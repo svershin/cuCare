@@ -17,8 +17,12 @@ TEMPLATE = app
 
 SOURCES += main.cpp \
     Database.cpp \
-    sqlite3.c
+    sqlite3.c \
+    QueryResult.cpp \
+    Tests.cpp
 
 HEADERS += \
     Database.h \
-    sqlite3.h
+    sqlite3.h \
+    QueryResult.h \
+    Tests.h

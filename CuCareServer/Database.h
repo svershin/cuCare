@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <sqlite3.h>
+#include "QueryResult.h"
 
 using namespace std;
 
@@ -16,10 +17,10 @@ public:
     bool open();
 
     //For issuing sql statements which do not return results
-    bool command(string query);
+    bool command(const string query);
 
     //For issuing sql statements which do return results
-    bool query(string query, vector<vector<string>*>* results);
+    bool query(const string query, QueryResult*& pOutResults);
 
     bool close();
 

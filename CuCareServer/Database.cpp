@@ -2,6 +2,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include <sqlite3.h>
+#include "QueryResult.h"
 
 Database::Database()
     : pDb (NULL),
@@ -25,7 +26,7 @@ bool Database::open()
     if(sqlite3_open(dbFilename, &pDb) == SQLITE_OK)
         return connected = true;
 
-    close();    //The connection must be closed even if there is an error
+    close();    //If there's an error, we still have to close the connection
     return false;
 }
 
@@ -56,13 +57,13 @@ bool Database::command(string query)
     return errorCheck();
 }
 
-bool Database::query(string query, vector<vector<string>*>* pResults)
+bool Database::query(string query, QueryResult*& pOutResults)
 {
     if(!connected)
         throw new exception();
 
     sqlite3_stmt *pStatement;
-    pResults = new vector<vector<string>*>();
+    vector< vector <string>* >* pRows = new vector< vector <string>* >();
 
     if(sqlite3_prepare_v2(pDb, query.c_str(), -1, &pStatement, 0) == SQLITE_OK)
     {
@@ -70,18 +71,16 @@ bool Database::query(string query, vector<vector<string>*>* pResults)
 
         while(sqlite3_step(pStatement) == SQLITE_ROW)
         {
-            vector<string>* pValues = new vector<string>();
+            vector<string>* pCols = new vector<string>();
+
             for(int col = 0; col < numCols; col++)
-            {
-                string currValue = (char*)sqlite3_column_text(pStatement, col);
-                cout << currValue;
-                pValues->push_back(currValue);
-            }
-            for(unsigned int i=0; i<pValues->size();i++)
-                cout << pValues->at(i);
-            pResults->push_back(pValues);
+                pCols->push_back((char*)sqlite3_column_text(pStatement, col));
+
+            pRows->push_back(pCols);
         }
     }
+
+    pOutResults = new QueryResult(pRows);
 
     return errorCheck();
 }
