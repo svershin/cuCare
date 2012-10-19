@@ -1,11 +1,14 @@
 #include <QtCore/QCoreApplication>
 #include <iostream>
+#include "Tests.h"
 
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
-    
-    std::cout << "Hello, Server!\n";
+
+    Tests::DatabaseExample();
 
     return a.exec();
 }
+
+

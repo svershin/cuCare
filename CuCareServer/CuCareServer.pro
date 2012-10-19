@@ -15,4 +15,14 @@ CONFIG   -= app_bundle
 TEMPLATE = app
 
 
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    Database.cpp \
+    sqlite3.c \
+    QueryResult.cpp \
+    Tests.cpp
+
+HEADERS += \
+    Database.h \
+    sqlite3.h \
+    QueryResult.h \
+    Tests.h
