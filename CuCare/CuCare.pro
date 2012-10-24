@@ -11,8 +11,42 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        cucare.cpp
+        cucare.cpp \
+    Model/User.cpp \
+    Model/Time.cpp \
+    Model/Test.cpp \
+    Model/SysAdmin.cpp \
+    Model/ReturnConsultation.cpp \
+    Model/ResultantFollowup.cpp \
+    Model/Referral.cpp \
+    Model/Physician.cpp \
+    Model/Patient.cpp \
+    Model/MedicationRewnewal.cpp \
+    Model/HealthCard.cpp \
+    Model/Followup.cpp \
+    Model/Date.cpp \
+    Model/ContactInfo.cpp \
+    Model/Consultation.cpp \
+    Model/AdminAssistant.cpp \
+    Model/Address.cpp
 
-HEADERS  += cucare.h
+HEADERS  += cucare.h \
+    Model/User.h \
+    Model/Time.h \
+    Model/Test.h \
+    Model/SysAdmin.h \
+    Model/ReturnConsultation.h \
+    Model/ResultantFollowup.h \
+    Model/Referral.h \
+    Model/Physician.h \
+    Model/Patient.h \
+    Model/MedicationRewnewal.h \
+    Model/HealthCard.h \
+    Model/Followup.h \
+    Model/Date.h \
+    Model/ContactInfo.h \
+    Model/Consultation.h \
+    Model/AdminAssistant.h \
+    Model/Address.h
 
 FORMS    += cucare.ui
