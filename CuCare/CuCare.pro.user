@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
+<<<<<<< HEAD
 <!-- Written by Qt Creator 2.4.1, 2012-10-24T16:27:56. -->
+=======
+<!-- Written by Qt Creator 2.4.1, 2012-10-24T03:17:32. -->
+>>>>>>> 9ab584408922e75412ac0e9a2edc6e66fa890443
 <qtcreator>
  <data>
   <variable>ProjectExplorer.Project.ActiveTarget</variable>
@@ -101,7 +105,11 @@
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4BuildConfiguration</value>
     <value type="int" key="Qt4ProjectManager.Qt4BuildConfiguration.BuildConfiguration">0</value>
+<<<<<<< HEAD
     <value type="QString" key="Qt4ProjectManager.Qt4BuildConfiguration.BuildDirectory">/home/baltar/Documents/repos/cucare/CuCare-build-desktop-Qt_4_8_1_in_PATH__System__Release</value>
+=======
+    <value type="QString" key="Qt4ProjectManager.Qt4BuildConfiguration.BuildDirectory">/home/baltar/comp3004/cucare/CuCare-build-desktop-Qt_4_8_1_in_PATH__System__Release</value>
+>>>>>>> 9ab584408922e75412ac0e9a2edc6e66fa890443
     <value type="int" key="Qt4ProjectManager.Qt4BuildConfiguration.QtVersionId">1</value>
     <value type="bool" key="Qt4ProjectManager.Qt4BuildConfiguration.UseShadowBuild">true</value>
    </valuemap>
@@ -151,7 +159,11 @@
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4BuildConfiguration</value>
     <value type="int" key="Qt4ProjectManager.Qt4BuildConfiguration.BuildConfiguration">2</value>
+<<<<<<< HEAD
     <value type="QString" key="Qt4ProjectManager.Qt4BuildConfiguration.BuildDirectory">/home/baltar/Documents/repos/cucare/CuCare-build-desktop-Qt_4_8_1_in_PATH__System__Debug</value>
+=======
+    <value type="QString" key="Qt4ProjectManager.Qt4BuildConfiguration.BuildDirectory">/home/baltar/comp3004/cucare/CuCare-build-desktop-Qt_4_8_1_in_PATH__System__Debug</value>
+>>>>>>> 9ab584408922e75412ac0e9a2edc6e66fa890443
     <value type="int" key="Qt4ProjectManager.Qt4BuildConfiguration.QtVersionId">1</value>
     <value type="bool" key="Qt4ProjectManager.Qt4BuildConfiguration.UseShadowBuild">true</value>
    </valuemap>
@@ -256,7 +268,11 @@
  </data>
  <data>
   <variable>ProjectExplorer.Project.Updater.EnvironmentId</variable>
+<<<<<<< HEAD
   <value type="QString">{27b823de-6c9f-4195-b014-db2698907cd4}</value>
+=======
+  <value type="QString">{a32418ac-f436-428a-9713-36ded5d5afb3}</value>
+>>>>>>> 9ab584408922e75412ac0e9a2edc6e66fa890443
  </data>
  <data>
   <variable>ProjectExplorer.Project.Updater.FileVersion</variable>
