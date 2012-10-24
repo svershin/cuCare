@@ -1,0 +1,41 @@
+#!/bin/bash
+#
+# Script to create the empty files for the cuCare object model.
+#
+mkdir Model
+cd Model
+touch User.h
+touch Physician.h
+touch AdminAssistant.h
+touch SysAdmin.h
+touch Patient.h
+touch HealthCard.h
+touch Consultation.h
+touch Followup.h
+touch ReturnConsultation.h
+touch MedicationRewnewal.h
+touch ResultantFollowup.h
+touch Referral.h
+touch Test.h
+touch ContactInfo.h
+touch Address.h
+touch Date.h
+touch Time.h
+touch User.cpp
+touch Physician.cpp
+touch AdminAssistant.cpp
+touch SysAdmin.cpp
+touch Patient.cpp
+touch HealthCard.cpp
+touch Consultation.cpp
+touch Followup.cpp
+touch ReturnConsultation.cpp
+touch MedicationRewnewal.cpp
+touch ResultantFollowup.cpp
+touch Referral.cpp
+touch Test.cpp
+touch ContactInfo.cpp
+touch Address.cpp
+touch Date.cpp
+touch Time.cpp
+cd ..
