@@ -12,6 +12,13 @@
 class Address
 {
 public:
+
+    // Constructor
+    Address();
+
+    // Destructor
+    ~Address();
+
 protected:
 private:
 };

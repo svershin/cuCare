@@ -12,6 +12,13 @@
 class ContactInfo
 {
 public:
+
+    // Constructor
+    ContactInfo();
+
+    // Destructor
+    ~ContactInfo();
+
 protected:
 private:
 };

@@ -12,6 +12,13 @@
 class AdminAssistant
 {
 public:
+
+    // Constructor
+    AdminAssistant();
+
+    // Destructor
+    ~AdminAssistant();
+
 protected:
 private:
 };

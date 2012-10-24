@@ -12,6 +12,13 @@
 class Consultation
 {
 public:
+
+    // Constructor
+    Consultation();
+
+    // Destructor
+    ~Consultation();
+
 protected:
 private:
 };

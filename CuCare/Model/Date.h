@@ -12,6 +12,13 @@
 class Date
 {
 public:
+
+    // Constructor
+    Date();
+
+    // Destructor
+    ~Date();
+
 protected:
 private:
 };

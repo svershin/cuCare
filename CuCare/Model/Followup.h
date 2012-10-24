@@ -12,6 +12,13 @@
 class Followup
 {
 public:
+
+    // Constructor
+    Followup();
+
+    // Destructor
+    ~Followup();
+
 protected:
 private:
 };
