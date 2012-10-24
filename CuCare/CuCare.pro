@@ -21,14 +21,14 @@ SOURCES += main.cpp\
     Model/Referral.cpp \
     Model/Physician.cpp \
     Model/Patient.cpp \
-    Model/MedicationRewnewal.cpp \
     Model/HealthCard.cpp \
     Model/Followup.cpp \
     Model/Date.cpp \
     Model/ContactInfo.cpp \
     Model/Consultation.cpp \
     Model/AdminAssistant.cpp \
-    Model/Address.cpp
+    Model/Address.cpp \
+    Model/MedicationRenewal.cpp
 
 HEADERS  += cucare.h \
     Model/User.h \
@@ -40,13 +40,13 @@ HEADERS  += cucare.h \
     Model/Referral.h \
     Model/Physician.h \
     Model/Patient.h \
-    Model/MedicationRewnewal.h \
     Model/HealthCard.h \
     Model/Followup.h \
     Model/Date.h \
     Model/ContactInfo.h \
     Model/Consultation.h \
     Model/AdminAssistant.h \
-    Model/Address.h
+    Model/Address.h \
+    Model/MedicationRenewal.h
 
 FORMS    += cucare.ui
