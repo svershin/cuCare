@@ -9,13 +9,41 @@
 #include "Followup.h"
 
 // Constructor
-Followup::Followup()
+Followup::Followup
+(   int idParam,
+    FollowupStatus statusParam,
+    Date dateDueParam,
+    Date dateReceivedParam,
+    Date dateCompletedParam,
+    bool deletedParam)
+    : id (idParam),
+      status (statusParam),
+      dateDue (dateDueParam),
+      dateReceived (dateReceivedParam),
+      dateCompleted (dateCompletedParam),
+      deleted (deletedParam)
 {
 }
 
-// Desctructor
+// Destructor
 Followup::~Followup()
 {
 }
+
+int Followup::getId() { return id; }
+
+FollowupStatus Followup::getStatus() { return status; }
+void Followup::setStatus(const FollowupStatus value) { status = value; }
+
+Date Followup::getDateDue() { return dateDue; }
+void Followup::setDateDue(const Date value) { dateDue = value; }
+
+Date Followup::getDateReceived() { return dateReceived; }
+void Followup::setDateReceived(const Date value) { dateReceived = value; }
+
+Date Followup::getDateCompleted() { return dateCompleted; }
+void Followup::setDateCompleted(const Date value) { dateCompleted = value; }
+
+void Followup::markDeleted() { deleted = true; }
 
 // EOF

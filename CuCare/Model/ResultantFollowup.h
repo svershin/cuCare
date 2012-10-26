@@ -9,18 +9,33 @@
 #ifndef RESULTANTFOLLOWUP_H
 #define RESULTANTFOLLOWUP_H
 
-class ResultantFollowup
+#include <string>
+#include "Followup.h"
+
+using namespace std;
+
+class ResultantFollowup:Followup
 {
 public:
 
     // Constructor
-    ResultantFollowup();
+    ResultantFollowup (int idParam,
+                       FollowupStatus statusParam,
+                       Date dateDueParam,
+                       Date dateReceivedParam,
+                       Date dateCompletedParam,
+                       string resultsParam,
+                       bool deletedParam);
 
     // Destructor
     ~ResultantFollowup();
 
+    string getResults();
+    void setResults(const string value);
+
 protected:
 private:
+    string results;
 };
 
 

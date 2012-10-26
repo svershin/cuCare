@@ -9,13 +9,33 @@
 #include "Physician.h"
 
 // Constructor
-Physician::Physician()
+Physician::Physician
+(	int idParam,
+    string usernameParam,
+    string firstNameParam,
+    string lastNameParam,
+    string titleParam,
+    Date dateOfBirthParam,
+    ContactInfo contactParam,
+    Address addressParam,
+    bool deletedParam)
+    : User (usernameParam,
+            firstNameParam,
+            lastNameParam,
+            titleParam,
+            dateOfBirthParam,
+            contactParam,
+            addressParam,
+            deletedParam),
+      id (idParam)
 {
 }
 
-// Desctructor
+// Destructor
 Physician::~Physician()
 {
 }
+
+int Physician::getId() { return id; }
 
 // EOF

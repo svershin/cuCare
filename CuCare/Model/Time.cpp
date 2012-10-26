@@ -9,13 +9,23 @@
 #include "Time.h"
 
 // Constructor
-Time::Time()
+Time::Time
+(   int hourParam,
+    int minuteParam)
+    : hour (hourParam),
+      minute (minuteParam)
 {
 }
 
-// Desctructor
+// Destructor
 Time::~Time()
 {
 }
+
+int Time::getHour() { return hour; }
+void Time::setHour(const int value) { hour = value; }
+
+int Time::getMinute() { return minute; }
+void Time::setMinute(const int value) { minute = value; }
 
 // EOF

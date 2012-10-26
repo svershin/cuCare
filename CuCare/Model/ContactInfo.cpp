@@ -9,13 +9,33 @@
 #include "ContactInfo.h"
 
 // Constructor
-ContactInfo::ContactInfo()
+ContactInfo::ContactInfo
+(	string workPhoneParam,
+    string cellPhoneParam,
+    string emailParam,
+    string workEmailParam)
+    : workPhone (workPhoneParam),
+      cellPhone (cellPhoneParam),
+      email (emailParam),
+      workEmail (workEmailParam)
 {
 }
 
-// Desctructor
+// Destructor
 ContactInfo::~ContactInfo()
 {
 }
+
+string ContactInfo::getWorkPhone() { return workPhone; }
+void ContactInfo::setWorkPhone(const string value) { workPhone = value; }
+
+string ContactInfo::getCellPhone() { return cellPhone; }
+void ContactInfo::setCellPhone(const string value) { cellPhone = value; }
+
+string ContactInfo::getEmail() { return email; }
+void ContactInfo::setEmail(const string value) { email = value; }
+
+string ContactInfo::getWorkEmail() { return workEmail; }
+void ContactInfo::setWorkEmail(const string value) { workEmail = value; }
 
 // EOF

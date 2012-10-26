@@ -9,13 +9,30 @@
 #include "MedicationRenewal.h"
 
 // Constructor
-MedicationRenewal::MedicationRenewal()
+MedicationRenewal::MedicationRenewal
+(   int idParam,
+    FollowupStatus statusParam,
+    Date dateDueParam,
+    Date dateReceivedParam,
+    Date dateCompletedParam,
+    string medicationParam,
+    bool deletedParam)
+    : Followup (idParam,
+                statusParam,
+                dateDueParam,
+                dateReceivedParam,
+                dateCompletedParam,
+                deletedParam),
+      medication (medicationParam)
 {
 }
 
-// Desctructor
+// Destructor
 MedicationRenewal::~MedicationRenewal()
 {
 }
+
+string MedicationRenewal::getMedication() { return medication; }
+void MedicationRenewal::setMedication(const string value) { medication = value; }
 
 // EOF

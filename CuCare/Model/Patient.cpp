@@ -9,13 +9,61 @@
 #include "Patient.h"
 
 // Constructor
-Patient::Patient()
+Patient::Patient
+(   int idParam,
+    string firstNameParam,
+    string lastNameParam,
+    string notesParam,
+    ContactInfo contactParam,
+    Address addressParam,
+    Date dateOfBirthParam,
+    Date dateAddedToSystemParam,
+    HealthCard healthCardParam,
+    bool deletedParam)
+    : id (idParam),
+      firstName (firstNameParam),
+      lastName (lastNameParam),
+      notes (notesParam),
+      contact (contactParam),
+      address (addressParam),
+      dateOfBirth (dateOfBirthParam),
+      dateAddedToSystem (dateAddedToSystemParam),
+      healthCard (healthCardParam),
+      deleted (deletedParam)
 {
 }
 
-// Desctructor
+// Destructor
 Patient::~Patient()
 {
 }
+
+int Patient::getId() { return id; }
+
+string Patient::getFirstName() { return firstName; }
+void Patient::setFirstName(const string value) { firstName = value; }
+
+string Patient::getLastName() { return lastName; }
+void Patient::setLastName(const string value) { lastName = value; }
+
+string Patient::getNotes() { return notes; }
+void Patient::setNotes(const string value) { notes = value; }
+
+ContactInfo Patient::getContact() { return contact; }
+void Patient::setContact(const ContactInfo value) { contact = value; }
+
+Address Patient::getAddress() { return address; }
+void Patient::setAddress(const Address value) { address = value; }
+
+Date Patient::getDateOfBirth() { return dateOfBirth; }
+void Patient::setDateOfBirth(const Date value) { dateOfBirth = value; }
+
+Date Patient::getDateAddedToSystem() { return dateAddedToSystem; }
+void Patient::setDateAddedToSystem(const Date value) { dateAddedToSystem = value; }
+
+HealthCard Patient::getHealthCard() { return healthCard; }
+void Patient::setHealthCard(const HealthCard value) { healthCard = value; }
+
+void Patient::markDeleted() { deleted = true; }
 
 // EOF

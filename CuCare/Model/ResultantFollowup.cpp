@@ -9,13 +9,29 @@
 #include "ResultantFollowup.h"
 
 // Constructor
-ResultantFollowup::ResultantFollowup()
+ResultantFollowup::ResultantFollowup
+(   int idParam,
+    FollowupStatus statusParam,
+    Date dateDueParam,
+    Date dateReceivedParam,
+    Date dateCompletedParam,
+    string resultsParam,
+    bool deletedParam)
+    : Followup (idParam,
+                statusParam,
+                dateDueParam,
+                dateReceivedParam,
+                dateCompletedParam,
+                deletedParam),
+      results (resultsParam)
 {
 }
 
-// Desctructor
+// Destructor
 ResultantFollowup::~ResultantFollowup()
 {
 }
 
+string ResultantFollowup::getResults() { return results; }
+void ResultantFollowup::setResults(const string value) { results = value; }
 // EOF

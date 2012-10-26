@@ -14,15 +14,28 @@ class Date
 public:
 
     // Constructor
-    Date();
+    Date (int DayParam,
+          int MonthParam,
+          int YearParam);
 
     // Destructor
     ~Date();
 
+    int getDay();
+    void setDay(const int value);
+
+    int getMonth();
+    void setMonth(const int value);
+
+    int getYear();
+    void setYear(const int value);
+
 protected:
 private:
+    int day;
+    int month;
+    int year;
 };
-
 
 #endif
 

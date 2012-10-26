@@ -3,20 +3,20 @@
 // Team: The Four Puppeteers
 // Contributing Editors: Sergey Vershinin
 //
-// Referral.h - Declaration of base class Referral
-// Member functions are defined in Referral.cpp
+// Test.h - Declaration of base class Test
+// Member functions are defined in Test.cpp
 
-#include "Referral.h"
+#include "MedicalTest.h"
 
 // Constructor
-Referral::Referral
+MedicalTest::MedicalTest
 (   int idParam,
     FollowupStatus statusParam,
     Date dateDueParam,
     Date dateReceivedParam,
     Date dateCompletedParam,
     string resultsParam,
-    string specialistNameParam,
+    string testTypeParam,
     bool deletedParam)
     : ResultantFollowup (idParam,
                          statusParam,
@@ -25,16 +25,16 @@ Referral::Referral
                          dateCompletedParam,
                          resultsParam,
                          deletedParam),
-      specialistName (specialistNameParam)
+      testType (testTypeParam)
 {
 }
 
 // Destructor
-Referral::~Referral()
+MedicalTest::~MedicalTest()
 {
 }
 
-string Referral::getSpecialistName() { return specialistName; }
-void Referral::setSpecialistName(const string value) { specialistName = value; }
+string MedicalTest::getTestType() { return testType; }
+void MedicalTest::setTestType(const string value) { testType = value; }
 
 // EOF

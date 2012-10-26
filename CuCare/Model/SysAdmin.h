@@ -9,18 +9,28 @@
 #ifndef SYSADMIN_H
 #define SYSADMIN_H
 
-class SysAdmin
+#include "User.h"
+
+class SysAdmin:User
 {
 public:
 
     // Constructor
-    SysAdmin();
+    SysAdmin (string usernameParam,
+              string firstNameParam,
+              string lastNameParam,
+              string titleParam,
+              Date dateOfBirthParam,
+              ContactInfo contactParam,
+              Address addressParam,
+              bool deletedParam);
 
     // Destructor
     ~SysAdmin();
 
 protected:
 private:
+
 };
 
 

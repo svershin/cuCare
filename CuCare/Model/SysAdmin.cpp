@@ -9,11 +9,27 @@
 #include "SysAdmin.h"
 
 // Constructor
-SysAdmin::SysAdmin()
+SysAdmin::SysAdmin
+(	string usernameParam,
+    string firstNameParam,
+    string lastNameParam,
+    string titleParam,
+    Date dateOfBirthParam,
+    ContactInfo contactParam,
+    Address addressParam,
+    bool deletedParam)
+    : User (usernameParam,
+            firstNameParam,
+            lastNameParam,
+            titleParam,
+            dateOfBirthParam,
+            contactParam,
+            addressParam,
+            deletedParam)
 {
 }
 
-// Desctructor
+// Destructor
 SysAdmin::~SysAdmin()
 {
 }

@@ -9,18 +9,34 @@
 #ifndef REFERRAL_H
 #define REFERRAL_H
 
-class Referral
+#include "ResultantFollowup.h"
+#include <string>
+
+using namespace std;
+
+class Referral:ResultantFollowup
 {
 public:
 
     // Constructor
-    Referral();
+    Referral (int idParam,
+              FollowupStatus statusParam,
+              Date dateDueParam,
+              Date dateReceivedParam,
+              Date dateCompletedParam,
+              string resultsParam,
+              string specialistNameParam,
+              bool deletedParam);
 
     // Destructor
     ~Referral();
 
+    string getSpecialistName();
+    void setSpecialistName(const string value);
+
 protected:
 private:
+    string specialistName;
 };
 
 

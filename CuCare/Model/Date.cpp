@@ -9,13 +9,28 @@
 #include "Date.h"
 
 // Constructor
-Date::Date()
+Date::Date
+(   int DayParam,
+    int MonthParam,
+    int YearParam)
+    : day (DayParam),
+      month (MonthParam),
+      year (YearParam)
 {
 }
 
-// Desctructor
+// Destructor
 Date::~Date()
 {
 }
+
+int Date::getDay() { return day; }
+void Date::setDay(const int value) { day = value; }
+
+int Date::getMonth() { return month; }
+void Date::setMonth(const int value) { month = value; }
+
+int Date::getYear() { return year; }
+void Date::setYear(const int value) { year = value; }
 
 // EOF

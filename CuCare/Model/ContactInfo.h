@@ -9,18 +9,41 @@
 #ifndef CONTACTINFO_H
 #define CONTACTINFO_H
 
+#include <string>
+
+using namespace std;
+
 class ContactInfo
 {
 public:
 
     // Constructor
-    ContactInfo();
+    ContactInfo (string workPhoneParam,
+                 string cellPhoneParam,
+                 string emailParam,
+                 string workEmailParam);
 
     // Destructor
     ~ContactInfo();
 
+    string getWorkPhone();
+    void setWorkPhone(const string value);
+
+    string getCellPhone();
+    void setCellPhone(const string value);
+
+    string getEmail();
+    void setEmail(const string value);
+
+    string getWorkEmail();
+    void setWorkEmail(const string value);
+
 protected:
 private:
+    string workPhone;
+    string cellPhone;
+    string email;
+    string workEmail;
 };
 
 

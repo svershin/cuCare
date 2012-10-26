@@ -9,13 +9,30 @@
 #include "ReturnConsultation.h"
 
 // Constructor
-ReturnConsultation::ReturnConsultation()
+ReturnConsultation::ReturnConsultation
+(   int idParam,
+    FollowupStatus statusParam,
+    Date dateDueParam,
+    Date dateReceivedParam,
+    Date dateCompletedParam,
+    Consultation* pConsultParam,
+    bool deletedParam)
+    : Followup (idParam,
+                statusParam,
+                dateDueParam,
+                dateReceivedParam,
+                dateCompletedParam,
+                deletedParam),
+      pConsult (pConsultParam)
 {
 }
 
-// Desctructor
+// Destructor
 ReturnConsultation::~ReturnConsultation()
 {
 }
+
+Consultation* ReturnConsultation::getConsult() { return pConsult; }
+void ReturnConsultation::setConsult(Consultation* const value) { pConsult = value; }
 
 // EOF

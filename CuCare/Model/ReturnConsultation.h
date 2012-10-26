@@ -9,20 +9,32 @@
 #ifndef RETURNCONSULTAION_H
 #define RETURNCONSULTAION_H
 
-class ReturnConsultation
+#include "Consultation.h"
+#include "Followup.h"
+
+class ReturnConsultation:Followup
 {
 public:
 
     // Constructor
-    ReturnConsultation();
+    ReturnConsultation (int idParam,
+                        FollowupStatus statusParam,
+                        Date dateDueParam,
+                        Date dateReceivedParam,
+                        Date dateCompletedParam,
+                        Consultation* pConsultParam,
+                        bool deletedParam);
 
     // Destructor
     ~ReturnConsultation();
 
+    Consultation* getConsult();
+    void setConsult(Consultation* const value);
+
 protected:
 private:
+    Consultation* pConsult;
 };
-
 
 #endif
 

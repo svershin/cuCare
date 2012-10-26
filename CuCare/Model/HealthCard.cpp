@@ -9,13 +9,21 @@
 #include "HealthCard.h"
 
 // Constructor
-HealthCard::HealthCard()
+HealthCard::HealthCard(string numberParam, Date expiryParam)
+    : number (numberParam),
+      expiry (expiryParam)
 {
 }
 
-// Desctructor
+// Destructor
 HealthCard::~HealthCard()
 {
 }
+
+string HealthCard::getNumber() { return number; }
+void HealthCard::setNumber(const string value) { number = value; }
+
+Date HealthCard::getExpiry() { return expiry; }
+void HealthCard::setExpiry(const Date value) { expiry = value; }
 
 // EOF

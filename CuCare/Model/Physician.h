@@ -9,18 +9,31 @@
 #ifndef PHYSICIAN_H
 #define PHYSICIAN_H
 
-class Physician
+#include "User.h"
+
+class Physician:User
 {
 public:
 
     // Constructor
-    Physician();
+    Physician (int idParam,
+               string usernameParam,
+               string firstNameParam,
+               string lastNameParam,
+               string titleParam,
+               Date dateOfBirthParam,
+               ContactInfo contactParam,
+               Address addressParam,
+               bool deletedParam);
 
     // Destructor
     ~Physician();
 
+    int getId();
+
 protected:
 private:
+    int id;
 };
 
 

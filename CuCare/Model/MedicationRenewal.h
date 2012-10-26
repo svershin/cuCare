@@ -9,20 +9,34 @@
 #ifndef MEDICATIONRENEWAL_H
 #define MEDICATIONRENEWAL_H
 
-class MedicationRenewal
+#include "Followup.h"
+#include <string>
+
+using namespace std;
+
+class MedicationRenewal:Followup
 {
 public:
 
     // Constructor
-    MedicationRenewal();
+    MedicationRenewal (int idParam,
+                       FollowupStatus statusParam,
+                       Date dateDueParam,
+                       Date dateReceivedParam,
+                       Date dateCompletedParam,
+                       string medicationParam,
+                       bool deletedParam);
 
     // Destructor
     ~MedicationRenewal();
 
+    string getMedication();
+    void setMedication(const string value);
+
 protected:
 private:
+    string medication;
 };
-
 
 #endif
 

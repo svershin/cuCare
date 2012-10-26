@@ -14,7 +14,6 @@ SOURCES += main.cpp\
         cucare.cpp \
     Model/User.cpp \
     Model/Time.cpp \
-    Model/Test.cpp \
     Model/SysAdmin.cpp \
     Model/ReturnConsultation.cpp \
     Model/ResultantFollowup.cpp \
@@ -28,12 +27,12 @@ SOURCES += main.cpp\
     Model/Consultation.cpp \
     Model/AdminAssistant.cpp \
     Model/Address.cpp \
-    Model/MedicationRenewal.cpp
+    Model/MedicationRenewal.cpp \
+    Model/MedicalTest.cpp
 
 HEADERS  += cucare.h \
     Model/User.h \
     Model/Time.h \
-    Model/Test.h \
     Model/SysAdmin.h \
     Model/ReturnConsultation.h \
     Model/ResultantFollowup.h \
@@ -47,6 +46,7 @@ HEADERS  += cucare.h \
     Model/Consultation.h \
     Model/AdminAssistant.h \
     Model/Address.h \
-    Model/MedicationRenewal.h
+    Model/MedicationRenewal.h \
+    Model/MedicalTest.h
 
 FORMS    += cucare.ui

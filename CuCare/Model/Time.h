@@ -14,13 +14,22 @@ class Time
 public:
 
     // Constructor
-    Time();
+    Time (int hourParam,
+          int minuteParam);
 
     // Destructor
     ~Time();
 
+    int getHour();
+    void setHour(const int value);
+
+    int getMinute();
+    void setMinute(const int value);
+
 protected:
 private:
+    int hour;
+    int minute;
 };
 
 

@@ -9,12 +9,21 @@
 #ifndef ADMINASSISTANT_H
 #define ADMINASSISTANT_H
 
-class AdminAssistant
+#include "User.h"
+
+class AdminAssistant:User
 {
 public:
 
     // Constructor
-    AdminAssistant();
+    AdminAssistant (string usernameParam,
+                    string firstNameParam,
+                    string lastNameParam,
+                    string titleParam,
+                    Date dateOfBirthParam,
+                    ContactInfo contactParam,
+                    Address addressParam,
+                    bool deletedParam);
 
     // Destructor
     ~AdminAssistant();
