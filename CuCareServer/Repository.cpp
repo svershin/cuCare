@@ -3,7 +3,7 @@
 
 Repository::Repository()
     : db (NULL),
-      createScriptFilename ("dbcreate.sql")
+      createScriptFilename ("../CuCareServer/dbcreate.sql")
 {
     bool firstTimeRun = false;
 
@@ -40,6 +40,8 @@ void Repository::createSchema()
 {
     ifstream createScript;
     createScript.open(createScriptFilename.c_str());
+    if(!createScript)
+        cout << "Failed to find file.\n";
 
     if(createScript.is_open())
     {
