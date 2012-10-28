@@ -2,11 +2,14 @@
 #include <iostream>
 #include "Tests.h"
 
+using namespace std;
+
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
-
-    Tests::DatabaseExample();
+    cout << "Program starts.\n";
+    //Tests::databaseExample();
+    Tests::repositorySetupTest();
 
     return a.exec();
 }

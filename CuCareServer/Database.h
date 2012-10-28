@@ -22,12 +22,13 @@ public:
     //For issuing sql statements which do return results
     bool query(const string query, QueryResult*& pOutResults);
 
+    string getErrorText();
+    const string dbFilename;
+
     bool close();
 
 private:
     bool errorCheck();
-
-    const char* dbFilename;
 
     string errorText;
     sqlite3 *pDb;

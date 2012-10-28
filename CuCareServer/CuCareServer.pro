@@ -19,10 +19,12 @@ SOURCES += main.cpp \
     Database.cpp \
     sqlite3.c \
     QueryResult.cpp \
-    Tests.cpp
+    Tests.cpp \
+    Repository.cpp
 
 HEADERS += \
     Database.h \
     sqlite3.h \
     QueryResult.h \
-    Tests.h
+    Tests.h \
+    Repository.h
