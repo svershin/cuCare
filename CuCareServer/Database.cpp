@@ -30,6 +30,11 @@ bool Database::open()
     return false;
 }
 
+int Database::lastUid()
+{
+    return sqlite3_last_insert_rowid(pDb);
+}
+
 bool Database::errorCheck()
 {
     if(SQLITE_OK != sqlite3_errcode(pDb))

@@ -11,7 +11,7 @@
 
 #include "User.h"
 
-class AdminAssistant:User
+class AdminAssistant:public User
 {
 public:
 

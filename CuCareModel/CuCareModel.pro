@@ -46,7 +46,8 @@ HEADERS += \
     ContactInfo.h \
     Consultation.h \
     AdminAssistant.h \
-    Address.h
+    Address.h \
+    ModelFiles.h
 unix:!symbian {
     maemo5 {
         target.path = /opt/usr/lib

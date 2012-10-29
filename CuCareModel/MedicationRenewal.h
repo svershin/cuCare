@@ -14,7 +14,7 @@
 
 using namespace std;
 
-class MedicationRenewal:Followup
+class MedicationRenewal:public Followup
 {
 public:
 

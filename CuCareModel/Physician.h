@@ -11,7 +11,7 @@
 
 #include "User.h"
 
-class Physician:User
+class Physician:public User
 {
 public:
 
