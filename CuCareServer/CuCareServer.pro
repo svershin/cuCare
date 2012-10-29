@@ -28,3 +28,10 @@ HEADERS += \
     QueryResult.h \
     Tests.h \
     Repository.h
+
+unix:!macx:!symbian: LIBS += -L$$PWD/../CuCareModel/ -lCuCareModel
+
+INCLUDEPATH += $$PWD/../CuCareModel
+DEPENDPATH += $$PWD/../CuCareModel
+
+unix:!macx:!symbian: PRE_TARGETDEPS += $$PWD/../CuCareModel/libCuCareModel.a

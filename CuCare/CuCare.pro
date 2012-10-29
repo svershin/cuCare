@@ -17,9 +17,10 @@ HEADERS  += cucare.h \
 
 FORMS    += cucare.ui
 
-unix:!macx:!symbian: LIBS += -L$$PWD/ -lCuCareModel
 
-INCLUDEPATH += $$PWD/
-DEPENDPATH += $$PWD/
+unix:!macx:!symbian: LIBS += -L$$PWD/../CuCareModel/ -lCuCareModel
 
-unix:!macx:!symbian: PRE_TARGETDEPS += $$PWD/libCuCareModel.a
+INCLUDEPATH += $$PWD/../CuCareModel
+DEPENDPATH += $$PWD/../CuCareModel
+
+unix:!macx:!symbian: PRE_TARGETDEPS += $$PWD/../CuCareModel/libCuCareModel.a
