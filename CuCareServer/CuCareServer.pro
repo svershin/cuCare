@@ -19,10 +19,19 @@ SOURCES += main.cpp \
     Database.cpp \
     sqlite3.c \
     QueryResult.cpp \
-    Tests.cpp
+    Tests.cpp \
+    Repository.cpp
 
 HEADERS += \
     Database.h \
     sqlite3.h \
     QueryResult.h \
-    Tests.h
+    Tests.h \
+    Repository.h
+
+unix:!macx:!symbian: LIBS += -L$$PWD/../CuCareModel/ -lCuCareModel
+
+INCLUDEPATH += $$PWD/../CuCareModel
+DEPENDPATH += $$PWD/../CuCareModel
+
+unix:!macx:!symbian: PRE_TARGETDEPS += $$PWD/../CuCareModel/libCuCareModel.a

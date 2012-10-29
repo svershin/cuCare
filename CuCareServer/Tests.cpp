@@ -1,11 +1,10 @@
 #include "Database.h"
+#include "Repository.h"
 #include <iostream>
 #include "Tests.h"
 
-void Tests::DatabaseExample()
+void Tests::databaseExample()
 {
-    cout << "Hello, Server!\n";
-
     Database * db = new Database();
 
     cout << "Created the database.\n";
@@ -39,5 +38,13 @@ void Tests::DatabaseExample()
     }
     while (pResults->nextRow());
 
-    cout << "Done!";
+    cout << "Done!\n";
+}
+
+void Tests::repositorySetupTest()
+{
+    cout << "Starting test.\n";
+    Repository* pRepo = new Repository();
+    delete pRepo;
+    cout << "Successful completion.\n";
 }

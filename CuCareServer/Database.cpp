@@ -5,10 +5,10 @@
 #include "QueryResult.h"
 
 Database::Database()
-    : pDb (NULL),
-      connected (false),
+    : dbFilename ("cucare.db"),
       errorText (""),
-      dbFilename ("cucare.db")
+      pDb (NULL),
+      connected (false)
 {
 }
 
@@ -23,7 +23,7 @@ bool Database::open()
     if(connected)
         return true;
 
-    if(sqlite3_open(dbFilename, &pDb) == SQLITE_OK)
+    if(sqlite3_open(dbFilename.c_str(), &pDb) == SQLITE_OK)
         return connected = true;
 
     close();    //If there's an error, we still have to close the connection
@@ -41,10 +41,15 @@ bool Database::errorCheck()
     return true;
 }
 
+string Database::getErrorText()
+{
+    return errorText;
+}
+
 bool Database::command(string query)
 {
     if(!connected)
-        throw new exception();
+        return false;
 
     sqlite3_stmt *pStatement;
 
@@ -60,7 +65,7 @@ bool Database::command(string query)
 bool Database::query(string query, QueryResult*& pOutResults)
 {
     if(!connected)
-        throw new exception();
+        return false;
 
     sqlite3_stmt *pStatement;
     vector< vector <string>* >* pRows = new vector< vector <string>* >();
