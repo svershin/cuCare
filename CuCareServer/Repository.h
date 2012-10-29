@@ -12,6 +12,8 @@ public:
 
     ~Repository();
 
+    bool createPhysician(Physician* pInputPhysician);
+
 private:
     Database* db;
 
