@@ -115,10 +115,29 @@ bool Repository::insertStatement(string table, map<string, string> values)
     return db->command(command);
 }
 
-bool Repository::createConsultation(Consultation *pInputConsultation, int physicianId, int patientId, int *uid)
+bool Repository::updateStatement(string table, string idname, string idvalue, map<string, string> values)
 {
-    string table = "consultations";
-    string idname = "consultationid";
+    stringstream statement;
+    statement << "UPDATE " << table << " SET (";
+    bool firstvalue = true;
+    for(map<string, string>::iterator it = values.begin(); it != values.end(); it++)
+    {
+        if(firstvalue)
+        {
+            firstvalue = false;
+            statement << it->first << " = '" << it->second << "'";
+        }
+        else
+            statement << ", " << it->first << " = '" << it->second << "'";
+    }
+    statement << ") WHERE " << idname << " = '" << idvalue << "';";
+
+    string command = statement.str();
+    return db->command(command);
+}
+
+map<string, string> Repository::getConsultationValues(Consultation* pInputConsultation, int physicianId, int patientId)
+{
     map<string,string> values;
     values["physicianid"] = itos(physicianId);
     values["patientid"] = itos(patientId);
@@ -128,16 +147,11 @@ bool Repository::createConsultation(Consultation *pInputConsultation, int physic
     values["day"] = itos(pInputConsultation->getDate().getDay());
     values["month"] = itos(pInputConsultation->getDate().getMonth());
     values["year"] = itos(pInputConsultation->getDate().getYear());
-    if(!insertStatement(table, idname, values))
-        return false;
-    *uid = db->lastUid();
-    return true;
+    return values;
 }
 
-bool Repository::createPatient(Patient *pInputPatient, int physicianId, int *uid)
+map<string, string> Repository::getPatientValues(Patient *pInputPatient, int physicianId)
 {
-    string table = "patients";
-    string idname = "patientid";
     map<string,string> values;
     values["physicianid"] = itos(physicianId);
     values["firstname"] = pInputPatient->getFirstName();
@@ -162,16 +176,11 @@ bool Repository::createPatient(Patient *pInputPatient, int physicianId, int *uid
     values["healthcardexpirymonth"] = itos(pInputPatient->getHealthCard().getExpiry().getMonth());
     values["healthcardexpiryyear"] = itos(pInputPatient->getHealthCard().getExpiry().getYear());
     values["notes"] = pInputPatient->getNotes();
-    if(!insertStatement(table, idname, values))
-        return false;
-    *uid = db->lastUid();
-    return true;
+    return values;
 }
 
-bool Repository::createFollowup(Followup *pInputFollowup, int consultationId, int *uid)
+map<string, string> Repository::getFollowupValues(Followup *pInputFollowup, int consultationId)
 {
-    string table = "followups";
-    string idname = "followupid";
     map<string,string> values;
     values["consultationid"] =consultationId;
     values["status"] = itos(pInputFollowup->getStatus());
@@ -184,7 +193,84 @@ bool Repository::createFollowup(Followup *pInputFollowup, int consultationId, in
     values["completedday"] = itos(pInputFollowup->getDateCompleted().getDay());
     values["completedmonth"] = itos(pInputFollowup->getDateCompleted().getMonth());
     values["completedyear"] = itos(pInputFollowup->getDateCompleted().getYear());
-    if(!insertStatement(table, idname, values))
+    return values;
+}
+
+map<string, string> Repository::getResultantFollowupValues(ResultantFollowup *pInputResultantFollowup)
+{
+    map<string,string> values;
+    values["results"] = pInputResultantFollowup->getResults();
+    return values;
+}
+
+map<string, string> Repository::getMedicalTestValues(MedicalTest *pInputMedicalTest)
+{
+    map<string,string> values;
+    values["testtype"] = pInputMedicalTest->getTestType();
+    return values;
+}
+
+map<string, string> Repository::getReferralValues(Referral *pInputReferral)
+{
+    map<string,string> values;
+    values["specialistname"] = pInputReferral->getSpecialistName();
+    return values;
+}
+
+map<string, string> Repository::getMedicationRenewalValues(MedicationRenewal *pInputMedicationRenewal)
+{
+    map<string,string> values;
+    values["medication"] = pInputMedicationRenewal->getMedication();
+    return values;
+}
+
+map<string, string> Repository::getReturnConsultationValues(int nextConsultationId)
+{
+    map<string,string> values;
+    values["nextconsultationid"] = itos(nextConsultationId);
+    return values;
+}
+
+map<string, string> Repository::getUserValues(User *pInputUser)
+{
+    map<string,string> values;
+    values["username"] = pInputUser->getUsername();
+    values["firstname"] = pInputUser->getFirstName();
+    values["lastname"] = pInputUser->getLastName();
+    values["country"] = pInputUser->getAddress().getCountry();
+    values["city"] = pInputUser->getAddress().getCity();
+    values["addresslineone"] = pInputUser->getAddress().getLineOne();
+    values["addresslinetwo"] = pInputUser->getAddress().getLineTwo();
+    values["postalcode"] = pInputUser->getAddress().getPostalCode();
+    values["workphone"] = pInputUser->getContact().getWorkPhone();
+    values["cellphone"] = pInputUser->getContact().getCellPhone();
+    values["email"] = pInputUser->getContact().getEmail();
+    values["workemail"] = pInputUser->getContact().getWorkEmail();
+    values["birthday"] = itos(pInputUser->getDateOfBirth().getDay());
+    values["birthmonth"] = itos(pInputUser->getDateOfBirth().getMonth());
+    values["birthyear"] = itos(pInputUser->getDateOfBirth().getYear());
+    return values;
+}
+
+bool Repository::createConsultation(Consultation *pInputConsultation, int physicianId, int patientId, int *uid)
+{
+    if(!insertStatement("consultations", "consulationid", getConsultationValues(pInputConsultation, physicianId, patientId)))
+        return false;
+    *uid = db->lastUid();
+    return true;
+}
+
+bool Repository::createPatient(Patient *pInputPatient, int physicianId, int *uid)
+{
+    if(!insertStatement("patients", "patientid", getPatientValues(pInputPatient, physicianId)))
+        return false;
+    *uid = db->lastUid();
+    return true;
+}
+
+bool Repository::createFollowup(Followup *pInputFollowup, int consultationId, int *uid)
+{
+    if(!insertStatement("followups", "followupid", getFollowupValues(pInputFollowup, consultationId)))
         return false;
     *uid = db->lastUid();
     return true;
@@ -197,8 +283,7 @@ bool Repository::createResultantFollowup(ResultantFollowup *pInputResultantFollo
         return false;
 
     string table = "resultantfollowups";
-    map<string,string> values;
-    values["results"] = pInputResultantFollowup->getResults();
+    map<string, string> values = getResultantFollowupValues(pInputResultantFollowup);
     values["followupid"] = itos(*uid);
 
     if(!insertStatement(table, values))
@@ -213,8 +298,7 @@ bool Repository::createMedicalTest(MedicalTest *pInputMedicalTest, int consultat
         return false;
 
     string table = "medicaltests";
-    map<string,string> values;
-    values["testtype"] = pInputMedicalTest->getTestType();
+    map<string,string> values = getMedicalTestValues(pInputMedicalTest);
     values["followupid"] = itos(*uid);
 
     if(!insertStatement(table, values))
@@ -229,8 +313,7 @@ bool Repository::createReferral(Referral *pInputReferral, int consultationId, in
         return false;
 
     string table = "referrals";
-    map<string,string> values;
-    values["specialistname"] = pInputReferral->getSpecialistName();
+    map<string,string> values = getReferralValues(pInputReferral);
     values["followupid"] = itos(*uid);
 
     if(!insertStatement(table, values))
@@ -245,8 +328,7 @@ bool Repository::createMedicationRenewal(MedicationRenewal *pInputMedicationRene
         return false;
 
     string table = "medicationrenewals";
-    map<string,string> values;
-    values["medication"] = pInputMedicationRenewal->getMedication();
+    map<string,string> values = getMedicationRenewalValues(pInputMedicationRenewal);
     values["followupid"] = itos(*uid);
 
     if(!insertStatement(table, values))
@@ -261,8 +343,7 @@ bool Repository::createReturnConsultation(ReturnConsultation *pInputMedicationRe
         return false;
 
     string table = "returnconsultations";
-    map<string,string> values;
-    values["nextconsultationid"] = itos(nextConsultationId);
+    map<string,string> values = getReturnConsultationValues(nextConsultationId);
     values["followupid"] = itos(*uid);
 
     if(!insertStatement(table, values))
@@ -281,24 +362,7 @@ bool Repository::createUser(User *pInputUser)
     if(pResults->numRows() > 0)
         throw "Username is already in use";
 
-    string table = "users";
-    map<string,string> values;
-    values["username"] = pInputUser->getUsername();
-    values["firstname"] = pInputUser->getFirstName();
-    values["lastname"] = pInputUser->getLastName();
-    values["country"] = pInputUser->getAddress().getCountry();
-    values["city"] = pInputUser->getAddress().getCity();
-    values["addresslineone"] = pInputUser->getAddress().getLineOne();
-    values["addresslinetwo"] = pInputUser->getAddress().getLineTwo();
-    values["postalcode"] = pInputUser->getAddress().getPostalCode();
-    values["workphone"] = pInputUser->getContact().getWorkPhone();
-    values["cellphone"] = pInputUser->getContact().getCellPhone();
-    values["email"] = pInputUser->getContact().getEmail();
-    values["workemail"] = pInputUser->getContact().getWorkEmail();
-    values["birthday"] = itos(pInputUser->getDateOfBirth().getDay());
-    values["birthmonth"] = itos(pInputUser->getDateOfBirth().getMonth());
-    values["birthyear"] = itos(pInputUser->getDateOfBirth().getYear());
-    if(!insertStatement(table, values))
+    if(!insertStatement("users", getUserValues(pInputUser)))
         return false;
     return true;
 }
@@ -357,5 +421,91 @@ bool Repository::createSysAdmin(SysAdmin *pInputSysAdmin)
         return false;
     return true;
 }
+
+bool Repository::pushUser(User* pInputUser)
+{
+    if(!updateStatement("users", "username", pInputUser->getUsername(), getUserValues(pInputUser)))
+        return false;
+    return true;
+}
+
+bool Repository::pushPatient(Patient *pInputPatient, int physicianId)
+{
+    if(!updateStatement("patients", "patientid", itos(pInputPatient->getId()), getPatientValues(pInputPatient, physicianId)))
+        return false;
+    return true;
+}
+
+bool Repository::pushConsultation(Consultation *pInputConsultation, int physicianId, int patientId)
+{
+    if(!updateStatement("consultations", "consultationid", itos(pInputConsultation->getConsultID()), getConsultationValues(pInputConsultation, physicianId, patientId)))
+        return false;
+    return true;
+}
+
+bool Repository::pushFollowup(Followup *pInputFollowup, int consultationId)
+{
+    if(!updateStatement("followups", "followupid", itos(pInputFollowup->getId()), getFollowupValues(pInputFollowup, consultationId)))
+        return false;
+    return true;
+}
+
+bool Repository::pushResultantFollowup(ResultantFollowup *pInputResultantFollowup, int consultationId)
+{
+    Followup* pInputFollowup = pInputResultantFollowup;
+    if(!pushFollowup(pInputFollowup, consultationId))
+        return false;
+
+    if(!updateStatement("resultantfollowups", "followupid", itos(pInputResultantFollowup->getId()), getResultantFollowupValues(pInputResultantFollowup)))
+        return false;
+    return true;
+}
+
+bool Repository::pushReferral(Referral *pInputReferral, int consultationId)
+{
+    ResultantFollowup* pInputResultantFollowup = pInputReferral;
+    if(!pushResultantFollowup(pInputResultantFollowup, consultationId))
+        return false;
+
+    if(!updateStatement("referrals", "followupid", itos(pInputReferral->getId()), getReferralValues(pInputReferral)))
+        return false;
+    return true;
+}
+
+bool Repository::pushMedicalTest(MedicalTest *pInputMedicalTest, int consultationId)
+{
+    ResultantFollowup* pInputResultantFollowup = pInputMedicalTest;
+    if(!pushResultantFollowup(pInputResultantFollowup, consultationId))
+        return false;
+
+    if(!updateStatement("medicaltests", "followupid", itos(pInputMedicalTest->getId()), getMedicalTestValues(pInputMedicalTest)))
+        return false;
+    return true;
+}
+
+bool Repository::pushReturnConsultation(ReturnConsultation *pInputReturnConsultation, int consultationId, int nextConsultationId)
+{
+    Followup* pInputFollowup = pInputReturnConsultation;
+    if(!pushFollowup(pInputFollowup, consultationId))
+        return false;
+
+    if(!updateStatement("returnconsultations", "followupid", itos(pInputReturnConsultation->getId()), getReturnConsultationValues(nextConsultationId)))
+        return false;
+    return true;
+}
+
+bool Repository::pushMedicationRenewal(MedicationRenewal *pInputMedicationRenewal, int consultationId)
+{
+    Followup* pInputFollowup = pInputMedicationRenewal;
+    if(!pushFollowup(pInputFollowup, consultationId))
+        return false;
+
+    if(!updateStatement("medicationrenewal", "followupid", itos(pInputMedicationRenewal->getId()), getMedicationRenewalValues(pInputMedicationRenewal)))
+        return false;
+    return true;
+}
+
+
+
 
 
