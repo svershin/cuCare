@@ -1,6 +1,7 @@
 #include <QtGui/QApplication>
 #include "../CuCareModel/User.h"
 #include "loginwindowdialog.h"
+#include "patientselectdialog.h"
 
 int main(int argc, char *argv[])
 {

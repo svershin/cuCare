@@ -12,15 +12,18 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
     patientselectdialog.cpp \
-    loginwindowdialog.cpp
+    loginwindowdialog.cpp \
+    mainwindow.cpp
 
 HEADERS  += \
     patientselectdialog.h \
-    loginwindowdialog.h
+    loginwindowdialog.h \
+    mainwindow.h
 
 FORMS    += \
     patientselectdialog.ui \
-    loginwindowdialog.ui
+    loginwindowdialog.ui \
+    mainwindow.ui
 
 
 unix:!macx:!symbian: LIBS += -L$$PWD/../CuCareModel/ -lCuCareModel
