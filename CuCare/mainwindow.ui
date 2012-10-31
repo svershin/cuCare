@@ -106,7 +106,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="PatientInfoTab">
        <attribute name="title">
@@ -299,27 +299,40 @@
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="QDateEdit" name="DateAddedDateEdit"/>
+           <widget class="QDateEdit" name="AddedDateEdit"/>
           </item>
-          <item row="2" column="0">
+          <item row="3" column="0">
            <widget class="QLabel" name="CardNumberLabel">
             <property name="text">
              <string>Health Card #:</string>
             </property>
            </widget>
           </item>
-          <item row="2" column="1">
+          <item row="3" column="1">
            <widget class="QLineEdit" name="CardNumberLineEdit"/>
           </item>
-          <item row="3" column="0">
+          <item row="4" column="0">
            <widget class="QLabel" name="CardExpirationLabel">
             <property name="text">
              <string>Expiration Date:</string>
             </property>
            </widget>
           </item>
-          <item row="3" column="1">
+          <item row="4" column="1">
            <widget class="QDateEdit" name="CardExpirationDateEdit"/>
+          </item>
+          <item row="2" column="1">
+           <spacer name="verticalSpacer_7">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
           </item>
          </layout>
         </item>
@@ -371,7 +384,7 @@
          </widget>
         </item>
         <item row="2" column="1" rowspan="2">
-         <widget class="QLabel" name="StatusLabel">
+         <widget class="QLabel" name="ConsultationStatusLabel">
           <property name="text">
            <string>Status:</string>
           </property>
@@ -414,7 +427,7 @@
          <widget class="QTextEdit" name="ConsultationNotesTextEdit"/>
         </item>
         <item row="4" column="1" colspan="2">
-         <widget class="QComboBox" name="StatusComboBox">
+         <widget class="QComboBox" name="ConsultationStatusComboBox">
           <item>
            <property name="text">
             <string>Pending</string>
@@ -438,6 +451,96 @@
        <attribute name="title">
         <string>Followup Details</string>
        </attribute>
+       <layout class="QGridLayout" name="gridLayout_5">
+        <item row="0" column="0">
+         <widget class="QLabel" name="FollowupStatusLabel">
+          <property name="text">
+           <string>Status:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="2" rowspan="3">
+         <layout class="QGridLayout" name="FollowupDatesGridLayout">
+          <item row="0" column="0">
+           <widget class="QLabel" name="DateDueLabel">
+            <property name="text">
+             <string>Date Due:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QDateEdit" name="DueDateEdit"/>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="DateReceivedLabel">
+            <property name="text">
+             <string>Date Received:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QDateEdit" name="ReceivedDateEdit"/>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="DateCompletedLabel">
+            <property name="text">
+             <string>Date Completed:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QDateEdit" name="CompletedDateEdit"/>
+          </item>
+         </layout>
+        </item>
+        <item row="1" column="0">
+         <widget class="QComboBox" name="FollowupStatusComboBox">
+          <item>
+           <property name="text">
+            <string>Pending</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Overdue</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Received</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Completed</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>AdditionalInfo:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0" colspan="2">
+         <widget class="QTextEdit" name="textEdit"/>
+        </item>
+        <item row="4" column="1">
+         <spacer name="verticalSpacer_6">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>237</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
       </widget>
      </widget>
     </item>
