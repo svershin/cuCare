@@ -106,14 +106,34 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="PatientInfoTab">
        <attribute name="title">
         <string>Patient Information</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_3">
-        <item row="0" column="0" rowspan="2">
+        <item row="2" column="1">
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>269</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLabel" name="PatientNotesLabel">
+          <property name="text">
+           <string>Notes:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0" rowspan="2">
          <layout class="QFormLayout" name="formLayout_2">
           <property name="fieldGrowthPolicy">
            <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
@@ -121,7 +141,7 @@
           <item row="0" column="0">
            <widget class="QLabel" name="FirstNameLabel">
             <property name="text">
-             <string>First Name</string>
+             <string>First Name:</string>
             </property>
            </widget>
           </item>
@@ -131,102 +151,12 @@
           <item row="1" column="0">
            <widget class="QLabel" name="LastNameLabel">
             <property name="text">
-             <string>Last Name</string>
+             <string>Last Name:</string>
             </property>
            </widget>
           </item>
           <item row="1" column="1">
            <widget class="QLineEdit" name="LastNameLineEdit"/>
-          </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="WorkPhoneLabel">
-            <property name="text">
-             <string>Work Phone</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="1">
-           <widget class="QLineEdit" name="WorkPhoneLineEdit"/>
-          </item>
-          <item row="4" column="0">
-           <widget class="QLabel" name="CellPhoneLabel">
-            <property name="text">
-             <string>Cell Phone</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="1">
-           <widget class="QLineEdit" name="CellPhoneLineEdit"/>
-          </item>
-          <item row="5" column="0">
-           <widget class="QLabel" name="EmailLabel">
-            <property name="text">
-             <string>Email</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="1">
-           <widget class="QLineEdit" name="EmailLineEdit"/>
-          </item>
-          <item row="6" column="0">
-           <widget class="QLabel" name="WorkEmailLabel">
-            <property name="text">
-             <string>Work Email</string>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="1">
-           <widget class="QLineEdit" name="WorkEmailLineEdit"/>
-          </item>
-          <item row="8" column="0">
-           <widget class="QLabel" name="Address1Label">
-            <property name="text">
-             <string>Address 1</string>
-            </property>
-           </widget>
-          </item>
-          <item row="8" column="1">
-           <widget class="QLineEdit" name="Address1LineEdit"/>
-          </item>
-          <item row="9" column="0">
-           <widget class="QLabel" name="Address2Label">
-            <property name="text">
-             <string>Address 2</string>
-            </property>
-           </widget>
-          </item>
-          <item row="9" column="1">
-           <widget class="QLineEdit" name="Address2LineEdit"/>
-          </item>
-          <item row="10" column="0">
-           <widget class="QLabel" name="CityLabel">
-            <property name="text">
-             <string>City</string>
-            </property>
-           </widget>
-          </item>
-          <item row="10" column="1">
-           <widget class="QLineEdit" name="CityLineEdit"/>
-          </item>
-          <item row="11" column="0">
-           <widget class="QLabel" name="CountryLabel">
-            <property name="text">
-             <string>Country</string>
-            </property>
-           </widget>
-          </item>
-          <item row="11" column="1">
-           <widget class="QLineEdit" name="CountryLineEdit"/>
-          </item>
-          <item row="12" column="0">
-           <widget class="QLabel" name="PostalCodeLabel">
-            <property name="text">
-             <string>Postal Code</string>
-            </property>
-           </widget>
-          </item>
-          <item row="12" column="1">
-           <widget class="QLineEdit" name="PostalCodeLineEdit"/>
           </item>
           <item row="2" column="1">
            <spacer name="verticalSpacer_2">
@@ -241,6 +171,46 @@
             </property>
            </spacer>
           </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="WorkPhoneLabel">
+            <property name="text">
+             <string>Work Phone:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QLineEdit" name="WorkPhoneLineEdit"/>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="CellPhoneLabel">
+            <property name="text">
+             <string>Cell Phone:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QLineEdit" name="CellPhoneLineEdit"/>
+          </item>
+          <item row="5" column="0">
+           <widget class="QLabel" name="EmailLabel">
+            <property name="text">
+             <string>Email:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="1">
+           <widget class="QLineEdit" name="EmailLineEdit"/>
+          </item>
+          <item row="6" column="0">
+           <widget class="QLabel" name="WorkEmailLabel">
+            <property name="text">
+             <string>Work Email:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="1">
+           <widget class="QLineEdit" name="WorkEmailLineEdit"/>
+          </item>
           <item row="7" column="1">
            <spacer name="verticalSpacer_3">
             <property name="orientation">
@@ -254,14 +224,67 @@
             </property>
            </spacer>
           </item>
+          <item row="8" column="0">
+           <widget class="QLabel" name="Address1Label">
+            <property name="text">
+             <string>Address 1:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="1">
+           <widget class="QLineEdit" name="Address1LineEdit"/>
+          </item>
+          <item row="9" column="0">
+           <widget class="QLabel" name="Address2Label">
+            <property name="text">
+             <string>Address 2:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="1">
+           <widget class="QLineEdit" name="Address2LineEdit"/>
+          </item>
+          <item row="10" column="0">
+           <widget class="QLabel" name="CityLabel">
+            <property name="text">
+             <string>City:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="10" column="1">
+           <widget class="QLineEdit" name="CityLineEdit"/>
+          </item>
+          <item row="11" column="0">
+           <widget class="QLabel" name="CountryLabel">
+            <property name="text">
+             <string>Country:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="11" column="1">
+           <widget class="QLineEdit" name="CountryLineEdit"/>
+          </item>
+          <item row="12" column="0">
+           <widget class="QLabel" name="PostalCodeLabel">
+            <property name="text">
+             <string>Postal Code:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="12" column="1">
+           <widget class="QLineEdit" name="PostalCodeLineEdit"/>
+          </item>
          </layout>
         </item>
-        <item row="0" column="1">
+        <item row="4" column="0" colspan="2">
+         <widget class="QTextEdit" name="PatientNotesTextEdit"/>
+        </item>
+        <item row="1" column="1">
          <layout class="QGridLayout" name="gridLayout_2">
           <item row="0" column="0">
            <widget class="QLabel" name="DOBLabel">
             <property name="text">
-             <string>Date of Birth</string>
+             <string>Date of Birth:</string>
             </property>
            </widget>
           </item>
@@ -271,7 +294,7 @@
           <item row="1" column="0">
            <widget class="QLabel" name="DateAddedLabel">
             <property name="text">
-             <string>Date Added to System</string>
+             <string>Date Added to System:</string>
             </property>
            </widget>
           </item>
@@ -281,7 +304,7 @@
           <item row="2" column="0">
            <widget class="QLabel" name="CardNumberLabel">
             <property name="text">
-             <string>Health Card #</string>
+             <string>Health Card #:</string>
             </property>
            </widget>
           </item>
@@ -291,7 +314,7 @@
           <item row="3" column="0">
            <widget class="QLabel" name="CardExpirationLabel">
             <property name="text">
-             <string>Expiration Date</string>
+             <string>Expiration Date:</string>
             </property>
            </widget>
           </item>
@@ -300,28 +323,18 @@
           </item>
          </layout>
         </item>
-        <item row="1" column="1">
-         <spacer name="verticalSpacer">
+        <item row="0" column="1">
+         <spacer name="verticalSpacer_5">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
           <property name="sizeHint" stdset="0">
            <size>
             <width>20</width>
-            <height>269</height>
+            <height>40</height>
            </size>
           </property>
          </spacer>
-        </item>
-        <item row="2" column="0">
-         <widget class="QLabel" name="NotesLabel">
-          <property name="text">
-           <string>Notes:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="0" colspan="2">
-         <widget class="QTextEdit" name="NotesTextEdit"/>
         </item>
        </layout>
       </widget>
@@ -329,6 +342,97 @@
        <attribute name="title">
         <string>Consultation Details</string>
        </attribute>
+       <layout class="QGridLayout" name="gridLayout_4">
+        <item row="0" column="0">
+         <widget class="QLabel" name="PhysicianLabel">
+          <property name="text">
+           <string>Physician:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLabel" name="DateAndTimeLabel">
+          <property name="text">
+           <string>Date &amp; Time:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLineEdit" name="PhysicianLineEdit"/>
+        </item>
+        <item row="1" column="1" colspan="2">
+         <widget class="QDateTimeEdit" name="ConsultationDateTimeEdit"/>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="ReasonLabel">
+          <property name="text">
+           <string>Reason:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1" rowspan="2">
+         <widget class="QLabel" name="StatusLabel">
+          <property name="text">
+           <string>Status:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0" rowspan="3">
+         <widget class="QTextEdit" name="ReasonTextEdit"/>
+        </item>
+        <item row="5" column="2">
+         <spacer name="verticalSpacer_4">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>110</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="6" column="0">
+         <widget class="QLabel" name="DiagnosisLabel">
+          <property name="text">
+           <string>Diagnosis:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="0" colspan="3">
+         <widget class="QTextEdit" name="DiagnosisTextEdit"/>
+        </item>
+        <item row="8" column="0">
+         <widget class="QLabel" name="ConsultationNotesLabel">
+          <property name="text">
+           <string>Notes:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="9" column="0" colspan="3">
+         <widget class="QTextEdit" name="ConsultationNotesTextEdit"/>
+        </item>
+        <item row="4" column="1" colspan="2">
+         <widget class="QComboBox" name="StatusComboBox">
+          <item>
+           <property name="text">
+            <string>Pending</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Occured</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Completed</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+       </layout>
       </widget>
       <widget class="QWidget" name="FollowupInfoTab">
        <attribute name="title">
