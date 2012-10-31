@@ -1,11 +1,13 @@
 #include <QtGui/QApplication>
-#include "cucare.h"
 #include "../CuCareModel/User.h"
+#include "loginwindowdialog.h"
+#include "patientselectdialog.h"
+#include "mainwindow.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    CuCare w;
+    MainWindow w;
     w.show();
 
     return a.exec();
