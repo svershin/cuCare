@@ -31,5 +31,8 @@ void PatientFilter::dateAddedToSystemSetMatch(bool match) { dateAddedToSystemMat
 bool PatientFilter::healthCardGetMatch() { return healthCardMatch; }
 void PatientFilter::healthCardSetMatch(bool match) { healthCardMatch = match; }
 
+bool PatientFilter::pPhysicianGetMatch() { return pPhysicianMatch; }
+void PatientFilter::pPhysicianSetMatch(bool match) { pPhysicianMatch = match; }
+
 bool PatientFilter::deletedGetMatch() { return deletedMatch; }
 void PatientFilter::deletedSetMatch(bool match) { deletedMatch = match; }

@@ -9,6 +9,9 @@ public:
     bool consultIDGetMatch();
     void consultIDSetMatch(bool match);
 
+    bool patientIdGetMatch();
+    void patientIdSetMatch(bool match);
+
     bool reasonGetMatch();
     void reasonSetMatch(bool match);
 
@@ -35,6 +38,7 @@ public:
 
 private:
     bool consultIDMatch;
+    bool patientIdMatch;
     bool reasonMatch;
     bool diagnosisMatch;
     bool commentsMatch;

@@ -3,7 +3,16 @@
 
 Repository::Repository()
     : db (NULL),
-      createScriptFilename ("../CuCareServer/dbcreate.sql")
+      createScriptFilename ("../CuCareServer/dbcreate.sql"),
+      adminAssistantColumns ("username, firstname, lastname, country, city, addresslineone, addresslinetwo, postalcode, workphone, cellphone, email, workemail, birthday, birthmonth, birthyear, deleted"),
+      physicianColumns ("username, physicianid, lastname, country, city, addresslineone, addresslinetwo, postalcode, workphone, cellphone, email, workemail, birthday, birthmonth, birthyear, deleted"),
+      sysAdminColumns (adminAssistantColumns),
+      patientColumns ("patientid, firstname, lastname, country, city, addresslineone, addresslinetwo, postalcode, workphone, cellphone, email, workemail, birthday, birthmonth, birthyear, addedday, addedmonth, addedyear, healthcardnumber, healthcardexpiryday, healthcardexpirymonth, healthcardexpiryyear, notes, physicianid, deleted"),
+      consultationColumns ("consultationid, physicianid, patientid, reason, diagnosis, status, day, month, year, comments, hours, minutes, deleted"),
+      referralColumns ("followupid, specialistname, results, consultationid, dueday, duemonth, dueyear, receivedday, receievedmonth, receivedyear, completedday, completedmonth, completedyear, status, deleted"),
+      medicalTestColumns ("followupid, testtype, results, consultationid, dueday, duemonth, dueyear, receivedday, receievedmonth, receivedyear, completedday, completedmonth, completedyear, status, deleted"),
+      returnConsultationColumns ("followupid, nextconsultationid, consultationid, dueday, duemonth, dueyear, receivedday, receievedmonth, receivedyear, completedday, completedmonth, completedyear, status, deleted"),
+      medicationRenewalColumns ("followupid, medication, consultationid, dueday, duemonth, dueyear, receivedday, receievedmonth, receivedyear, completedday, completedmonth, completedyear, status, deleted")
 {
     bool firstTimeRun = false;
 
@@ -74,6 +83,13 @@ int Repository::stoi(string stringvalue)
     return results;
 }
 
+string Repository::squote(string stringValue)
+{
+    stringstream toQuote;
+    toQuote << "'" << stringValue << "'";
+    return toQuote.str();
+}
+
 bool Repository::databaseExists()
 {
     ifstream dbfile(db->dbFilename.c_str());
@@ -91,7 +107,7 @@ bool Repository::insertStatement(string table, map<string, string> values)
     stringstream statement;
     stringstream valueBracket;
     statement << "INSERT INTO " << table << "(";
-    valueBracket << "('";
+    valueBracket << "(";
     bool firstvalue = true;
     for(map<string, string>::iterator it = values.begin(); it != values.end(); it++)
     {
@@ -99,12 +115,12 @@ bool Repository::insertStatement(string table, map<string, string> values)
         {
             firstvalue = false;
             statement << it->first;
-            valueBracket << it->second << "'";
+            valueBracket << it->second;
         }
         else
         {
             statement << ", " << it->first;
-            valueBracket << ", '" << it->second << "'";
+            valueBracket << ", " << it->second;
         }
     }
     statement << ") VALUES ";
@@ -125,15 +141,36 @@ bool Repository::updateStatement(string table, string idname, string idvalue, ma
         if(firstvalue)
         {
             firstvalue = false;
-            statement << it->first << " = '" << it->second << "'";
+            statement << it->first << " = " << it->second;
         }
         else
-            statement << ", " << it->first << " = '" << it->second << "'";
+            statement << ", " << it->first << " = " << it->second;
     }
-    statement << ") WHERE " << idname << " = '" << idvalue << "';";
+    statement << ") WHERE " << idname << " = " << idvalue << ";";
 
     string command = statement.str();
     return db->command(command);
+}
+
+bool Repository::selectStatement(string table, map<string, string> where, string columns, QueryResult *&pResults)
+{
+    stringstream statement;
+    statement << "SELECT " << columns << " FROM " << table << " WHERE ";
+    bool firstvalue = true;
+    for(map<string, string>::iterator it = where.begin(); it != where.end(); it++)
+    {
+        if(firstvalue)
+        {
+            firstvalue = false;
+            statement << it->first << " = " << it->second;
+        }
+        else
+            statement << " AND " << it->first << " = " << it->second;
+    }
+    statement << ";";
+
+    string query = statement.str();
+    return db->query(query, pResults);
 }
 
 map<string, string> Repository::getConsultationValues(Consultation* pInputConsultation, int physicianId, int patientId)
@@ -141,12 +178,16 @@ map<string, string> Repository::getConsultationValues(Consultation* pInputConsul
     map<string,string> values;
     values["physicianid"] = itos(physicianId);
     values["patientid"] = itos(patientId);
-    values["reason"] = pInputConsultation->getReason();
-    values["diagnosis"] = pInputConsultation->getDiagnosis();
+    values["reason"] = squote(pInputConsultation->getReason());
+    values["diagnosis"] = squote(pInputConsultation->getDiagnosis());
     values["status"] = itos(pInputConsultation->getStatus());
     values["day"] = itos(pInputConsultation->getDate().getDay());
     values["month"] = itos(pInputConsultation->getDate().getMonth());
     values["year"] = itos(pInputConsultation->getDate().getYear());
+    values["comments"] = squote(pInputConsultation->getComments());
+    values["hours"] = itos(pInputConsultation->getTime().getHour());
+    values["minutes"] = itos(pInputConsultation->getTime().getMinute());
+    values["deleted"] = (pInputConsultation->isDeleted()) ? ("1") : ("0");
     return values;
 }
 
@@ -154,28 +195,29 @@ map<string, string> Repository::getPatientValues(Patient *pInputPatient, int phy
 {
     map<string,string> values;
     values["physicianid"] = itos(physicianId);
-    values["firstname"] = pInputPatient->getFirstName();
-    values["lastname"] = pInputPatient->getLastName();
-    values["country"] = pInputPatient->getAddress().getCountry();
-    values["city"] = pInputPatient->getAddress().getCity();
-    values["addresslineone"] = pInputPatient->getAddress().getLineOne();
-    values["addresslinetwo"] = pInputPatient->getAddress().getLineTwo();
-    values["postalcode"] = pInputPatient->getAddress().getPostalCode();
-    values["workphone"] = pInputPatient->getContact().getWorkPhone();
-    values["cellphone"] = pInputPatient->getContact().getCellPhone();
-    values["email"] = pInputPatient->getContact().getEmail();
-    values["workemail"] = pInputPatient->getContact().getWorkEmail();
+    values["firstname"] = squote(pInputPatient->getFirstName());
+    values["lastname"] = squote(pInputPatient->getLastName());
+    values["country"] = squote(pInputPatient->getAddress().getCountry());
+    values["city"] = squote(pInputPatient->getAddress().getCity());
+    values["addresslineone"] = squote(pInputPatient->getAddress().getLineOne());
+    values["addresslinetwo"] = squote(pInputPatient->getAddress().getLineTwo());
+    values["postalcode"] = squote(pInputPatient->getAddress().getPostalCode());
+    values["workphone"] = squote(pInputPatient->getContact().getWorkPhone());
+    values["cellphone"] = squote(pInputPatient->getContact().getCellPhone());
+    values["email"] = squote(pInputPatient->getContact().getEmail());
+    values["workemail"] = squote(pInputPatient->getContact().getWorkEmail());
     values["birthday"] = itos(pInputPatient->getDateOfBirth().getDay());
     values["birthmonth"] = itos(pInputPatient->getDateOfBirth().getMonth());
     values["birthyear"] = itos(pInputPatient->getDateOfBirth().getYear());
     values["addedday"] = itos(pInputPatient->getDateAddedToSystem().getDay());
     values["addedmonth"] = itos(pInputPatient->getDateAddedToSystem().getMonth());
     values["addedyear"] = itos(pInputPatient->getDateAddedToSystem().getYear());
-    values["healthcardnumber"] = pInputPatient->getHealthCard().getNumber();
+    values["healthcardnumber"] = squote(pInputPatient->getHealthCard().getNumber());
     values["healthcardexpiryday"] = itos(pInputPatient->getHealthCard().getExpiry().getDay());
     values["healthcardexpirymonth"] = itos(pInputPatient->getHealthCard().getExpiry().getMonth());
     values["healthcardexpiryyear"] = itos(pInputPatient->getHealthCard().getExpiry().getYear());
-    values["notes"] = pInputPatient->getNotes();
+    values["notes"] = squote(pInputPatient->getNotes());
+    values["deleted"] = (pInputPatient->isDeleted()) ? ("1") : ("0");
     return values;
 }
 
@@ -193,34 +235,35 @@ map<string, string> Repository::getFollowupValues(Followup *pInputFollowup, int 
     values["completedday"] = itos(pInputFollowup->getDateCompleted().getDay());
     values["completedmonth"] = itos(pInputFollowup->getDateCompleted().getMonth());
     values["completedyear"] = itos(pInputFollowup->getDateCompleted().getYear());
+    values["deleted"] = (pInputFollowup->isDeleted()) ? ("1") : ("0");
     return values;
 }
 
 map<string, string> Repository::getResultantFollowupValues(ResultantFollowup *pInputResultantFollowup)
 {
     map<string,string> values;
-    values["results"] = pInputResultantFollowup->getResults();
+    values["results"] = squote(pInputResultantFollowup->getResults());
     return values;
 }
 
 map<string, string> Repository::getMedicalTestValues(MedicalTest *pInputMedicalTest)
 {
     map<string,string> values;
-    values["testtype"] = pInputMedicalTest->getTestType();
+    values["testtype"] = squote(pInputMedicalTest->getTestType());
     return values;
 }
 
 map<string, string> Repository::getReferralValues(Referral *pInputReferral)
 {
     map<string,string> values;
-    values["specialistname"] = pInputReferral->getSpecialistName();
+    values["specialistname"] = squote(pInputReferral->getSpecialistName());
     return values;
 }
 
 map<string, string> Repository::getMedicationRenewalValues(MedicationRenewal *pInputMedicationRenewal)
 {
     map<string,string> values;
-    values["medication"] = pInputMedicationRenewal->getMedication();
+    values["medication"] = squote(pInputMedicationRenewal->getMedication());
     return values;
 }
 
@@ -234,22 +277,447 @@ map<string, string> Repository::getReturnConsultationValues(int nextConsultation
 map<string, string> Repository::getUserValues(User *pInputUser)
 {
     map<string,string> values;
-    values["username"] = pInputUser->getUsername();
-    values["firstname"] = pInputUser->getFirstName();
-    values["lastname"] = pInputUser->getLastName();
-    values["country"] = pInputUser->getAddress().getCountry();
-    values["city"] = pInputUser->getAddress().getCity();
-    values["addresslineone"] = pInputUser->getAddress().getLineOne();
-    values["addresslinetwo"] = pInputUser->getAddress().getLineTwo();
-    values["postalcode"] = pInputUser->getAddress().getPostalCode();
-    values["workphone"] = pInputUser->getContact().getWorkPhone();
-    values["cellphone"] = pInputUser->getContact().getCellPhone();
-    values["email"] = pInputUser->getContact().getEmail();
-    values["workemail"] = pInputUser->getContact().getWorkEmail();
+    values["username"] = squote(pInputUser->getUsername());
+    values["firstname"] = squote(pInputUser->getFirstName());
+    values["lastname"] = squote(pInputUser->getLastName());
+    values["country"] = squote(pInputUser->getAddress().getCountry());
+    values["city"] = squote(pInputUser->getAddress().getCity());
+    values["addresslineone"] = squote(pInputUser->getAddress().getLineOne());
+    values["addresslinetwo"] = squote(pInputUser->getAddress().getLineTwo());
+    values["postalcode"] = squote(pInputUser->getAddress().getPostalCode());
+    values["workphone"] = squote(pInputUser->getContact().getWorkPhone());
+    values["cellphone"] = squote(pInputUser->getContact().getCellPhone());
+    values["email"] = squote(pInputUser->getContact().getEmail());
+    values["workemail"] = squote(pInputUser->getContact().getWorkEmail());
     values["birthday"] = itos(pInputUser->getDateOfBirth().getDay());
     values["birthmonth"] = itos(pInputUser->getDateOfBirth().getMonth());
     values["birthyear"] = itos(pInputUser->getDateOfBirth().getYear());
+    values["deleted"] = (pInputUser->isDeleted()) ? ("1") : ("0");
     return values;
+}
+
+map<string, string> Repository::getUserConditions(User *pUserValues, UserFilter userFilter)
+{
+    map<string,string> values;
+    if(userFilter.usernameGetMatch())
+        values["username"] = squote(pUserValues->getUsername());
+    if(userFilter.firstNameGetMatch())
+        values["firstname"] = squote(pUserValues->getFirstName());
+    if(userFilter.lastNameGetMatch())
+        values["lastname"] = squote(pUserValues->getLastName());
+    if(userFilter.addressGetMatch())
+    {
+        values["country"] = squote(pUserValues->getAddress().getCountry());
+        values["city"] = squote(pUserValues->getAddress().getCity());
+        values["addresslineone"] = squote(pUserValues->getAddress().getLineOne());
+        values["addresslinetwo"] = squote(pUserValues->getAddress().getLineTwo());
+        values["postalcode"] = squote(pUserValues->getAddress().getPostalCode());
+    }
+    if(userFilter.contactGetMatch())
+    {
+        values["workphone"] = squote(pUserValues->getContact().getWorkPhone());
+        values["cellphone"] = squote(pUserValues->getContact().getCellPhone());
+        values["email"] = squote(pUserValues->getContact().getEmail());
+        values["workemail"] = squote(pUserValues->getContact().getWorkEmail());
+    }
+    if(userFilter.dateOfBirthGetMatch())
+    {
+        values["birthday"] = itos(pUserValues->getDateOfBirth().getDay());
+        values["birthmonth"] = itos(pUserValues->getDateOfBirth().getMonth());
+        values["birthyear"] = itos(pUserValues->getDateOfBirth().getYear());
+    }
+    if(userFilter.deletedGetMatch())
+        values["deleted"] = (pUserValues->isDeleted()) ? ("1") : ("0");
+    return values;
+}
+
+map<string, string> Repository::getPhysicianConditions(Physician *pPhysicianValues, PhysicianFilter physicianFilter)
+{
+    map<string, string> values = getUserConditions(pPhysicianValues, physicianFilter);
+    if(physicianFilter.idGetMatch())
+        values["physicianid"] = itos(pPhysicianValues->getId());
+    return values;
+}
+
+map<string, string> Repository::getPatientConditions(Patient *pPatientValues, PatientFilter patientFilter, int physicianId)
+{
+    map<string,string> values;
+    if(patientFilter.pPhysicianGetMatch())
+        values["physicianid"] = itos(physicianId);
+    if(patientFilter.firstNameGetMatch())
+        values["firstname"] = squote(pPatientValues->getFirstName());
+    if(patientFilter.lastNameGetMatch())
+        values["lastname"] = squote(pPatientValues->getLastName());
+    if(patientFilter.addressGetMatch())
+    {
+        values["country"] = squote(pPatientValues->getAddress().getCountry());
+        values["city"] = squote(pPatientValues->getAddress().getCity());
+        values["addresslineone"] = squote(pPatientValues->getAddress().getLineOne());
+        values["addresslinetwo"] = squote(pPatientValues->getAddress().getLineTwo());
+        values["postalcode"] = squote(pPatientValues->getAddress().getPostalCode());
+    }
+    if(patientFilter.contactGetMatch())
+    {
+        values["workphone"] = squote(pPatientValues->getContact().getWorkPhone());
+        values["cellphone"] = squote(pPatientValues->getContact().getCellPhone());
+        values["email"] = squote(pPatientValues->getContact().getEmail());
+        values["workemail"] = squote(pPatientValues->getContact().getWorkEmail());
+    }
+    if(patientFilter.dateOfBirthGetMatch())
+    {
+        values["birthday"] = itos(pPatientValues->getDateOfBirth().getDay());
+        values["birthmonth"] = itos(pPatientValues->getDateOfBirth().getMonth());
+        values["birthyear"] = itos(pPatientValues->getDateOfBirth().getYear());
+    }
+    if(patientFilter.dateAddedToSystemGetMatch())
+    {
+        values["addedday"] = itos(pPatientValues->getDateAddedToSystem().getDay());
+        values["addedmonth"] = itos(pPatientValues->getDateAddedToSystem().getMonth());
+        values["addedyear"] = itos(pPatientValues->getDateAddedToSystem().getYear());
+    }
+    if(patientFilter.healthCardGetMatch())
+    {
+        values["healthcardnumber"] = squote(pPatientValues->getHealthCard().getNumber());
+        values["healthcardexpiryday"] = itos(pPatientValues->getHealthCard().getExpiry().getDay());
+        values["healthcardexpirymonth"] = itos(pPatientValues->getHealthCard().getExpiry().getMonth());
+        values["healthcardexpiryyear"] = itos(pPatientValues->getHealthCard().getExpiry().getYear());
+    }
+    if(patientFilter.notesGetMatch())
+        values["notes"] = squote(pPatientValues->getNotes());
+    if(patientFilter.deletedGetMatch())
+        values["deleted"] = (pPatientValues->isDeleted()) ? ("1") : ("0");
+    return values;
+}
+
+map<string, string> Repository::getConsultationConditions(Consultation *pConsultationValues, ConsultationFilter consultationFilter, int physicianId, int patientId)
+{
+    map<string,string> values;
+    if(consultationFilter.pConsultingPhysGetMatch())
+        values["physicianid"] = itos(physicianId);
+    if(consultationFilter.patientIdGetMatch())
+        values["patientid"] = itos(patientId);
+    if(consultationFilter.reasonGetMatch())
+        values["reason"] = squote(pConsultationValues->getReason());
+    if(consultationFilter.diagnosisGetMatch())
+        values["diagnosis"] = squote(pConsultationValues->getDiagnosis());
+    if(consultationFilter.statusGetMatch())
+        values["status"] = itos(pConsultationValues->getStatus());
+    if(consultationFilter.commentsGetMatch())
+        values["comments"] = squote(pConsultationValues->getComments());
+    if(consultationFilter.dateGetMatch())
+    {
+        values["day"] = itos(pConsultationValues->getDate().getDay());
+        values["month"] = itos(pConsultationValues->getDate().getMonth());
+        values["year"] = itos(pConsultationValues->getDate().getYear());
+    }
+    if(consultationFilter.timeGetMatch())
+    {
+        values["hours"] = itos(pConsultationValues->getTime().getHour());
+        values["minutes"] = itos(pConsultationValues->getTime().getMinute());
+    }
+    if(consultationFilter.deletedGetMatch())
+        values["deleted"] = (pConsultationValues->isDeleted()) ? ("1") : ("0");
+    return values;
+}
+
+map<string, string> Repository::getFollowupConditions(Followup *pFollowupValues, FollowupFilter followupFilter, int consultationId)
+{
+    map<string,string> values;
+    if(followupFilter.idGetMatch())
+        values["consultationid"] =consultationId;
+    if(followupFilter.statusGetMatch())
+        values["status"] = itos(pFollowupValues->getStatus());
+    if(followupFilter.dateDueGetMatch())
+    {
+        values["dueday"] = itos(pFollowupValues->getDateDue().getDay());
+        values["duemonth"] = itos(pFollowupValues->getDateDue().getMonth());
+        values["dueyear"] = itos(pFollowupValues->getDateDue().getYear());
+    }
+    if(followupFilter.dateReceivedGetMatch())
+    {
+        values["receivedday"] = itos(pFollowupValues->getDateReceived().getDay());
+        values["receivedmonth"] = itos(pFollowupValues->getDateReceived().getMonth());
+        values["receivedyear"] = itos(pFollowupValues->getDateReceived().getYear());
+    }
+    if(followupFilter.dateCompletedGetMatch())
+    {
+        values["completedday"] = itos(pFollowupValues->getDateCompleted().getDay());
+        values["completedmonth"] = itos(pFollowupValues->getDateCompleted().getMonth());
+        values["completedyear"] = itos(pFollowupValues->getDateCompleted().getYear());
+    }
+    if(followupFilter.deletedGetMatch())
+        values["deleted"] = (pFollowupValues->isDeleted()) ? ("1") : ("0");
+    return values;
+}
+
+map<string, string> Repository::getResultantFollowupConditions(ResultantFollowup *pResultantFollowupValues, ResultantFollowupFilter resultantFollowupFilter, int consultationId)
+{
+    map<string, string> values = getFollowupConditions(pResultantFollowupValues, resultantFollowupFilter, consultationId);
+    if(resultantFollowupFilter.resultsGetMatch())
+        values["results"] = squote(pResultantFollowupValues->getResults());
+    return values;
+}
+
+map<string, string> Repository::getReferralConditions(Referral *pReferralValues, ReferralFilter referralFilter, int consultationId)
+{
+    map<string, string> values = getResultantFollowupConditions(pReferralValues, referralFilter, consultationId);
+    if(referralFilter.specialistNameGetMatch())
+        values["specialistname"] = squote(pReferralValues->getSpecialistName());
+    return values;
+}
+
+map<string, string> Repository::getMedicalTestConditions(MedicalTest *pMedicalTestValues, MedicalTestFilter medicalTestFilter, int consultationId)
+{
+    map<string, string> values = getResultantFollowupConditions(pMedicalTestValues, medicalTestFilter, consultationId);
+    if(medicalTestFilter.testTypeGetMatch())
+        values["testtype"] = squote(pMedicalTestValues->getTestType());
+    return values;
+}
+
+map<string, string> Repository::getReturnConsultationConditions(ReturnConsultation* pReturnConsultationValues, ReturnConsultationFilter returnConsultationFilter, int nextConsultationId, int consultationId)
+{
+    map<string, string> values = getFollowupConditions(pReturnConsultationValues, returnConsultationFilter, consultationId);
+    if(returnConsultationFilter.pConsultGetMatch())
+        values["consultationid"] = itos(nextConsultationId);
+    return values;
+}
+
+map<string, string> Repository::getMedicationRenewalConditions(MedicationRenewal* pMedicationRenewalValues, MedicationRenewalFilter medicationRenewalFilter, int consultationId)
+{
+    map<string, string> values = getFollowupConditions(pMedicationRenewalValues, medicationRenewalFilter, consultationId);
+    if(medicationRenewalFilter.medicationGetMatch())
+        values["consultationid"] = squote(pMedicationRenewalValues->getMedication());
+    return values;
+}
+
+void Repository::instantiateAdminAssistants(vector<AdminAssistant *> *pResults, QueryResult *pQueryResult)
+{
+    pResults = new vector<AdminAssistant *>();
+    do
+    {   //column order is defined in the const strings "[classname]Columns"
+        AdminAssistant* retrieved = new AdminAssistant((*pQueryResult)[0],
+                                                       (*pQueryResult)[1],
+                                                       (*pQueryResult)[2],
+                                                       Date(stoi((*pQueryResult)[12]),
+                                                            stoi((*pQueryResult)[13]),
+                                                            stoi((*pQueryResult)[14])),
+                                                       ContactInfo((*pQueryResult)[8],
+                                                                   (*pQueryResult)[9],
+                                                                   (*pQueryResult)[10],
+                                                                   (*pQueryResult)[11]),
+                                                       Address((*pQueryResult)[3],
+                                                               (*pQueryResult)[4],
+                                                               (*pQueryResult)[5],
+                                                               (*pQueryResult)[6],
+                                                               (*pQueryResult)[7]),
+                                                       (bool)stoi((*pQueryResult)[15]));
+        pResults->push_back(retrieved);
+    }
+    while (pQueryResult->nextRow());
+}
+
+void Repository::instantiateConsultations(vector<Consultation *> *pResults, QueryResult *pQueryResult)
+{
+    pResults = new vector<Consultation *>();
+    do
+    {   //column order is defined in the const strings "[classname]Columns"
+        Consultation* retrieved = new Consultation(stoi((*pQueryResult)[0]),
+                                                   (*pQueryResult)[3],
+                                                   (*pQueryResult)[4],
+                                                   (*pQueryResult)[9],
+                                                   (Consultation::ConsultationStatus)stoi((*pQueryResult)[5]),
+                                                   Date(stoi((*pQueryResult)[6]),
+                                                        stoi((*pQueryResult)[7]),
+                                                        stoi((*pQueryResult)[8])),
+                                                   Time(stoi((*pQueryResult)[10]),
+                                                        stoi((*pQueryResult)[11])),
+                                                   NULL,
+                                                   (bool)stoi((*pQueryResult)[12]));
+        pResults->push_back(retrieved);
+    }
+    while (pQueryResult->nextRow());
+}
+
+void Repository::instantiateMedicalTests(vector<MedicalTest *> *pResults, QueryResult *pQueryResult)
+{
+    pResults = new vector<MedicalTest *>();
+    do
+    {   //column order is defined in the const strings "[classname]Columns"
+        MedicalTest* retrieved = new MedicalTest(stoi((*pQueryResult)[0]),
+                                                 (Followup::FollowupStatus)stoi((*pQueryResult)[13]),
+                                                 Date(stoi((*pQueryResult)[4]),
+                                                      stoi((*pQueryResult)[5]),
+                                                      stoi((*pQueryResult)[6])),
+                                                 Date(stoi((*pQueryResult)[7]),
+                                                      stoi((*pQueryResult)[8]),
+                                                      stoi((*pQueryResult)[9])),
+                                                 Date(stoi((*pQueryResult)[10]),
+                                                      stoi((*pQueryResult)[11]),
+                                                      stoi((*pQueryResult)[12])),
+                                                 (*pQueryResult)[2],
+                                                 (*pQueryResult)[1],
+                                                 (bool)stoi((*pQueryResult)[14]));
+        pResults->push_back(retrieved);
+    }
+    while (pQueryResult->nextRow());
+}
+
+void Repository::instantiateReferrals(vector<Referral *> *pResults, QueryResult *pQueryResult)
+{
+    pResults = new vector<Referral *>();
+    do
+    {   //column order is defined in the const strings "[classname]Columns"
+        Referral* retrieved = new Referral(stoi((*pQueryResult)[0]),
+                                           (Followup::FollowupStatus)stoi((*pQueryResult)[13]),
+                                           Date(stoi((*pQueryResult)[4]),
+                                                stoi((*pQueryResult)[5]),
+                                                stoi((*pQueryResult)[6])),
+                                           Date(stoi((*pQueryResult)[7]),
+                                                stoi((*pQueryResult)[8]),
+                                                stoi((*pQueryResult)[9])),
+                                           Date(stoi((*pQueryResult)[10]),
+                                                stoi((*pQueryResult)[11]),
+                                                stoi((*pQueryResult)[12])),
+                                           (*pQueryResult)[2],
+                                           (*pQueryResult)[1],
+                                           (bool)stoi((*pQueryResult)[14]));
+        pResults->push_back(retrieved);
+    }
+    while (pQueryResult->nextRow());
+}
+
+void Repository::instantiatePatients(vector<Patient *> *pResults, QueryResult *pQueryResult)
+{
+    pResults = new vector<Patient *>();
+    do
+    {   //column order is defined in the const strings "[classname]Columns"
+        Patient* retrieved = new Patient(stoi((*pQueryResult)[0]),
+                                         (*pQueryResult)[1],
+                                         (*pQueryResult)[2],
+                                         (*pQueryResult)[22],
+                                         ContactInfo((*pQueryResult)[8],
+                                                     (*pQueryResult)[9],
+                                                     (*pQueryResult)[10],
+                                                     (*pQueryResult)[11]),
+                                         Address((*pQueryResult)[3],
+                                                 (*pQueryResult)[4],
+                                                 (*pQueryResult)[5],
+                                                 (*pQueryResult)[6],
+                                                 (*pQueryResult)[7]),
+                                         Date(stoi((*pQueryResult)[12]),
+                                              stoi((*pQueryResult)[13]),
+                                              stoi((*pQueryResult)[14])),
+                                         Date(stoi((*pQueryResult)[15]),
+                                              stoi((*pQueryResult)[16]),
+                                              stoi((*pQueryResult)[17])),
+                                         NULL,
+                                         HealthCard((*pQueryResult)[18],
+                                                    Date(stoi((*pQueryResult)[19]),
+                                                         stoi((*pQueryResult)[20]),
+                                                         stoi((*pQueryResult)[21]))),
+                                         (bool)stoi((*pQueryResult)[24]));
+        pResults->push_back(retrieved);
+    }
+    while (pQueryResult->nextRow());
+}
+
+void Repository::instantiateMedicationRenewals(vector<MedicationRenewal *> *pResults, QueryResult *pQueryResult)
+{
+    pResults = new vector<MedicationRenewal *>();
+    do
+    {   //column order is defined in the const strings "[classname]Columns"
+        MedicationRenewal* retrieved = new MedicationRenewal(stoi((*pQueryResult)[0]),
+                                                             (Followup::FollowupStatus)stoi((*pQueryResult)[12]),
+                                                             Date(stoi((*pQueryResult)[3]),
+                                                                  stoi((*pQueryResult)[4]),
+                                                                  stoi((*pQueryResult)[5])),
+                                                             Date(stoi((*pQueryResult)[6]),
+                                                                  stoi((*pQueryResult)[7]),
+                                                                  stoi((*pQueryResult)[8])),
+                                                             Date(stoi((*pQueryResult)[9]),
+                                                                  stoi((*pQueryResult)[10]),
+                                                                  stoi((*pQueryResult)[11])),
+                                                             (*pQueryResult)[1],
+                                                             (bool)stoi((*pQueryResult)[13]));
+        pResults->push_back(retrieved);
+    }
+    while (pQueryResult->nextRow());
+}
+
+void Repository::instantiateReturnConsultations(vector<ReturnConsultation *> *pResults, QueryResult *pQueryResult)
+{
+    pResults = new vector<ReturnConsultation *>();
+    do
+    {   //column order is defined in the const strings "[classname]Columns"
+        ReturnConsultation* retrieved = new ReturnConsultation(stoi((*pQueryResult)[0]),
+                                                               (Followup::FollowupStatus)stoi((*pQueryResult)[12]),
+                                                               Date(stoi((*pQueryResult)[3]),
+                                                                    stoi((*pQueryResult)[4]),
+                                                                    stoi((*pQueryResult)[5])),
+                                                               Date(stoi((*pQueryResult)[6]),
+                                                                    stoi((*pQueryResult)[7]),
+                                                                    stoi((*pQueryResult)[8])),
+                                                               Date(stoi((*pQueryResult)[9]),
+                                                                    stoi((*pQueryResult)[10]),
+                                                                    stoi((*pQueryResult)[11])),
+                                                               NULL,
+                                                               (bool)stoi((*pQueryResult)[13]));
+        pResults->push_back(retrieved);
+    }
+    while (pQueryResult->nextRow());
+}
+
+void Repository::instantiatePhysicians(vector<Physician *> *pResults, QueryResult *pQueryResult)
+{
+    pResults = new vector<Physician *>();
+    do
+    {   //column order is defined in the const strings "[classname]Columns"
+        Physician* retrieved = new Physician(stoi((*pQueryResult)[1]),
+                                             (*pQueryResult)[0],
+                                             (*pQueryResult)[2],
+                                             (*pQueryResult)[3],
+                                             Date(stoi((*pQueryResult)[13]),
+                                                  stoi((*pQueryResult)[14]),
+                                                  stoi((*pQueryResult)[15])),
+                                             ContactInfo((*pQueryResult)[9],
+                                                         (*pQueryResult)[10],
+                                                         (*pQueryResult)[11],
+                                                         (*pQueryResult)[12]),
+                                             Address((*pQueryResult)[4],
+                                                     (*pQueryResult)[5],
+                                                     (*pQueryResult)[6],
+                                                     (*pQueryResult)[7],
+                                                     (*pQueryResult)[8]),
+                                             (bool)stoi((*pQueryResult)[16]));
+        pResults->push_back(retrieved);
+    }
+    while (pQueryResult->nextRow());
+}
+
+void Repository::instantiateSysAdmins(vector<SysAdmin *> *pResults, QueryResult *pQueryResult)
+{
+    pResults = new vector<SysAdmin *>();
+    do
+    {   //column order is defined in the const strings "[classname]Columns"
+        SysAdmin* retrieved = new SysAdmin((*pQueryResult)[0],
+                                           (*pQueryResult)[1],
+                                           (*pQueryResult)[2],
+                                           Date(stoi((*pQueryResult)[12]),
+                                                stoi((*pQueryResult)[13]),
+                                                stoi((*pQueryResult)[14])),
+                                           ContactInfo((*pQueryResult)[8],
+                                                       (*pQueryResult)[9],
+                                                       (*pQueryResult)[10],
+                                                       (*pQueryResult)[11]),
+                                           Address((*pQueryResult)[3],
+                                                   (*pQueryResult)[4],
+                                                   (*pQueryResult)[5],
+                                                   (*pQueryResult)[6],
+                                                   (*pQueryResult)[7]),
+                                           (bool)stoi((*pQueryResult)[15]));
+        pResults->push_back(retrieved);
+    }
+    while (pQueryResult->nextRow());
 }
 
 bool Repository::createConsultation(Consultation *pInputConsultation, int physicianId, int patientId, int *uid)
@@ -504,6 +972,106 @@ bool Repository::pushMedicationRenewal(MedicationRenewal *pInputMedicationRenewa
         return false;
     return true;
 }
+
+bool Repository::pullAdminAssistant(AdminAssistant *pAdminAssistantValues, UserFilter userFilter, vector<AdminAssistant*> *pResults)
+{
+    QueryResult* pQueryResults = NULL;
+    if(!selectStatement("adminassistants NATURAL JOIN users", getUserConditions(pAdminAssistantValues, userFilter), adminAssistantColumns, pQueryResults))
+        return false;
+
+    instantiateAdminAssistants(pResults, pQueryResults);
+    delete pQueryResults;
+    return true;
+}
+
+bool Repository::pullPhysician(Physician *pPhysicianValues, PhysicianFilter physicianFilter, vector<Physician*>* pResults)
+{
+    QueryResult* pQueryResults = NULL;
+    if(!selectStatement("physicians NATURAL JOIN users", getPhysicianConditions(pPhysicianValues, physicianFilter), physicianColumns, pQueryResults))
+        return false;
+
+    instantiatePhysicians(pResults, pQueryResults);
+    delete pQueryResults;
+    return true;
+}
+
+bool Repository::pullSysAdmin(SysAdmin *pSysAdminValues, UserFilter userFilter, vector<SysAdmin*>* pResults)
+{
+    QueryResult* pQueryResults = NULL;
+    if(!selectStatement("sysadmins NATURAL JOIN users", getUserConditions(pSysAdminValues, userFilter), sysAdminColumns, pQueryResults))
+        return false;
+
+    instantiateSysAdmins(pResults, pQueryResults);
+    delete pQueryResults;
+    return true;
+}
+
+bool Repository::pullPatient(Patient* pPatientValues, PatientFilter patientFilter, int physicianId, vector<Patient*>* pResults)
+{
+    QueryResult* pQueryResults = NULL;
+    if(!selectStatement("patients", getPatientConditions(pPatientValues, patientFilter, physicianId), patientColumns, pQueryResults))
+        return false;
+
+    instantiatePatients(pResults, pQueryResults);
+    delete pQueryResults;
+    return true;
+}
+
+bool Repository::pullConsultation(Consultation* pConsultationValues, ConsultationFilter consultationFilter, int physicianId, int patientId, vector<Consultation*>* pResults)
+{
+    QueryResult* pQueryResults = NULL;
+    if(!selectStatement("consultations", getConsultationConditions(pConsultationValues, consultationFilter, physicianId, patientId), consultationColumns, pQueryResults))
+        return false;
+
+    instantiateConsultations(pResults, pQueryResults);
+    delete pQueryResults;
+    return true;
+}
+
+bool Repository::pullReferral(Referral* pReferralValues, ReferralFilter referralFilter, int consultationId, vector<Referral*>* pResults)
+{
+    QueryResult* pQueryResults = NULL;
+    if(!selectStatement("(referrals NATURAL JOIN resultantfollowups) NATURAL JOIN followups", getReferralConditions(pReferralValues, referralFilter, consultationId), referralColumns, pQueryResults))
+        return false;
+
+    instantiateReferrals(pResults, pQueryResults);
+    delete pQueryResults;
+    return true;
+}
+
+bool Repository::pullMedicalTest(MedicalTest* pMedicalTestValues, MedicalTestFilter medicalTestFilter, int consultationId, vector<MedicalTest*>* pResults)
+{
+    QueryResult* pQueryResults = NULL;
+    if(!selectStatement("(medicaltests NATURAL JOIN resultantfollowups) NATURAL JOIN followups", getMedicalTestConditions(pMedicalTestValues, medicalTestFilter, consultationId), medicalTestColumns, pQueryResults))
+        return false;
+
+    instantiateMedicalTests(pResults, pQueryResults);
+    delete pQueryResults;
+    return true;
+}
+
+bool Repository::pullReturnConsultation(ReturnConsultation* pReturnConsultationValues, ReturnConsultationFilter returnConsultationFilter, int consultationId, int nextConsultationId, vector<ReturnConsultation*>* pResults)
+{
+    QueryResult* pQueryResults = NULL;
+    if(!selectStatement("returnconsultations NATURAL JOIN followups", getReturnConsultationConditions(pReturnConsultationValues, returnConsultationFilter, nextConsultationId, consultationId), returnConsultationColumns, pQueryResults))
+        return false;
+
+    instantiateReturnConsultations(pResults, pQueryResults);
+    delete pQueryResults;
+    return true;
+}
+
+bool Repository::pullMedicationRenewal(MedicationRenewal* pMedicationRenewalValues, MedicationRenewalFilter medicationRenewalFilter, int consultationId, vector<MedicationRenewal*>* pResults)
+{
+    QueryResult* pQueryResults = NULL;
+    if(!selectStatement("medicationrenewals NATURAL JOIN followups", getMedicationRenewalConditions(pMedicationRenewalValues, medicationRenewalFilter, consultationId), medicationRenewalColumns, pQueryResults))
+        return false;
+
+    instantiateMedicationRenewals(pResults, pQueryResults);
+    delete pQueryResults;
+    return true;
+}
+
 
 
 

@@ -33,6 +33,9 @@ public:
     bool healthCardGetMatch();
     void healthCardSetMatch(bool match);
 
+    bool pPhysicianGetMatch();
+    void pPhysicianSetMatch(bool match);
+
     bool deletedGetMatch();
     void deletedSetMatch(bool match);
 
@@ -46,6 +49,7 @@ private:
     bool dateOfBirthMatch;
     bool dateAddedToSystemMatch;
     bool healthCardMatch;
+    bool pPhysicianMatch;
     bool deletedMatch;
 };
 

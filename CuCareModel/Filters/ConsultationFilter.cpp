@@ -7,6 +7,9 @@ ConsultationFilter::ConsultationFilter()
 bool ConsultationFilter::consultIDGetMatch() { return consultIDMatch; }
 void ConsultationFilter::consultIDSetMatch(bool match) { consultIDMatch = match; }
 
+bool ConsultationFilter::patientIdGetMatch() { return patientIdMatch; }
+void ConsultationFilter::patientIdSetMatch(bool match) { patientIdMatch = match; }
+
 bool ConsultationFilter::reasonGetMatch() { return reasonMatch; }
 void ConsultationFilter::reasonSetMatch(bool match) { reasonMatch = match; }
 

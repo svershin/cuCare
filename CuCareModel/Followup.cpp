@@ -11,7 +11,7 @@
 // Constructor
 Followup::Followup
 (   int idParam,
-    FollowupStatus statusParam,
+    Followup::FollowupStatus statusParam,
     Date dateDueParam,
     Date dateReceivedParam,
     Date dateCompletedParam,
@@ -32,7 +32,7 @@ Followup::~Followup()
 
 int Followup::getId() { return id; }
 
-FollowupStatus Followup::getStatus() { return status; }
+Followup::FollowupStatus Followup::getStatus() { return status; }
 void Followup::setStatus(const FollowupStatus value) { status = value; }
 
 Date Followup::getDateDue() { return dateDue; }
@@ -45,5 +45,6 @@ Date Followup::getDateCompleted() { return dateCompleted; }
 void Followup::setDateCompleted(const Date value) { dateCompleted = value; }
 
 void Followup::markDeleted() { deleted = true; }
+bool Followup::isDeleted() { return deleted; }
 
 // EOF

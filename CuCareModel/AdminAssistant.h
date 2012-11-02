@@ -19,7 +19,6 @@ public:
     AdminAssistant (string usernameParam,
                     string firstNameParam,
                     string lastNameParam,
-                    string titleParam,
                     Date dateOfBirthParam,
                     ContactInfo contactParam,
                     Address addressParam,
