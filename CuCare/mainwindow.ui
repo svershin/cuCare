@@ -112,6 +112,13 @@
         </property>
        </spacer>
       </item>
+      <item>
+       <widget class="QPushButton" name="LogOutPushButton">
+        <property name="text">
+         <string>Log Out</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </item>
     <item row="1" column="1" colspan="2">
