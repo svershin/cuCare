@@ -1,0 +1,609 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1024</width>
+    <height>768</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>1024</width>
+    <height>768</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>CuCare v0.0.1</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="2" column="2">
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <spacer name="horizontalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QProgressBar" name="SubmitProgressBar">
+        <property name="value">
+         <number>24</number>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="ResetFormsPushButton">
+        <property name="text">
+         <string>Reset Forms</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="SubmitChangesPushButton">
+        <property name="text">
+         <string>Submit Changes</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="1" column="0" rowspan="2">
+     <widget class="QTreeView" name="treeView">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0" colspan="3">
+     <layout class="QHBoxLayout" name="MainButtonsHorizontalLayout">
+      <item>
+       <widget class="QPushButton" name="NewPatientPushButton">
+        <property name="text">
+         <string>New Patient</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="SelectPatientPushButton">
+        <property name="text">
+         <string>Select Patient</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="CreateConsultationPushButton">
+        <property name="text">
+         <string>Create Consultation</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="RunReportsPushButton">
+        <property name="text">
+         <string>Run Reports</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="LogOutPushButton">
+        <property name="text">
+         <string>Log Out</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="1" column="1" colspan="2">
+     <widget class="QTabWidget" name="DisplayTabsWidget">
+      <property name="tabShape">
+       <enum>QTabWidget::Rounded</enum>
+      </property>
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="PatientInfoTab">
+       <attribute name="title">
+        <string>Patient Information</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_3">
+        <item row="2" column="1">
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>269</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLabel" name="PatientNotesLabel">
+          <property name="text">
+           <string>Notes:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0" rowspan="2">
+         <layout class="QFormLayout" name="formLayout_2">
+          <property name="fieldGrowthPolicy">
+           <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+          </property>
+          <item row="0" column="0">
+           <widget class="QLabel" name="FirstNameLabel">
+            <property name="text">
+             <string>First Name:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="FirstNameLineEdit"/>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="LastNameLabel">
+            <property name="text">
+             <string>Last Name:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="LastNameLineEdit"/>
+          </item>
+          <item row="2" column="1">
+           <spacer name="verticalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="WorkPhoneLabel">
+            <property name="text">
+             <string>Work Phone:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QLineEdit" name="WorkPhoneLineEdit"/>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="CellPhoneLabel">
+            <property name="text">
+             <string>Cell Phone:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QLineEdit" name="CellPhoneLineEdit"/>
+          </item>
+          <item row="5" column="0">
+           <widget class="QLabel" name="EmailLabel">
+            <property name="text">
+             <string>Email:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="1">
+           <widget class="QLineEdit" name="EmailLineEdit"/>
+          </item>
+          <item row="6" column="0">
+           <widget class="QLabel" name="WorkEmailLabel">
+            <property name="text">
+             <string>Work Email:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="1">
+           <widget class="QLineEdit" name="WorkEmailLineEdit"/>
+          </item>
+          <item row="7" column="1">
+           <spacer name="verticalSpacer_3">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="8" column="0">
+           <widget class="QLabel" name="Address1Label">
+            <property name="text">
+             <string>Address 1:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="1">
+           <widget class="QLineEdit" name="Address1LineEdit"/>
+          </item>
+          <item row="9" column="0">
+           <widget class="QLabel" name="Address2Label">
+            <property name="text">
+             <string>Address 2:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="1">
+           <widget class="QLineEdit" name="Address2LineEdit"/>
+          </item>
+          <item row="10" column="0">
+           <widget class="QLabel" name="CityLabel">
+            <property name="text">
+             <string>City:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="10" column="1">
+           <widget class="QLineEdit" name="CityLineEdit"/>
+          </item>
+          <item row="11" column="0">
+           <widget class="QLabel" name="CountryLabel">
+            <property name="text">
+             <string>Country:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="11" column="1">
+           <widget class="QLineEdit" name="CountryLineEdit"/>
+          </item>
+          <item row="12" column="0">
+           <widget class="QLabel" name="PostalCodeLabel">
+            <property name="text">
+             <string>Postal Code:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="12" column="1">
+           <widget class="QLineEdit" name="PostalCodeLineEdit"/>
+          </item>
+         </layout>
+        </item>
+        <item row="4" column="0" colspan="2">
+         <widget class="QTextEdit" name="PatientNotesTextEdit"/>
+        </item>
+        <item row="1" column="1">
+         <layout class="QGridLayout" name="gridLayout_2">
+          <item row="0" column="0">
+           <widget class="QLabel" name="DOBLabel">
+            <property name="text">
+             <string>Date of Birth:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QDateEdit" name="DOBDateEdit"/>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="DateAddedLabel">
+            <property name="text">
+             <string>Date Added to System:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QDateEdit" name="AddedDateEdit"/>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="CardNumberLabel">
+            <property name="text">
+             <string>Health Card #:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QLineEdit" name="CardNumberLineEdit"/>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="CardExpirationLabel">
+            <property name="text">
+             <string>Expiration Date:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QDateEdit" name="CardExpirationDateEdit"/>
+          </item>
+          <item row="2" column="1">
+           <spacer name="verticalSpacer_7">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+        <item row="0" column="1">
+         <spacer name="verticalSpacer_5">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="5" column="1" alignment="Qt::AlignRight">
+         <widget class="QPushButton" name="DeletePatientPushButton">
+          <property name="text">
+           <string>Delete Patient</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="ConsultInfoTab">
+       <attribute name="title">
+        <string>Consultation Details</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_4">
+        <item row="0" column="0">
+         <widget class="QLabel" name="PhysicianLabel">
+          <property name="text">
+           <string>Physician:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLabel" name="DateAndTimeLabel">
+          <property name="text">
+           <string>Date &amp; Time:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="1" colspan="2">
+         <widget class="QComboBox" name="ConsultationStatusComboBox">
+          <item>
+           <property name="text">
+            <string>Pending</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Occured</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Completed</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item row="8" column="0">
+         <widget class="QLabel" name="ConsultationNotesLabel">
+          <property name="text">
+           <string>Notes:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLabel" name="ReasonLabel">
+          <property name="text">
+           <string>Reason:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="0" colspan="3">
+         <widget class="QTextEdit" name="DiagnosisTextEdit"/>
+        </item>
+        <item row="4" column="0" rowspan="2">
+         <widget class="QTextEdit" name="ReasonTextEdit"/>
+        </item>
+        <item row="3" column="1">
+         <widget class="QLabel" name="ConsultationStatusLabel">
+          <property name="text">
+           <string>Status:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0" alignment="Qt::AlignLeft">
+         <widget class="QComboBox" name="PhysicianSelectComboBox">
+          <property name="minimumSize">
+           <size>
+            <width>250</width>
+            <height>0</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item row="9" column="0" colspan="3">
+         <widget class="QTextEdit" name="ConsultationNotesTextEdit"/>
+        </item>
+        <item row="5" column="2">
+         <spacer name="verticalSpacer_4">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>105</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="6" column="0">
+         <widget class="QLabel" name="DiagnosisLabel">
+          <property name="text">
+           <string>Diagnosis:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QDateTimeEdit" name="ConsultationDateTimeEdit"/>
+        </item>
+        <item row="10" column="2">
+         <widget class="QPushButton" name="DeleteConsultationPushButton">
+          <property name="text">
+           <string>Delete Consultation</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="FollowupInfoTab">
+       <attribute name="title">
+        <string>Followup Details</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_5">
+        <item row="1" column="0">
+         <widget class="QComboBox" name="FollowupStatusComboBox">
+          <item>
+           <property name="text">
+            <string>Pending</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Overdue</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Received</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Completed</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="FollowupInfoLabel">
+          <property name="text">
+           <string>AdditionalInfo:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QTextEdit" name="FollowupInfoTextEdit"/>
+        </item>
+        <item row="4" column="0">
+         <widget class="QLabel" name="FollowupInfoLabel2">
+          <property name="text">
+           <string>AdditionalInfo2:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="FollowupStatusLabel">
+          <property name="text">
+           <string>Status:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="0">
+         <widget class="QTextEdit" name="FollowupInfoTextEdit2"/>
+        </item>
+        <item row="0" column="1" rowspan="3">
+         <layout class="QGridLayout" name="FollowupDatesGridLayout">
+          <item row="0" column="0">
+           <widget class="QLabel" name="DateDueLabel">
+            <property name="text">
+             <string>Date Due:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QDateEdit" name="DueDateEdit"/>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="DateReceivedLabel">
+            <property name="text">
+             <string>Date Received:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QDateEdit" name="ReceivedDateEdit"/>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="DateCompletedLabel">
+            <property name="text">
+             <string>Date Completed:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QDateEdit" name="CompletedDateEdit"/>
+          </item>
+         </layout>
+        </item>
+        <item row="6" column="1" alignment="Qt::AlignRight">
+         <widget class="QPushButton" name="DeleteFollowupPushButton">
+          <property name="text">
+           <string>Delete Followup</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1024</width>
+     <height>24</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

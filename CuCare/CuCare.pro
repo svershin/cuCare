@@ -11,11 +11,19 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        cucare.cpp \
+    patientselectdialog.cpp \
+    loginwindowdialog.cpp \
+    mainwindow.cpp
 
-HEADERS  += cucare.h \
+HEADERS  += \
+    patientselectdialog.h \
+    loginwindowdialog.h \
+    mainwindow.h
 
-FORMS    += cucare.ui
+FORMS    += \
+    patientselectdialog.ui \
+    loginwindowdialog.ui \
+    mainwindow.ui
 
 
 unix:!macx:!symbian: LIBS += -L$$PWD/../CuCareModel/ -lCuCareModel
