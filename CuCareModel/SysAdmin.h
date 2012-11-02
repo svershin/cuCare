@@ -11,7 +11,7 @@
 
 #include "User.h"
 
-class SysAdmin:User
+class SysAdmin:public User
 {
 public:
 

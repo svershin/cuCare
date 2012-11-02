@@ -14,7 +14,7 @@
 
 using namespace std;
 
-class ResultantFollowup:Followup
+class ResultantFollowup:public Followup
 {
 public:
 

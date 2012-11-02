@@ -7,6 +7,6 @@ CREATE TABLE consultations (consultationid INTEGER PRIMARY KEY NOT NULL, physici
 CREATE TABLE followups (followupid INTEGER PRIMARY KEY NOT NULL, consultationid INTEGER, dueday INTEGER, duemonth INTEGER, dueyear INTEGER, receivedday INTEGER, receivedmonth INTEGER, receivedyear INTEGER, completedday INTEGER, completedmonth INTEGER, completedyear INTEGER, status INTEGER, FOREIGN KEY (consultationid) REFERENCES consultations (consultationid));
 CREATE TABLE resultantfollowups (followupid INTEGER NOT NULL, results TEXT, FOREIGN KEY (followupid) REFERENCES followups (followupid));
 CREATE TABLE medicationrenewals (followupid INTEGER NOT NULL, medication TEXT, FOREIGN KEY (followupid) REFERENCES followups (followupid));
-CREATE TABLE returnconsultations (followupid INTEGER NOT NULL, consultationid INTEGER, FOREIGN KEY (followupid) REFERENCES followups (followupid), FOREIGN KEY (consultationid) REFERENCES consultations (consultid));
+CREATE TABLE returnconsultations (followupid INTEGER NOT NULL, nextconsultationid INTEGER, FOREIGN KEY (followupid) REFERENCES followups (followupid), FOREIGN KEY (nextconsultationid) REFERENCES consultations (consultid));
 CREATE TABLE referrals (followupid INTEGER NOT NULL, specialistname TEXT, FOREIGN KEY (followupid) REFERENCES resultantfollowups (followupid));
 CREATE TABLE medicaltests (followupid INTEGER NOT NULL, testtype TEXT, FOREIGN KEY (followupid) REFERENCES resultantfollowups (followupid));

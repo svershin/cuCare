@@ -22,6 +22,8 @@ public:
     //For issuing sql statements which do return results
     bool query(const string query, QueryResult*& pOutResults);
 
+    int lastUid();
+
     string getErrorText();
     const string dbFilename;
 
