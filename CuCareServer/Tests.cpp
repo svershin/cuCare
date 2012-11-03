@@ -41,10 +41,97 @@ void Tests::databaseExample()
     cout << "Done!\n";
 }
 
-void Tests::repositorySetupTest()
+void Tests::repositoryTest()
 {
     cout << "Starting test.\n";
     Repository* pRepo = new Repository();
+    AdminAssistant* newAA = new AdminAssistant("Im a test!",
+                                               "Noodles",
+                                               "Pasta",
+                                               Date(12,
+                                                    12,
+                                                    2012),
+                                               ContactInfo("613-256-6880",
+                                                           "613-293-8843",
+                                                           "ddenis@connect.carleton.ca",
+                                                           "ddenis@gmail.com"),
+                                               Address("Canada",
+                                                       "Ottawa",
+                                                       "1268 Cobden Road",
+                                                       "nooooo",
+                                                       "K2C 3A2"),
+                                               false);
+    try
+    {
+        if(pRepo->createAdminAssistant(newAA))
+            cout << "Created successfully.\n";
+    }
+
+    UserFilter filter;
+    filter.usernameSetMatch(true);
+    vector<AdminAssistant *>* results = NULL;
+    try
+    {
+        if(pRepo->pullAdminAssistant(newAA, filter, results))
+            cout << "Pulled successfully.\n";
+
+        cout << newAA->getUsername() << ", " <<
+                newAA->getFirstName() << ", " <<
+                newAA->getLastName() << ", " <<
+                newAA->getDateOfBirth().getDay() << ", " <<
+                newAA->getDateOfBirth().getMonth() << ", " <<
+                newAA->getDateOfBirth().getYear() << ", " <<
+                newAA->getContact().getWorkPhone() << ", " <<
+                newAA->getContact().getCellPhone() << ", " <<
+                newAA->getContact().getEmail() << ", " <<
+                newAA->getContact().getWorkEmail() << ", " <<
+                newAA->getAddress().getCountry() << ", " <<
+                newAA->getAddress().getCity() << ", " <<
+                newAA->getAddress().getLineOne() << ", " <<
+                newAA->getAddress().getLineTwo() << ", " <<
+                newAA->getAddress().getPostalCode() << ", " <<
+                newAA->isDeleted() << "\n";
+    }
+    catch(const char * err)
+    {
+        cout << err << "\n";
+    }
+
+    newAA->setFirstName("NOT Noodles");
+
+    if(pRepo->pushUser(newAA))
+        cout << "Pushed successfully\n";
+    else
+        cout << pRepo->getDbErrorText() << "\n";
+
+    try
+    {
+        if(pRepo->pullAdminAssistant(newAA, filter, results))
+            cout << "Pulled successfully.\n";
+
+        cout << newAA->getUsername() << ", " <<
+                newAA->getFirstName() << ", " <<
+                newAA->getLastName() << ", " <<
+                newAA->getDateOfBirth().getDay() << ", " <<
+                newAA->getDateOfBirth().getMonth() << ", " <<
+                newAA->getDateOfBirth().getYear() << ", " <<
+                newAA->getContact().getWorkPhone() << ", " <<
+                newAA->getContact().getCellPhone() << ", " <<
+                newAA->getContact().getEmail() << ", " <<
+                newAA->getContact().getWorkEmail() << ", " <<
+                newAA->getAddress().getCountry() << ", " <<
+                newAA->getAddress().getCity() << ", " <<
+                newAA->getAddress().getLineOne() << ", " <<
+                newAA->getAddress().getLineTwo() << ", " <<
+                newAA->getAddress().getPostalCode() << ", " <<
+                newAA->isDeleted() << "\n";
+    }
+    catch(const char * err)
+    {
+        cout << err << "\n";
+    }
+
     delete pRepo;
-    cout << "Successful completion.\n";
+    cout << "Completion.\n";
 }
+

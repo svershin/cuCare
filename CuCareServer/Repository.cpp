@@ -68,6 +68,11 @@ void Repository::createSchema()
     else throw "Error opening " + createScriptFilename;
 }
 
+string Repository::getDbErrorText()
+{
+    return db->getErrorText();
+}
+
 string Repository::itos(int integer)
 {
     stringstream number;
@@ -125,7 +130,7 @@ bool Repository::insertStatement(string table, map<string, string> values)
     }
     statement << ") VALUES ";
     valueBracket << ")";
-    statement << valueBracket << ";";
+    statement << valueBracket.str() << ";";
 
     string command = statement.str();
     return db->command(command);
@@ -827,11 +832,13 @@ bool Repository::createUser(User *pInputUser)
     QueryResult* pResults = NULL;
     if(!db->query(query, pResults))
         return false;
+
     if(pResults->numRows() > 0)
         throw "Username is already in use";
 
     if(!insertStatement("users", getUserValues(pInputUser)))
         return false;
+
     return true;
 }
 
@@ -852,7 +859,7 @@ bool Repository::createPhysician(Physician* pInputPhysician, int* uid)
 
     string table = "physicians";
     map<string,string> values;
-    values["username"] = pInputPhysician->getUsername();
+    values["username"] = squote(pInputPhysician->getUsername());
     values["physicianid"] = itos(*uid);
 
     if(!insertStatement(table, values))
@@ -868,7 +875,7 @@ bool Repository::createAdminAssistant(AdminAssistant *pInputAdminAssistant)
 
     string table = "adminassistants";
     map<string,string> values;
-    values["username"] = pInputAdminAssistant->getUsername();
+    values["username"] = squote(pInputAdminAssistant->getUsername());
 
     if(!insertStatement(table, values))
         return false;
@@ -883,7 +890,7 @@ bool Repository::createSysAdmin(SysAdmin *pInputSysAdmin)
 
     string table = "sysadmins";
     map<string,string> values;
-    values["username"] = pInputSysAdmin->getUsername();
+    values["username"] = squote(pInputSysAdmin->getUsername());
 
     if(!insertStatement(table, values))
         return false;
