@@ -1,14 +1,18 @@
 #include <QtGui/QApplication>
 #include "../CuCareModel/User.h"
 #include "loginwindowdialog.h"
-#include "patientselectdialog.h"
 #include "mainwindow.h"
+#include "MasterController/MasterController.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    MainWindow w;
-    w.show();
+
+    MasterController *controller = new MasterController();
+
+    MainWindow *mainWindow = new MainWindow(controller);
+
+    loginWindow->exec();
 
     return a.exec();
 }

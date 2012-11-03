@@ -1,9 +1,10 @@
 #include "loginwindowdialog.h"
 #include "ui_loginwindowdialog.h"
 
-LoginWindowDialog::LoginWindowDialog(QWidget *parent) :
+LoginWindowDialog::LoginWindowDialog(MasterController *controllerParam, QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::LoginWindowDialog)
+    ui(new Ui::LoginWindowDialog),
+    controller(controllerParam)
 {
     ui->setupUi(this);
 }
