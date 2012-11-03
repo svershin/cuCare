@@ -24,7 +24,6 @@ public:
     User (string usernameParam,
           string firstNameParam,
           string lastNameParam,
-          string titleParam,
           Date dateOfBirthParam,
           ContactInfo contactParam,
           Address addressParam,
@@ -41,9 +40,6 @@ public:
     string getLastName();
     void setLastName(const string value);
 
-    string getTitle();
-    void setTitle(const string value);
-
     Date getDateOfBirth();
     void setDateOfBirth(const Date value);
 
@@ -54,13 +50,13 @@ public:
     void setAddress(const Address value);
 
     void markDeleted();
+    bool isDeleted();
 
 protected:
 private:
     string username;
     string firstName;
     string lastName;
-    string title;
     Date dateOfBirth;
     ContactInfo contact;
     Address address;

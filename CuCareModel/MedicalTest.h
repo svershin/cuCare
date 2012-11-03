@@ -14,7 +14,7 @@
 
 using namespace std;
 
-class MedicalTest:ResultantFollowup
+class MedicalTest:public ResultantFollowup
 {
 public:
 

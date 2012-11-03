@@ -18,18 +18,17 @@
 
 using namespace std;
 
-//Move this somewhere else eventually
-enum ConsultationStatus
-{
-    CSTAT_ERROR,
-    CSTAT_PENDING,
-    CSTAT_OCCURED,
-    CSTAT_COMPLETED
-};
-
 class Consultation
 {
 public:
+
+    enum ConsultationStatus
+    {
+        CSTAT_ERROR,
+        CSTAT_PENDING,
+        CSTAT_OCCURED,
+        CSTAT_COMPLETED
+    };
 
     // Constructor
     Consultation (int consultIDParam,
@@ -69,6 +68,7 @@ public:
     void setConsultingPhys(Physician* const value);
 
     void markDeleted();
+    bool isDeleted();
 
 protected:
 private:

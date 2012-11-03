@@ -14,6 +14,7 @@
 #include "Date.h"
 #include "Address.h"
 #include "HealthCard.h"
+#include "Physician.h"
 
 using namespace std;
 
@@ -30,6 +31,7 @@ public:
              Address addressParam,
              Date dateOfBirthParam,
              Date dateAddedToSystemParam,
+             Physician* pPhysicianParam,
              HealthCard healthCardParam,
              bool deletedParam);
 
@@ -62,7 +64,12 @@ public:
     HealthCard getHealthCard();
     void setHealthCard(const HealthCard value);
 
+    Physician* getPhysician();
+    void setPhysician(Physician* const value);
+
     void markDeleted();
+    bool isDeleted();
+
 protected:
 private:
     int id;
@@ -73,6 +80,7 @@ private:
     Address address;
     Date dateOfBirth;
     Date dateAddedToSystem;
+    Physician* pPhysician;
     HealthCard healthCard;
     bool deleted;
 };

@@ -11,7 +11,7 @@
 
 #include "User.h"
 
-class Physician:User
+class Physician:public User
 {
 public:
 
@@ -20,7 +20,6 @@ public:
                string usernameParam,
                string firstNameParam,
                string lastNameParam,
-               string titleParam,
                Date dateOfBirthParam,
                ContactInfo contactParam,
                Address addressParam,

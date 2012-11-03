@@ -11,19 +11,18 @@
 
 #include "Date.h"
 
-//Move to enum file eventually
-enum FollowupStatus
-{
-    FSTAT_ERROR,
-    FSTAT_PENDING,
-    FSTAT_OVERDUE,
-    FSTAT_RECEIVED,
-    FSTAT_COMPLETED
-};
-
 class Followup
 {
 public:
+
+    enum FollowupStatus
+    {
+        FSTAT_ERROR,
+        FSTAT_PENDING,
+        FSTAT_OVERDUE,
+        FSTAT_RECEIVED,
+        FSTAT_COMPLETED
+    };
 
     // Constructor
     Followup (int idParam,
@@ -51,6 +50,7 @@ public:
     void setDateCompleted(const Date value);
 
     void markDeleted();
+    bool isDeleted();
 
 protected:
 private:
