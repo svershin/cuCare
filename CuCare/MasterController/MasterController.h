@@ -35,7 +35,8 @@ public:
 
     bool createPatient(Patient* pInputPatient);
     bool modifyPatient(Patient* pInputPatient);
-    bool getPatientList(Patient* pPatientValues, PatientFilter patientFilter, vector<Patient*>* pResults); // filtered, will not populate consultations or followups
+    bool getPatientList(vector<Patient *> *pResults); // no filter
+//    bool getPatientList(Patient* pPatientValues, PatientFilter patientFilter, vector<Patient*>* pResults); // filtered, will not populate consultations or followups
     bool getFullPatient(int patientId, Patient* pResults); // must supply valid UID
 
     // Consultations
