@@ -13,12 +13,14 @@ TEMPLATE = app
 SOURCES += main.cpp\
     patientselectdialog.cpp \
     loginwindowdialog.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    MasterController/MasterController.cpp
 
 HEADERS  += \
     patientselectdialog.h \
     loginwindowdialog.h \
-    mainwindow.h
+    mainwindow.h \
+    MasterController/MasterController.h
 
 FORMS    += \
     patientselectdialog.ui \
