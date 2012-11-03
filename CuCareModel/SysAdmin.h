@@ -11,7 +11,7 @@
 
 #include "User.h"
 
-class SysAdmin:User
+class SysAdmin:public User
 {
 public:
 
@@ -19,7 +19,6 @@ public:
     SysAdmin (string usernameParam,
               string firstNameParam,
               string lastNameParam,
-              string titleParam,
               Date dateOfBirthParam,
               ContactInfo contactParam,
               Address addressParam,

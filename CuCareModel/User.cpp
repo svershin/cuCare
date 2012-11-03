@@ -13,7 +13,6 @@ User::User
 (	string usernameParam,
     string firstNameParam,
     string lastNameParam,
-    string titleParam,
     Date dateOfBirthParam,
     ContactInfo contactParam,
     Address addressParam,
@@ -21,7 +20,6 @@ User::User
     : username (usernameParam),
       firstName (firstNameParam),
       lastName (lastNameParam),
-      title (titleParam),
       dateOfBirth (dateOfBirthParam),
       contact (contactParam),
       address (addressParam),
@@ -42,9 +40,6 @@ void User::setFirstName(const string value) { firstName = value; }
 string User::getLastName() { return lastName; }
 void User::setLastName(const string value) { lastName = value; }
 
-string User::getTitle() { return title; }
-void User::setTitle(const string value) { title = value; }
-
 Date User::getDateOfBirth() { return dateOfBirth; }
 void User::setDateOfBirth(const Date value) { dateOfBirth = value; }
 
@@ -55,4 +50,5 @@ Address User::getAddress() { return address; }
 void User::setAddress(const Address value) { address = value; }
 
 void User::markDeleted() { deleted = true; }
+bool User::isDeleted() { return deleted; }
 // EOF

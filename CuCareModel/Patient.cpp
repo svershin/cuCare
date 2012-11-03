@@ -18,6 +18,7 @@ Patient::Patient
     Address addressParam,
     Date dateOfBirthParam,
     Date dateAddedToSystemParam,
+    Physician* pPhysicianParam,
     HealthCard healthCardParam,
     bool deletedParam)
     : id (idParam),
@@ -28,6 +29,7 @@ Patient::Patient
       address (addressParam),
       dateOfBirth (dateOfBirthParam),
       dateAddedToSystem (dateAddedToSystemParam),
+      pPhysician (pPhysicianParam),
       healthCard (healthCardParam),
       deleted (deletedParam)
 {
@@ -64,6 +66,10 @@ void Patient::setDateAddedToSystem(const Date value) { dateAddedToSystem = value
 HealthCard Patient::getHealthCard() { return healthCard; }
 void Patient::setHealthCard(const HealthCard value) { healthCard = value; }
 
+Physician* Patient::getPhysician() { return pPhysician; }
+void Patient::setPhysician(Physician* const value) { pPhysician = value; }
+
 void Patient::markDeleted() { deleted = true; }
+bool Patient::isDeleted() { return deleted; }
 
 // EOF

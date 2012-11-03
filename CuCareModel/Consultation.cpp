@@ -14,7 +14,7 @@ Consultation::Consultation
     string reasonParam,
     string diagnosisParam,
     string commentsParam,
-    ConsultationStatus statusParam,
+    Consultation::ConsultationStatus statusParam,
     Date dateParam,
     Time timeParam,
     Physician* pConsultingPhysParam,
@@ -49,7 +49,7 @@ void Consultation::setDiagnosis(const string value) { diagnosis = value; }
 string Consultation::getComments() { return comments; }
 void Consultation::setComments(const string value) { comments = value; }
 
-ConsultationStatus Consultation::getStatus() { return status; }
+Consultation::ConsultationStatus Consultation::getStatus() { return status; }
 void Consultation::setStatus(const ConsultationStatus value) { status = value; }
 
 Date Consultation::getDate() { return date; }
@@ -62,4 +62,5 @@ Physician* Consultation::getConsultingPhys() { return pConsultingPhys; }
 void Consultation::setConsultingPhys(Physician* const value) { pConsultingPhys = value; }
 
 void Consultation::markDeleted() { deleted = true; }
+bool Consultation::isDeleted() { return deleted; }
 // EOF

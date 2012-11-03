@@ -12,7 +12,7 @@
 #include "Consultation.h"
 #include "Followup.h"
 
-class ReturnConsultation:Followup
+class ReturnConsultation:public Followup
 {
 public:
 
