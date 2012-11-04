@@ -39,6 +39,7 @@ public:
     ~Patient();
 
     int getId();
+    void setId(int value);
 
     string getFirstName();
     void setFirstName(const string value);

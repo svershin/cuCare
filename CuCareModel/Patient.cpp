@@ -41,7 +41,7 @@ Patient::~Patient()
 }
 
 int Patient::getId() { return id; }
-void setId(int value) { id = value; }
+void Patient::setId(int value) { id = value; }
 
 string Patient::getFirstName() { return firstName; }
 void Patient::setFirstName(const string value) { firstName = value; }
