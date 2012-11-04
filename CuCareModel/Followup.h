@@ -36,6 +36,7 @@ public:
     ~Followup();
 
     int getId();
+    void setId(int newId);
 
     FollowupStatus getStatus();
     void setStatus(const FollowupStatus value);

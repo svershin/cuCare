@@ -46,7 +46,7 @@ public:
     */
     bool createPatient(Patient* pInputPatient, int physicianId, string *pErrString);
 
-    /* modifyPatient() - Pushes changes to pCurrentPatient to storage
+    /* modifyPatient() - Pushes changes to pCurrentPatient to storage (HINT: need to call getCurrentPatient() first, and modify it)
        pErrString - A ptr to a string that will be populated with the error message (if any)
     */
 
@@ -58,15 +58,15 @@ public:
     */
     bool getPatientList(vector<Patient *> *pResults, string *pErrString); // no filter
 
-    /* NOTES: This is is not required for the prototype, will allow filtered pulling of patients
-       bool getPatientList(Patient* pPatientValues, PatientFilter patientFilter, vector<Patient*>* pResults, string *pErrString);
-    */
+    // Overloaded getPatientList() that will allow filtered pulling of patients
+    // NOTE: Not required for the prototype
+    // bool getPatientList(Patient* pPatientValues, PatientFilter patientFilter, vector<Patient*>* pResults, string *pErrString);
 
     /* setCurrentPatient() - Fetches a full patient record (including consultations and followups) from storage
        patientId - A valid UID for a patient record (HINT: will need to call getPatientList() first)
        pErrString - A ptr to a string that will be populated with the error message (if any)
     */
-    bool getFullPatient(int patientId, string *pErrString);
+    bool setCurrentPatient(int patientId, string *pErrString);
 
     /* getCurrentPatient() - Returns a pointer to the currently selected patient
        Note: Returns a NULL ptr if no patient has yet been selected (using setCurrentPatient)
@@ -75,18 +75,37 @@ public:
 
     // CONSULTATIONS
 
+    /* createConsultation() - Creates a new consultation record in storage, and adds it to pCurrentPatient
+       pInputConsultation - A (new) ptr to a Consultation object with the new data (DO NOT DELETE, this will get attached to currentPatient)
+       pErrString - A ptr to a string that will be populated with the error message (if any)
+    */
     bool createConsultation(Consultation* pInputConsultation, string *pErrString);
-    bool modifyConsultation(Consultation* pInputConsultation, string *pErrString);
+
+    /* modifyConsultation() - Pushes changes to a consultation record to storage
+       consultId - A valid UID for a consultation record (HINT: must set & get currentPatient first, then pick an existing consultation)
+       pErrString - A ptr to a string that will be populated with the error message (if any)
+    */
+    bool modifyConsultation(int consultId, string *pErrString);
 
     // FOLLOWUPS
 
+    /* createFollowup() - Creates a new follow-up record in storage, and adds it to the associated consultation in pCurrentPatient
+       pInputFollowup - A (new) ptr to a Followup object (can be ptr to subclass) with the new data (DO NOT DELETE, this will get attached to currentPatient)
+       pErrString - A ptr to a string that will be populated with the error message (if any)
+    */
     bool createFollowup(Followup* pInputFollowup, string *pErrString);
-    bool modifyFollowup(Followup* pInputFollowup, string *pErrString);
+
+    /* modifyFollowup() - Pushes changes to a followup record to storage
+       followupId - A valid UID for a followup record (HINT: must set & get currentPatient first, then pick an existing followup)
+       pErrString - A ptr to a string that will be populated with the error message (if any)
+    */
+    bool modifyFollowup(int followupId, string *pErrString);
 
     // PHYSICIANS
 
     /* getPhysicianList() - Fetches a list of "shallow" Physician objects from storage
        pResults - Ptr to a vector of Physician ptrs; will get populated with data from storage
+       pErrString - A ptr to a string that will be populated with the error message (if any)
     */
 
     bool getPhysicianList(vector<Physician*> *pResults, string *pErrString);

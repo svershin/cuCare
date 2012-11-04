@@ -131,7 +131,7 @@ bool MasterController::modifyConsultation(Consultation* pInputConsultation, stri
 // Follow-ups
 
 bool MasterController::createFollowup(Followup* pInputFollowup, string *pErrString){}
-bool MasterController::modifyFollowup(Followup* pInputFollowup, string *pErrString){}
+bool MasterController::modifyFollowup(int followupId, string *pErrString){}
 
 // Physicians
 

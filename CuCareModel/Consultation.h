@@ -45,6 +45,7 @@ public:
     ~Consultation();
 
     int getConsultID();
+    void setConsultID(int newConsultID);
 
     string getReason();
     void setReason(const string value);
