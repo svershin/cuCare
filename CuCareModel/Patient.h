@@ -9,7 +9,9 @@
 #ifndef PATIENT_H
 #define PATIENT_H
 
+#include <vector>
 #include <string>
+#include "Consultation.h"
 #include "ContactInfo.h"
 #include "Date.h"
 #include "Address.h"
@@ -84,6 +86,7 @@ private:
     Physician* pPhysician;
     HealthCard healthCard;
     bool deleted;
+    vector<Consultation*> Consultations;
 };
 
 
