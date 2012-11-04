@@ -6,7 +6,7 @@ class Tests
 {
 public:
     static void databaseExample();
-    static void repositorySetupTest();
+    static void repositoryTest();
 };
 
 #endif // TESTS_H
