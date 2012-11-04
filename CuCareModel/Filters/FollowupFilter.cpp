@@ -1,6 +1,12 @@
 #include "FollowupFilter.h"
 
 FollowupFilter::FollowupFilter()
+    : idMatch(false),
+      statusMatch(false),
+      dateDueMatch(false),
+      dateReceivedMatch(false),
+      dateCompletedMatch(false),
+      deletedMatch(false)
 {
 }
 
