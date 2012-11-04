@@ -14,7 +14,7 @@
 
 using namespace std;
 
-class Referral:ResultantFollowup
+class Referral:public ResultantFollowup
 {
 public:
 
