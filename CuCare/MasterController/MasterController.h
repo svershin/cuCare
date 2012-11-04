@@ -17,7 +17,13 @@
 class MasterController {
 public:
 
-    // Access Control
+    // Constructor
+    MasterController();
+
+    // Destructor
+    ~MasterController();
+
+    // ACCESS CONTROL
 
     enum AccessControlStatus
     {
@@ -112,6 +118,7 @@ public:
 
 private:
 
+    // Internal method to store a valid user passed by login, store it, and update login status
     AccessControlStatus authorize(User* user);
 
     // Stores the user object for access control
