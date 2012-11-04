@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<<<<<<< HEAD
-<!-- Written by Qt Creator 2.4.1, 2012-11-03T15:12:17. -->
-=======
-<!-- Written by Qt Creator 2.4.1, 2012-11-02T23:39:55. -->
->>>>>>> 6ce152e30bd8a7875c25f85180bd4ecaab87fa0a
+<!-- Written by Qt Creator 2.4.1, 2012-11-04T15:27:01. -->
 <qtcreator>
  <data>
   <variable>ProjectExplorer.Project.ActiveTarget</variable>
@@ -105,11 +101,7 @@
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4BuildConfiguration</value>
     <value type="int" key="Qt4ProjectManager.Qt4BuildConfiguration.BuildConfiguration">0</value>
-<<<<<<< HEAD
-    <value type="QString" key="Qt4ProjectManager.Qt4BuildConfiguration.BuildDirectory">/home/baltar/Documents/cucare/CuCareModel-build-desktop-Qt_4_8_1_in_PATH__System__Release</value>
-=======
     <value type="QString" key="Qt4ProjectManager.Qt4BuildConfiguration.BuildDirectory">/home/baltar/comp3004/cucare/CuCareModel-build-desktop-Qt_4_8_1_in_PATH__System__Release</value>
->>>>>>> 6ce152e30bd8a7875c25f85180bd4ecaab87fa0a
     <value type="int" key="Qt4ProjectManager.Qt4BuildConfiguration.QtVersionId">1</value>
     <value type="bool" key="Qt4ProjectManager.Qt4BuildConfiguration.UseShadowBuild">true</value>
    </valuemap>
@@ -159,11 +151,7 @@
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4BuildConfiguration</value>
     <value type="int" key="Qt4ProjectManager.Qt4BuildConfiguration.BuildConfiguration">2</value>
-<<<<<<< HEAD
-    <value type="QString" key="Qt4ProjectManager.Qt4BuildConfiguration.BuildDirectory">/home/baltar/Documents/cucare/CuCareModel-build-desktop-Qt_4_8_1_in_PATH__System__Debug</value>
-=======
     <value type="QString" key="Qt4ProjectManager.Qt4BuildConfiguration.BuildDirectory">/home/baltar/comp3004/cucare/CuCareModel-build-desktop-Qt_4_8_1_in_PATH__System__Debug</value>
->>>>>>> 6ce152e30bd8a7875c25f85180bd4ecaab87fa0a
     <value type="int" key="Qt4ProjectManager.Qt4BuildConfiguration.QtVersionId">1</value>
     <value type="bool" key="Qt4ProjectManager.Qt4BuildConfiguration.UseShadowBuild">true</value>
    </valuemap>
@@ -267,11 +255,7 @@
  </data>
  <data>
   <variable>ProjectExplorer.Project.Updater.EnvironmentId</variable>
-<<<<<<< HEAD
-  <value type="QString">{0f03bdac-0a7e-41d0-9e09-ca65fb8023e1}</value>
-=======
   <value type="QString">{a32418ac-f436-428a-9713-36ded5d5afb3}</value>
->>>>>>> 6ce152e30bd8a7875c25f85180bd4ecaab87fa0a
  </data>
  <data>
   <variable>ProjectExplorer.Project.Updater.FileVersion</variable>

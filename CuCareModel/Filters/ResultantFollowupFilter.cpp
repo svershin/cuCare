@@ -1,6 +1,7 @@
 #include "ResultantFollowupFilter.h"
 
 ResultantFollowupFilter::ResultantFollowupFilter()
+    : resultsMatch(false)
 {
 }
 

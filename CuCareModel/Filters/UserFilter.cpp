@@ -1,6 +1,14 @@
 #include "UserFilter.h"
 
 UserFilter::UserFilter()
+    : usernameMatch(false),
+      firstNameMatch(false),
+      lastNameMatch(false),
+      titleMatch(false),
+      dateOfBirthMatch(false),
+      contactMatch(false),
+      addressMatch(false),
+      deletedMatch(false)
 {
 }
 

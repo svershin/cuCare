@@ -1,6 +1,16 @@
 #include "ConsultationFilter.h"
 
 ConsultationFilter::ConsultationFilter()
+    : consultIDMatch(false),
+      patientIdMatch(false),
+      reasonMatch(false),
+      diagnosisMatch(false),
+      commentsMatch(false),
+      statusMatch(false),
+      dateMatch(false),
+      timeMatch(false),
+      pConsultingPhysMatch(false),
+      deletedMatch(false)
 {
 }
 
