@@ -38,6 +38,8 @@ Patient::Patient
 // Destructor
 Patient::~Patient()
 {
+    for(unsigned int i=0; i < Consultations.size(); i++)
+        delete Consultations[i];
 }
 
 int Patient::getId() { return id; }
@@ -69,6 +71,8 @@ void Patient::setHealthCard(const HealthCard value) { healthCard = value; }
 
 Physician* Patient::getPhysician() { return pPhysician; }
 void Patient::setPhysician(Physician* const value) { pPhysician = value; }
+
+vector<Consultation*>* Patient::getConsultations() { return &Consultations; }
 
 void Patient::markDeleted() { deleted = true; }
 bool Patient::isDeleted() { return deleted; }

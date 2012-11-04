@@ -70,6 +70,8 @@ public:
     Physician* getPhysician();
     void setPhysician(Physician* const value);
 
+    vector<Consultation*>* getConsultations();
+
     void markDeleted();
     bool isDeleted();
 

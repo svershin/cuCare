@@ -68,6 +68,8 @@ public:
     Physician* getConsultingPhys();
     void setConsultingPhys(Physician* const value);
 
+    vector<Followup*>* getFollowups();
+
     void markDeleted();
     bool isDeleted();
 
