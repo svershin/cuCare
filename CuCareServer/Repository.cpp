@@ -42,6 +42,7 @@ Repository::Repository()
 
 Repository::~Repository()
 {
+    db->close();
     delete db;
 }
 
@@ -50,7 +51,7 @@ void Repository::createSchema()
     ifstream createScript;
     createScript.open(createScriptFilename.c_str());
     if(!createScript)
-        cout << "Failed to find file.\n";
+        throw "Failed to find file.\n";
 
     if(createScript.is_open())
     {
@@ -66,6 +67,10 @@ void Repository::createSchema()
         }
     }
     else throw "Error opening " + createScriptFilename;
+
+    //For the physicianid autoincrement, there needs to be a dummy entry with a physid of zero.
+    if(!db->command("INSERT INTO physicians (username, physicianid) VALUES ('dummyentry', 0);"))
+        throw "Error inserting dummy entry.";
 }
 
 string Repository::getDbErrorText()
@@ -139,7 +144,7 @@ bool Repository::insertStatement(string table, map<string, string> values)
 bool Repository::updateStatement(string table, string idname, string idvalue, map<string, string> values)
 {
     stringstream statement;
-    statement << "UPDATE " << table << " SET (";
+    statement << "UPDATE " << table << " SET ";
     bool firstvalue = true;
     for(map<string, string>::iterator it = values.begin(); it != values.end(); it++)
     {
@@ -151,7 +156,7 @@ bool Repository::updateStatement(string table, string idname, string idvalue, ma
         else
             statement << ", " << it->first << " = " << it->second;
     }
-    statement << ") WHERE " << idname << " = " << idvalue << ";";
+    statement << " WHERE " << idname << " = " << idvalue << ";";
 
     string command = statement.str();
     return db->command(command);
@@ -282,7 +287,6 @@ map<string, string> Repository::getReturnConsultationValues(int nextConsultation
 map<string, string> Repository::getUserValues(User *pInputUser)
 {
     map<string,string> values;
-    values["username"] = squote(pInputUser->getUsername());
     values["firstname"] = squote(pInputUser->getFirstName());
     values["lastname"] = squote(pInputUser->getLastName());
     values["country"] = squote(pInputUser->getAddress().getCountry());
@@ -495,9 +499,11 @@ map<string, string> Repository::getMedicationRenewalConditions(MedicationRenewal
     return values;
 }
 
-void Repository::instantiateAdminAssistants(vector<AdminAssistant *> *pResults, QueryResult *pQueryResult)
+void Repository::instantiateAdminAssistants(vector<AdminAssistant *> *&pResults, QueryResult *pQueryResult)
 {
     pResults = new vector<AdminAssistant *>();
+    if(!(pQueryResult->numRows() > 0))
+        return;
     do
     {   //column order is defined in the const strings "[classname]Columns"
         AdminAssistant* retrieved = new AdminAssistant((*pQueryResult)[0],
@@ -521,9 +527,11 @@ void Repository::instantiateAdminAssistants(vector<AdminAssistant *> *pResults, 
     while (pQueryResult->nextRow());
 }
 
-void Repository::instantiateConsultations(vector<Consultation *> *pResults, QueryResult *pQueryResult)
+void Repository::instantiateConsultations(vector<Consultation *> *&pResults, QueryResult *pQueryResult)
 {
     pResults = new vector<Consultation *>();
+    if(!(pQueryResult->numRows() > 0))
+        return;
     do
     {   //column order is defined in the const strings "[classname]Columns"
         Consultation* retrieved = new Consultation(stoi((*pQueryResult)[0]),
@@ -543,9 +551,11 @@ void Repository::instantiateConsultations(vector<Consultation *> *pResults, Quer
     while (pQueryResult->nextRow());
 }
 
-void Repository::instantiateMedicalTests(vector<MedicalTest *> *pResults, QueryResult *pQueryResult)
+void Repository::instantiateMedicalTests(vector<MedicalTest *> *&pResults, QueryResult *pQueryResult)
 {
     pResults = new vector<MedicalTest *>();
+    if(!(pQueryResult->numRows() > 0))
+        return;
     do
     {   //column order is defined in the const strings "[classname]Columns"
         MedicalTest* retrieved = new MedicalTest(stoi((*pQueryResult)[0]),
@@ -567,9 +577,11 @@ void Repository::instantiateMedicalTests(vector<MedicalTest *> *pResults, QueryR
     while (pQueryResult->nextRow());
 }
 
-void Repository::instantiateReferrals(vector<Referral *> *pResults, QueryResult *pQueryResult)
+void Repository::instantiateReferrals(vector<Referral *> *&pResults, QueryResult *pQueryResult)
 {
     pResults = new vector<Referral *>();
+    if(!(pQueryResult->numRows() > 0))
+        return;
     do
     {   //column order is defined in the const strings "[classname]Columns"
         Referral* retrieved = new Referral(stoi((*pQueryResult)[0]),
@@ -591,9 +603,11 @@ void Repository::instantiateReferrals(vector<Referral *> *pResults, QueryResult 
     while (pQueryResult->nextRow());
 }
 
-void Repository::instantiatePatients(vector<Patient *> *pResults, QueryResult *pQueryResult)
+void Repository::instantiatePatients(vector<Patient *> *&pResults, QueryResult *pQueryResult)
 {
     pResults = new vector<Patient *>();
+    if(!(pQueryResult->numRows() > 0))
+        return;
     do
     {   //column order is defined in the const strings "[classname]Columns"
         Patient* retrieved = new Patient(stoi((*pQueryResult)[0]),
@@ -626,9 +640,11 @@ void Repository::instantiatePatients(vector<Patient *> *pResults, QueryResult *p
     while (pQueryResult->nextRow());
 }
 
-void Repository::instantiateMedicationRenewals(vector<MedicationRenewal *> *pResults, QueryResult *pQueryResult)
+void Repository::instantiateMedicationRenewals(vector<MedicationRenewal *> *&pResults, QueryResult *pQueryResult)
 {
     pResults = new vector<MedicationRenewal *>();
+    if(!(pQueryResult->numRows() > 0))
+        return;
     do
     {   //column order is defined in the const strings "[classname]Columns"
         MedicationRenewal* retrieved = new MedicationRenewal(stoi((*pQueryResult)[0]),
@@ -649,9 +665,11 @@ void Repository::instantiateMedicationRenewals(vector<MedicationRenewal *> *pRes
     while (pQueryResult->nextRow());
 }
 
-void Repository::instantiateReturnConsultations(vector<ReturnConsultation *> *pResults, QueryResult *pQueryResult)
+void Repository::instantiateReturnConsultations(vector<ReturnConsultation *> *&pResults, QueryResult *pQueryResult)
 {
     pResults = new vector<ReturnConsultation *>();
+    if(!(pQueryResult->numRows() > 0))
+        return;
     do
     {   //column order is defined in the const strings "[classname]Columns"
         ReturnConsultation* retrieved = new ReturnConsultation(stoi((*pQueryResult)[0]),
@@ -672,9 +690,11 @@ void Repository::instantiateReturnConsultations(vector<ReturnConsultation *> *pR
     while (pQueryResult->nextRow());
 }
 
-void Repository::instantiatePhysicians(vector<Physician *> *pResults, QueryResult *pQueryResult)
+void Repository::instantiatePhysicians(vector<Physician *> *&pResults, QueryResult *pQueryResult)
 {
     pResults = new vector<Physician *>();
+    if(!(pQueryResult->numRows() > 0))
+        return;
     do
     {   //column order is defined in the const strings "[classname]Columns"
         Physician* retrieved = new Physician(stoi((*pQueryResult)[1]),
@@ -699,9 +719,11 @@ void Repository::instantiatePhysicians(vector<Physician *> *pResults, QueryResul
     while (pQueryResult->nextRow());
 }
 
-void Repository::instantiateSysAdmins(vector<SysAdmin *> *pResults, QueryResult *pQueryResult)
+void Repository::instantiateSysAdmins(vector<SysAdmin *> *&pResults, QueryResult *pQueryResult)
 {
     pResults = new vector<SysAdmin *>();
+    if(!(pQueryResult->numRows() > 0))
+        return;
     do
     {   //column order is defined in the const strings "[classname]Columns"
         SysAdmin* retrieved = new SysAdmin((*pQueryResult)[0],
@@ -834,9 +856,16 @@ bool Repository::createUser(User *pInputUser)
         return false;
 
     if(pResults->numRows() > 0)
-        throw "Username is already in use";
+    {
+        throw "Username already in use.";
+        return false; //This really shouldn't be necessary...
+    }
 
-    if(!insertStatement("users", getUserValues(pInputUser)))
+    string table = "users";
+    map<string,string> values = getUserValues(pInputUser);
+    values["username"] = squote(pInputUser->getUsername());
+
+    if(!insertStatement(table, values))
         return false;
 
     return true;
@@ -850,7 +879,7 @@ bool Repository::createPhysician(Physician* pInputPhysician, int* uid)
 
     //Autoincrementing ids only works for primary keys, so we have to do something else for physid
     stringstream getUid;
-    getUid << "SELECT MAX(ISNULL(physicianid, 0) + 1) FROM physicians";
+    getUid << "SELECT MAX(physicianid) + 1 FROM physicians;";
     string query = getUid.str();
     QueryResult* pResults = NULL;
     if(!db->query(query, pResults))
@@ -899,7 +928,7 @@ bool Repository::createSysAdmin(SysAdmin *pInputSysAdmin)
 
 bool Repository::pushUser(User* pInputUser)
 {
-    if(!updateStatement("users", "username", pInputUser->getUsername(), getUserValues(pInputUser)))
+    if(!updateStatement("users", "username", squote(pInputUser->getUsername()), getUserValues(pInputUser)))
         return false;
     return true;
 }
@@ -980,7 +1009,7 @@ bool Repository::pushMedicationRenewal(MedicationRenewal *pInputMedicationRenewa
     return true;
 }
 
-bool Repository::pullAdminAssistant(AdminAssistant *pAdminAssistantValues, UserFilter userFilter, vector<AdminAssistant*> *pResults)
+bool Repository::pullAdminAssistant(AdminAssistant *pAdminAssistantValues, UserFilter userFilter, vector<AdminAssistant*> *&pResults)
 {
     QueryResult* pQueryResults = NULL;
     if(!selectStatement("adminassistants NATURAL JOIN users", getUserConditions(pAdminAssistantValues, userFilter), adminAssistantColumns, pQueryResults))
@@ -991,7 +1020,7 @@ bool Repository::pullAdminAssistant(AdminAssistant *pAdminAssistantValues, UserF
     return true;
 }
 
-bool Repository::pullPhysician(Physician *pPhysicianValues, PhysicianFilter physicianFilter, vector<Physician*>* pResults)
+bool Repository::pullPhysician(Physician *pPhysicianValues, PhysicianFilter physicianFilter, vector<Physician*>*& pResults)
 {
     QueryResult* pQueryResults = NULL;
     if(!selectStatement("physicians NATURAL JOIN users", getPhysicianConditions(pPhysicianValues, physicianFilter), physicianColumns, pQueryResults))
@@ -1002,7 +1031,7 @@ bool Repository::pullPhysician(Physician *pPhysicianValues, PhysicianFilter phys
     return true;
 }
 
-bool Repository::pullSysAdmin(SysAdmin *pSysAdminValues, UserFilter userFilter, vector<SysAdmin*>* pResults)
+bool Repository::pullSysAdmin(SysAdmin *pSysAdminValues, UserFilter userFilter, vector<SysAdmin*>*& pResults)
 {
     QueryResult* pQueryResults = NULL;
     if(!selectStatement("sysadmins NATURAL JOIN users", getUserConditions(pSysAdminValues, userFilter), sysAdminColumns, pQueryResults))
@@ -1013,7 +1042,7 @@ bool Repository::pullSysAdmin(SysAdmin *pSysAdminValues, UserFilter userFilter, 
     return true;
 }
 
-bool Repository::pullPatient(Patient* pPatientValues, PatientFilter patientFilter, int physicianId, vector<Patient*>* pResults)
+bool Repository::pullPatient(Patient* pPatientValues, PatientFilter patientFilter, int physicianId, vector<Patient*>*& pResults)
 {
     QueryResult* pQueryResults = NULL;
     if(!selectStatement("patients", getPatientConditions(pPatientValues, patientFilter, physicianId), patientColumns, pQueryResults))
@@ -1024,7 +1053,7 @@ bool Repository::pullPatient(Patient* pPatientValues, PatientFilter patientFilte
     return true;
 }
 
-bool Repository::pullConsultation(Consultation* pConsultationValues, ConsultationFilter consultationFilter, int physicianId, int patientId, vector<Consultation*>* pResults)
+bool Repository::pullConsultation(Consultation* pConsultationValues, ConsultationFilter consultationFilter, int physicianId, int patientId, vector<Consultation*>*& pResults)
 {
     QueryResult* pQueryResults = NULL;
     if(!selectStatement("consultations", getConsultationConditions(pConsultationValues, consultationFilter, physicianId, patientId), consultationColumns, pQueryResults))
@@ -1035,7 +1064,7 @@ bool Repository::pullConsultation(Consultation* pConsultationValues, Consultatio
     return true;
 }
 
-bool Repository::pullReferral(Referral* pReferralValues, ReferralFilter referralFilter, int consultationId, vector<Referral*>* pResults)
+bool Repository::pullReferral(Referral* pReferralValues, ReferralFilter referralFilter, int consultationId, vector<Referral*>*& pResults)
 {
     QueryResult* pQueryResults = NULL;
     if(!selectStatement("(referrals NATURAL JOIN resultantfollowups) NATURAL JOIN followups", getReferralConditions(pReferralValues, referralFilter, consultationId), referralColumns, pQueryResults))
@@ -1046,7 +1075,7 @@ bool Repository::pullReferral(Referral* pReferralValues, ReferralFilter referral
     return true;
 }
 
-bool Repository::pullMedicalTest(MedicalTest* pMedicalTestValues, MedicalTestFilter medicalTestFilter, int consultationId, vector<MedicalTest*>* pResults)
+bool Repository::pullMedicalTest(MedicalTest* pMedicalTestValues, MedicalTestFilter medicalTestFilter, int consultationId, vector<MedicalTest*>*& pResults)
 {
     QueryResult* pQueryResults = NULL;
     if(!selectStatement("(medicaltests NATURAL JOIN resultantfollowups) NATURAL JOIN followups", getMedicalTestConditions(pMedicalTestValues, medicalTestFilter, consultationId), medicalTestColumns, pQueryResults))
@@ -1057,7 +1086,7 @@ bool Repository::pullMedicalTest(MedicalTest* pMedicalTestValues, MedicalTestFil
     return true;
 }
 
-bool Repository::pullReturnConsultation(ReturnConsultation* pReturnConsultationValues, ReturnConsultationFilter returnConsultationFilter, int consultationId, int nextConsultationId, vector<ReturnConsultation*>* pResults)
+bool Repository::pullReturnConsultation(ReturnConsultation* pReturnConsultationValues, ReturnConsultationFilter returnConsultationFilter, int consultationId, int nextConsultationId, vector<ReturnConsultation*>*& pResults)
 {
     QueryResult* pQueryResults = NULL;
     if(!selectStatement("returnconsultations NATURAL JOIN followups", getReturnConsultationConditions(pReturnConsultationValues, returnConsultationFilter, nextConsultationId, consultationId), returnConsultationColumns, pQueryResults))
@@ -1068,7 +1097,7 @@ bool Repository::pullReturnConsultation(ReturnConsultation* pReturnConsultationV
     return true;
 }
 
-bool Repository::pullMedicationRenewal(MedicationRenewal* pMedicationRenewalValues, MedicationRenewalFilter medicationRenewalFilter, int consultationId, vector<MedicationRenewal*>* pResults)
+bool Repository::pullMedicationRenewal(MedicationRenewal* pMedicationRenewalValues, MedicationRenewalFilter medicationRenewalFilter, int consultationId, vector<MedicationRenewal*>*& pResults)
 {
     QueryResult* pQueryResults = NULL;
     if(!selectStatement("medicationrenewals NATURAL JOIN followups", getMedicationRenewalConditions(pMedicationRenewalValues, medicationRenewalFilter, consultationId), medicationRenewalColumns, pQueryResults))
