@@ -23,7 +23,7 @@ MasterController::MasterController()
 AccessControlStatus MasterController::loginUser(string username, string *pErrString)
 {
     // initialize request objects
-    Physician inputUser(0, username, "", "", Date("","",""), ContactInfo("","","",""), Address("", "", "", "", "", ""), false);
+    Physician inputUser(0, username, "", "", Date(0, 0, 0), ContactInfo("","","",""), Address("", "", "", "", "", ""), false);
     PhysicianFilter inputFilter;
     inputFilter->usernameSetMatch(true);
     vector<Physician*>* pReturnUser = NULL;
@@ -59,27 +59,69 @@ AccessControlStatus MasterController::logout()
 
 // Patients
 
-bool MasterController::createPatient(Patient* pInputPatient, string *pErrString)
+bool MasterController::createPatient(Patient* pInputPatient, int physicianId, string *pErrString)
 {
     int uid = 0;
-    int physicianId = 0;
-    int requestStatus = Request.createPatient(pInputPatient, pErrString, physicianId, &uid);
+    int requestStatus = Request.createPatient(pErrString, pInputPatient, physicianId, &uid);
 
     if(!requestStatus)
-        return AC_FAILED; // COMMS ERROR
+        return 0; // COMMS ERROR
 
-    pInputPatient->setId(pUid);
+    if(pCurrentPatient != NULL)
+        delete pCurrentPatient;
+    pCurrentPatient = pInputPatient;
+    pCurrentPatient->setId(pUid);
 
-    if(!pInputPatient)
+    if(!pCurrentPatient)
         return 1;
     else
         return 0;
 }
 
-bool MasterController::modifyPatient(Patient* pInputPatient, string *pErrString){}
+bool MasterController::modifyPatient(Patient* pInputPatient, int physicianId, string *pErrString)
+{
+    int requestStatus = Request.pushPatient(pErrString, pInputPatient, physicianId);
+
+    if(!requestStatus)
+        return AC_FAILED; // COMMS ERROR
+
+    delete pCurrentPatient;
+    pCurrentPatient = pInputPatient;
+
+    if(!pCurrentPatient)
+        return 0;
+    else
+        return 0;
+}
+
 bool MasterController::getPatientList(vector<Patient *> *pResults, string *pErrString){}
-bool MasterController::getFullPatient(int patientId, Patient* pResults, string *pErrString){}
-Patient* MasterController::getCurrentPatient(){}
+
+// ASSUME A PARTIAL PATIENT IS BEING PASSED
+// TODO: Pull Consultations and Follow-ups
+bool MasterController::getFullPatient(Patient* newCurrentPatient, string *pErrString)
+{
+    delete pCurrentPatient;
+
+    PatientFilter inputFilter;
+    inputFilter->patientIdSetMatch(true);
+    vector<Patient*>* pResults = NULL;
+
+    int requestStatus = Request.pullPatient(pErrString, newCurrentPatient, inputFilter, pResults);
+    if(!requestStatus)
+        return 0; // COMMS ERROR
+
+    if(!pResults->empty()) {
+        pCurrentPatient = pResults->front());
+        newCurrentPatient = pCurrentPatient;
+        return 1;
+    } else
+        return 0;
+}
+
+Patient* MasterController::getCurrentPatient()
+{
+    return pCurrentPatient;
+}
 
 // Consultations
 

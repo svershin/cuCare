@@ -34,14 +34,25 @@ public:
 
     // Patients
 
-    bool createPatient(Patient* pInputPatient, string *pErrString);
-    bool modifyPatient(Patient* pInputPatient, string *pErrString);
+    // createPatient() Parameters:
+    // pInputPatient - a ptr to a Patient object with the new data (do not delete, this will get assigned to currentPatient)
+    // physicianId - the UID of the Patient's Physician
+    // pErrString - a ptr to a string that will be populated with the error message (if any)
+    bool createPatient(Patient* pInputPatient, int physicianId, string *pErrString);
+
+    bool modifyPatient(Patient* pInputPatient, int physicianId, string *pErrString);
+
     bool getPatientList(vector<Patient *> *pResults, string *pErrString); // no filter
+
 //    bool getPatientList(Patient* pPatientValues, PatientFilter patientFilter, vector<Patient*>* pResults); // filtered, will not populate consultations or followups
-    bool getFullPatient(int patientId, Patient* pResults, string *pErrString); // must supply valid UID
+
+    // getFullPatient() Notes:
+    // ? gets the full record for the patient, and points pCurrentPatient
+    // ? assumes that it is being passed a pointer to a "shallow" patient that comes from a getPatientList() call
+    bool getFullPatient(Patient* newCurrentPatient, string *pErrString); // must supply valid UID
 
     Patient* getCurrentPatient();   // returns a pointer to the currently selected patient
-                                    // NULL if no patient has yet been selected
+                                    // NULL ptr if no patient has yet been selected
 
     // Consultations
 
