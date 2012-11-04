@@ -27,6 +27,8 @@ public:
     // Destructor
     ~SysAdmin();
 
+    int getType() { return 4; }
+
 protected:
 private:
 

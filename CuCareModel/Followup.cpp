@@ -31,6 +31,7 @@ Followup::~Followup()
 }
 
 int Followup::getId() { return id; }
+void Followup::setId(int newId) { id = newId; }
 
 Followup::FollowupStatus Followup::getStatus() { return status; }
 void Followup::setStatus(const FollowupStatus value) { status = value; }

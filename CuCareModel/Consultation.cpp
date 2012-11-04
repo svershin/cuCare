@@ -39,6 +39,7 @@ Consultation::~Consultation()
 }
 
 int Consultation::getConsultID() { return consultID; }
+void Consultation::setConsultID(int newConsultID) { consultID = newConsultID };
 
 string Consultation::getReason() { return reason; }
 void Consultation::setReason(const string value) { reason = value; }

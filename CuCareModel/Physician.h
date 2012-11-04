@@ -28,6 +28,8 @@ public:
     // Destructor
     ~Physician();
 
+    int getType() { return 2; }
+
     int getId();
 
 protected:
