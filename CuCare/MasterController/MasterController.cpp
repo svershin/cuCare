@@ -24,12 +24,11 @@ AccessControlStatus MasterController::loginUser(string username, string *pErrStr
 {
     // initialize request objects
     Physician inputUser(0, username, "", "", Date("","",""), ContactInfo("","","",""), Address("", "", "", "", "", ""), false);
-    PhysicianFilter* inputFilter = new UserFilter();
+    PhysicianFilter inputFilter;
     inputFilter->usernameSetMatch(true);
     vector<Physician*>* pReturnUser = NULL;
 
-    int requestStatus = Request.pullPhysician(pErrString, inputUser, &inputFilter, pReturnUSer);
-    delete inputFilter;
+    int requestStatus = Request.pullPhysician(pErrString, &inputUser, inputFilter, pReturnUSer);
 
     if(!requestStatus)
         return AC_FAILED; // COMMS ERROR
@@ -60,21 +59,37 @@ AccessControlStatus MasterController::logout()
 
 // Patients
 
-bool MasterController::createPatient(Patient* pInputPatient){}
-bool MasterController::modifyPatient(Patient* pInputPatient){}
-bool MasterController::getPatientList(vector<Patient *> *pResults){}
-bool MasterController::getFullPatient(int patientId, Patient* pResults){}
+bool MasterController::createPatient(Patient* pInputPatient, string *pErrString)
+{
+    int uid = 0;
+    int physicianId = 0;
+    int requestStatus = Request.createPatient(pInputPatient, pErrString, physicianId, &uid);
+
+    if(!requestStatus)
+        return AC_FAILED; // COMMS ERROR
+
+    pInputPatient->setId(pUid);
+
+    if(!pInputPatient)
+        return 1;
+    else
+        return 0;
+}
+
+bool MasterController::modifyPatient(Patient* pInputPatient, string *pErrString){}
+bool MasterController::getPatientList(vector<Patient *> *pResults, string *pErrString){}
+bool MasterController::getFullPatient(int patientId, Patient* pResults, string *pErrString){}
 Patient* MasterController::getCurrentPatient(){}
 
 // Consultations
 
-bool MasterController::createConsultation(Consultation* pInputConsultation){}
-bool MasterController::modifyConsultation(Consultation* pInputConsultation){}
+bool MasterController::createConsultation(Consultation* pInputConsultation, string *pErrString){}
+bool MasterController::modifyConsultation(Consultation* pInputConsultation, string *pErrString){}
 
 // Follow-ups
 
-bool MasterController::createFollowup(Followup* pInputFollowup){}
-bool MasterController::modifyFollowup(Followup* pInputFollowup){}
+bool MasterController::createFollowup(Followup* pInputFollowup, string *pErrString){}
+bool MasterController::modifyFollowup(Followup* pInputFollowup, string *pErrString){}
 
 // Physicians
 
