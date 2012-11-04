@@ -8,8 +8,8 @@ class MessageParser
 public:
     MessageParser();
 
-    bool parseCreateReply(string **ppErrString, QString reply, int **ppUid);
-    bool parsePushReply(string **ppErrString, QString reply);
+    static bool parseCreateReply(string **ppErrString, QString reply, int **ppUid);
+    static bool parsePushReply(string **ppErrString, QString reply);
 
     //TODO: pull functions
 };

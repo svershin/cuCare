@@ -9,6 +9,9 @@ public:
     MessageGenerator();
     ~MessageGenerator();
 
+    //Function to convert any QObject into Json
+    static QString objectToJson(const QObject *modelObject);
+
     //Creation functions
     static bool makeCreatePhysicianMessage(Physician inputPhysician, QString **ppOutputMessage);
     static bool makeCreateAdminAssistantMessage(AdminAssistant inputAdminAssistant, QString **ppOutputMessage);
@@ -34,7 +37,7 @@ public:
 //    static bool pullAdminAssistants(AdminAssistantFilter inputFilter);
 //    static bool pullSysAdmins(SysAdminFilter inputFilter);
 //    static bool pullPatients(PatientFilter inputFilter);
-//    static bool pullConsultatiosn(ConsultationFilter inputFilter);
+//    static bool pullConsultations(ConsultationFilter inputFilter);
 //    static bool pulleReferrals(ReferralFilter inputFilter);
 //    static bool pullMedicalTests(MedicalTestFilter inputFilter);
 //    static bool pullReturnConsultations(ReturnConsultationFilter inputFilter);

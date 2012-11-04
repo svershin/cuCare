@@ -3,11 +3,11 @@
 
 
 #include <QString>
-#include <QTcpSocket>
 #include <QtNetwork>
 #include <QtGlobal>
 #include <string>
-
+#include <QTcpSocket>
+#include <QObject>
 
 
 #include "../../CuCareModel/Address.h"
@@ -29,7 +29,8 @@
 #include "../../CuCareModel/Time.h"
 #include "../../CuCareModel/User.h"
 
-#include "../QJson/src/serializer.h"
+#include "../qjson/src/serializer.h"
+#include "../qjson/src/qobjecthelper.h"
 
 
 #endif // COMMSINCLUDE_H

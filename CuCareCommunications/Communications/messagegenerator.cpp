@@ -4,3 +4,8 @@ MessageGenerator::MessageGenerator()
 {
 
 }
+
+QString MessageGenerator::objectToJson(const QObject *modelObject)
+{
+
+}

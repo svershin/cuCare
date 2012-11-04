@@ -23,6 +23,6 @@ bool ClientSocket::sendRecieve(string **ppErrString, QString pRequestMessage, QS
         return false;
     }
 
-    (*pReplyMessage) = message;
+    (*pReplyMessage) = new QString(message);
     return true;
 }

@@ -3,3 +3,8 @@
 ServerSocket::ServerSocket()
 {
 }
+
+int ServerSocket::test()
+{
+    return 1;
+}

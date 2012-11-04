@@ -7,6 +7,7 @@ class ServerSocket
 {
 public:
     ServerSocket();
+    int test();
 };
 
 #endif // SERVERSOCKET_H
