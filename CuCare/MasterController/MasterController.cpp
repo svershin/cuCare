@@ -12,18 +12,51 @@
 
 MasterController::MasterController()
     : pCurrentUser (NULL),
-      pCurrentPatient (NULL)
+      pCurrentPatient (NULL),
+      status (AC_LOGGED_OUT)
 {
 }
 
-AccessControlStatus MasterController::loginUser(string username)
+// at present only pulling with the expectation to get a physician
+// since the prototype functionality requires consult and followup creation
+// AdminAssistant and SysAdmin pulls TBC
+AccessControlStatus MasterController::loginUser(string username, string *pErrString)
 {
+    // initialize request objects
+    Physician inputUser(0, username, "", "", Date("","",""), ContactInfo("","","",""), Address("", "", "", "", "", ""), false);
+    PhysicianFilter* inputFilter = new UserFilter();
+    inputFilter->usernameSetMatch(true);
+    vector<Physician*>* pReturnUser = NULL;
 
+    int requestStatus = Request.pullPhysician(pErrString, inputUser, &inputFilter, pReturnUSer);
+    delete inputFilter;
+
+    if(!requestStatus)
+        return AC_FAILED; // COMMS ERROR
+
+    if(!pReturnUser->empty() )
+        return authorize(pReturnUser->front());
+
+    else
+        return AC_FAILED; // NO SUCH USER
 }
 
-AccessControlStatus MasterController::loginStatus(){}
+AccessControlStatus MasterController::loginStatus() { return status; }
 
-AccessControlStatus MasterController::logout(){}
+AccessControlStatus MasterController::authorize(User* user)
+{
+    pCurrentUser = user;
+    status = pCurrentUser->getType();
+    return loginStatus();
+}
+
+AccessControlStatus MasterController::logout()
+{
+    delete pCurrentUser;
+    pCurrentUser = NULL;
+    status = AC_LOGGED_OUT;
+    return loginStatus();
+}
 
 // Patients
 

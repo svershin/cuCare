@@ -10,6 +10,7 @@
 #define MASTERCONTROLLER_H
 
 #include "../CuCareModel/ModelFiles.h"
+#include "../CuCareCommunications/Communications/request.h"
 #include <string>
 #include <vector>
 
@@ -27,40 +28,44 @@ public:
         AC_LOGGED_IN_AS_SYSADMIN
     };
 
-    AccessControlStatus loginUser(string username);
+    AccessControlStatus loginUser(string username, string *pErrString);
     AccessControlStatus loginStatus();
     AccessControlStatus logout();
 
     // Patients
 
-    bool createPatient(Patient* pInputPatient);
-    bool modifyPatient(Patient* pInputPatient);
-    bool getPatientList(vector<Patient *> *pResults); // no filter
+    bool createPatient(Patient* pInputPatient, string *pErrString);
+    bool modifyPatient(Patient* pInputPatient, string *pErrString);
+    bool getPatientList(vector<Patient *> *pResults, string *pErrString); // no filter
 //    bool getPatientList(Patient* pPatientValues, PatientFilter patientFilter, vector<Patient*>* pResults); // filtered, will not populate consultations or followups
-    bool getFullPatient(int patientId, Patient* pResults); // must supply valid UID
+    bool getFullPatient(int patientId, Patient* pResults, string *pErrString); // must supply valid UID
 
     Patient* getCurrentPatient();   // returns a pointer to the currently selected patient
                                     // NULL if no patient has yet been selected
 
     // Consultations
 
-    bool createConsultation(Consultation* pInputConsultation);
-    bool modifyConsultation(Consultation* pInputConsultation);
+    bool createConsultation(Consultation* pInputConsultation, string *pErrString);
+    bool modifyConsultation(Consultation* pInputConsultation, string *pErrString);
 
     // Follow-ups
 
-    bool createFollowup(Followup* pInputFollowup);
-    bool modifyFollowup(Followup* pInputFollowup);
+    bool createFollowup(Followup* pInputFollowup, string *pErrString);
+    bool modifyFollowup(Followup* pInputFollowup, string *pErrString);
 
     // Physicians
 
-    bool getPhysicianList(vector<Physician*> *pResults);
+    bool getPhysicianList(vector<Physician*> *pResults, string *pErrString);
 
 private:
+
+    AccessControlStatus authorize(User* user);
 
     // Stores the user object for access control
     // Set to NULL if not logged-in
     User* pCurrentUser;
+
+    AccessControlStatus status;
 
     // Stores the data for the currently selected patient
     // Set to NULL if a patient has not yet been selected

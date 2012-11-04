@@ -49,6 +49,7 @@ public:
     Address getAddress();
     void setAddress(const Address value);
 
+    virtual int getType() = 0;
     void markDeleted();
     bool isDeleted();
 

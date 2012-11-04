@@ -7,6 +7,7 @@
 #include "messagegenerator.h"
 #include <QVariant>
 #include "messageparser.h"
+#include "../../CuCareModel/ModelFiles.h"
 
 class Request {
 
@@ -53,7 +54,7 @@ public:
     int pushMedicationRenewal(string *pErrString, MedicationRenewal *pInputMedicationRenewal, int physicianId);
 
     //Object retrieval functions
-    int pullPhysician(string *pErrString, Physician *pPhysicianValues, UserFilter inputFilter, vector<Physician*> *pOutputPhysicians);
+    int pullPhysician(string *pErrString, Physician *pPhysicianValues, PhysicianFilter inputFilter, vector<Physician*> *pOutputPhysicians);
     int pullAdminAssistant(string *pErrString, AdminAssistant *pPhysicianValues, UserFilter inputFilter, vector<AdminAssistant*> *pOutputAdminAssistants);
     int pullSysAdmin(string *pErrString, SysAdmin *pSysAdminValues, UserFilter inputFilter, vector<SysAdmin*> *pOutputSysAdmins);
     int pullPatient(string *pErrString, Patient *pPatientValues, PatientFilter inputFilter, vector<SysAdmin*> *pOutputPatients);

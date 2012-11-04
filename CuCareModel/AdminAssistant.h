@@ -27,6 +27,8 @@ public:
     // Destructor
     ~AdminAssistant();
 
+    int getType() { return 3; }
+
 protected:
 private:
 };
