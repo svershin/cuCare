@@ -10,7 +10,7 @@ public:
     ~MessageGenerator();
 
     //Function to convert any QObject into Json
-    static QString objectToJson(const QObject *modelObject);
+    static QByteArray qObjectToJson(const QObject &modelObject);
 
     //Creation functions
     static bool makeCreatePhysicianMessage(Physician inputPhysician, QString **ppOutputMessage);
