@@ -17,9 +17,14 @@ public:
     explicit LoginWindowDialog(MasterController *controllerParam, QWidget *parent = 0);
     ~LoginWindowDialog();
     
+private slots:
+    void on_LogInPushButton_clicked();
+
 private:
     Ui::LoginWindowDialog *ui;
     MasterController *controller;
+
+    bool checkUsername();
 };
 
 #endif // LOGINWINDOWDIALOG_H

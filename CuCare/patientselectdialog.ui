@@ -25,6 +25,9 @@
   <property name="windowTitle">
    <string>Select Patient</string>
   </property>
+  <property name="modal">
+   <bool>true</bool>
+  </property>
   <layout class="QGridLayout" name="gridLayout_2">
    <item row="0" column="0">
     <layout class="QGridLayout" name="gridLayout">

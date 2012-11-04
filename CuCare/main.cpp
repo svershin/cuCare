@@ -1,5 +1,4 @@
 #include <QtGui/QApplication>
-#include "../CuCareModel/User.h"
 #include "loginwindowdialog.h"
 #include "mainwindow.h"
 #include "MasterController/MasterController.h"
@@ -10,9 +9,11 @@ int main(int argc, char *argv[])
 
     MasterController *controller = new MasterController();
 
+    LoginWindowDialog *loginWindow = new LoginWindowDialog(controller);
     MainWindow *mainWindow = new MainWindow(controller);
 
-    loginWindow->exec();
+    if (loginWindow->exec() == 1)
+        mainWindow->show();
 
     return a.exec();
 }

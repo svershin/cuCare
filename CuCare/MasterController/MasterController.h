@@ -38,6 +38,7 @@ public:
     bool getPatientList(vector<Patient *> *pResults); // no filter
 //    bool getPatientList(Patient* pPatientValues, PatientFilter patientFilter, vector<Patient*>* pResults); // filtered, will not populate consultations or followups
     bool getFullPatient(int patientId, Patient* pResults); // must supply valid UID
+    Patient* getCurrentPatient();
 
     // Consultations
 
