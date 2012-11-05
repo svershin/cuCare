@@ -31,6 +31,10 @@ private slots:
 
     void on_SubmitChangesPushButton_clicked();
 
+    void on_FollowupReceivedCheckBox_stateChanged(int arg1);
+
+    void on_FollowupCompletedCheckBox_stateChanged(int arg1);
+
 private:
     Ui::MainWindow *ui;
     MasterController *controller;

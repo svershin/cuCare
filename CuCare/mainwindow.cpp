@@ -27,6 +27,10 @@ MainWindow::MainWindow(MasterController *controllerParam, QWidget *parent) :
     //Populate list of physicians in consultation tab
     populatePhysicians();
 
+    //Followup received and completed dates are not set/editable by default
+    ui->ReceivedDateEdit->setEnabled(false);
+    ui->CompletedDateEdit->setEnabled(false);
+
     ui->statusbar->showMessage("Welcome to CuCare v0.0.1");
 }
 
@@ -242,6 +246,11 @@ void MainWindow::showFollowup(int fid, int cid)
                     ui->FollowupInfoTextEdit2->hide();
                     ui->ReturnConsultationPushButton->hide();
 
+                    ui->FollowupReceivedCheckBox->setCheckState(Qt::Unchecked);
+                    ui->FollowupCompletedCheckBox->setCheckState(Qt::Unchecked);
+                    ui->ReceivedDateEdit->setEnabled(false);
+                    ui->CompletedDateEdit->setEnabled(false);
+
                     switch(controller->getCurrentPatient()->getConsultations()->at(i)->getFollowups()->at(j)->getType()) {
                     case 1: //Medical Test
                         showMedicalTest((MedicalTest*)controller->getCurrentPatient()->getConsultations()->at(i)->getFollowups()->at(j));
@@ -291,12 +300,21 @@ void MainWindow::showMedicalTest(MedicalTest *pMedicalTest)
     ui->DueDateEdit->setDate(QDate(pMedicalTest->getDateDue().getYear(),
                                    pMedicalTest->getDateDue().getMonth(),
                                    pMedicalTest->getDateDue().getDay()));
-    ui->ReceivedDateEdit->setDate(QDate(pMedicalTest->getDateReceived().getYear(),
-                                   pMedicalTest->getDateReceived().getMonth(),
-                                   pMedicalTest->getDateReceived().getDay()));
-    ui->CompletedDateEdit->setDate(QDate(pMedicalTest->getDateCompleted().getYear(),
-                                   pMedicalTest->getDateCompleted().getMonth(),
-                                   pMedicalTest->getDateCompleted().getDay()));
+    if (pMedicalTest->getDateReceived().getYear() != 0) {
+        ui->ReceivedDateEdit->setEnabled(true);
+        ui->ReceivedDateEdit->setDate(QDate(pMedicalTest->getDateReceived().getYear(),
+                                            pMedicalTest->getDateReceived().getMonth(),
+                                            pMedicalTest->getDateReceived().getDay()));
+        ui->FollowupReceivedCheckBox->setChecked(true);
+    }
+    if (pMedicalTest->getDateCompleted().getYear() != 0) {
+        ui->CompletedDateEdit->setEnabled(true);
+        ui->CompletedDateEdit->setDate(QDate(pMedicalTest->getDateCompleted().getYear(),
+                                             pMedicalTest->getDateCompleted().getMonth(),
+                                             pMedicalTest->getDateCompleted().getDay()));
+        ui->FollowupCompletedCheckBox->setChecked(true);
+    }
+
 
     ui->FollowupInfoLabel->setText("Test Type:");
     ui->FollowupInfoLabel->show();
@@ -443,6 +461,8 @@ void MainWindow::clearFollowupTab()
     ui->DueDateEdit->setDate(QDate(2000,1,1));
     ui->ReceivedDateEdit->setDate(QDate(2000,1,1));
     ui->CompletedDateEdit->setDate(QDate(2000,1,1));
+    ui->FollowupReceivedCheckBox->setCheckState(Qt::Unchecked);
+    ui->FollowupCompletedCheckBox->setCheckState(Qt::Unchecked);
 }
 
 void MainWindow::populatePhysicians()
@@ -541,4 +561,20 @@ void MainWindow::on_PatientTreeWidget_itemClicked(QTreeWidgetItem *item)
 void MainWindow::on_SubmitChangesPushButton_clicked()
 {
 
+}
+
+void MainWindow::on_FollowupReceivedCheckBox_stateChanged(int arg1)
+{
+    if (arg1 == 0)
+        ui->ReceivedDateEdit->setEnabled(false);
+    else
+        ui->ReceivedDateEdit->setEnabled(true);
+}
+
+void MainWindow::on_FollowupCompletedCheckBox_stateChanged(int arg1)
+{
+    if (arg1 == 0)
+        ui->CompletedDateEdit->setEnabled(false);
+    else
+        ui->CompletedDateEdit->setEnabled(true);
 }
