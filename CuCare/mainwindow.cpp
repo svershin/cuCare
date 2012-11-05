@@ -375,15 +375,18 @@ void MainWindow::showReturnConsultation(ReturnConsultation *pReturnConsultation)
 void MainWindow::populatePhysicians()
 {
     string *pErrorString = NULL;
-    vector<Physician*> *pPhysicians = NULL;
+    pPhysicians = new vector<Physician *>();
     if (controller->getPhysicianList(pPhysicians, pErrorString)) {
         for (unsigned int i = 0 ; i < pPhysicians->size() ; i++) {
-            ui->PhysicianSelectComboBox->addItem(QString::fromStdString(pPhysicians->at(i)->getLastName()), pPhysicians->at(i)->getId());
+            ui->PhysicianSelectComboBox->addItem(QString::fromStdString(pPhysicians->at(i)->getLastName() + ", " + pPhysicians->at(i)->getFirstName()), pPhysicians->at(i)->getId());
         }
     }
 }
 
 void MainWindow::populatePatientTree()
 {
-    QTreeWidgetItem *pPatientTree = new QTreeWidgetItem(ui->PatientTreeWidget);
+    ui->PatientTreeWidget->clear();
+
+    QTreeWidgetItem *pPatientWidget = new QTreeWidgetItem(ui->PatientTreeWidget);
+    pPatientWidget->setText(0, QString::fromStdString(controller->getCurrentPatient()->getLastName() + string(", ") + controller->getCurrentPatient()->getFirstName()));
 }

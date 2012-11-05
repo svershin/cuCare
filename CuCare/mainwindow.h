@@ -28,6 +28,8 @@ private:
     Ui::MainWindow *ui;
     MasterController *controller;
 
+    vector<Physician*> *pPhysicians;
+
     void enablePatientEditing();
     void disablePatientEditing();
 

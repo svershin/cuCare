@@ -18,19 +18,14 @@ PatientSelectDialog::PatientSelectDialog(MasterController *controllerParam, QWid
 
     //Populate the list with patient names.
     string *pErrorString = NULL;
-    QString nameTempString;
     QListWidgetItem *tempListItem;
 
     if ( controller->getPatientList(pPatientList, pErrorString) ) {
         ui->PatientListWidget->setSortingEnabled(true);
         for (unsigned int i = 0 ; i < pPatientList->size() ; i++) {
             //Build the list item in the format "Lastname, Firstname"
-            nameTempString = QString::fromStdString(pPatientList->at(i)->getLastName());
-            nameTempString.append(", ");
-            nameTempString.append(QString::fromStdString(pPatientList->at(i)->getFirstName()));
-
             //Populate the list item, also storing the patient ID for simple patient selection.
-            tempListItem = new QListWidgetItem(nameTempString);
+            tempListItem = new QListWidgetItem(QString::fromStdString(pPatientList->at(i)->getLastName() + string(", ") + pPatientList->at(i)->getFirstName()));
             tempListItem->setData(Qt::UserRole, pPatientList->at(i)->getId());
 
             ui->PatientListWidget->addItem(tempListItem);
