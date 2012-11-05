@@ -5,7 +5,7 @@
 
 #include "MasterController/MasterController.h"
 #include "patientselectdialog.h"
-#include "../CuCareModel/Patient.h"
+#include "../CuCareModel/ModelFiles.h"
 
 namespace Ui {
 class MainWindow;
@@ -30,6 +30,18 @@ private:
 
     void enablePatientEditing();
     void disablePatientEditing();
+
+    void showPatientInfo();
+    void showConsultationInfo(Consultation *pConsultation);
+
+    void showFollowup();
+    void showMedicalTest(MedicalTest *pMedicalTest);
+    void showMedicationRenewal(MedicationRenewal *pMedicationRenewal);
+    void showReferral(Referral *pReferral);
+    void showResultantFollowup(ResultantFollowup *pResultantFollowup);
+    void showReturnConsultation(ReturnConsultation *pReturnConsultation);
+
+    void populatePhysicians();
 };
 
 #endif // MAINWINDOW_H
