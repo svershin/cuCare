@@ -252,10 +252,7 @@ void MainWindow::showFollowup(int fid, int cid)
                     case 3: //Referral
                         showReferral((Referral*)controller->getCurrentPatient()->getConsultations()->at(i)->getFollowups()->at(j));
                         break;
-                    case 4: //ResultantFollowup
-                        showResultantFollowup((ResultantFollowup*)controller->getCurrentPatient()->getConsultations()->at(i)->getFollowups()->at(j));
-                        break;
-                    case 5: //ReturnConsultation
+                    case 4: //ReturnConsultation
                         showReturnConsultation((ReturnConsultation*)controller->getCurrentPatient()->getConsultations()->at(i)->getFollowups()->at(j));
                         break;
                     }
@@ -391,44 +388,6 @@ void MainWindow::showReferral(Referral *pReferral)
     ui->FollowupInfoLabel2->show();
     ui->FollowupInfoTextEdit2->setText(QString::fromStdString(pReferral->getResults()));
     ui->FollowupInfoTextEdit2->show();
-}
-
-void MainWindow::showResultantFollowup(ResultantFollowup *pResultantFollowup)
-{
-    Followup::FollowupStatus fStat = pResultantFollowup->getStatus();
-    switch(fStat) {
-    case Followup::FSTAT_PENDING:
-        ui->FollowupStatusComboBox->setCurrentIndex(ui->FollowupStatusComboBox->findText("Pending"));
-        break;
-    case Followup::FSTAT_OVERDUE:
-        ui->FollowupStatusComboBox->setCurrentIndex(ui->FollowupStatusComboBox->findText("Overdue"));
-        break;
-    case Followup::FSTAT_RECEIVED:
-        ui->FollowupStatusComboBox->setCurrentIndex(ui->FollowupStatusComboBox->findText("Received"));
-        break;
-    case Followup::FSTAT_COMPLETED:
-        ui->FollowupStatusComboBox->setCurrentIndex(ui->FollowupStatusComboBox->findText("Completed"));
-        break;
-    case Followup::FSTAT_ERROR:
-        //handle error case here
-        ui->FollowupStatusComboBox->setCurrentIndex(ui->FollowupStatusComboBox->findText("Pending"));
-        break;
-    }
-
-    ui->DueDateEdit->setDate(QDate(pResultantFollowup->getDateDue().getYear(),
-                                   pResultantFollowup->getDateDue().getMonth(),
-                                   pResultantFollowup->getDateDue().getDay()));
-    ui->ReceivedDateEdit->setDate(QDate(pResultantFollowup->getDateReceived().getYear(),
-                                   pResultantFollowup->getDateReceived().getMonth(),
-                                   pResultantFollowup->getDateReceived().getDay()));
-    ui->CompletedDateEdit->setDate(QDate(pResultantFollowup->getDateCompleted().getYear(),
-                                   pResultantFollowup->getDateCompleted().getMonth(),
-                                   pResultantFollowup->getDateCompleted().getDay()));
-
-    ui->FollowupInfoLabel->setText("Results:");
-    ui->FollowupInfoLabel->show();
-    ui->FollowupInfoTextEdit->setText(QString::fromStdString(pResultantFollowup->getResults()));
-    ui->FollowupInfoTextEdit->show();
 }
 
 void MainWindow::showReturnConsultation(ReturnConsultation *pReturnConsultation)

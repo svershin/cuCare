@@ -47,7 +47,6 @@ private:
     void showMedicalTest(MedicalTest *pMedicalTest);
     void showMedicationRenewal(MedicationRenewal *pMedicationRenewal);
     void showReferral(Referral *pReferral);
-    void showResultantFollowup(ResultantFollowup *pResultantFollowup);
     void showReturnConsultation(ReturnConsultation *pReturnConsultation);
 
     void clearConsultationTab();
