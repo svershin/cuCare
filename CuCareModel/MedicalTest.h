@@ -16,7 +16,6 @@ using namespace std;
 
 class MedicalTest:public ResultantFollowup
 {
-
     Q_OBJECT
 
     Q_PROPERTY(QString testType READ qGetTestType WRITE qGetTestType)
@@ -38,6 +37,11 @@ public:
 
     string getTestType();
     void setTestType(const string value);
+
+    //Special getters and setters for serialization purposes
+    QString qGetTestType();
+    void qSetTestType(const qString value);
+
 
 protected:
 private:

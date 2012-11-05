@@ -16,6 +16,10 @@ using namespace std;
 
 class ResultantFollowup:public Followup
 {
+    Q_OBJECT
+
+    Q_PROPERTY(QString results READ qGetResults WRITE qSetResults)
+
 public:
 
     // Constructor
@@ -32,6 +36,12 @@ public:
 
     string getResults();
     void setResults(const string value);
+
+
+    //Special getters and setters for serialization purposes
+    QString qGetResults();
+    void qSetResults(const QString value);
+
 
 protected:
 private:

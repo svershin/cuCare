@@ -11,11 +11,19 @@
 
 #include <string>
 #include "Date.h"
+#include <QString>
+#include <QVariantMap>
 
 using namespace std;
 
-class HealthCard
+class HealthCard : public QObject
 {
+
+    Q_OBJECT
+
+    Q_PROPERTY(QString number READ qGetNumber WRITE qSetNumber)
+    Q_PROPERTY(QVariantMap expiry READ qGetExpiry)
+
 public:
 
     // Constructor
@@ -29,6 +37,14 @@ public:
 
     Date getExpiry();
     void setExpiry(const Date value);
+
+
+    //Special getters and setters for serialization purposes
+    QString qGetNumber();
+    void qSetNumber(const QString value);
+
+    QVariantMap qGetExpiry();
+    //void qSetExpiry(const QVariantMap);
 
 protected:
 private:

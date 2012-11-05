@@ -13,9 +13,9 @@ class Date : public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(int READ getDay WRITE setDay)
-    Q_PROPERTY(int READ getMonth WRITE setMonth)
-    Q_PROPERTY(int READ getYear WRITE setYear)
+    Q_PROPERTY(int day READ getDay WRITE setDay)
+    Q_PROPERTY(int month READ getMonth WRITE setMonth)
+    Q_PROPERTY(int year READ getYear WRITE setYear)
 
 public:
 

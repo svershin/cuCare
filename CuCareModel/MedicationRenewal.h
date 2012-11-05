@@ -37,6 +37,11 @@ public:
     string getMedication();
     void setMedication(const string value);
 
+    //Special getters and setters for serialization purposes
+    QString qGetMedication();
+    void qSetMedication(const QString value);
+
+
 protected:
 private:
     string medication;

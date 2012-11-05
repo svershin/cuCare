@@ -78,12 +78,12 @@ void Consultation::qSetDiagnosis(const QString value){diagnosis = value.toStdStr
 QString Consultation::qGetComments(){return QString::fromStdString(comments);}
 void Consultation::qSetComments(const QString value){comments = value.toStdString();}
 
-QVariantMap Consultation::qGetDate();
-void Consultation::qSetDate(const QVariantMap value);
+QVariantMap Consultation::qGetDate(){return QJson::QObjectHelper::qobject2qvariant(&date);}
+//void Consultation::qSetDate(const QVariantMap value);
 
-QVariantMap Consultation::qGetTime();
-void Consultation::qSetTime(const QVariantMap value);
+QVariantMap Consultation::qGetTime(){return QJson::QObjectHelper::qobject2qvariant(&time);}
+//void Consultation::qSetTime(const QVariantMap value);
 
-void Consultation::qPutDeleted(const bool value);
+void Consultation::qPutDeleted(const bool value){deleted = value;}
 
 // EOF

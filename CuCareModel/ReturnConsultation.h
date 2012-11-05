@@ -33,6 +33,7 @@ public:
     Consultation* getConsult();
     void setConsult(Consultation* const value);
 
+
 protected:
 private:
     Consultation* pConsult;

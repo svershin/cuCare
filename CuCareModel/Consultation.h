@@ -29,8 +29,8 @@ class Consultation : public QObject
     Q_PROPERTY(QString diagnosis READ qGetDiagnosis WRITE qSetDiagnosis)
     Q_PROPERTY(QString comments READ qGetComments WRITE qSetComments)
     Q_PROPERTY(ConsultationStatus status READ getStatus WRITE setStatus)
-    Q_PROPERTY(QVariantMap date READ qGetDate WRITE qSetDate)
-    Q_PROPERTY(QVariantMap time READ qGetTime WRITE qSetTime)
+    Q_PROPERTY(QVariantMap date READ qGetDate)
+    Q_PROPERTY(QVariantMap time READ qGetTime)
     Q_PROPERTY(bool deleted READ isDeleted WRITE qPutDeleted)
     Q_ENUMS(ConsultationStatus)
 
@@ -102,10 +102,10 @@ public:
     void qSetComments(const QString value);
 
     QVariantMap qGetDate();
-    void qSetDate(const QVariantMap value);
+    //void qSetDate(const QVariantMap value);
 
     QVariantMap qGetTime();
-    void qSetTime(const QVariantMap value);
+    //void qSetTime(const QVariantMap value);
 
     void qPutDeleted(const bool value);
 

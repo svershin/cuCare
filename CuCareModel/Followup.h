@@ -18,18 +18,13 @@ class Followup : public QObject
 
     Q_PROPERTY(int id READ getId WRITE setId)
     Q_PROPERTY(FollowupStatus status READ getStatus WRITE setStatus)
-    Q_PROPERTY(QVariant dateDue READ qGetDateDue WRITE qSetDataDue)
-    Q_PROPERTY(QVariant dateReceived READ qGetDateReceived WRITE qSetDateReceived)
-    Q_PROPERTY(QVariant dateCompleted READ qGetDateCompleted WRITE qSetDateCompleted)
+    Q_PROPERTY(QVariantMap dateDue READ qGetDateDue)
+    Q_PROPERTY(QVariantMap dateReceived READ qGetDateReceived)
+    Q_PROPERTY(QVariantMap dateCompleted READ qGetDateCompleted)
     Q_PROPERTY(bool deleted READ isDeleted WRITE qPutDeleted)
     Q_ENUMS(FollowupStatus)
 
-    int id;
-    FollowupStatus status;
-    Date dateDue;
-    Date dateReceived;
-    Date dateCompleted;
-    bool deleted;
+
 
 public:
 
@@ -70,6 +65,18 @@ public:
 
     void markDeleted();
     bool isDeleted();
+
+
+    //Special getters and setters for serialization purposes
+    QVariantMap qGetDateDue();
+    void qSetDateDue(const QVariantMap value);
+
+    QVariantMap qGetDateReceived();
+    void qSetDateReceived(const QVariantMap value);
+
+    QVariantMap qGetDateCompleted();
+    void qSetDateCompleted(const QVariantMap value);
+
 
 protected:
 private:

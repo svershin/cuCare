@@ -38,6 +38,12 @@ public:
     string getSpecialistName();
     void setSpecialistName(const string value);
 
+
+    //Special getters and setters for serialization purposes
+    QString qGetSpecialistName();
+    void qSetSpecialistName(const QString value);
+
+
 protected:
 private:
     string specialistName;

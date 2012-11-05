@@ -13,6 +13,8 @@
 
 class AdminAssistant:public User
 {
+    Q_OBJECT
+
 public:
 
     // Constructor

@@ -30,11 +30,13 @@ class Patient : public QObject
     Q_PROPERTY(QString lastName READ qGetLastName WRITE qSetLastName)
     Q_PROPERTY(QString notes READ qGetNotes WRITE qSetNotes)
     Q_PROPERTY(QString contact READ qGetContact WRITE qSetContact)
-    Q_PROPERTY(QVariantMap address READ qGetAddress WRITE qSetAddress)
-    Q_PROPERTY(QVariantMap dateOfBirth READ qGetDateOfBirth WRITE qSetDateOfBirth)
-    Q_PROPERTY(QVariantMap dateAddedToSystem READ qGetDateAddedToSystem WRITE qSetDateAddedToSystem)
-    Q_PROPERTY(QVariantMap healthCard READ qGetHealthCard WRITE qSetHealthCard)
+    Q_PROPERTY(QVariantMap address READ qGetAddress)
+    Q_PROPERTY(QVariantMap dateOfBirth READ qGetDateOfBirth)
+    Q_PROPERTY(QVariantMap dateAddedToSystem READ qGetDateAddedToSystem)
+    Q_PROPERTY(QVariantMap healthCard READ qGetHealthCard)
     Q_PROPERTY(bool deleted READ getDeleted WRITE qPutDeleted)
+
+
 
 public:
 
@@ -88,6 +90,33 @@ public:
 
     void markDeleted();
     bool isDeleted();
+
+
+    //Special getters and setters for serialization purposes
+    QString qGetFirstName();
+    void qSetFirstName(const QString value);
+
+    QString qGetLastName();
+    void qSetLastName(const QString value);
+
+    QString qGetNotes();
+    void qSetNotes(const QString value);
+
+    QString qGetContact();
+    void qSetContact(const QString value);
+
+    QVariantMap qGetAddress();
+    //void qSetAddress(const QVariantMap);
+
+    QVariantMap qGetDateOfBirth();
+    //void qSetDateOfBirth(const QVariantMap);
+
+    QVariantMap qGetDateAddedToSystem();
+    //void qSetDateAddedToSystem(const QVariantMap);
+
+    QVariantMap qGet();
+    //void qSet(const QVariantMap);
+
 
 protected:
 private:

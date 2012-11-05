@@ -1,7 +1,10 @@
 #ifndef FOLLOWUPFILTER_H
 #define FOLLOWUPFILTER_H
 
-class FollowupFilter
+#include <QObject>
+
+
+class FollowupFilter : public QObject
 {
     Q_OBJECT
 

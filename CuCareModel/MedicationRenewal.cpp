@@ -35,4 +35,10 @@ MedicationRenewal::~MedicationRenewal()
 string MedicationRenewal::getMedication() { return medication; }
 void MedicationRenewal::setMedication(const string value) { medication = value; }
 
+
+// Special getters and setters for serialization purposes
+//
+QString MedicationRenewal::qGetMedication(){return QString::fromStdString(medication);}
+void MedicationRenewal::qSetMedication(const QString value){medication = value.toStdString();}
+
 // EOF

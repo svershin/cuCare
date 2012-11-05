@@ -13,6 +13,8 @@
 
 class Physician:public User
 {
+    Q_OBJECT
+
 public:
 
     // Constructor

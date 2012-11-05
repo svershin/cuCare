@@ -1,6 +1,8 @@
 #ifndef CONSULTATIONFILTER_H
 #define CONSULTATIONFILTER_H
 
+#include <QObject>
+
 class ConsultationFilter : public QObject
 {
     Q_OBJECT
@@ -15,19 +17,6 @@ class ConsultationFilter : public QObject
     Q_PROPERTY(bool timeMatch READ timeGetMatch WRITE timeSetMatch)
     Q_PROPERTY(bool pConsultingPhysMatch READ pConsultingPhysGetMatch WRITE pConsultingPhysSetMatch)
     Q_PROPERTY(bool deletedMatch READ deletedGetMatch WRITE deletedSetMatch)
-
-    bool consultIDMatch;
-    bool patientIdMatch;
-    bool reasonMatch;
-    bool diagnosisMatch;
-    bool commentsMatch;
-    bool statusMatch;
-    bool dateMatch;
-    bool timeMatch;
-    bool pConsultingPhysMatch;
-    bool deletedMatch;
-
-
 
 public:
     ConsultationFilter();

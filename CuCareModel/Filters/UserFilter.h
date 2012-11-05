@@ -14,15 +14,6 @@ class UserFilter : public QObject
     Q_PROPERTY(bool addressMatch READ addressGetMatch WRITE addressSetMatch)
     Q_PROPERTY(bool deletedMatch READ deletedGetMatch WRITE deletedSetMatch)
 
-    bool usernameMatch;
-    bool firstNameMatch;
-    bool lastNameMatch;
-    bool titleMatch;
-    bool dateOfBirthMatch;
-    bool contactMatch;
-    bool addressMatch;
-    bool deletedMatch;
-
 public:
     UserFilter();
 

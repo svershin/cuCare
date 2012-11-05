@@ -1,6 +1,8 @@
 #ifndef PATIENTFILTER_H
 #define PATIENTFILTER_H
 
+#include <QObject>
+
 class PatientFilter : public QObject
 {
     Q_OBJECT

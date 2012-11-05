@@ -77,4 +77,32 @@ vector<Consultation*>* Patient::getConsultations() { return &Consultations; }
 void Patient::markDeleted() { deleted = true; }
 bool Patient::isDeleted() { return deleted; }
 
+
+//Special getters and setters for serialization purposes
+//
+QString Patient::qGetFirstName(){return QString::fromStdSTring(firstName);}
+void Patient::qSetFirstName(const QString value){firstName = value.toStdString();}
+
+QString Patient::qGetLastName(){return QString::fromStdSTring(lastName);}
+void Patient::qSetLastName(const QString value){lastName = value.toStdString();}
+
+QString Patient::qGetNotes(){return QString::fromStdSTring(notes);}
+void Patient::qSetNotes(const QString value){notes = value.toStdString();}
+
+QString Patient::qGetContact(){return QString::fromStdSTring(contact);}
+void Patient::qSetContact(const QString value){contact = value.toStdString();}
+
+QVariantMap Patient::qGetAddress();
+//void Patient::qSetAddress(const QVariantMap);
+
+QVariantMap Patient::qGetDateOfBirth();
+//void Patient::qSetDateOfBirth(const QVariantMap);
+
+QVariantMap Patient::qGetDateAddedToSystem();
+//void Patient::qSetDateAddedToSystem(const QVariantMap);
+
+QVariantMap Patient::qGet();
+//void Patient::qSet(const QVariantMap);
+
+
 // EOF

@@ -13,14 +13,24 @@
 #include "Date.h"
 #include "ContactInfo.h"
 #include "Address.h"
+#include <QVariantMap>
 
 using namespace std;
+
 
 class User : public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(
+    Q_PROPERTY(QString username READ qGetUserName WRITE qSetUserName)
+    Q_PROPERTY(QString firstName READ qGetFirstName WRITE qSetFirstName)
+    Q_PROPERTY(QString lastName READ qGetLastName WRITE qSetLastName)
+    Q_PROPERTY(QVariantMap dateOfBirth READ qGetDateOfBirth)
+    Q_PROPERTY(QVariantMap contact READ qGetContact)
+    Q_PROPERTY(QVariantMap address READ qGetAddress)
+    Q_PROPERTY(bool deleted READ isDeleted WRITE qPutDeleted)
+
+
 
 public:
 
@@ -56,6 +66,26 @@ public:
     virtual int getType() = 0;
     void markDeleted();
     bool isDeleted();
+
+
+    //Special getters and setters for serialization purposes
+    QString qGetUserName();
+    void qSetUserName(const QString value);
+
+    QString qGetFirstName();
+    void qSetFirstName(const QString value);
+
+    QString qGetLastName();
+    void qSetLastName(const QString value);
+
+    QVariantMap qGetDateOfBirth();
+    //void qSetDateOfBirth(const QVariantMap value);
+
+    QVariantMap qGetContact();
+    //void qSetContact(const QVariantMap value);
+
+    QVariantMap qGetAddress();
+    //void qSetAddress(const QVariantMap value);
 
 protected:
 private:

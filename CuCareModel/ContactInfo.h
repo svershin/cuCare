@@ -23,11 +23,6 @@ class ContactInfo : public QObject
     Q_PROPERTY(QString email READ qGetEmail WRITE qSetEmail)
     Q_PROPERTY(QString workEmail READ qGetWorkEmail WRITE qSetEmail)
 
-    string workPhone;
-    string cellPhone;
-    string email;
-    string workEmail;
-
 public:
 
     // Constructor
@@ -50,6 +45,21 @@ public:
 
     string getWorkEmail();
     void setWorkEmail(const string value);
+
+
+    //Special getters and setters for serialization purposes
+    QString qGetWorkPhone();
+    void qSetWorkPhone(const QString value);
+
+    QString qGetCellPhone();
+    void qSetCellPhone(const QString value);
+
+    QString qGetEmail();
+    void qSetEmail(const QString value);
+
+    QString qGetWorkEmail();
+    void qSetWorkEmail(const QString value);
+
 
 protected:
 private:

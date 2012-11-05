@@ -48,4 +48,16 @@ void Followup::setDateCompleted(const Date value) { dateCompleted = value; }
 void Followup::markDeleted() { deleted = true; }
 bool Followup::isDeleted() { return deleted; }
 
+
+// Special getters and setters for serialization purposes
+//
+QVariantMap qGetDateDue(){return QJson::QObjectHelper::qobject2qvariant(&dateDue);}
+//void qSetDateDue(const QVariantMap value){}
+
+QVariantMap qGetDateReceived(){return QJson::QObjectHelper::qobject2qvariant(&dateReceived);}
+//void qSetDateReceived(const QVariantMap value){}
+
+QVariantMap qGetDateCompleted(){return QJson::QObjectHelper::qobject2qvariant(&dateCompleted);}
+//void qSetDateCompleted(const QVariantMap value){}
+
 // EOF
