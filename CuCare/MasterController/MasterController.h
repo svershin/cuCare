@@ -10,9 +10,10 @@
 #define MASTERCONTROLLER_H
 
 #include "../CuCareModel/ModelFiles.h"
-#include "../CuCareCommunications/Communications/request.h"
+// #include "../CuCareCommunications/Communications/request.h"
 #include <string>
 #include <vector>
+using namespace std;
 
 class MasterController {
 public:

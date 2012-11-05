@@ -25,64 +25,65 @@ MasterController::~MasterController()
 
 // Access Control ---------------------------------------------------------------------------------------
 
-AccessControlStatus MasterController::loginUser(string username, string *pErrString)
+MasterController::AccessControlStatus MasterController::loginUser(string username, string *pErrString)
 {
     // Try to see if the user is a valid AdminAssistant
-    AdminAssistant inputAdminAssistant(username, "", "", Date(0,0,0), ConactInfo("","","",""), Address("","","","",""), false);
+    AdminAssistant inputAdminAssistant(username, "", "", Date(0,0,0), ContactInfo("","","",""), Address("","","","",""), false);
     UserFilter inputFilterUser;
-    inputFilterUser->usernameSetMatch(true);
+    inputFilterUser.usernameSetMatch(true);
     vector<AdminAssistant*>* pReturnAdminAssistant = NULL;
 
-    requestStatus = Request.pullAdminAssistant(pErrString, &inputAdminAssistant, inputFilterUser, pReturnAdminAssistant);
+ //   requestStatus = Request.pullAdminAssistant(pErrString, &inputAdminAssistant, inputFilterUser, pReturnAdminAssistant);
+    int requestStatus;
 
     if(!requestStatus)
         return AC_FAILED; // COMMS ERROR
 
     if(!pReturnAdminAssistant->empty() )
-        return authorize((User)pReturnAdminAssistant->front());
+        return authorize(pReturnAdminAssistant->front());
 
     // Try to see if the user is a valid Physician
     Physician inputPhysician(0, username, "", "", Date(0,0,0), ContactInfo("","","",""), Address("", "", "", "", ""), false);
     PhysicianFilter inputFilterPhysician;
-    inputFilterPhysician->usernameSetMatch(true);
+    inputFilterPhysician.usernameSetMatch(true);
     vector<Physician*>* pReturnPhysician = NULL;
 
-    int requestStatus = Request.pullPhysician(pErrString, &inputPhysician, inputFilterPhysician, pReturnPhysician);
+ //   int requestStatus = Request.pullPhysician(pErrString, &inputPhysician, inputFilterPhysician, pReturnPhysician);
 
     if(!requestStatus)
         return AC_FAILED; // COMMS ERROR
 
     if(!pReturnPhysician->empty() )
-        return authorize((User)pReturnPhysician->front());
+        return authorize(pReturnPhysician->front());
 
     // Try to see if the user is a valid Physician
     SysAdmin inputSysAdmin(username, "", "", Date(0,0,0), ContactInfo("","","",""), Address("", "", "", "", ""), false);
     vector<SysAdmin*>* pReturnSysAdmin = NULL;
 
-    int requestStatus = Request.pullSysAdmin(pErrString, &inputSysAdmin, inputFilterUser, pReturnSysAdmin);
+ //   int requestStatus = Request.pullSysAdmin(pErrString, &inputSysAdmin, inputFilterUser, pReturnSysAdmin);
 
     if(!requestStatus)
         return AC_FAILED; // COMMS ERROR
 
     if(!pReturnSysAdmin->empty() )
-        return authorize((User)pReturnSysAdmin->front());
+        return authorize(pReturnSysAdmin->front());
 
     return AC_FAILED;
 }
 
-AccessControlStatus MasterController::loginStatus()
+MasterController::AccessControlStatus MasterController::loginStatus()
 {
     return status;
 }
 
-AccessControlStatus MasterController::authorize(User* user)
+MasterController::AccessControlStatus MasterController::authorize(User* user)
 {
     pCurrentUser = user;
-    status = pCurrentUser->getType();
+    status = (AccessControlStatus)(pCurrentUser->getType());
     return loginStatus();
 }
 
-AccessControlStatus MasterController::logout()
+MasterController::AccessControlStatus MasterController::logout()
 {
     delete pCurrentUser;
     pCurrentUser = NULL;
@@ -95,7 +96,8 @@ AccessControlStatus MasterController::logout()
 bool MasterController::createPatient(Patient* pInputPatient, int physicianId, string *pErrString)
 {
     int uid = 0;
-    int requestStatus = Request.createPatient(pErrString, pInputPatient, physicianId, &uid);
+ //   int requestStatus = Request.createPatient(pErrString, pInputPatient, physicianId, &uid);
+    int requestStatus;
 
     if(!requestStatus)
         return 0; // COMMS ERROR
@@ -113,7 +115,8 @@ bool MasterController::createPatient(Patient* pInputPatient, int physicianId, st
 
 bool MasterController::modifyPatient(string *pErrString)
 {
-    int requestStatus = Request.pushPatient(pErrString, pCurrentPatient, pCurrentPatient->getPhysician()->getId());
+ //   int requestStatus = Request.pushPatient(pErrString, pCurrentPatient, pCurrentPatient->getPhysician()->getId());
+    int requestStatus;
 
     if(!requestStatus)
         return 0; // COMMS ERROR
@@ -123,10 +126,11 @@ bool MasterController::modifyPatient(string *pErrString)
 
 bool MasterController::getPatientList(vector<Patient *> *pResults, string *pErrString)
 {
-    Patient inputPatient(0, "", "", "", ConactInfo("","","",""), Address("","","","",""), Date(0,0,0), Date(0,0,0), NULL, HealthCard("", Date(0,0,0)), false);
+    Patient inputPatient(0, "", "", "", ContactInfo("","","",""), Address("","","","",""), Date(0,0,0), Date(0,0,0), NULL, HealthCard("", Date(0,0,0)), false);
     PatientFilter inputFilter;
 
-    requestStatus = Request.pullPatient(pErrString, &inputPatient, inputFilter, pResults);
+//    requestStatus = Request.pullPatient(pErrString, &inputPatient, inputFilter, pResults);
+    int requestStatus;
 
     if(!requestStatus)
         return 0; // COMMS ERROR
@@ -139,17 +143,18 @@ bool MasterController::setCurrentPatient(int patientId, string *pErrString)
     if(pCurrentPatient != NULL)
         delete pCurrentPatient;
 
-    Patient inputPatient(patientId, "", "", "", ConactInfo("","","",""), Address("","","","",""), Date(0,0,0), Date(0,0,0), NULL, HealthCard("", Date(0,0,0)), false);
+    Patient inputPatient(patientId, "", "", "", ContactInfo("","","",""), Address("","","","",""), Date(0,0,0), Date(0,0,0), NULL, HealthCard("", Date(0,0,0)), false);
     PatientFilter inputFilter;
-    inputFilter->patientIdSetMatch(true);
+    inputFilter.idSetMatch(true);
     vector<Patient*>* pResults = NULL;
 
-    int requestStatus = Request.pullPatient(pErrString, inputPatient, inputFilter, pResults);
+ //   int requestStatus = Request.pullPatient(pErrString, inputPatient, inputFilter, pResults);
+    int requestStatus;
     if(!requestStatus)
         return 0; // COMMS ERROR
 
     if(!pResults->empty()) {
-        pCurrentPatient = pResults->front());
+        pCurrentPatient = pResults->front();
     } else
         return 0;
 
@@ -167,19 +172,20 @@ Patient* MasterController::getCurrentPatient()
 bool MasterController::createConsultation(Consultation* pInputConsultation, string *pErrString)
 {
     int uid = 0;
-    int requestStatus = Request.createConsultation(pErrString, pInputPatient, physicianId, &uid);
+//    int requestStatus = Request.createConsultation(pErrString, pInputPatient, physicianId, &uid);
+    int requestStatus;
 
     if(!requestStatus)
         return 0; // COMMS ERROR
 
-    if(pCurrentPatient != NULL)
+/*    if(pCurrentPatient != NULL)
         delete pCurrentPatient;
     pCurrentPatient = pInputPatient;
     pCurrentPatient->setId(uid);
 
     if(pCurrentPatient != NULL)
         return 1;
-    else
+    else */
         return 0;
 
     // !!! need to add code here to add the consultation to currentPatient
