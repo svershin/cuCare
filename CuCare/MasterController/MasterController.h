@@ -63,7 +63,7 @@ public:
        pResults - Ptr to a vector of Patient ptrs, will get populated with data from storage
        pErrString - A ptr to a string that will be populated with the error message (if any)
     */
-    bool getPatientList(vector<Patient *> *pResults, string *pErrString); // no filter
+    bool getPatientList(vector<Patient *> *&pResults, string *pErrString); // no filter
 
     // Overloaded getPatientList() that will allow filtered pulling of patients
     // NOTE: Not required for the prototype

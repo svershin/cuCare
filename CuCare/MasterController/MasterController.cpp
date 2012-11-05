@@ -155,42 +155,50 @@ bool MasterController::setCurrentPatient(int patientId, string *pErrString)
     inputFilterConsultation.patientIdSetMatch(true);
 
     //will need to change as physican ids will come back as a vector of ints
-    requestStatus = server.pullConsultation(pErrString, inputConsultation, inputFilterConsultation, 0, pCurrentPatient->getId(), pCurrentPatient->getConsultations());
+    requestStatus = server.pullConsultation(pErrString, &inputConsultation, inputFilterConsultation, 0, pCurrentPatient->getId(), pCurrentPatient->getConsultations());
     if(!requestStatus)
         return 0; // COMMS ERROR
 
     // Need to populate physicians into every consultation
 
     for(unsigned int i=0; i < pCurrentPatient->getConsultations()->size(); i++) {
-        Referral pReferralValues(0, (Followup::FollowupStatus)0, Date(0,0,0), Date(0,0,0), Date(0.0.0), "", "", false);
+        Referral pReferralValues(0, (Followup::FollowupStatus)0, Date(0,0,0), Date(0,0,0), Date(0,0,0), "", "", false);
         ReferralFilter inputFilterReferral;
         vector<Referral*> pOutputReferral;
         server.pullReferral(pErrString, &pReferralValues, inputFilterReferral, pCurrentPatient->getConsultations()->at(i)->getConsultID(), &pOutputReferral);
         if(!requestStatus)
             return 0; // COMMS ERROR
 
-        MedicalTest pMedicalTestValues(0, (Followup::FollowupStatus)0, Date(0,0,0), Date(0,0,0), Date(0.0.0), "", "", false);
+        MedicalTest pMedicalTestValues(0, (Followup::FollowupStatus)0, Date(0,0,0), Date(0,0,0), Date(0,0,0), "", "", false);
         MedicalTestFilter inputFilterMedicalTest;
         vector<MedicalTest*> pOutputMedicalTest;
         server.pullMedicalTest(pErrString, &pMedicalTestValues, inputFilterMedicalTest, pCurrentPatient->getConsultations()->at(i)->getConsultID(), &pOutputMedicalTest);
         if(!requestStatus)
             return 0; // COMMS ERROR
 
-        Referral pReferralValues1(0, (Followup::FollowupStatus)0, Date(0,0,0), Date(0,0,0), Date(0.0.0), "", "", false);
-        ReferralFilter inputFilterReferral;
-        vector<Referral*> pOutputReferral;
-        server.pullReturnConsultation(pErrString, ReturnConsultation *pReturnConsultationValues, ReturnConsultationFilter inputFilter, int consultationId, int nextConsultationId, vector<ReturnConsultation*> *pOutputReturnConsultation);
+        ReturnConsultation pReturnConsultationValues(0, (Followup::FollowupStatus)0, Date(0,0,0), Date(0,0,0), Date(0,0,0), NULL, false);
+        ReturnConsultationFilter inputFilterReturnConsultation;
+        vector<ReturnConsultation*> pOutputReturnConsultation;
+        server.pullReturnConsultation(pErrString, &pReturnConsultationValues, inputFilterReturnConsultation, pCurrentPatient->getConsultations()->at(i)->getConsultID(), 0, &pOutputReturnConsultation);
         if(!requestStatus)
             return 0; // COMMS ERROR
 
-        Referral pReferralValues1(0, (Followup::FollowupStatus)0, Date(0,0,0), Date(0,0,0), Date(0.0.0), "", "", false);
-        ReferralFilter inputFilterReferral;
-        vector<Referral*> pOutputReferral;
-        server.pullMedicationRenewal(pErrString, MedicationRenewal *pMedicationRenewalValues, MedicationRenewalFilter inputFilter, int consultationId, vector<MedicationRenewal*> *pOutputMedicationRenewal);
+        MedicationRenewal pMedicationRenewalValues(0, (Followup::FollowupStatus)0, Date(0,0,0), Date(0,0,0), Date(0,0,0), "", false);
+        MedicationRenewalFilter inputFilterMedicationRenewal;
+        vector<MedicationRenewal*> pOutputMedicationRenewal;
+        server.pullMedicationRenewal(pErrString, &pMedicationRenewalValues, inputFilterMedicationRenewal, pCurrentPatient->getConsultations()->at(i)->getConsultID(), &pOutputMedicationRenewal);
         if(!requestStatus)
             return 0; // COMMS ERROR
+
+        for(unsigned int i=0; i < pOutputReferral.size(); i++)
+            pCurrentPatient->getConsultations()->at(i)->getFollowups()->push_back(pOutputReferral.at(i));
+        for(unsigned int i=0; i < pOutputMedicalTest.size(); i++)
+            pCurrentPatient->getConsultations()->at(i)->getFollowups()->push_back(pOutputMedicalTest.at(i));
+        for(unsigned int i=0; i < pOutputReturnConsultation.size(); i++)
+            pCurrentPatient->getConsultations()->at(i)->getFollowups()->push_back(pOutputReturnConsultation.at(i));
+        for(unsigned int i=0; i < pOutputMedicationRenewal.size(); i++)
+            pCurrentPatient->getConsultations()->at(i)->getFollowups()->push_back(pOutputMedicationRenewal.at(i));
     }
-
 
     return 1;
 }
