@@ -168,8 +168,21 @@ void MainWindow::showPatientInfo()
     ui->PatientNotesTextEdit->setText(QString::fromStdString(controller->getCurrentPatient()->getNotes()));
 }
 
-void MainWindow::showConsultationInfo(Consultation *pConsultation)
+void MainWindow::showConsultationInfo(int cid)
 {
+
+    Consultation *pConsultation = NULL;
+
+    for (unsigned int i = 0 ; i < controller->getCurrentPatient()->getConsultations()->size() ; i++) {
+        if (controller->getCurrentPatient()->getConsultations()->at(i)->getConsultID() == cid) {
+            pConsultation = controller->getCurrentPatient()->getConsultations()->at(i);
+            break;
+        }
+    }
+
+    if (pConsultation == NULL)
+        return;
+
     //Switch to consultation tab and disable other tabs
     ui->DisplayTabsWidget->setTabEnabled(1, true);
     ui->DisplayTabsWidget->setCurrentIndex(1);
@@ -205,26 +218,50 @@ void MainWindow::showConsultationInfo(Consultation *pConsultation)
     }
 }
 
-void MainWindow::showFollowup()
+void MainWindow::showFollowup(int fid, int cid)
 {
-    //Switch to followup tab and disable other tabs
-    ui->DisplayTabsWidget->setTabEnabled(2, true);
-    ui->DisplayTabsWidget->setCurrentIndex(2);
-    ui->DisplayTabsWidget->setTabEnabled(0, false);
-    ui->DisplayTabsWidget->setTabEnabled(1, false);
+    for (unsigned int i = 0 ; i < controller->getCurrentPatient()->getConsultations()->size() ; i++) {
+        if (controller->getCurrentPatient()->getConsultations()->at(i)->getConsultID() == cid) {
+            for (unsigned int j = 0 ; j < controller->getCurrentPatient()->getConsultations()->at(i)->getFollowups()->size() ; j++) {
+                if (controller->getCurrentPatient()->getConsultations()->at(i)->getFollowups()->at(j)->getId() == fid) {
 
-    //Hide buttons/fields for specific followup types
-    ui->FollowupInfoLabel->hide();
-    ui->FollowupInfoTextEdit->hide();
-    ui->FollowupInfoLabel2->hide();
-    ui->FollowupInfoTextEdit2->hide();
-    ui->ReturnConsultationPushButton->hide();
+                    //Switch to followup tab and disable other tabs
+                    ui->DisplayTabsWidget->setTabEnabled(2, true);
+                    ui->DisplayTabsWidget->setCurrentIndex(2);
+                    ui->DisplayTabsWidget->setTabEnabled(0, false);
+                    ui->DisplayTabsWidget->setTabEnabled(1, false);
+
+                    //Hide buttons/fields for specific followup types
+                    ui->FollowupInfoLabel->hide();
+                    ui->FollowupInfoTextEdit->hide();
+                    ui->FollowupInfoLabel2->hide();
+                    ui->FollowupInfoTextEdit2->hide();
+                    ui->ReturnConsultationPushButton->hide();
+
+                    switch(controller->getCurrentPatient()->getConsultations()->at(i)->getFollowups()->at(j)->getType()) {
+                    case 1: //Medical Test
+                        showMedicalTest((MedicalTest*)controller->getCurrentPatient()->getConsultations()->at(i)->getFollowups()->at(j));
+                    case 2: //Medication Renewal
+                        showMedicationRenewal((MedicationRenewal*)controller->getCurrentPatient()->getConsultations()->at(i)->getFollowups()->at(j));
+                    case 3: //Referral
+                        showReferral((Referral*)controller->getCurrentPatient()->getConsultations()->at(i)->getFollowups()->at(j));
+                    case 4: //ResultantFollowup
+                        showResultantFollowup((ResultantFollowup*)controller->getCurrentPatient()->getConsultations()->at(i)->getFollowups()->at(j));
+                    case 5: //ReturnConsultation
+                        showReturnConsultation((ReturnConsultation*)controller->getCurrentPatient()->getConsultations()->at(i)->getFollowups()->at(j));
+                    }
+                    break;
+                }
+            }
+            break;
+        }
+    }
+
+
 }
 
 void MainWindow::showMedicalTest(MedicalTest *pMedicalTest)
 {
-    showFollowup();
-
     Followup::FollowupStatus fStat = pMedicalTest->getStatus();
     switch(fStat) {
     case Followup::FSTAT_PENDING:
@@ -263,8 +300,6 @@ void MainWindow::showMedicalTest(MedicalTest *pMedicalTest)
 
 void MainWindow::showMedicationRenewal(MedicationRenewal *pMedicationRenewal)
 {
-    showFollowup();
-
     Followup::FollowupStatus fStat = pMedicationRenewal->getStatus();
     switch(fStat) {
     case Followup::FSTAT_PENDING:
@@ -298,8 +333,6 @@ void MainWindow::showMedicationRenewal(MedicationRenewal *pMedicationRenewal)
 
 void MainWindow::showReferral(Referral *pReferral)
 {
-    showFollowup();
-
     Followup::FollowupStatus fStat = pReferral->getStatus();
     switch(fStat) {
     case Followup::FSTAT_PENDING:
@@ -338,8 +371,6 @@ void MainWindow::showReferral(Referral *pReferral)
 
 void MainWindow::showResultantFollowup(ResultantFollowup *pResultantFollowup)
 {
-    showFollowup();
-
     Followup::FollowupStatus fStat = pResultantFollowup->getStatus();
     switch(fStat) {
     case Followup::FSTAT_PENDING:
@@ -373,8 +404,6 @@ void MainWindow::showResultantFollowup(ResultantFollowup *pResultantFollowup)
 
 void MainWindow::showReturnConsultation(ReturnConsultation *pReturnConsultation)
 {
-    showFollowup();
-
     Followup::FollowupStatus fStat = pReturnConsultation->getStatus();
     switch(fStat) {
     case Followup::FSTAT_PENDING:
@@ -474,38 +503,10 @@ void MainWindow::on_PatientTreeWidget_itemClicked(QTreeWidgetItem *item, int col
         showPatientInfo();
     case 1: //Consultation has been selected
         cid = item->data(1, Qt::UserRole).toInt();
-
-        for (unsigned int i = 0 ; i < controller->getCurrentPatient()->getConsultations()->size() ; i++) {
-            if (controller->getCurrentPatient()->getConsultations()->at(i)->getConsultID() == cid) {
-                showConsultationInfo(controller->getCurrentPatient()->getConsultations()->at(i));
-                break;
-            }
-        }
-    case 2:
+        showConsultationInfo(cid);
+    case 2: //Followup has been selected
         fid = item->data(1, Qt::UserRole).toInt();
         cid = item->parent()->data(1, Qt::UserRole).toInt();
-
-        for (unsigned int i = 0 ; i < controller->getCurrentPatient()->getConsultations()->size() ; i++) {
-            if (controller->getCurrentPatient()->getConsultations()->at(i)->getConsultID() == cid) {
-                for (unsigned int j = 0 ; j < controller->getCurrentPatient()->getConsultations()->at(i)->getFollowups()->size() ; j++) {
-                    if (controller->getCurrentPatient()->getConsultations()->at(i)->getFollowups()->at(j)->getId() == fid) {
-                        switch(controller->getCurrentPatient()->getConsultations()->at(i)->getFollowups()->at(j)->getType()) {
-                        case 1: //Medical Test
-                            showMedicalTest((MedicalTest*)controller->getCurrentPatient()->getConsultations()->at(i)->getFollowups()->at(j));
-                        case 2: //Medication Renewal
-                            showMedicationRenewal((MedicationRenewal*)controller->getCurrentPatient()->getConsultations()->at(i)->getFollowups()->at(j));
-                        case 3: //Referral
-                            showReferral((Referral*)controller->getCurrentPatient()->getConsultations()->at(i)->getFollowups()->at(j));
-                        case 4: //ResultantFollowup
-                            showResultantFollowup((ResultantFollowup*)controller->getCurrentPatient()->getConsultations()->at(i)->getFollowups()->at(j));
-                        case 5: //ReturnConsultation
-                            showReturnConsultation((ReturnConsultation*)controller->getCurrentPatient()->getConsultations()->at(i)->getFollowups()->at(j));
-                        }
-                        break;
-                    }
-                }
-                break;
-            }
-        }
+        showFollowup(fid, cid);
     }
 }

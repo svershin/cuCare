@@ -39,9 +39,9 @@ private:
     void disablePatientEditing();
 
     void showPatientInfo();
-    void showConsultationInfo(Consultation *pConsultation);
+    void showConsultationInfo(int cid);
 
-    void showFollowup();
+    void showFollowup(int fid, int cid);
     void showMedicalTest(MedicalTest *pMedicalTest);
     void showMedicationRenewal(MedicationRenewal *pMedicationRenewal);
     void showReferral(Referral *pReferral);
