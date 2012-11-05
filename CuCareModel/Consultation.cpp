@@ -1,7 +1,7 @@
 // COMP 3004 FALL 2012
 // Assignment 2: cuCare Prototype
 // Team: The Four Puppeteers
-// Contributing Editors: Sergey Vershinin
+// Contributing Editors: Sergey Vershinin, Mike Yuill
 //
 // Consultation.h - Declaration of base class Consultation
 // Member functions are defined in Consultation.cpp
@@ -19,7 +19,8 @@ Consultation::Consultation
     Time timeParam,
     Physician* pConsultingPhysParam,
     bool deletedParam)
-    : consultID (consultIDParam),
+    : QObject(),
+      consultID (consultIDParam),
       reason (reasonParam),
       diagnosis (diagnosisParam),
       comments (commentsParam),
@@ -28,14 +29,49 @@ Consultation::Consultation
       time (timeParam),
       pConsultingPhys (pConsultingPhysParam),
       deleted (deletedParam)
+{}
+
+
+//Blank constructor
+Consulation::Consulation()
+{}
+
+//Copy Constructor
+Consultation::Consultation(const Address& origin) :
+QObject(),
+consultID (origin.consultID),
+reason (origin.reason),
+diagnosis (origin.diagnosis),
+comments (origin.comments),
+status (origin.status),
+date (origin.date),
+time (origin.time),
+pConsultingPhys (origin.pConsultingPhys),
+deleted (origin.deleted)
+{}
+
+
+//Assignment operator
+Consultation& Consultation::operator=(const Consultation& origin)
 {
+    consultID = origin.consultID;
+    reason = origin.reason;
+    diagnosis = origin.diagnosis;
+    comments = origin.comments;
+    status = origin.status;
+    date = origin.date;
+    time = origin.time;
+    pConsultingPhys = origin.pConsultingPhys;
+    deleted = origin.deleted;
+    return *this;
 }
+
 
 // Destructor
 Consultation::~Consultation()
 {
     for(unsigned int i=0; i < Followups.size(); i++)
-        delete Followups[i];
+    delete Followups[i];
 }
 
 int Consultation::getConsultID() { return consultID; }
@@ -68,7 +104,8 @@ void Consultation::markDeleted() { deleted = true; }
 bool Consultation::isDeleted() { return deleted; }
 
 
-//Special getters and setters for serialization purposes
+// Special getters and setters for serialization purposes
+//
 QString Consultation::qGetReason(){return QString::fromStdString(reason);}
 void Consultation::qSetReason(const QString value){reason = value.toStdString();}
 

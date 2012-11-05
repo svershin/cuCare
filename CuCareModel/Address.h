@@ -31,20 +31,24 @@ class Address : public QObject
 
 public:
 
-
-    //Copy Constructor and overloaded assignment operator
-    Address& operator=(const Address& addr);
-    Address(const Address& other);
-
-    //Default constructor
-    Address();
-
-    // Regular-use Constructor
+    // Regular Constructor
     Address (string countryParam,
              string cityParam,
              string lineOneParam,
              string lineTwoParam,
              string postalCodeParam);
+
+    //Blank constructor
+    Address();
+
+    //Copy Constructor
+    Address(const Address& origin);
+
+    //Assignment operator
+    Address& operator=(const Address& origin);
+
+
+
 
     // Destructor
     virtual ~Address();

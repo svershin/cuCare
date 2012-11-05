@@ -1,7 +1,7 @@
 // COMP 3004 FALL 2012
 // Assignment 2: cuCare Prototype
 // Team: The Four Puppeteers
-// Contributing Editors: Sergey Vershinin
+// Contributing Editors: Sergey Vershinin, Mike Yuill
 //
 // Patient.h - Declaration of base class Patient
 // Member functions are defined in Patient.cpp
@@ -92,17 +92,17 @@ void Patient::qSetNotes(const QString value){notes = value.toStdString();}
 QString Patient::qGetContact(){return QString::fromStdSTring(contact);}
 void Patient::qSetContact(const QString value){contact = value.toStdString();}
 
-QVariantMap Patient::qGetAddress();
+QVariantMap Patient::qGetAddress(){return QJson::QObjectHelper::qobject2qvariant(&address);}
 //void Patient::qSetAddress(const QVariantMap);
 
-QVariantMap Patient::qGetDateOfBirth();
+QVariantMap Patient::qGetDateOfBirth(){return QJson::QObjectHelper::qobject2qvariant(&dateOfBirth);}
 //void Patient::qSetDateOfBirth(const QVariantMap);
 
-QVariantMap Patient::qGetDateAddedToSystem();
+QVariantMap Patient::qGetDateAddedToSystem(){return QJson::QObjectHelper::qobject2qvariant(&dateAddedToSystem);}
 //void Patient::qSetDateAddedToSystem(const QVariantMap);
 
-QVariantMap Patient::qGet();
-//void Patient::qSet(const QVariantMap);
+QVariantMap Patient::qGetHealthCard(){return QJson::QObjectHelper::qobject2qvariant(&healthCard);}
+//void Patient::qSetHealthCard(const QVariantMap);
 
 
 // EOF

@@ -1,7 +1,7 @@
 // COMP 3004 FALL 2012
 // Assignment 2: cuCare Prototype
 // Team: The Four Puppeteers
-// Contributing Editors: Sergey Vershinin
+// Contributing Editors: Sergey Vershinin, Mike Yuill
 //
 // Consultation.h - Declaration of base class Consultation
 // Member functions are defined in Consultation.cpp
@@ -47,7 +47,7 @@ public:
         CSTAT_COMPLETED
     };
 
-    // Constructor
+    // Regular Constructor
     Consultation (int consultIDParam,
                   string reasonParam,
                   string diagnosisParam,
@@ -57,6 +57,16 @@ public:
                   Time timeParam,
                   Physician* pConsultingPhysParam,
                   bool deletedParam);
+
+    //Blank constructor
+    Consultation();
+
+    //Copy Constructor
+    Consultation(const Consultation& origin);
+
+    //Assignment operator
+    Consultation& operator=(const Consultation& origin);
+
 
     // Destructor
     ~Consultation();

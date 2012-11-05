@@ -1,7 +1,7 @@
 // COMP 3004 FALL 2012
 // Assignment 2: cuCare Prototype
 // Team: The Four Puppeteers
-// Contributing Editors: Sergey Vershinin
+// Contributing Editors: Sergey Vershinin, Mike Yuill
 //
 // Test.h - Declaration of base class Test
 // Member functions are defined in Test.cpp
@@ -40,7 +40,7 @@ public:
 
     //Special getters and setters for serialization purposes
     QString qGetTestType();
-    void qSetTestType(const qString value);
+    void qSetTestType(const QString value);
 
 
 protected:

@@ -1,7 +1,7 @@
 // COMP 3004 FALL 2012
 // Assignment 2: cuCare Prototype
 // Team: The Four Puppeteers
-// Contributing Editors: Sergey Vershinin
+// Contributing Editors: Sergey Vershinin, Mike Yuill
 //
 // HealthCard.h - Declaration of base class HealthCard
 // Member functions are defined in HealthCard.cpp

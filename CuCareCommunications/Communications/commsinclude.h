@@ -25,6 +25,7 @@
 
 #include "../qjson/src/serializer.h"
 #include "../qjson/src/qobjecthelper.h"
+#include "../qjson/src/parser.h"
 
 
 #endif // COMMSINCLUDE_H

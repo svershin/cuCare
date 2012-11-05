@@ -76,3 +76,8 @@ unix:!symbian {
     }
     INSTALLS += target
 }
+
+unix:!macx:!symbian: LIBS += -L$$PWD/../CuCareCommunications/qjson/lib/ -lqjson
+
+INCLUDEPATH += $$PWD/../CuCareCommunications/qjson/include
+DEPENDPATH += $$PWD/../CuCareCommunications/qjson/include

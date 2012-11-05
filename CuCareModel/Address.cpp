@@ -8,29 +8,7 @@
 
 #include "Address.h"
 
-// Constructors
-Address::Address(const Address& origin) :
-    QObject(),
-    country (origin.country),
-    city (origin.city),
-    lineOne (origin.lineOne),
-    lineTwo (origin.lineTwo),
-    postalCode (origin.postalCode)
-{
-}
-
-Address& Address::operator=(const Address& origin)
-{
-    country = origin.country;
-    city = origin.city;
-    lineOne = origin.lineOne;
-    lineTwo = origin.lineTwo;
-    postalCode = origin.postalCode;
-    return *this;
-}
-
-
-
+// Regular Constuctor
 Address::Address
 (   string countryParam,
     string cityParam,
@@ -45,16 +23,40 @@ Address::Address
       postalCode (postalCodeParam)
 {}
 
+// Blank Constructor
 Address::Address()
-//    :QObject(),
-//      country (""),
-//      city (""),
-//      lineOne (""),
-//      lineTwo (""),
-//      postalCode ("")
 {
     Address("","","","","");
 }
+
+
+// Copy Constructor
+Address::Address(const Address& origin) :
+    QObject(),
+    country (origin.country),
+    city (origin.city),
+    lineOne (origin.lineOne),
+    lineTwo (origin.lineTwo),
+    postalCode (origin.postalCode)
+{}
+
+// Assignment Operator
+Address& Address::operator=(const Address& origin)
+{
+    country = origin.country;
+    city = origin.city;
+    lineOne = origin.lineOne;
+    lineTwo = origin.lineTwo;
+    postalCode = origin.postalCode;
+    return *this;
+}
+
+
+
+
+
+
+
 
 // Destructor
 Address::~Address()

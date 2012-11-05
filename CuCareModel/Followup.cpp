@@ -1,7 +1,7 @@
 // COMP 3004 FALL 2012
 // Assignment 2: cuCare Prototype
 // Team: The Four Puppeteers
-// Contributing Editors: Sergey Vershinin
+// Contributing Editors: Sergey Vershinin, Mike Yuill
 //
 // Followup.h - Declaration of base class Followup
 // Member functions are defined in Followup.cpp
@@ -51,13 +51,13 @@ bool Followup::isDeleted() { return deleted; }
 
 // Special getters and setters for serialization purposes
 //
-QVariantMap qGetDateDue(){return QJson::QObjectHelper::qobject2qvariant(&dateDue);}
-//void qSetDateDue(const QVariantMap value){}
+QVariantMap Followup::qGetDateDue(){return QJson::QObjectHelper::qobject2qvariant(&dateDue);}
+//void Followup::qSetDateDue(const QVariantMap value){}
 
-QVariantMap qGetDateReceived(){return QJson::QObjectHelper::qobject2qvariant(&dateReceived);}
-//void qSetDateReceived(const QVariantMap value){}
+QVariantMap Followup::qGetDateReceived(){return QJson::QObjectHelper::qobject2qvariant(&dateReceived);}
+//void Followup::qSetDateReceived(const QVariantMap value){}
 
-QVariantMap qGetDateCompleted(){return QJson::QObjectHelper::qobject2qvariant(&dateCompleted);}
-//void qSetDateCompleted(const QVariantMap value){}
+QVariantMap Followup::qGetDateCompleted(){return QJson::QObjectHelper::qobject2qvariant(&dateCompleted);}
+//void Followup::qSetDateCompleted(const QVariantMap value){}
 
 // EOF

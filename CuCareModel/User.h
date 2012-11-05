@@ -1,7 +1,7 @@
 // COMP 3004 FALL 2012
 // Assignment 2: cuCare Prototype
 // Team: The Four Puppeteers
-// Contributing Editors: Sergey Vershinin
+// Contributing Editors: Sergey Vershinin, Mike Yuill
 //
 // User.h - Declaration of base class User
 // Member functions are defined in User.cpp
@@ -14,6 +14,7 @@
 #include "ContactInfo.h"
 #include "Address.h"
 #include <QVariantMap>
+#include "../CuCareCommunications/qjson/src/qobjecthelper.h"
 
 using namespace std;
 
@@ -22,14 +23,13 @@ class User : public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(QString username READ qGetUserName WRITE qSetUserName)
+    Q_PROPERTY(QString username READ qGetUsername WRITE qSetUsername)
     Q_PROPERTY(QString firstName READ qGetFirstName WRITE qSetFirstName)
     Q_PROPERTY(QString lastName READ qGetLastName WRITE qSetLastName)
     Q_PROPERTY(QVariantMap dateOfBirth READ qGetDateOfBirth)
     Q_PROPERTY(QVariantMap contact READ qGetContact)
     Q_PROPERTY(QVariantMap address READ qGetAddress)
     Q_PROPERTY(bool deleted READ isDeleted WRITE qPutDeleted)
-
 
 
 public:
@@ -69,8 +69,8 @@ public:
 
 
     //Special getters and setters for serialization purposes
-    QString qGetUserName();
-    void qSetUserName(const QString value);
+    QString qGetUsername();
+    void qSetUsername(const QString value);
 
     QString qGetFirstName();
     void qSetFirstName(const QString value);

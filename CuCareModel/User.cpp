@@ -1,12 +1,13 @@
 // COMP 3004 FALL 2012
 // Assignment 2: cuCare Prototype
 // Team: The Four Puppeteers
-// Contributing Editors: Sergey Vershinin
+// Contributing Editors: Sergey Vershinin, Mike Yuill
 //
 // User.h - Declaration of base class User
 // Member functions are defined in User.cpp
 
 #include "User.h"
+
 
 // Constructor
 User::User
@@ -25,6 +26,7 @@ User::User
       address (addressParam),
       deleted (deletedParam)
 {
+
 }
 
 // Destructor
@@ -51,4 +53,25 @@ void User::setAddress(const Address value) { address = value; }
 
 void User::markDeleted() { deleted = true; }
 bool User::isDeleted() { return deleted; }
+
+
+//Special getters and setters for serialization purposes
+//
+QString User::qGetUsername(){return QString::fromStdString(username);}
+void User::qSetUsername(const QString value){username = value.toStdString();}
+
+QString User::qGetFirstName(){return QString::fromStdString(firstName);}
+void User::qSetFirstName(const QString value){firstName = value.toStdString();}
+
+QString User::qGetLastName(){return QString::fromStdString(lastName);}
+void User::qSetLastName(const QString value){lastName = value.toStdString();}
+
+QVariantMap User::qGetDateOfBirth(){return QJson::QObjectHelper::qobject2qvariant(&dateOfBirth);}
+//void User::qSetDateOfBirth(const QVariantMap value);
+
+QVariantMap User::qGetContact(){return QJson::QObjectHelper::qobject2qvariant(&contact);}
+//void User::qSetContact(const QVariantMap value);
+
+QVariantMap User::qGetAddress(){return QJson::QObjectHelper::qobject2qvariant(&contact);}
+//void User::qSetAddress(const QVariantMap value);
 // EOF
