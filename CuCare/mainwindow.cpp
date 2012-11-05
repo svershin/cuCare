@@ -4,13 +4,17 @@
 MainWindow::MainWindow(MasterController *controllerParam, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-    controller(controllerParam)
+    controller(controllerParam),
+    newPatient(false),
+    newConsultation(false)
 {
     ui->setupUi(this);
 
     //Disable UI elements for features not yet implemented
+    ui->LogOutPushButton->hide();
     ui->RunReportsPushButton->setEnabled(false);
     ui->CreateConsultationPushButton->setEnabled(false);
+    ui->SubmitProgressBar->hide();
 
     //Initially, only the patient tab is displayed.
     ui->DisplayTabsWidget->setTabEnabled(1, false);
@@ -34,6 +38,7 @@ MainWindow::~MainWindow()
 void MainWindow::on_NewPatientPushButton_clicked()
 {
     enablePatientEditing();
+    newPatient = true;
 }
 
 void MainWindow::on_SelectPatientPushButton_clicked()
@@ -72,6 +77,9 @@ void MainWindow::enablePatientEditing()
 
     ui->DeletePatientPushButton->setEnabled(true);
     ui->PatientNotesTextEdit->setEnabled(true);
+
+    ui->SubmitChangesPushButton->setEnabled(true);
+    ui->ResetFormsPushButton->setEnabled(true);
 }
 
 void MainWindow::disablePatientEditing()
@@ -97,6 +105,9 @@ void MainWindow::disablePatientEditing()
 
     ui->DeletePatientPushButton->setEnabled(false);
     ui->PatientNotesTextEdit->setEnabled(false);
+
+    ui->SubmitChangesPushButton->setEnabled(false);
+    ui->ResetFormsPushButton->setEnabled(false);
 }
 
 void MainWindow::showPatientInfo()

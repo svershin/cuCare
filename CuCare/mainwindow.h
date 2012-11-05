@@ -45,6 +45,9 @@ private:
 
     void populatePhysicians();
     void populatePatientTree();
+
+    bool newPatient;
+    bool newConsultation;
 };
 
 #endif // MAINWINDOW_H
