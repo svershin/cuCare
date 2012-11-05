@@ -17,10 +17,11 @@
 #include "Address.h"
 #include "HealthCard.h"
 #include "Physician.h"
+#include "modelobject.h"
 
 using namespace std;
 
-class Patient : public QObject
+class Patient : public ModelObject
 {
 
     Q_OBJECT
@@ -29,12 +30,12 @@ class Patient : public QObject
     Q_PROPERTY(QString firstName READ qGetFirstName WRITE qSetFirstName)
     Q_PROPERTY(QString lastName READ qGetLastName WRITE qSetLastName)
     Q_PROPERTY(QString notes READ qGetNotes WRITE qSetNotes)
-    Q_PROPERTY(QString contact READ qGetContact WRITE qSetContact)
+    Q_PROPERTY(QVariantMap contact READ qGetContact)
     Q_PROPERTY(QVariantMap address READ qGetAddress)
     Q_PROPERTY(QVariantMap dateOfBirth READ qGetDateOfBirth)
     Q_PROPERTY(QVariantMap dateAddedToSystem READ qGetDateAddedToSystem)
     Q_PROPERTY(QVariantMap healthCard READ qGetHealthCard)
-    Q_PROPERTY(bool deleted READ getDeleted WRITE qPutDeleted)
+    Q_PROPERTY(bool deleted READ isDeleted WRITE qPutDeleted)
 
 
 
@@ -52,6 +53,8 @@ public:
              Physician* pPhysicianParam,
              HealthCard healthCardParam,
              bool deletedParam);
+
+    Patient();
 
     // Destructor
     ~Patient();
@@ -102,7 +105,7 @@ public:
     QString qGetNotes();
     void qSetNotes(const QString value);
 
-    QString qGetContact();
+    QVariantMap qGetContact();
     void qSetContact(const QString value);
 
     QVariantMap qGetAddress();
@@ -117,6 +120,7 @@ public:
     QVariantMap qGetHealthCard();
     //void qSetHealthCard(const QVariantMap);
 
+    void qPutDeleted(const bool value);
 
 protected:
 private:

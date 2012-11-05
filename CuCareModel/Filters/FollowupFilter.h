@@ -1,17 +1,17 @@
 #ifndef FOLLOWUPFILTER_H
 #define FOLLOWUPFILTER_H
 
-#include <QObject>
+#include "../modelobject.h"
 
 
-class FollowupFilter : public QObject
+class FollowupFilter : public ModelObject
 {
     Q_OBJECT
 
     Q_PROPERTY(bool idMatch READ idGetMatch WRITE idSetMatch)
-    Q_PROPERTY(bool statusMatch READ statusGetMatch statusWRITE SetMatch)
-    Q_PROPERTY(bool dateDueMatch READ dateDueGetMatch dateDueWRITE SetMatch)
-    Q_PROPERTY(bool dateRecievedMatch READ dateRecievedGetMatch WRITE dateRecievedSetMatch)
+    Q_PROPERTY(bool statusMatch READ statusGetMatch WRITE statusSetMatch)
+    Q_PROPERTY(bool dateDueMatch READ dateDueGetMatch WRITE dateDueSetMatch)
+    Q_PROPERTY(bool dateReceivedMatch READ dateReceivedGetMatch WRITE dateReceivedSetMatch)
     Q_PROPERTY(bool dateCompletedMatch READ dateCompletedGetMatch WRITE dateCompletedSetMatch)
     Q_PROPERTY(bool deletedMatch READ deletedGetMatch WRITE deletedSetMatch)
 

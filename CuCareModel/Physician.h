@@ -27,6 +27,8 @@ public:
                Address addressParam,
                bool deletedParam);
 
+    Physician();
+
     // Destructor
     ~Physician();
 

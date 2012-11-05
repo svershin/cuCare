@@ -9,7 +9,9 @@
 #ifndef TIME_H
 #define TIME_H
 
-class Time : public QObject
+#include "modelobject.h"
+
+class Time : public ModelObject
 {
     Q_OBJECT
 
@@ -21,6 +23,8 @@ public:
     // Constructor
     Time (int hourParam,
           int minuteParam);
+
+    Time();
 
     // Destructor
     ~Time();

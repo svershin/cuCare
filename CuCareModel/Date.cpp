@@ -13,8 +13,7 @@ Date::Date
 (   int DayParam,
     int MonthParam,
     int YearParam)
-    : QObject(),
-      day (DayParam),
+    : day (DayParam),
       month (MonthParam),
       year (YearParam)
 {
@@ -22,23 +21,6 @@ Date::Date
 
 //Blank constructor
 Date::Date(){}
-
-//Copy Constructor
-Date::Date(const Date& origin)
-    : QObject()
-    day (origin.day),
-    month (origin.month),
-    year (origin.year)
-{}
-
-
-//Assignment operator
-Date& Date::operator=(const Date& origin)
-{
-    day = origin.day;
-    month = (origin.month);
-    year = (origin.year);
-}
 
 // Destructor
 Date::~Date()

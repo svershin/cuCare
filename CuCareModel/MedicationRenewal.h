@@ -31,6 +31,8 @@ public:
                        string medicationParam,
                        bool deletedParam);
 
+    MedicationRenewal();
+
     // Destructor
     ~MedicationRenewal();
 

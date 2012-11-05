@@ -27,6 +27,8 @@ public:
                     bool deletedParam);
 
     // Destructor
+    AdminAssistant();
+
     ~AdminAssistant();
 
     int getType() { return 3; }

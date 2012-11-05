@@ -1,14 +1,14 @@
 #ifndef CONSULTATIONFILTER_H
 #define CONSULTATIONFILTER_H
 
-#include <QObject>
+#include "../modelobject.h"
 
-class ConsultationFilter : public QObject
+class ConsultationFilter : public ModelObject
 {
     Q_OBJECT
 
     Q_PROPERTY(bool consultIDMatch READ consultIDGetMatch WRITE consultIDSetMatch)
-    Q_PROPERTY(bool patientIdMatch READ paitentIdGetMatch WRITE patientIdSetMatch)
+    Q_PROPERTY(bool patientIdMatch READ patientIdGetMatch WRITE patientIdSetMatch)
     Q_PROPERTY(bool reasonMatch READ diagnosisGetMatch WRITE diagnosisSetMatch)
     Q_PROPERTY(bool diagnosisMatch READ diagnosisGetMatch WRITE diagnosisSetMatch)
     Q_PROPERTY(bool commentsMatch READ commentsGetMatch WRITE commentsSetMatch)

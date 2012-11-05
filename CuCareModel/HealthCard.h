@@ -16,7 +16,7 @@
 
 using namespace std;
 
-class HealthCard : public QObject
+class HealthCard : public ModelObject
 {
 
     Q_OBJECT
@@ -28,6 +28,8 @@ public:
 
     // Constructor
     HealthCard(string numberParam, Date expiryParam);
+
+    HealthCard();
 
     // Destructor
     ~HealthCard();

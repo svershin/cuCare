@@ -19,8 +19,7 @@ Consultation::Consultation
     Time timeParam,
     Physician* pConsultingPhysParam,
     bool deletedParam)
-    : QObject(),
-      consultID (consultIDParam),
+    : consultID (consultIDParam),
       reason (reasonParam),
       diagnosis (diagnosisParam),
       comments (commentsParam),
@@ -33,38 +32,38 @@ Consultation::Consultation
 
 
 //Blank constructor
-Consulation::Consulation()
+Consultation::Consultation()
 {}
 
-//Copy Constructor
-Consultation::Consultation(const Address& origin) :
-QObject(),
-consultID (origin.consultID),
-reason (origin.reason),
-diagnosis (origin.diagnosis),
-comments (origin.comments),
-status (origin.status),
-date (origin.date),
-time (origin.time),
-pConsultingPhys (origin.pConsultingPhys),
-deleted (origin.deleted)
-{}
+////Copy Constructor
+//Consultation::Consultation(const Address& origin) :
+//QObject(),
+//consultID (origin.consultID),
+//reason (origin.reason),
+//diagnosis (origin.diagnosis),
+//comments (origin.comments),
+//status (origin.status),
+//date (origin.date),
+//time (origin.time),
+//pConsultingPhys (origin.pConsultingPhys),
+//deleted (origin.deleted)
+//{}
 
 
-//Assignment operator
-Consultation& Consultation::operator=(const Consultation& origin)
-{
-    consultID = origin.consultID;
-    reason = origin.reason;
-    diagnosis = origin.diagnosis;
-    comments = origin.comments;
-    status = origin.status;
-    date = origin.date;
-    time = origin.time;
-    pConsultingPhys = origin.pConsultingPhys;
-    deleted = origin.deleted;
-    return *this;
-}
+////Assignment operator
+//Consultation& Consultation::operator=(const Consultation& origin)
+//{
+//    consultID = origin.consultID;
+//    reason = origin.reason;
+//    diagnosis = origin.diagnosis;
+//    comments = origin.comments;
+//    status = origin.status;
+//    date = origin.date;
+//    time = origin.time;
+//    pConsultingPhys = origin.pConsultingPhys;
+//    deleted = origin.deleted;
+//    return *this;
+//}
 
 
 // Destructor

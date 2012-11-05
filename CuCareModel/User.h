@@ -15,11 +15,12 @@
 #include "Address.h"
 #include <QVariantMap>
 #include "../CuCareCommunications/qjson/src/qobjecthelper.h"
+#include "modelobject.h"
 
 using namespace std;
 
 
-class User : public QObject
+class User : public ModelObject
 {
     Q_OBJECT
 
@@ -42,6 +43,8 @@ public:
           ContactInfo contactParam,
           Address addressParam,
           bool deletedParam);
+
+    User();
 
     // Destructor
     ~User();
@@ -86,6 +89,8 @@ public:
 
     QVariantMap qGetAddress();
     //void qSetAddress(const QVariantMap value);
+
+    void qPutDeleted(const bool value);
 
 protected:
 private:

@@ -11,10 +11,11 @@
 
 #include <string>
 #include <QString>
+#include "modelobject.h"
 
 using namespace std;
 
-class ContactInfo : public QObject
+class ContactInfo : public ModelObject
 {
     Q_OBJECT
 
@@ -31,14 +32,7 @@ public:
                  string emailParam,
                  string workEmailParam);
 
-    //Blank constructor
     ContactInfo();
-
-    //Copy Constructor
-    ContactInfo(const ContactInfo& origin);
-
-    //Assignment operator
-    ContactInfo& operator=(const ContactInfo& origin);
 
     // Destructor
     ~ContactInfo();

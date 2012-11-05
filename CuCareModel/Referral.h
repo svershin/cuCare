@@ -32,6 +32,8 @@ public:
               string specialistNameParam,
               bool deletedParam);
 
+    Referral();
+
     // Destructor
     ~Referral();
 

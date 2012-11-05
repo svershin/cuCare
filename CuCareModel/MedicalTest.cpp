@@ -39,7 +39,7 @@ void MedicalTest::setTestType(const string value) { testType = value; }
 
 //Special getters and setters for serialization purposes
 //
-QString MedicalTest::qGetTestType(){return QString::fromStdString(testType);}
+QString MedicalTest::qGetTestType() {return QString::fromStdString(testType);}
 void MedicalTest::qSetTestType(const QString value){testType = value.toStdString();}
 
 // EOF

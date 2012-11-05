@@ -1,9 +1,9 @@
 #ifndef PATIENTFILTER_H
 #define PATIENTFILTER_H
 
-#include <QObject>
+#include "../modelobject.h"
 
-class PatientFilter : public QObject
+class PatientFilter : public ModelObject
 {
     Q_OBJECT
 
@@ -16,7 +16,7 @@ class PatientFilter : public QObject
     Q_PROPERTY(bool dateOfBirthMatch READ dateOfBirthGetMatch WRITE dateOfBirthSetMatch)
     Q_PROPERTY(bool dateAddedToSystemMatch READ dateAddedToSystemGetMatch WRITE dateAddedToSystemSetMatch)
     Q_PROPERTY(bool healthCardMatch READ healthCardGetMatch WRITE healthCardSetMatch)
-    Q_PROPERTY(bool pPhysicianMatch READ pPhysicianMatchGetMatch WRITE pPhysicianMatchSetMatch)
+    Q_PROPERTY(bool pPhysicianMatch READ pPhysicianGetMatch WRITE pPhysicianSetMatch)
     Q_PROPERTY(bool deletedMatch READ deletedGetMatch WRITE deletedSetMatch)
 
 

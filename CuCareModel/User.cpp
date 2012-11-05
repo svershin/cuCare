@@ -74,4 +74,6 @@ QVariantMap User::qGetContact(){return QJson::QObjectHelper::qobject2qvariant(&c
 
 QVariantMap User::qGetAddress(){return QJson::QObjectHelper::qobject2qvariant(&contact);}
 //void User::qSetAddress(const QVariantMap value);
+
+void User::qPutDeleted(const bool value){deleted = value;}
 // EOF

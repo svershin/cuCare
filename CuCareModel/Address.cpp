@@ -15,8 +15,7 @@ Address::Address
     string lineOneParam,
     string lineTwoParam,
     string postalCodeParam)
-    : QObject(),
-      country (countryParam),
+    : country (countryParam),
       city (cityParam),
       lineOne (lineOneParam),
       lineTwo (lineTwoParam),
@@ -25,37 +24,7 @@ Address::Address
 
 // Blank Constructor
 Address::Address()
-{
-    Address("","","","","");
-}
-
-
-// Copy Constructor
-Address::Address(const Address& origin) :
-    QObject(),
-    country (origin.country),
-    city (origin.city),
-    lineOne (origin.lineOne),
-    lineTwo (origin.lineTwo),
-    postalCode (origin.postalCode)
 {}
-
-// Assignment Operator
-Address& Address::operator=(const Address& origin)
-{
-    country = origin.country;
-    city = origin.city;
-    lineOne = origin.lineOne;
-    lineTwo = origin.lineTwo;
-    postalCode = origin.postalCode;
-    return *this;
-}
-
-
-
-
-
-
 
 
 // Destructor

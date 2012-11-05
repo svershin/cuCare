@@ -14,10 +14,11 @@
 #include <QtGlobal>
 #include <QString>
 #include <string>
+#include "modelobject.h"
 
 using namespace std;
 
-class Address : public QObject
+class Address : public ModelObject
 {
 
     Q_OBJECT
@@ -41,17 +42,10 @@ public:
     //Blank constructor
     Address();
 
-    //Copy Constructor
-    Address(const Address& origin);
-
-    //Assignment operator
-    Address& operator=(const Address& origin);
-
-
 
 
     // Destructor
-    virtual ~Address();
+    ~Address();
 
 
     string getCountry();

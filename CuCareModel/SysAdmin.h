@@ -24,6 +24,8 @@ public:
               Address addressParam,
               bool deletedParam);
 
+    SysAdmin();
+
     // Destructor
     ~SysAdmin();
 

@@ -80,29 +80,30 @@ bool Patient::isDeleted() { return deleted; }
 
 //Special getters and setters for serialization purposes
 //
-QString Patient::qGetFirstName(){return QString::fromStdSTring(firstName);}
+QString Patient::qGetFirstName(){return QString::fromStdString(firstName);}
 void Patient::qSetFirstName(const QString value){firstName = value.toStdString();}
 
-QString Patient::qGetLastName(){return QString::fromStdSTring(lastName);}
+QString Patient::qGetLastName(){return QString::fromStdString(lastName);}
 void Patient::qSetLastName(const QString value){lastName = value.toStdString();}
 
-QString Patient::qGetNotes(){return QString::fromStdSTring(notes);}
+QString Patient::qGetNotes(){return QString::fromStdString(notes);}
 void Patient::qSetNotes(const QString value){notes = value.toStdString();}
 
-QString Patient::qGetContact(){return QString::fromStdSTring(contact);}
-void Patient::qSetContact(const QString value){contact = value.toStdString();}
+QVariantMap Patient::qGetContact(){return QJson::QObjectHelper::qobject2qvariant(&contact);}
+//void Patient::qSetContact(const QVariantMap value){}
 
 QVariantMap Patient::qGetAddress(){return QJson::QObjectHelper::qobject2qvariant(&address);}
-//void Patient::qSetAddress(const QVariantMap);
+//void Patient::qSetAddress(const QVariantMap){}
 
 QVariantMap Patient::qGetDateOfBirth(){return QJson::QObjectHelper::qobject2qvariant(&dateOfBirth);}
-//void Patient::qSetDateOfBirth(const QVariantMap);
+//void Patient::qSetDateOfBirth(const QVariantMap){}
 
 QVariantMap Patient::qGetDateAddedToSystem(){return QJson::QObjectHelper::qobject2qvariant(&dateAddedToSystem);}
-//void Patient::qSetDateAddedToSystem(const QVariantMap);
+//void Patient::qSetDateAddedToSystem(const QVariantMap){}
 
 QVariantMap Patient::qGetHealthCard(){return QJson::QObjectHelper::qobject2qvariant(&healthCard);}
-//void Patient::qSetHealthCard(const QVariantMap);
+//void Patient::qSetHealthCard(const QVariantMap){}
 
+void Patient::qPutDeleted(const bool value){deleted = value;}
 
 // EOF

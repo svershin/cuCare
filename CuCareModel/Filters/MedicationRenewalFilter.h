@@ -7,7 +7,7 @@ class MedicationRenewalFilter : public FollowupFilter
 {
     Q_OBJECT
 
-    Q_PROPERTY(bool Match READ GetMatch WRITE SetMatch)
+    Q_PROPERTY(bool medicationMatch READ medicationGetMatch WRITE medicationSetMatch)
 public:
     MedicationRenewalFilter();
 

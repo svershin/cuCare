@@ -17,10 +17,11 @@
 #include "Physician.h"
 #include <QtGlobal>
 #include <QVariantMap>
+#include "modelobject.h"
 
 using namespace std;
 
-class Consultation : public QObject
+class Consultation : public ModelObject
 {
     Q_OBJECT
 
@@ -58,14 +59,7 @@ public:
                   Physician* pConsultingPhysParam,
                   bool deletedParam);
 
-    //Blank constructor
     Consultation();
-
-    //Copy Constructor
-    Consultation(const Consultation& origin);
-
-    //Assignment operator
-    Consultation& operator=(const Consultation& origin);
 
 
     // Destructor

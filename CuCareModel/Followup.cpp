@@ -60,4 +60,6 @@ QVariantMap Followup::qGetDateReceived(){return QJson::QObjectHelper::qobject2qv
 QVariantMap Followup::qGetDateCompleted(){return QJson::QObjectHelper::qobject2qvariant(&dateCompleted);}
 //void Followup::qSetDateCompleted(const QVariantMap value){}
 
+void Followup::qPutDeleted(const bool value){deleted = value;}
+
 // EOF

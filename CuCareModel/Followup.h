@@ -11,8 +11,9 @@
 
 #include "Date.h"
 #include <QVariant>
+#include "modelobject.h"
 
-class Followup : public QObject
+class Followup : public ModelObject
 {
     Q_OBJECT
 
@@ -45,14 +46,8 @@ public:
               Date dateCompletedParam,
               bool deletedParam);
 
-    //Blank constructor
-    Date();
 
-    //Copy Constructor
-    Date(const Address& origin);
-
-    //Assignment operator
-    Date& operator=(const Consultation& origin);
+    Followup();
 
     // Destructor
     ~Followup();
@@ -86,6 +81,7 @@ public:
     QVariantMap qGetDateCompleted();
     void qSetDateCompleted(const QVariantMap value);
 
+    void qPutDeleted(const bool value);
 
 protected:
 private:

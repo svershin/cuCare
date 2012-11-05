@@ -18,7 +18,7 @@ class MedicalTest:public ResultantFollowup
 {
     Q_OBJECT
 
-    Q_PROPERTY(QString testType READ qGetTestType WRITE qGetTestType)
+    Q_PROPERTY(QString testType READ qGetTestType WRITE qSetTestType)
 
 public:
 
@@ -31,6 +31,8 @@ public:
                  string resultsParam,
                  string testTypeParam,
                  bool deletedParam);
+
+    MedicalTest();
 
     // Destructor
     ~MedicalTest();

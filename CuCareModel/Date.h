@@ -10,8 +10,9 @@
 #define DATE_H
 
 #include <QObject>
+#include "modelobject.h"
 
-class Date : public QObject
+class Date : public ModelObject
 {
     Q_OBJECT
 
@@ -26,15 +27,7 @@ public:
           int MonthParam,
           int YearParam);
 
-    //Blank constructor
     Date();
-
-    //Copy Constructor
-    Date(const Address& origin);
-
-    //Assignment operator
-    Date& operator=(const Consultation& origin);
-
 
     // Destructor
     ~Date();

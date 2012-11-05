@@ -1,7 +1,9 @@
 #ifndef USERFILTER_H
 #define USERFILTER_H
 
-class UserFilter : public QObject
+#include "../modelobject.h"
+
+class UserFilter : public ModelObject
 {
     Q_OBJECT
 

@@ -31,6 +31,8 @@ public:
                        string resultsParam,
                        bool deletedParam);
 
+    ResultantFollowup();
+
     // Destructor
     ~ResultantFollowup();
 

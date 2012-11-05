@@ -28,6 +28,7 @@ SOURCES += \
     Consultation.cpp \
     AdminAssistant.cpp \
     Address.cpp \
+    modelobject.cpp \
     Filters/ConsultationFilter.cpp \
     Filters/FollowupFilter.cpp \
     Filters/MedicationRenewalFilter.cpp \
@@ -37,7 +38,8 @@ SOURCES += \
     Filters/ResultantFollowupFilter.cpp \
     Filters/ReturnConsultationFilter.cpp \
     Filters/UserFilter.cpp \
-    Filters/MedicalTestFilter.cpp
+    Filters/MedicalTestFilter.cpp \
+
 
 HEADERS += \
     User.h \
@@ -58,6 +60,7 @@ HEADERS += \
     AdminAssistant.h \
     Address.h \
     ModelFiles.h \
+    modelobject.h \
     Filters/ReturnConsultationFilter.h \
     Filters/ResultantFollowupFilter.h \
     Filters/UserFilter.h \
@@ -67,7 +70,8 @@ HEADERS += \
     Filters/MedicationRenewalFilter.h \
     Filters/FollowupFilter.h \
     Filters/ConsultationFilter.h \
-    Filters/MedicalTestFilter.h
+    Filters/MedicalTestFilter.h \
+
 unix:!symbian {
     maemo5 {
         target.path = /opt/usr/lib

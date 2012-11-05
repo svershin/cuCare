@@ -27,6 +27,8 @@ public:
                         Consultation* pConsultParam,
                         bool deletedParam);
 
+    ReturnConsultation();
+
     // Destructor
     ~ReturnConsultation();
 
