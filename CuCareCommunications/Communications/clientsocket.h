@@ -9,7 +9,8 @@ public:
     ClientSocket(QHostAddress serverIPAddressParam, quint16 serverPortParam);
     ~ClientSocket();
 
-    bool sendRecieve(string **ppErrString, QString pRequestMessage, QString **pReplyMessage);
+
+    bool sendRecieve(string *pErrString, QString pRequestMessage, QString *pReplyMessage);
 
 private:
     QTcpSocket sock;

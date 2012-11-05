@@ -1,6 +1,7 @@
 #ifndef COMMSINCLUDE_H
 #define COMMSINCLUDE_H
 
+#define JSON_LEADING_STRIP 4
 
 #include <QString>
 #include <QtNetwork>

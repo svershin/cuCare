@@ -46,14 +46,14 @@ Address::Address
 {}
 
 Address::Address()
-    :QObject(),
-      country (""),
-      city (""),
-      lineOne (""),
-      lineTwo (""),
-      postalCode ("")
+//    :QObject(),
+//      country (""),
+//      city (""),
+//      lineOne (""),
+//      lineTwo (""),
+//      postalCode ("")
 {
-
+    Address("","","","","");
 }
 
 // Destructor

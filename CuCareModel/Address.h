@@ -12,8 +12,8 @@
 
 #include <QObject>
 #include <QtGlobal>
-#include <string>
 #include <QString>
+#include <string>
 
 using namespace std;
 

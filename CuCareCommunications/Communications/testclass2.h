@@ -11,12 +11,11 @@ class TestClass2 : public QObject
 
     Q_PROPERTY(QString m_name READ qName WRITE qSetName)
     Q_PROPERTY(int m_phoneNumber READ phoneNumber WRITE setPhoneNumber)
-    Q_PROPERTY(QDate m_dob READ dob WRITE setDob)
+    Q_PROPERTY(QVariantMap m_addr READ qGetAddr)
 
 public:
 
-    TestClass2(string, int, QDate);
-
+    TestClass2(string, int, Address);
     TestClass2(const TestClass2&);
     TestClass2& operator=(const TestClass2&);
 
@@ -28,13 +27,15 @@ public:
     int phoneNumber();
     void setPhoneNumber(const int  phoneNumber);
 
-    QDate dob();
-    void setDob(const QDate& dob);
+    Address getAddr();
+    void setAddr(const Address& Address);
+
+    QVariantMap qGetAddr();
 
     private:
     string m_name;
     int m_phoneNumber;
-    QDate m_dob;
+    Address m_addr;
 
 };
 
