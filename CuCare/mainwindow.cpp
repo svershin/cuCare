@@ -21,6 +21,7 @@ MainWindow::MainWindow(MasterController *controllerParam, QWidget *parent) :
     disablePatientEditing();
 
     //Populate list of physicians in consultation tab
+    populatePhysicians();
 
     ui->statusbar->showMessage("Welcome to CuCare v0.0.1");
 }
@@ -367,6 +368,8 @@ void MainWindow::showReturnConsultation(ReturnConsultation *pReturnConsultation)
     ui->CompletedDateEdit->setDate(QDate(pReturnConsultation->getDateCompleted().getYear(),
                                    pReturnConsultation->getDateCompleted().getMonth(),
                                    pReturnConsultation->getDateCompleted().getDay()));
+
+    ui->ReturnConsultationPushButton->show();
 }
 
 void MainWindow::populatePhysicians()
@@ -378,4 +381,9 @@ void MainWindow::populatePhysicians()
             ui->PhysicianSelectComboBox->addItem(QString::fromStdString(pPhysicians->at(i)->getLastName()), pPhysicians->at(i)->getId());
         }
     }
+}
+
+void MainWindow::populatePatientTree()
+{
+    QTreeWidgetItem *pPatientTree = new QTreeWidgetItem(ui->PatientTreeWidget);
 }

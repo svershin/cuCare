@@ -34,4 +34,7 @@ ResultantFollowup::~ResultantFollowup()
 
 string ResultantFollowup::getResults() { return results; }
 void ResultantFollowup::setResults(const string value) { results = value; }
+
+int ResultantFollowup::getType() { return 4; }
+
 // EOF

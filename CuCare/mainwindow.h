@@ -42,6 +42,7 @@ private:
     void showReturnConsultation(ReturnConsultation *pReturnConsultation);
 
     void populatePhysicians();
+    void populatePatientTree();
 };
 
 #endif // MAINWINDOW_H

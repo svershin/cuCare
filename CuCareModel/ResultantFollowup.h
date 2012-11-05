@@ -33,6 +33,8 @@ public:
     string getResults();
     void setResults(const string value);
 
+    int getType();
+
 protected:
 private:
     string results;

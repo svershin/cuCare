@@ -35,4 +35,6 @@ ReturnConsultation::~ReturnConsultation()
 Consultation* ReturnConsultation::getConsult() { return pConsult; }
 void ReturnConsultation::setConsult(Consultation* const value) { pConsult = value; }
 
+int ReturnConsultation::getType() { return 5; }
+
 // EOF
