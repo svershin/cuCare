@@ -527,7 +527,7 @@ void Repository::instantiateAdminAssistants(vector<AdminAssistant *> *&pResults,
     while (pQueryResult->nextRow());
 }
 
-void Repository::instantiateConsultations(vector<Consultation *> *&pResults, QueryResult *pQueryResult, int *physicianId)
+void Repository::instantiateConsultations(vector<Consultation *> *&pResults, QueryResult *pQueryResult, vector<int> *&physicianIds)
 {
     pResults = new vector<Consultation *>();
     if(!(pQueryResult->numRows() > 0))
@@ -546,7 +546,8 @@ void Repository::instantiateConsultations(vector<Consultation *> *&pResults, Que
                                                         stoi((*pQueryResult)[11])),
                                                    NULL,
                                                    (bool)stoi((*pQueryResult)[12]));
-        (*physicianId) = stoi((*pQueryResult)[2]);
+        vector<int> ids = new vector<int>();
+        ids.push_back(stoi((*pQueryResult)[2]));
         pResults->push_back(retrieved);
     }
     while (pQueryResult->nextRow());
@@ -1054,13 +1055,13 @@ bool Repository::pullPatient(Patient* pPatientValues, PatientFilter patientFilte
     return true;
 }
 
-bool Repository::pullConsultation(Consultation* pConsultationValues, ConsultationFilter consultationFilter, int *physicianId, int patientId, vector<Consultation*>*& pResults)
+bool Repository::pullConsultation(Consultation* pConsultationValues, ConsultationFilter consultationFilter, vector<int> *&physicianIds, int *physicianId, int patientId, vector<Consultation*>*& pResults)
 {
     QueryResult* pQueryResults = NULL;
     if(!selectStatement("consultations", getConsultationConditions(pConsultationValues, consultationFilter, physicianId, patientId), consultationColumns, pQueryResults))
         return false;
 
-    instantiateConsultations(pResults, pQueryResults, physicianId);
+    instantiateConsultations(pResults, pQueryResults, physicianIds);
     delete pQueryResults;
     return true;
 }

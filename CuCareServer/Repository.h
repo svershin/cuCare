@@ -36,7 +36,7 @@ public:
     bool pullPhysician(Physician *pPhysicianValues, PhysicianFilter physicianFilter, vector<Physician*>*& pResults);
     bool pullSysAdmin(SysAdmin *pSysAdminValues, UserFilter userFilter, vector<SysAdmin*>*& pResults);
     bool pullPatient(Patient* pPatientValues, PatientFilter patientFilter, int physicianId, vector<Patient*>*& pResults);
-    bool pullConsultation(Consultation* pConsultationValues, ConsultationFilter consultationFilter, int *physicianId, int patientId, vector<Consultation*>*& pResults);
+    bool pullConsultation(Consultation* pConsultationValues, ConsultationFilter consultationFilter, vector<int> physicianIds, int physicianId, int patientId, vector<Consultation*>*& pResults);
     bool pullReferral(Referral* pReferralValues, ReferralFilter referralFilter, int consultationId, vector<Referral*>*& pResults);
     bool pullMedicalTest(MedicalTest* pMedicalTestValues, MedicalTestFilter medicalTestFilter, int consultationId, vector<MedicalTest*>*& pResults);
     bool pullReturnConsultation(ReturnConsultation* pReturnConsultationValues, ReturnConsultationFilter returnConsultationFilter, int consultationId, int nextConsultationId, vector<ReturnConsultation*>*& pResults);
@@ -101,7 +101,7 @@ private:
     void instantiateAdminAssistants(vector<AdminAssistant*>*& pResults, QueryResult* queryResult);
     void instantiatePhysicians(vector<Physician*>*& pResults, QueryResult* queryResult);
     void instantiateSysAdmins(vector<SysAdmin*>*& pResults, QueryResult* queryResult);
-    void instantiateConsultations(vector<Consultation*>*& pResults, QueryResult* queryResult, int *physicianId);
+    vector<int> instantiateConsultations(vector<Consultation*>*& pResults, QueryResult* queryResult);
     void instantiatePatients(vector<Patient*>*& pResults, QueryResult* queryResult);
     void instantiateMedicationRenewals(vector<MedicationRenewal*>*& pResults, QueryResult* queryResult);
     void instantiateReturnConsultations(vector<ReturnConsultation*>*& pResults, QueryResult* queryResult);
