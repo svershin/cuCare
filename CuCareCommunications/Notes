@@ -1,0 +1,9 @@
+Approach I took to the Request API: for creations and pushes, those functions will not give back pointers to the objects. It seems to make more sense to simply give back a uid for creates, and to let the caller use the pull functions if they want objects.
+
+Also, the callers of create and push functions will not pass pointers. Instead, they will pass objects on the stack. My reasoning here is that there's no need to have any more pointers than is absolutely necessary.
+
+About JSON:
+Though I looked for awhile, I couldn't seem to find any way to just serialize an object into JSON. I resigned myself to having to do it all manually. I did some research, people seemed to think JsonCpp was good and simple. I started using JsonCpp, but, unfortunately, partway in, I discovered, while reading a readme file, that JsonCpp required some installed stuff that wasn't in the VM. So, I went back to looking and magically found something called "QJson", a QT library (that isn't listed in the includable libraries when starting a new project in QtCreator). It turns out that with QJson, if an object inherits from QObject, it can be immediately serialized or parsed without the need for writing specific serialization functions for each object! So, I'm wondering if we could have our Model classes inherit from QObject. It would make things a lot nicer and eliminate the need for a big wad of code for converting every object. I haven't implemented the JSON conversions yet, but if I can do it this way, it'll save a lot of time.
+
+Strings:
+I've been using strings for the parts of my functions that the callers will see. However, some of the socket/JSON functions require that I use QStrings. Makes things seem a little inconsistent.

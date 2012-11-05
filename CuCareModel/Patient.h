@@ -9,7 +9,9 @@
 #ifndef PATIENT_H
 #define PATIENT_H
 
+#include <vector>
 #include <string>
+#include "Consultation.h"
 #include "ContactInfo.h"
 #include "Date.h"
 #include "Address.h"
@@ -39,6 +41,7 @@ public:
     ~Patient();
 
     int getId();
+    void setId(int value);
 
     string getFirstName();
     void setFirstName(const string value);
@@ -67,6 +70,8 @@ public:
     Physician* getPhysician();
     void setPhysician(Physician* const value);
 
+    vector<Consultation*>* getConsultations();
+
     void markDeleted();
     bool isDeleted();
 
@@ -83,6 +88,7 @@ private:
     Physician* pPhysician;
     HealthCard healthCard;
     bool deleted;
+    vector<Consultation*> Consultations;
 };
 
 

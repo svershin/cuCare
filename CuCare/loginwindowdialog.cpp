@@ -18,8 +18,9 @@ bool LoginWindowDialog::checkUsername()
 {
     QString userString = ui->UsernameLineEdit->text();
     MasterController::AccessControlStatus loginStatus;
+    string *pErrorString = NULL;
 
-    loginStatus = controller->loginUser(userString.toStdString());
+    loginStatus = controller->loginUser(userString.toStdString(), pErrorString);
 
     if (loginStatus == MasterController::AC_LOGGED_IN_AS_PHYSICIAN
             || loginStatus == MasterController::AC_LOGGED_IN_AS_ADMINASSISTANT

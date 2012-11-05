@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
     QCoreApplication a(argc, argv);
     cout << "Program starts.\n";
     //Tests::databaseExample();
-    Tests::repositorySetupTest();
+    Tests::repositoryTest();
 
     return a.exec();
 }

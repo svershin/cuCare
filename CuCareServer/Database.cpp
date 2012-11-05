@@ -37,7 +37,8 @@ int Database::lastUid()
 
 bool Database::errorCheck()
 {
-    if(SQLITE_OK != sqlite3_errcode(pDb))
+    int errcode = sqlite3_errcode(pDb);
+    if(SQLITE_OK != errcode && SQLITE_DONE != errcode)
     {
         errorText = sqlite3_errmsg(pDb);
         return false;
@@ -78,13 +79,15 @@ bool Database::query(string query, QueryResult*& pOutResults)
     if(sqlite3_prepare_v2(pDb, query.c_str(), -1, &pStatement, 0) == SQLITE_OK)
     {
         int numCols = sqlite3_column_count(pStatement);
-
         while(sqlite3_step(pStatement) == SQLITE_ROW)
         {
             vector<string>* pCols = new vector<string>();
 
             for(int col = 0; col < numCols; col++)
-                pCols->push_back((char*)sqlite3_column_text(pStatement, col));
+            {
+                char* coltext = (char*)sqlite3_column_text(pStatement, col);
+                pCols->push_back(coltext == NULL ? "0" : coltext);
+            }
 
             pRows->push_back(pCols);
         }

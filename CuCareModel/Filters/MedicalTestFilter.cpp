@@ -1,6 +1,7 @@
 #include "MedicalTestFilter.h"
 
 MedicalTestFilter::MedicalTestFilter()
+    : testTypeMatch(false)
 {
 }
 

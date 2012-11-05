@@ -32,16 +32,17 @@ public:
     bool pushReturnConsultation(ReturnConsultation* pInputReturnConsultation, int consultationId, int nextConsultationId);
     bool pushMedicationRenewal(MedicationRenewal* pInputMedicationRenewal, int consultationId);
 
-    bool pullAdminAssistant(AdminAssistant *pAdminAssitantValues, UserFilter userFilter, vector<AdminAssistant*>* pResults);
-    bool pullPhysician(Physician *pPhysicianValues, PhysicianFilter physicianFilter, vector<Physician*>* pResults);
-    bool pullSysAdmin(SysAdmin *pSysAdminValues, UserFilter userFilter, vector<SysAdmin*>* pResults);
-    bool pullPatient(Patient* pPatientValues, PatientFilter patientFilter, int physicianId, vector<Patient*>* pResults);
-    bool pullConsultation(Consultation* pConsultationValues, ConsultationFilter consultationFilter, int physicianId, int patientId, vector<Consultation*>* pResults);
-    bool pullReferral(Referral* pReferralValues, ReferralFilter referralFilter, int consultationId, vector<Referral*>* pResults);
-    bool pullMedicalTest(MedicalTest* pMedicalTestValues, MedicalTestFilter medicalTestFilter, int consultationId, vector<MedicalTest*>* pResults);
-    bool pullReturnConsultation(ReturnConsultation* pReturnConsultationValues, ReturnConsultationFilter returnConsultationFilter, int consultationId, int nextConsultationId, vector<ReturnConsultation*>* pResults);
-    bool pullMedicationRenewal(MedicationRenewal* pMedicationRenewalValues, MedicationRenewalFilter medicationRenewalFilter, int consultationId, vector<MedicationRenewal*>* pResults);
+    bool pullAdminAssistant(AdminAssistant *pAdminAssitantValues, UserFilter userFilter, vector<AdminAssistant*>*& pResults);
+    bool pullPhysician(Physician *pPhysicianValues, PhysicianFilter physicianFilter, vector<Physician*>*& pResults);
+    bool pullSysAdmin(SysAdmin *pSysAdminValues, UserFilter userFilter, vector<SysAdmin*>*& pResults);
+    bool pullPatient(Patient* pPatientValues, PatientFilter patientFilter, int physicianId, vector<Patient*>*& pResults);
+    bool pullConsultation(Consultation* pConsultationValues, ConsultationFilter consultationFilter, int physicianId, int patientId, vector<Consultation*>*& pResults);
+    bool pullReferral(Referral* pReferralValues, ReferralFilter referralFilter, int consultationId, vector<Referral*>*& pResults);
+    bool pullMedicalTest(MedicalTest* pMedicalTestValues, MedicalTestFilter medicalTestFilter, int consultationId, vector<MedicalTest*>*& pResults);
+    bool pullReturnConsultation(ReturnConsultation* pReturnConsultationValues, ReturnConsultationFilter returnConsultationFilter, int consultationId, int nextConsultationId, vector<ReturnConsultation*>*& pResults);
+    bool pullMedicationRenewal(MedicationRenewal* pMedicationRenewalValues, MedicationRenewalFilter medicationRenewalFilter, int consultationId, vector<MedicationRenewal*>*& pResults);
 
+    string getDbErrorText();
 private:
     Database* db;
     const string createScriptFilename;
@@ -97,15 +98,15 @@ private:
     map<string, string> getMedicationRenewalConditions(MedicationRenewal* pMedicationRenewalValues, MedicationRenewalFilter medicationRenewalFilter, int consultationId);
     map<string, string> getReturnConsultationConditions(ReturnConsultation* pReturnConsultationValues, ReturnConsultationFilter returnConsultationFilter, int nextConsultationId, int consultationId);
 
-    void instantiateAdminAssistants(vector<AdminAssistant*>* pResults, QueryResult* queryResult);
-    void instantiatePhysicians(vector<Physician*>* pResults, QueryResult* queryResult);
-    void instantiateSysAdmins(vector<SysAdmin*>* pResults, QueryResult* queryResult);
-    void instantiateConsultations(vector<Consultation*>* pResults, QueryResult* queryResult);
-    void instantiatePatients(vector<Patient*>* pResults, QueryResult* queryResult);
-    void instantiateMedicationRenewals(vector<MedicationRenewal*>* pResults, QueryResult* queryResult);
-    void instantiateReturnConsultations(vector<ReturnConsultation*>* pResults, QueryResult* queryResult);
-    void instantiateMedicalTests(vector<MedicalTest*>* pResults, QueryResult* queryResult);
-    void instantiateReferrals(vector<Referral*>* pResults, QueryResult* queryResult);
+    void instantiateAdminAssistants(vector<AdminAssistant*>*& pResults, QueryResult* queryResult);
+    void instantiatePhysicians(vector<Physician*>*& pResults, QueryResult* queryResult);
+    void instantiateSysAdmins(vector<SysAdmin*>*& pResults, QueryResult* queryResult);
+    void instantiateConsultations(vector<Consultation*>*& pResults, QueryResult* queryResult);
+    void instantiatePatients(vector<Patient*>*& pResults, QueryResult* queryResult);
+    void instantiateMedicationRenewals(vector<MedicationRenewal*>*& pResults, QueryResult* queryResult);
+    void instantiateReturnConsultations(vector<ReturnConsultation*>*& pResults, QueryResult* queryResult);
+    void instantiateMedicalTests(vector<MedicalTest*>*& pResults, QueryResult* queryResult);
+    void instantiateReferrals(vector<Referral*>*& pResults, QueryResult* queryResult);
 };
 
 #endif // REPOSITORY_H
