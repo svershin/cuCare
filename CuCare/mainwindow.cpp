@@ -416,7 +416,33 @@ void MainWindow::populatePatientTree()
     ui->PatientTreeWidget->clear();
 
     QTreeWidgetItem *pPatientWidget = new QTreeWidgetItem(ui->PatientTreeWidget);
+    vector<Consultation *> *pConsultations = new vector<Consultation *>();
+    vector<Followup *> *pFollowups = new vector<Followup *>();
+    QTreeWidgetItem *pTempWidget;
+    QTreeWidgetItem *pTempWidget2;
+
     pPatientWidget->setText(0, QString::fromStdString(controller->getCurrentPatient()->getLastName() + string(", ") + controller->getCurrentPatient()->getFirstName()));
+
+    pConsultations = controller->getCurrentPatient()->getConsultations();
+
+    for (unsigned int i = 0 ; i < pConsultations->size() ; i++) {
+        pTempWidget = new QTreeWidgetItem(pPatientWidget);
+        pTempWidget->setText(0, "tempConsName");
+        pTempWidget->setData(0, Qt::UserRole, pConsultations->at(i)->getConsultID());
+
+        pFollowups = pConsultations->at(i)->getFollowups();
+        for (unsigned int j = 0 ; j < pFollowups->size() ; j++) {
+            pTempWidget2 = new QTreeWidgetItem(pTempWidget);
+            pTempWidget2->setText(0, "tempFupName");
+            pTempWidget2->setData(0, Qt::UserRole, pFollowups->at(j)->getId());
+
+            pTempWidget->addChild(pTempWidget2);
+        }
+
+        pPatientWidget->addChild(pTempWidget);
+    }
+
+    ui->PatientTreeWidget->addTopLevelItem(pPatientWidget);
 }
 
 void MainWindow::on_ResetFormsPushButton_clicked()
