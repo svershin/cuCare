@@ -10,7 +10,7 @@
 #define MASTERCONTROLLER_H
 
 #include "../CuCareModel/ModelFiles.h"
-// #include "../CuCareCommunications/Communications/request.h"
+#include "Request.h"
 #include <string>
 #include <vector>
 using namespace std;
@@ -132,6 +132,8 @@ private:
     // Stores the data for the currently selected patient
     // Set to NULL if a patient has not yet been selected
     Patient* pCurrentPatient;
+
+    Request server;
 };
 
 

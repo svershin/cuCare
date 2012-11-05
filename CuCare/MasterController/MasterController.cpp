@@ -11,8 +11,8 @@
 // Constructor
 MasterController::MasterController()
     : pCurrentUser (NULL),
-      pCurrentPatient (NULL),
-      status (AC_LOGGED_OUT)
+      status (AC_LOGGED_OUT),
+      pCurrentPatient (NULL)
 {
 }
 
@@ -33,8 +33,7 @@ MasterController::AccessControlStatus MasterController::loginUser(string usernam
     inputFilterUser.usernameSetMatch(true);
     vector<AdminAssistant*>* pReturnAdminAssistant = NULL;
 
- //   requestStatus = Request.pullAdminAssistant(pErrString, &inputAdminAssistant, inputFilterUser, pReturnAdminAssistant);
-    int requestStatus;
+    int requestStatus = server.pullAdminAssistant(pErrString, &inputAdminAssistant, inputFilterUser, pReturnAdminAssistant);
 
     if(!requestStatus)
         return AC_FAILED; // COMMS ERROR
@@ -48,7 +47,7 @@ MasterController::AccessControlStatus MasterController::loginUser(string usernam
     inputFilterPhysician.usernameSetMatch(true);
     vector<Physician*>* pReturnPhysician = NULL;
 
- //   int requestStatus = Request.pullPhysician(pErrString, &inputPhysician, inputFilterPhysician, pReturnPhysician);
+    requestStatus = server.pullPhysician(pErrString, &inputPhysician, inputFilterPhysician, pReturnPhysician);
 
     if(!requestStatus)
         return AC_FAILED; // COMMS ERROR
@@ -60,7 +59,7 @@ MasterController::AccessControlStatus MasterController::loginUser(string usernam
     SysAdmin inputSysAdmin(username, "", "", Date(0,0,0), ContactInfo("","","",""), Address("", "", "", "", ""), false);
     vector<SysAdmin*>* pReturnSysAdmin = NULL;
 
- //   int requestStatus = Request.pullSysAdmin(pErrString, &inputSysAdmin, inputFilterUser, pReturnSysAdmin);
+    requestStatus = server.pullSysAdmin(pErrString, &inputSysAdmin, inputFilterUser, pReturnSysAdmin);
 
     if(!requestStatus)
         return AC_FAILED; // COMMS ERROR
@@ -96,8 +95,7 @@ MasterController::AccessControlStatus MasterController::logout()
 bool MasterController::createPatient(Patient* pInputPatient, int physicianId, string *pErrString)
 {
     int uid = 0;
- //   int requestStatus = Request.createPatient(pErrString, pInputPatient, physicianId, &uid);
-    int requestStatus;
+    int requestStatus = server.createPatient(pErrString, pInputPatient, physicianId, &uid);
 
     if(!requestStatus)
         return 0; // COMMS ERROR
@@ -105,7 +103,7 @@ bool MasterController::createPatient(Patient* pInputPatient, int physicianId, st
     if(pCurrentPatient != NULL)
         delete pCurrentPatient;
     pCurrentPatient = pInputPatient;
-    pCurrentPatient->setId(uid);
+//    pCurrentPatient->setId(uid);
 
     if(pCurrentPatient != NULL)
         return 1;
@@ -115,8 +113,7 @@ bool MasterController::createPatient(Patient* pInputPatient, int physicianId, st
 
 bool MasterController::modifyPatient(string *pErrString)
 {
- //   int requestStatus = Request.pushPatient(pErrString, pCurrentPatient, pCurrentPatient->getPhysician()->getId());
-    int requestStatus;
+    int requestStatus = server.pushPatient(pErrString, pCurrentPatient, pCurrentPatient->getPhysician()->getId());
 
     if(!requestStatus)
         return 0; // COMMS ERROR
@@ -129,8 +126,7 @@ bool MasterController::getPatientList(vector<Patient *> *pResults, string *pErrS
     Patient inputPatient(0, "", "", "", ContactInfo("","","",""), Address("","","","",""), Date(0,0,0), Date(0,0,0), NULL, HealthCard("", Date(0,0,0)), false);
     PatientFilter inputFilter;
 
-//    requestStatus = Request.pullPatient(pErrString, &inputPatient, inputFilter, pResults);
-    int requestStatus;
+    int requestStatus = server.pullPatient(pErrString, &inputPatient, inputFilter, 0, pResults);
 
     if(!requestStatus)
         return 0; // COMMS ERROR
@@ -148,8 +144,7 @@ bool MasterController::setCurrentPatient(int patientId, string *pErrString)
     inputFilter.idSetMatch(true);
     vector<Patient*>* pResults = NULL;
 
- //   int requestStatus = Request.pullPatient(pErrString, inputPatient, inputFilter, pResults);
-    int requestStatus;
+    int requestStatus = server.pullPatient(pErrString, &inputPatient, inputFilter, 0, pResults);
     if(!requestStatus)
         return 0; // COMMS ERROR
 
@@ -158,8 +153,8 @@ bool MasterController::setCurrentPatient(int patientId, string *pErrString)
     } else
         return 0;
 
-    // !!! need to add code here to populate consultations and followups
-
+    // !!! need to add code here to populate the physician, consultation and followup ptrs/vectors
+    return 0;
 }
 
 Patient* MasterController::getCurrentPatient()
@@ -172,8 +167,7 @@ Patient* MasterController::getCurrentPatient()
 bool MasterController::createConsultation(Consultation* pInputConsultation, string *pErrString)
 {
     int uid = 0;
-//    int requestStatus = Request.createConsultation(pErrString, pInputPatient, physicianId, &uid);
-    int requestStatus;
+    int requestStatus = server.createConsultation(pErrString, pInputConsultation, pCurrentPatient->getPhysician()->getId(), pCurrentPatient->getId(), &uid);
 
     if(!requestStatus)
         return 0; // COMMS ERROR
@@ -193,18 +187,26 @@ bool MasterController::createConsultation(Consultation* pInputConsultation, stri
 
 bool MasterController::modifyConsultation(int consultId, string *pErrString)
 {
+    return 0;
 }
 
 // Follow-ups ---------------------------------------------------------------------------------------
 
 bool MasterController::createFollowup(Followup* pInputFollowup, string *pErrString)
 {
+    return 0;
 }
 
-bool MasterController::modifyFollowup(int followupId, string *pErrString){}
+bool MasterController::modifyFollowup(int followupId, string *pErrString)
+{
+    return 0;
+}
 
 // Physicians
 
-bool MasterController::getPhysicianList(vector<Physician*> *pResults, string *pErrString){}
+bool MasterController::getPhysicianList(vector<Physician*> *pResults, string *pErrString)
+{
+    return 0;
+}
 
 // EOF
