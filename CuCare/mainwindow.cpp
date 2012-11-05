@@ -49,6 +49,9 @@ void MainWindow::on_SelectPatientPushButton_clicked()
         enablePatientEditing();
         ui->CreateConsultationPushButton->setEnabled(true);
 
+        //Populate patient tree view
+        populatePatientTree();
+
         //Populate patient info tab
         showPatientInfo();
     }
