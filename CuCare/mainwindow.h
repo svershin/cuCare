@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QTreeWidgetItem>
 
 #include "MasterController/MasterController.h"
 #include "patientselectdialog.h"
@@ -25,6 +26,8 @@ private slots:
     void on_SelectPatientPushButton_clicked();
 
     void on_ResetFormsPushButton_clicked();
+
+    void on_PatientTreeWidget_itemClicked(QTreeWidgetItem *item, int column);
 
 private:
     Ui::MainWindow *ui;

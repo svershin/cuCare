@@ -425,19 +425,22 @@ void MainWindow::populatePatientTree()
     QTreeWidgetItem *pTempWidget2;
 
     pPatientWidget->setText(0, QString::fromStdString(controller->getCurrentPatient()->getLastName() + string(", ") + controller->getCurrentPatient()->getFirstName()));
+    pPatientWidget->setData(0, Qt::UserRole, 0); //Patient
 
     pConsultations = controller->getCurrentPatient()->getConsultations();
 
     for (unsigned int i = 0 ; i < pConsultations->size() ; i++) {
         pTempWidget = new QTreeWidgetItem(pPatientWidget);
         pTempWidget->setText(0, "tempConsName");
-        pTempWidget->setData(0, Qt::UserRole, pConsultations->at(i)->getConsultID());
+        pTempWidget->setData(0, Qt::UserRole, 1); //Consultation
+        pTempWidget->setData(1, Qt::UserRole, pConsultations->at(i)->getConsultID());
 
         pFollowups = pConsultations->at(i)->getFollowups();
         for (unsigned int j = 0 ; j < pFollowups->size() ; j++) {
             pTempWidget2 = new QTreeWidgetItem(pTempWidget);
             pTempWidget2->setText(0, "tempFupName");
-            pTempWidget2->setData(0, Qt::UserRole, pFollowups->at(j)->getId());
+            pTempWidget2->setData(0, Qt::UserRole, 2); //Followup
+            pTempWidget2->setData(1, Qt::UserRole, pFollowups->at(j)->getId());
 
             pTempWidget->addChild(pTempWidget2);
         }
@@ -458,5 +461,51 @@ void MainWindow::on_ResetFormsPushButton_clicked()
             enablePatientEditing();
         else
             showPatientInfo();
+    }
+}
+
+void MainWindow::on_PatientTreeWidget_itemClicked(QTreeWidgetItem *item, int column)
+{
+    int itemType = item->data(0, Qt::UserRole).toInt();
+    int cid, fid;
+
+    switch(itemType){
+    case 0: //Patient has been selected
+        showPatientInfo();
+    case 1: //Consultation has been selected
+        cid = item->data(1, Qt::UserRole).toInt();
+
+        for (unsigned int i = 0 ; i < controller->getCurrentPatient()->getConsultations()->size() ; i++) {
+            if (controller->getCurrentPatient()->getConsultations()->at(i)->getConsultID() == cid) {
+                showConsultationInfo(controller->getCurrentPatient()->getConsultations()->at(i));
+                break;
+            }
+        }
+    case 2:
+        fid = item->data(1, Qt::UserRole).toInt();
+        cid = item->parent()->data(1, Qt::UserRole).toInt();
+
+        for (unsigned int i = 0 ; i < controller->getCurrentPatient()->getConsultations()->size() ; i++) {
+            if (controller->getCurrentPatient()->getConsultations()->at(i)->getConsultID() == cid) {
+                for (unsigned int j = 0 ; j < controller->getCurrentPatient()->getConsultations()->at(i)->getFollowups()->size() ; j++) {
+                    if (controller->getCurrentPatient()->getConsultations()->at(i)->getFollowups()->at(j)->getId() == fid) {
+                        switch(controller->getCurrentPatient()->getConsultations()->at(i)->getFollowups()->at(j)->getType()) {
+                        case 1: //Medical Test
+                            showMedicalTest((MedicalTest*)controller->getCurrentPatient()->getConsultations()->at(i)->getFollowups()->at(j));
+                        case 2: //Medication Renewal
+                            showMedicationRenewal((MedicationRenewal*)controller->getCurrentPatient()->getConsultations()->at(i)->getFollowups()->at(j));
+                        case 3: //Referral
+                            showReferral((Referral*)controller->getCurrentPatient()->getConsultations()->at(i)->getFollowups()->at(j));
+                        case 4: //ResultantFollowup
+                            showResultantFollowup((ResultantFollowup*)controller->getCurrentPatient()->getConsultations()->at(i)->getFollowups()->at(j));
+                        case 5: //ReturnConsultation
+                            showReturnConsultation((ReturnConsultation*)controller->getCurrentPatient()->getConsultations()->at(i)->getFollowups()->at(j));
+                        }
+                        break;
+                    }
+                }
+                break;
+            }
+        }
     }
 }
