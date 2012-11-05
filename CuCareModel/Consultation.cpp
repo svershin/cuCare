@@ -39,6 +39,7 @@ Consultation::~Consultation()
 }
 
 int Consultation::getConsultID() { return consultID; }
+void Consultation::setConsultID(int newConsultID) { consultID = newConsultID; }
 
 string Consultation::getReason() { return reason; }
 void Consultation::setReason(const string value) { reason = value; }
@@ -60,6 +61,8 @@ void Consultation::setTime(const Time value) { time = value; }
 
 Physician* Consultation::getConsultingPhys() { return pConsultingPhys; }
 void Consultation::setConsultingPhys(Physician* const value) { pConsultingPhys = value; }
+
+vector<Followup*>* Consultation::getFollowups() { return &Followups; }
 
 void Consultation::markDeleted() { deleted = true; }
 bool Consultation::isDeleted() { return deleted; }

@@ -1,6 +1,7 @@
 #include "MedicationRenewalFilter.h"
 
 MedicationRenewalFilter::MedicationRenewalFilter()
+    : medicationMatch(false)
 {
 }
 

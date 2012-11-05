@@ -45,6 +45,7 @@ public:
     ~Consultation();
 
     int getConsultID();
+    void setConsultID(int newConsultID);
 
     string getReason();
     void setReason(const string value);
@@ -66,6 +67,8 @@ public:
 
     Physician* getConsultingPhys();
     void setConsultingPhys(Physician* const value);
+
+    vector<Followup*>* getFollowups();
 
     void markDeleted();
     bool isDeleted();

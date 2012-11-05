@@ -1,6 +1,7 @@
 #include "PhysicianFilter.h"
 
 PhysicianFilter::PhysicianFilter()
+    : idMatch(false)
 {
 }
 

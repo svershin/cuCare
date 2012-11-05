@@ -1,6 +1,17 @@
 #include "PatientFilter.h"
 
 PatientFilter::PatientFilter()
+    :   idMatch(false),
+        firstNameMatch(false),
+        lastNameMatch(false),
+        notesMatch(false),
+        contactMatch(false),
+        addressMatch(false),
+        dateOfBirthMatch(false),
+        dateAddedToSystemMatch(false),
+        healthCardMatch(false),
+        pPhysicianMatch(false),
+        deletedMatch(false)
 {
 }
 

@@ -1,6 +1,7 @@
 #include "ReferralFilter.h"
 
 ReferralFilter::ReferralFilter()
+    : specialistNameMatch(false)
 {
 }
 

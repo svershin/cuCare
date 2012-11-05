@@ -1,6 +1,7 @@
 #include "ReturnConsultationFilter.h"
 
 ReturnConsultationFilter::ReturnConsultationFilter()
+    : pConsultMatch(false)
 {
 }
 
