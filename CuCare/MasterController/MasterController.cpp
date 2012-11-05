@@ -105,10 +105,7 @@ bool MasterController::createPatient(Patient* pInputPatient, int physicianId, st
     pCurrentPatient = pInputPatient;
     pCurrentPatient->setId(uid);
 
-    if(pCurrentPatient != NULL)
-        return 1;
-    else
-        return 0;
+    return 1;
 }
 
 bool MasterController::modifyPatient(string *pErrString)
@@ -121,7 +118,7 @@ bool MasterController::modifyPatient(string *pErrString)
     return 1;
 }
 
-bool MasterController::getPatientList(vector<Patient *> *pResults, string *pErrString)
+bool MasterController::getPatientList(vector<Patient *>* &pResults, string *pErrString)
 {
     Patient inputPatient(0, "", "", "", ContactInfo("","","",""), Address("","","","",""), Date(0,0,0), Date(0,0,0), NULL, HealthCard("", Date(0,0,0)), false);
     PatientFilter inputFilter;
@@ -153,8 +150,49 @@ bool MasterController::setCurrentPatient(int patientId, string *pErrString)
     } else
         return 0;
 
-    // !!! need to add code here to populate the physician, consultation and followup ptrs/vectors
-    return 0;
+    Consultation inputConsultation(0, "", "", "", (Consultation::ConsultationStatus)0, Date(0,0,0), Time(0,0), NULL, false);
+    ConsultationFilter inputFilterConsultation;
+    inputFilterConsultation.patientIdSetMatch(true);
+
+    //will need to change as physican ids will come back as a vector of ints
+    requestStatus = server.pullConsultation(pErrString, inputConsultation, inputFilterConsultation, 0, pCurrentPatient->getId(), pCurrentPatient->getConsultations());
+    if(!requestStatus)
+        return 0; // COMMS ERROR
+
+    // Need to populate physicians into every consultation
+
+    for(unsigned int i=0; i < pCurrentPatient->getConsultations()->size(); i++) {
+        Referral pReferralValues(0, (Followup::FollowupStatus)0, Date(0,0,0), Date(0,0,0), Date(0.0.0), "", "", false);
+        ReferralFilter inputFilterReferral;
+        vector<Referral*> pOutputReferral;
+        server.pullReferral(pErrString, &pReferralValues, inputFilterReferral, pCurrentPatient->getConsultations()->at(i)->getConsultID(), &pOutputReferral);
+        if(!requestStatus)
+            return 0; // COMMS ERROR
+
+        MedicalTest pMedicalTestValues(0, (Followup::FollowupStatus)0, Date(0,0,0), Date(0,0,0), Date(0.0.0), "", "", false);
+        MedicalTestFilter inputFilterMedicalTest;
+        vector<MedicalTest*> pOutputMedicalTest;
+        server.pullMedicalTest(pErrString, &pMedicalTestValues, inputFilterMedicalTest, pCurrentPatient->getConsultations()->at(i)->getConsultID(), &pOutputMedicalTest);
+        if(!requestStatus)
+            return 0; // COMMS ERROR
+
+        Referral pReferralValues1(0, (Followup::FollowupStatus)0, Date(0,0,0), Date(0,0,0), Date(0.0.0), "", "", false);
+        ReferralFilter inputFilterReferral;
+        vector<Referral*> pOutputReferral;
+        server.pullReturnConsultation(pErrString, ReturnConsultation *pReturnConsultationValues, ReturnConsultationFilter inputFilter, int consultationId, int nextConsultationId, vector<ReturnConsultation*> *pOutputReturnConsultation);
+        if(!requestStatus)
+            return 0; // COMMS ERROR
+
+        Referral pReferralValues1(0, (Followup::FollowupStatus)0, Date(0,0,0), Date(0,0,0), Date(0.0.0), "", "", false);
+        ReferralFilter inputFilterReferral;
+        vector<Referral*> pOutputReferral;
+        server.pullMedicationRenewal(pErrString, MedicationRenewal *pMedicationRenewalValues, MedicationRenewalFilter inputFilter, int consultationId, vector<MedicationRenewal*> *pOutputMedicationRenewal);
+        if(!requestStatus)
+            return 0; // COMMS ERROR
+    }
+
+
+    return 1;
 }
 
 Patient* MasterController::getCurrentPatient()
