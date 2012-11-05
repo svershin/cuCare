@@ -52,26 +52,43 @@ void MainWindow::on_SelectPatientPushButton_clicked()
 void MainWindow::enablePatientEditing()
 {
     ui->FirstNameLineEdit->setEnabled(true);
+    ui->FirstNameLineEdit->clear();
     ui->LastNameLineEdit->setEnabled(true);
+    ui->LastNameLineEdit->clear();
+
 
     ui->WorkPhoneLineEdit->setEnabled(true);
+    ui->WorkPhoneLineEdit->clear();
     ui->CellPhoneLineEdit->setEnabled(true);
+    ui->CellPhoneLineEdit->clear();
     ui->EmailLineEdit->setEnabled(true);
+    ui->EmailLineEdit->clear();
     ui->WorkEmailLineEdit->setEnabled(true);
+    ui->WorkEmailLineEdit->clear();
 
     ui->Address1LineEdit->setEnabled(true);
+    ui->Address1LineEdit->clear();
     ui->Address2LineEdit->setEnabled(true);
+    ui->Address2LineEdit->clear();
     ui->CityLineEdit->setEnabled(true);
+    ui->CityLineEdit->clear();
     ui->CountryLineEdit->setEnabled(true);
+    ui->CountryLineEdit->clear();
     ui->PostalCodeLineEdit->setEnabled(true);
+    ui->PostalCodeLineEdit->clear();
 
     ui->DOBDateEdit->setEnabled(true);
+    ui->DOBDateEdit->setDate(QDate(2000,1,1));
     ui->AddedDateEdit->setEnabled(true);
+    ui->AddedDateEdit->setDate(QDate(2000,1,1));
     ui->CardNumberLineEdit->setEnabled(true);
+    ui->CardNumberLineEdit->clear();
     ui->CardExpirationDateEdit->setEnabled(true);
+    ui->CardExpirationDateEdit->setDate(QDate(2000,1,1));
 
     ui->DeletePatientPushButton->setEnabled(true);
     ui->PatientNotesTextEdit->setEnabled(true);
+    ui->PatientNotesTextEdit->clear();
 }
 
 void MainWindow::disablePatientEditing()
