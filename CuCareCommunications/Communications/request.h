@@ -19,7 +19,7 @@ public:
     Request(string serverIPAddressParam, quint16 serverPortParam);
     ~Request();
 
-
+    int sendRecieve(string *pErrString, QByteArray input, QVariantMap *output);
 
     /* ***Server Interface Functions***
 

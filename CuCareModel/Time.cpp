@@ -17,6 +17,8 @@ Time::Time
 {
 }
 
+Time::Time(){}
+
 // Destructor
 Time::~Time()
 {

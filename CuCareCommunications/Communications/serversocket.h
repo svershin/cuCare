@@ -2,12 +2,14 @@
 #define SERVERSOCKET_H
 
 #include "commsinclude.h"
+#include <QtNetwork>
+#include <QTcpSocket>
 
-class ServerSocket
+class ServerSocket : public QTcpSocket
 {
 public:
-    ServerSocket();
-    int test();
+    ServerSocket(QObject  *parent = 0);
+
 };
 
 #endif // SERVERSOCKET_H

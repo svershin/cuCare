@@ -12,8 +12,9 @@
 HealthCard::HealthCard(string numberParam, Date expiryParam)
     : number (numberParam),
       expiry (expiryParam)
-{
-}
+{}
+
+HealthCard::HealthCard(){}
 
 // Destructor
 HealthCard::~HealthCard()
@@ -26,5 +27,13 @@ void HealthCard::setNumber(const string value) { number = value; }
 Date HealthCard::getExpiry() { return expiry; }
 void HealthCard::setExpiry(const Date value) { expiry = value; }
 
+
+//Special getters and setters for serialization purposes
+//
+QString HealthCard::qGetNumber(){return QString::fromStdString(number);}
+void HealthCard::qSetNumber(const QString value){number = value.toStdString();}
+
+QVariantMap HealthCard::qGetExpiry(){return QJson::QObjectHelper::qobject2qvariant(&expiry);}
+void HealthCard::qSetExpiry(const QVariantMap value){QJson::QObjectHelper::qvariant2qobject(value, &expiry);}
 
 // EOF

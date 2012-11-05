@@ -1,12 +1,10 @@
-#ifndef MESSAGEPARSER_H
-#define MESSAGEPARSER_H
+#ifndef MESSENGER_H
+#define MESSENGER_H
 
-#include "commsinclude.h"
-
-class MessageParser
+class Messenger
 {
 public:
-    MessageParser();
+    Messenger();
 
     enum RequestCode
     {
@@ -38,19 +36,6 @@ public:
         PULL_RETURN_CONSULTATION,   //23
         PULL_MEDICATION_RENEWAL     //24
     };
-
-
-    enum ReplyCode
-    {
-        FAILURE,    //0
-        SUCCESS     //1
-    };
-
-    static QVariantMap qbArrayToqvMap(QByteArray);
-    static ModelObject qvMapToModelObject(QVariantMap);
-
-    static bool parseCreateReply(string **ppErrString, QString reply, int **ppUid);
-    static bool parsePushReply(string **ppErrString, QString reply);
 };
 
-#endif // MESSAGEPARSER_H
+#endif // MESSENGER_H

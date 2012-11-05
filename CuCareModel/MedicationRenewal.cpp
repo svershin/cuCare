@@ -24,8 +24,9 @@ MedicationRenewal::MedicationRenewal
                 dateCompletedParam,
                 deletedParam),
       medication (medicationParam)
-{
-}
+{}
+
+MedicationRenewal::MedicationRenewal(){}
 
 // Destructor
 MedicationRenewal::~MedicationRenewal()

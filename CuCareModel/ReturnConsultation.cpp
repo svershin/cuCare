@@ -24,8 +24,9 @@ ReturnConsultation::ReturnConsultation
                 dateCompletedParam,
                 deletedParam),
       pConsult (pConsultParam)
-{
-}
+{}
+
+ReturnConsultation::ReturnConsultation(){}
 
 // Destructor
 ReturnConsultation::~ReturnConsultation()

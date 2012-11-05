@@ -20,6 +20,7 @@
 #include "SysAdmin.h"
 #include "Time.h"
 #include "User.h"
+#include "modelobject.h"
 
 #include "Filters/ConsultationFilter.h"
 #include "Filters/FollowupFilter.h"

@@ -32,8 +32,10 @@ Patient::Patient
       pPhysician (pPhysicianParam),
       healthCard (healthCardParam),
       deleted (deletedParam)
-{
-}
+{}
+
+Patient::Patient(){}
+
 
 // Destructor
 Patient::~Patient()
@@ -90,19 +92,19 @@ QString Patient::qGetNotes(){return QString::fromStdString(notes);}
 void Patient::qSetNotes(const QString value){notes = value.toStdString();}
 
 QVariantMap Patient::qGetContact(){return QJson::QObjectHelper::qobject2qvariant(&contact);}
-//void Patient::qSetContact(const QVariantMap value){}
+void Patient::qSetContact(const QVariantMap value){QJson::QObjectHelper::qvariant2qobject(value, &contact);}
 
 QVariantMap Patient::qGetAddress(){return QJson::QObjectHelper::qobject2qvariant(&address);}
-//void Patient::qSetAddress(const QVariantMap){}
+void Patient::qSetAddress(const QVariantMap value){QJson::QObjectHelper::qvariant2qobject(value, &address);}
 
 QVariantMap Patient::qGetDateOfBirth(){return QJson::QObjectHelper::qobject2qvariant(&dateOfBirth);}
-//void Patient::qSetDateOfBirth(const QVariantMap){}
+void Patient::qSetDateOfBirth(const QVariantMap value){QJson::QObjectHelper::qvariant2qobject(value, &dateOfBirth);}
 
 QVariantMap Patient::qGetDateAddedToSystem(){return QJson::QObjectHelper::qobject2qvariant(&dateAddedToSystem);}
-//void Patient::qSetDateAddedToSystem(const QVariantMap){}
+void Patient::qSetDateAddedToSystem(const QVariantMap value){QJson::QObjectHelper::qvariant2qobject(value, &dateAddedToSystem);}
 
 QVariantMap Patient::qGetHealthCard(){return QJson::QObjectHelper::qobject2qvariant(&healthCard);}
-//void Patient::qSetHealthCard(const QVariantMap){}
+void Patient::qSetHealthCard(const QVariantMap value){QJson::QObjectHelper::qvariant2qobject(value, &healthCard);}
 
 void Patient::qPutDeleted(const bool value){deleted = value;}
 

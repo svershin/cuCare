@@ -22,8 +22,9 @@ Followup::Followup
       dateReceived (dateReceivedParam),
       dateCompleted (dateCompletedParam),
       deleted (deletedParam)
-{
-}
+{}
+
+Followup::Followup(){}
 
 // Destructor
 Followup::~Followup()
@@ -52,13 +53,13 @@ bool Followup::isDeleted() { return deleted; }
 // Special getters and setters for serialization purposes
 //
 QVariantMap Followup::qGetDateDue(){return QJson::QObjectHelper::qobject2qvariant(&dateDue);}
-//void Followup::qSetDateDue(const QVariantMap value){}
+void Followup::qSetDateDue(const QVariantMap value){QJson::QObjectHelper::qvariant2qobject(value, &dateDue);}
 
 QVariantMap Followup::qGetDateReceived(){return QJson::QObjectHelper::qobject2qvariant(&dateReceived);}
-//void Followup::qSetDateReceived(const QVariantMap value){}
+void Followup::qSetDateReceived(const QVariantMap value){QJson::QObjectHelper::qvariant2qobject(value, &dateReceived);}
 
 QVariantMap Followup::qGetDateCompleted(){return QJson::QObjectHelper::qobject2qvariant(&dateCompleted);}
-//void Followup::qSetDateCompleted(const QVariantMap value){}
+void Followup::qSetDateCompleted(const QVariantMap value){QJson::QObjectHelper::qvariant2qobject(value, &dateCompleted);}
 
 void Followup::qPutDeleted(const bool value){deleted = value;}
 

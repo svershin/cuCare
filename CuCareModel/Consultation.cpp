@@ -32,8 +32,7 @@ Consultation::Consultation
 
 
 //Blank constructor
-Consultation::Consultation()
-{}
+Consultation::Consultation(){}
 
 ////Copy Constructor
 //Consultation::Consultation(const Address& origin) :

@@ -24,8 +24,9 @@ SysAdmin::SysAdmin
             contactParam,
             addressParam,
             deletedParam)
-{
-}
+{}
+
+SysAdmin::SysAdmin(){}
 
 // Destructor
 SysAdmin::~SysAdmin()

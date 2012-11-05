@@ -23,8 +23,7 @@ Address::Address
 {}
 
 // Blank Constructor
-Address::Address()
-{}
+Address::Address(){}
 
 
 // Destructor

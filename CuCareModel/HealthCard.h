@@ -22,7 +22,7 @@ class HealthCard : public ModelObject
     Q_OBJECT
 
     Q_PROPERTY(QString number READ qGetNumber WRITE qSetNumber)
-    Q_PROPERTY(QVariantMap expiry READ qGetExpiry)
+    Q_PROPERTY(QVariantMap expiry READ qGetExpiry WRITE qSetExpiry)
 
 public:
 
@@ -46,7 +46,7 @@ public:
     void qSetNumber(const QString value);
 
     QVariantMap qGetExpiry();
-    //void qSetExpiry(const QVariantMap);
+    void qSetExpiry(const QVariantMap value);
 
 protected:
 private:

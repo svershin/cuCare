@@ -18,8 +18,9 @@ ContactInfo::ContactInfo
       cellPhone (cellPhoneParam),
       email (emailParam),
       workEmail (workEmailParam)
-{
-}
+{}
+
+ContactInfo::ContactInfo(){}
 
 // Destructor
 ContactInfo::~ContactInfo()

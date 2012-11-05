@@ -26,8 +26,9 @@ Referral::Referral
                          resultsParam,
                          deletedParam),
       specialistName (specialistNameParam)
-{
-}
+{}
+
+Referral::Referral(){}
 
 // Destructor
 Referral::~Referral()

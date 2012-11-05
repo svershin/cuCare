@@ -19,9 +19,9 @@ class Followup : public ModelObject
 
     Q_PROPERTY(int id READ getId WRITE setId)
     Q_PROPERTY(FollowupStatus status READ getStatus WRITE setStatus)
-    Q_PROPERTY(QVariantMap dateDue READ qGetDateDue)
-    Q_PROPERTY(QVariantMap dateReceived READ qGetDateReceived)
-    Q_PROPERTY(QVariantMap dateCompleted READ qGetDateCompleted)
+    Q_PROPERTY(QVariantMap dateDue READ qGetDateDue WRITE qSetDateDue)
+    Q_PROPERTY(QVariantMap dateReceived READ qGetDateReceived WRITE qSetDateDue)
+    Q_PROPERTY(QVariantMap dateCompleted READ qGetDateCompleted WRITE qSetDateCompleted)
     Q_PROPERTY(bool deleted READ isDeleted WRITE qPutDeleted)
     Q_ENUMS(FollowupStatus)
 

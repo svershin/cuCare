@@ -25,9 +25,9 @@ User::User
       contact (contactParam),
       address (addressParam),
       deleted (deletedParam)
-{
+{}
 
-}
+User::User(){}
 
 // Destructor
 User::~User()
@@ -67,13 +67,13 @@ QString User::qGetLastName(){return QString::fromStdString(lastName);}
 void User::qSetLastName(const QString value){lastName = value.toStdString();}
 
 QVariantMap User::qGetDateOfBirth(){return QJson::QObjectHelper::qobject2qvariant(&dateOfBirth);}
-//void User::qSetDateOfBirth(const QVariantMap value);
+void User::qSetDateOfBirth(const QVariantMap value){QJson::QObjectHelper::qvariant2qobject(value, &dateOfBirth);}
 
 QVariantMap User::qGetContact(){return QJson::QObjectHelper::qobject2qvariant(&contact);}
-//void User::qSetContact(const QVariantMap value);
+void User::qSetContact(const QVariantMap value){QJson::QObjectHelper::qvariant2qobject(value, &contact);}
 
-QVariantMap User::qGetAddress(){return QJson::QObjectHelper::qobject2qvariant(&contact);}
-//void User::qSetAddress(const QVariantMap value);
+QVariantMap User::qGetAddress(){return QJson::QObjectHelper::qobject2qvariant(&address);}
+void User::qSetAddress(const QVariantMap value){QJson::QObjectHelper::qvariant2qobject(value, &address);}
 
 void User::qPutDeleted(const bool value){deleted = value;}
 // EOF

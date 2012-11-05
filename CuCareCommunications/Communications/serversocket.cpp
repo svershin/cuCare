@@ -1,10 +1,7 @@
 #include "serversocket.h"
 
-ServerSocket::ServerSocket()
-{
-}
+ServerSocket::ServerSocket(QObject *parent)
+    : QObject(parent)
+{}
 
-int ServerSocket::test()
-{
-    return 1;
-}
+

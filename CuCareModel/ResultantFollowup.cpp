@@ -27,6 +27,8 @@ ResultantFollowup::ResultantFollowup
 {
 }
 
+ResultantFollowup::ResultantFollowup(){}
+
 // Destructor
 ResultantFollowup::~ResultantFollowup()
 {

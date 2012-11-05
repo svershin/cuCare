@@ -26,8 +26,9 @@ Physician::Physician
             addressParam,
             deletedParam),
       id (idParam)
-{
-}
+{}
+
+Physician::Physician(){}
 
 // Destructor
 Physician::~Physician()

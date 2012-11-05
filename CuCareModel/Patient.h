@@ -30,11 +30,11 @@ class Patient : public ModelObject
     Q_PROPERTY(QString firstName READ qGetFirstName WRITE qSetFirstName)
     Q_PROPERTY(QString lastName READ qGetLastName WRITE qSetLastName)
     Q_PROPERTY(QString notes READ qGetNotes WRITE qSetNotes)
-    Q_PROPERTY(QVariantMap contact READ qGetContact)
-    Q_PROPERTY(QVariantMap address READ qGetAddress)
-    Q_PROPERTY(QVariantMap dateOfBirth READ qGetDateOfBirth)
-    Q_PROPERTY(QVariantMap dateAddedToSystem READ qGetDateAddedToSystem)
-    Q_PROPERTY(QVariantMap healthCard READ qGetHealthCard)
+    Q_PROPERTY(QVariantMap contact READ qGetContact WRITE qSetContact)
+    Q_PROPERTY(QVariantMap address READ qGetAddress WRITE qSetAddress)
+    Q_PROPERTY(QVariantMap dateOfBirth READ qGetDateOfBirth WRITE qSetDateOfBirth)
+    Q_PROPERTY(QVariantMap dateAddedToSystem READ qGetDateAddedToSystem WRITE qSetDateAddedToSystem)
+    Q_PROPERTY(QVariantMap healthCard READ qGetHealthCard WRITE qSetHealthCard)
     Q_PROPERTY(bool deleted READ isDeleted WRITE qPutDeleted)
 
 
@@ -106,19 +106,19 @@ public:
     void qSetNotes(const QString value);
 
     QVariantMap qGetContact();
-    void qSetContact(const QString value);
+    void qSetContact(const QVariantMap value);
 
     QVariantMap qGetAddress();
-    //void qSetAddress(const QVariantMap);
+    void qSetAddress(const QVariantMap value);
 
     QVariantMap qGetDateOfBirth();
-    //void qSetDateOfBirth(const QVariantMap);
+    void qSetDateOfBirth(const QVariantMap value);
 
     QVariantMap qGetDateAddedToSystem();
-    //void qSetDateAddedToSystem(const QVariantMap);
+    void qSetDateAddedToSystem(const QVariantMap value);
 
     QVariantMap qGetHealthCard();
-    //void qSetHealthCard(const QVariantMap);
+    void qSetHealthCard(const QVariantMap value);
 
     void qPutDeleted(const bool value);
 

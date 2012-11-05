@@ -19,7 +19,8 @@ SOURCES += \
     requesthandler.cpp \
     messageparser.cpp \
     messagegenerator.cpp \
-    testclass2.cpp
+    testclass2.cpp \
+    messenger.cpp
 
 HEADERS += \
     request.h \
@@ -29,7 +30,8 @@ HEADERS += \
     messageparser.h \
     messagegenerator.h \
     commsinclude.h \
-    testclass2.h
+    testclass2.h \
+    messenger.h
 unix:!symbian {
     maemo5 {
         target.path = /opt/usr/lib

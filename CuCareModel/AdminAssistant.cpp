@@ -24,8 +24,9 @@ AdminAssistant::AdminAssistant
             contactParam,
             addressParam,
             deletedParam)
-{
-}
+{}
+
+AdminAssistant::AdminAssistant(){}
 
 // Destructor
 AdminAssistant::~AdminAssistant()

@@ -26,8 +26,9 @@ MedicalTest::MedicalTest
                          resultsParam,
                          deletedParam),
       testType (testTypeParam)
-{
-}
+{}
+
+MedicalTest::MedicalTest(){}
 
 // Destructor
 MedicalTest::~MedicalTest()
