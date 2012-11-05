@@ -66,4 +66,24 @@ vector<Followup*>* Consultation::getFollowups() { return &Followups; }
 
 void Consultation::markDeleted() { deleted = true; }
 bool Consultation::isDeleted() { return deleted; }
+
+
+//Special getters and setters for serialization purposes
+QString Consultation::qGetReason(){return QString::fromStdString(reason);}
+void Consultation::qSetReason(const QString value){reason = value.toStdString();}
+
+QString Consultation::qGetDiagnosis(){return QString::fromStdString(diagnosis);}
+void Consultation::qSetDiagnosis(const QString value){diagnosis = value.toStdString();}
+
+QString Consultation::qGetComments(){return QString::fromStdString(comments);}
+void Consultation::qSetComments(const QString value){comments = value.toStdString();}
+
+QVariantMap Consultation::qGetDate();
+void Consultation::qSetDate(const QVariantMap value);
+
+QVariantMap Consultation::qGetTime();
+void Consultation::qSetTime(const QVariantMap value);
+
+void Consultation::qPutDeleted(const bool value);
+
 // EOF

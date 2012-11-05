@@ -49,20 +49,20 @@ public:
     int pushPatient(string *pErrString, Patient *pInputPatient, int physicianId);
     int pushConsultation(string *pErrString, Consultation *pInputPatient, int physicianId, int patientId);
     int pushReferral(string *pErrString, Referral *pInputReferral, int consultationId);
-    int pushMedicalTest(string *pErrString, MedicalTest *pInputMedicalTest, int physicianId);
-    int pushReturnConsultation(string *pErrString, ReturnConsultation *pInputReturnConsultation, int physicianId, int nextConsultationId);
-    int pushMedicationRenewal(string *pErrString, MedicationRenewal *pInputMedicationRenewal, int physicianId);
+    int pushMedicalTest(string *pErrString, MedicalTest *pInputMedicalTest, int consultationId);
+    int pushReturnConsultation(string *pErrString, ReturnConsultation *pInputReturnConsultation, int consultationId, int nextConsultationId);
+    int pushMedicationRenewal(string *pErrString, MedicationRenewal *pInputMedicationRenewal, int consultationId);
 
     //Object retrieval functions
     int pullPhysician(string *pErrString, Physician *pPhysicianValues, PhysicianFilter inputFilter, vector<Physician*> *pOutputPhysicians);
     int pullAdminAssistant(string *pErrString, AdminAssistant *pPhysicianValues, UserFilter inputFilter, vector<AdminAssistant*> *pOutputAdminAssistants);
     int pullSysAdmin(string *pErrString, SysAdmin *pSysAdminValues, UserFilter inputFilter, vector<SysAdmin*> *pOutputSysAdmins);
-    int pullPatient(string *pErrString, Patient *pPatientValues, PatientFilter inputFilter, vector<Patient*> *pOutputPatients);
-    int pullConsultation(string *pErrString, Consultation *pConsultationValues, ConsultationFilter inputFilter, vector<Consultation*> *pOutputConsultations);
-    int pullReferral(string *pErrString, Referral *pReferralValues, ReferralFilter inputFilter, vector<Referral*> *pOutputReferral);
-    int pullMedicalTest(string *pErrString, MedicalTest *pMedicalTestValues, MedicalTestFilter inputFilter, vector<MedicalTest*> *pOutputMedicalTests);
-    int pullReturnConsultation(string *pErrString, ReturnConsultation *pReturnConsultationValues, ReturnConsultationFilter inputFilter, vector<ReturnConsultation*> *pOutputReturnConsultation);
-    int pullMedicationRenewal(string *pErrString, MedicationRenewal *pMedicationRenewalValues, MedicationRenewalsFilter inputFilter, vector<MedicalTest*> *pOutputMedicationRenewal);
+    int pullPatient(string *pErrString, Patient *pPatientValues, PatientFilter inputFilter, int physicianId, vector<Patient*> *pOutputPatients);
+    int pullConsultation(string *pErrString, Consultation *pConsultationValues, ConsultationFilter inputFilter, int physicianId, int patientId, vector<Consultation*> *pOutputConsultations);
+    int pullReferral(string *pErrString, Referral *pReferralValues, ReferralFilter inputFilter, int consultationId, vector<Referral*> *pOutputReferral);
+    int pullMedicalTest(string *pErrString, MedicalTest *pMedicalTestValues, MedicalTestFilter inputFilter, int consultationId, vector<MedicalTest*> *pOutputMedicalTests);
+    int pullReturnConsultation(string *pErrString, ReturnConsultation *pReturnConsultationValues, ReturnConsultationFilter inputFilter, int consultationId, int nextConsultationId, vector<ReturnConsultation*> *pOutputReturnConsultation);
+    int pullMedicationRenewal(string *pErrString, MedicationRenewal *pMedicationRenewalValues, MedicationRenewalFilter inputFilter, int consultationId, vector<MedicationRenewal*> *pOutputMedicationRenewal);
 
 
 private:

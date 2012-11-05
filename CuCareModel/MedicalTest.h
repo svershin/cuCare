@@ -16,6 +16,11 @@ using namespace std;
 
 class MedicalTest:public ResultantFollowup
 {
+
+    Q_OBJECT
+
+    Q_PROPERTY(QString testType READ qGetTestType WRITE qGetTestType)
+
 public:
 
     // Constructor

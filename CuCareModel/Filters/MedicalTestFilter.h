@@ -5,6 +5,10 @@
 
 class MedicalTestFilter : public ResultantFollowupFilter
 {
+    Q_OBJECT
+
+    Q_PROPERTY(bool testTypeMatch READ testTypeGetMatch WRITE testTypeSetMatch)
+
 public:
     MedicalTestFilter();
 

@@ -5,6 +5,9 @@
 
 class ReferralFilter : public ResultantFollowupFilter
 {
+    Q_OBJECT
+
+    Q_PROPERTY(bool specialistNameMatch READ specialistNameGetMatch WRITE specialistNameSetMatch)
 public:
     ReferralFilter();
 

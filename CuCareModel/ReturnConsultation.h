@@ -14,6 +14,8 @@
 
 class ReturnConsultation:public Followup
 {
+    Q_OBJECT
+
 public:
 
     // Constructor

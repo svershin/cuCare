@@ -5,6 +5,10 @@
 
 class PhysicianFilter : public UserFilter
 {
+    Q_OBJECT
+
+    Q_PROPERTY(bool idMatch READ idGetMatch WRITE idSetMatch)
+
 public:
     PhysicianFilter();
 

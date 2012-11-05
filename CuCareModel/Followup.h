@@ -10,9 +10,27 @@
 #define FOLLOWUP_H
 
 #include "Date.h"
+#include <QVariant>
 
-class Followup
+class Followup : public QObject
 {
+    Q_OBJECT
+
+    Q_PROPERTY(int id READ getId WRITE setId)
+    Q_PROPERTY(FollowupStatus status READ getStatus WRITE setStatus)
+    Q_PROPERTY(QVariant dateDue READ qGetDateDue WRITE qSetDataDue)
+    Q_PROPERTY(QVariant dateReceived READ qGetDateReceived WRITE qSetDateReceived)
+    Q_PROPERTY(QVariant dateCompleted READ qGetDateCompleted WRITE qSetDateCompleted)
+    Q_PROPERTY(bool deleted READ isDeleted WRITE qPutDeleted)
+    Q_ENUMS(FollowupStatus)
+
+    int id;
+    FollowupStatus status;
+    Date dateDue;
+    Date dateReceived;
+    Date dateCompleted;
+    bool deleted;
+
 public:
 
     enum FollowupStatus

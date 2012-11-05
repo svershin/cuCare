@@ -9,8 +9,13 @@
 #ifndef TIME_H
 #define TIME_H
 
-class Time
+class Time : public QObject
 {
+    Q_OBJECT
+
+    Q_PROPERTY(int hour READ getHour WRITE setHour)
+    Q_PROPERTY(int hour READ getMinute WRITE setMinute)
+
 public:
 
     // Constructor

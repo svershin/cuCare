@@ -16,8 +16,12 @@
 
 using namespace std;
 
-class User
+class User : public QObject
 {
+    Q_OBJECT
+
+    Q_PROPERTY(
+
 public:
 
     // Constructor

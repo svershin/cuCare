@@ -1,8 +1,23 @@
 #ifndef PATIENTFILTER_H
 #define PATIENTFILTER_H
 
-class PatientFilter
+class PatientFilter : public QObject
 {
+    Q_OBJECT
+
+    Q_PROPERTY(bool idMatch READ idGetMatch WRITE idSetMatch)
+    Q_PROPERTY(bool firstNameMatch READ firstNameGetMatch WRITE firstNameSetMatch)
+    Q_PROPERTY(bool lastNameMatch READ lastNameGetMatch WRITE lastNameSetMatch)
+    Q_PROPERTY(bool notesMatch READ notesGetMatch WRITE notesSetMatch)
+    Q_PROPERTY(bool contactMatch READ contactGetMatch WRITE contactSetMatch)
+    Q_PROPERTY(bool addressMatch READ addressGetMatch WRITE addressSetMatch)
+    Q_PROPERTY(bool dateOfBirthMatch READ dateOfBirthGetMatch WRITE dateOfBirthSetMatch)
+    Q_PROPERTY(bool dateAddedToSystemMatch READ dateAddedToSystemGetMatch WRITE dateAddedToSystemSetMatch)
+    Q_PROPERTY(bool healthCardMatch READ healthCardGetMatch WRITE healthCardSetMatch)
+    Q_PROPERTY(bool pPhysicianMatch READ pPhysicianMatchGetMatch WRITE pPhysicianMatchSetMatch)
+    Q_PROPERTY(bool deletedMatch READ deletedGetMatch WRITE deletedSetMatch)
+
+
 public:
     PatientFilter();
 

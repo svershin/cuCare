@@ -5,6 +5,9 @@
 
 class ReturnConsultationFilter : public FollowupFilter
 {
+    Q_OBJECT
+
+    Q_PROPERTY(bool pConsultMatch READ pConsultGetMatch WRITE pConsultSetMatch)
 public:
     ReturnConsultationFilter();
 

@@ -10,11 +10,24 @@
 #define CONTACTINFO_H
 
 #include <string>
+#include <QString>
 
 using namespace std;
 
-class ContactInfo
+class ContactInfo : public QObject
 {
+    Q_OBJECT
+
+    Q_PROPERTY(QString workPhone READ qGetWorkPhone WRITE qSetWorkPhone)
+    Q_PROPERTY(QString cellPhone READ qGetCellPhone WRITE qSetCellPhone)
+    Q_PROPERTY(QString email READ qGetEmail WRITE qSetEmail)
+    Q_PROPERTY(QString workEmail READ qGetWorkEmail WRITE qSetEmail)
+
+    string workPhone;
+    string cellPhone;
+    string email;
+    string workEmail;
+
 public:
 
     // Constructor

@@ -13,37 +13,34 @@ public:
     static QByteArray qObjectToJson(const QObject &modelObject);
 
     //Creation functions
-    static QString makeCreatePhysicianMessage(Physician inputPhysician);
-    static QString makeCreateAdminAssistantMessage(AdminAssistant inputAdminAssistant);
-    static QString makeCreateSysAdminMessage(SysAdmin inputSysAdmin);
-    static QString makeCreatePatientMessage(Patient inputPatient, int physicianId);
-    static QString makeCreateConsultationMessage(Consultation inputConsultation, int physicianId, int patientId);
-    static QString makeCreateReferralMessage(Referral inputReferral, int consultationId);
-    static QString makeCreateMedicalTestMessage(MedicalTest inputMedicalTest, int consultationId, QString **ppOutputMessage);
-    static QString makeCreateReturnConsultationMessage(ReturnConsultation inputReturnConsultation, int consultationId, int nextConsultationId, QString **ppOutputMessage);
-    static QString makeCreateMedicationRenewalMessage(MedicationRenewal inputMedicationRenewal, int consultationId, QString **ppOutputMessage);
+    static QString makeCreatePhysicianMessage(Physician *pInputPhysician);
+    static QString makeCreateAdminAssistantMessage(AdminAssistant *pInputAdminAssistant);
+    static QString makeCreateSysAdminMessage(SysAdmin *pInputSysAdmin);
+    static QString makeCreatePatientMessage(Patient *pInputPatient, int physicianId);
+    static QString makeCreateConsultationMessage(Consultation *pInputConsultation, int physicianId, int patientId);
+    static QString makeCreateReferralMessage(Referral *pInputReferral, int consultationId);
+    static QString makeCreateMedicalTestMessage(MedicalTest *pInputMedicalTest, int consultationId);
+    static QString makeCreateReturnConsultationMessage(ReturnConsultation *pInputReturnConsultation, int consultationId, int nextConsultationId);
+    static QString makeCreateMedicationRenewalMessage(MedicationRenewal *pInputMedicationRenewal, int consultationId);
 
     //Modification functions
-    static QString makePushUserMessage(User inputUser, QString **ppOutputMessage);
-    static QString makePushPatientMessage(Patient inputPatient, int physicianId, QString **ppOutputMessage);
-    static QString makePushConsultationMessage(Consultation inputPatient, int physicianId, int patientId, QString **ppOutputMessage);
-    static QString makePushReferralMessage(Referral inputReferral, int consultationId, QString **ppOutputMessage);
-    static QString makePushMedicalMessage(MedicalTest inputMedicalTest, int physicianId, QString **ppOutputMessage);
-    static QString makePushReturnConsultationMessage(ReturnConsultation inputReturnConsultation, int physicianId, int nextConsultationId, QString **ppOutputMessage);
-    static QString makePushMedicationRenewalMessage(MedicationRenewal inputMedicationRenewal, int physicianId, QString **ppOutputMessage);
+    static QString makePushUserMessage(User *pInputUser);
+    static QString makePushPatientMessage(Patient *pInputPatient, int physicianId);
+    static QString makePushConsultationMessage(Consultation *pInputPatient, int physicianId, int patientId);
+    static QString makePushReferralMessage(Referral *pInputReferral, int consultationId);
+    static QString makePushMedicalMessage(MedicalTest *pInputMedicalTest, int physicianId);
+    static QString makePushReturnConsultationMessage(ReturnConsultation *pInputReturnConsultation, int physicianId, int nextConsultationId);
+    static QString makePushMedicationRenewalMessage(MedicationRenewal *pInputMedicationRenewal, int physicianId);
 
-    //Object retrieval functions    static QString makePullPhysiciansMessage(PhysicianFilter inputFilter);
-//    static QString pullAdminAssistants(AdminAssistantFilter inputFilter);
-//    static QString pullSysAdmins(SysAdminFilter inputFilter);
-//    static QString pullPatients(PatientFilter inputFilter);
-//    static QString pullConsultations(ConsultationFilter inputFilter);
-//    static QString pulleReferrals(ReferralFilter inputFilter);
-//    static QString pullMedicalTests(MedicalTestFilter inputFilter);
-//    static QString pullReturnConsultations(ReturnConsultationFilter inputFilter);
-//    static QString pullMedicationRenewals(MedicationRenewalsFilter inputFilter);
-
-
-
+    //Object retrieval functions    static QString makePullPhysiciansMessage(PhysicianFilter *pInputFilter);
+    static QString pullAdminAssistants(UserFilter *pInputFilter);
+    static QString pullSysAdmins(UserFilter *pInputFilter);
+    static QString pullPatients(PatientFilter *pInputFilter);
+    static QString pullConsultations(ConsultationFilter *pInputFilter);
+    static QString pulleReferrals(ReferralFilter *pInputFilter);
+    static QString pullMedicalTests(MedicalTestFilter *pInputFilter);
+    static QString pullReturnConsultations(ReturnConsultationFilter *pInputFilter);
+    static QString pullMedicationRenewals(MedicationRenewalFilter *pInputFilter);
 };
 
 #endif // MESSAGEGENERATOR_H

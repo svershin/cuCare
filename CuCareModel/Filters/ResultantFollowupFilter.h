@@ -5,6 +5,10 @@
 
 class ResultantFollowupFilter : public FollowupFilter
 {
+    Q_OBJECT
+
+    Q_PROPERTY(bool resultsMatch READ resultsGetMatch WRITE resultsSetMatch)
+
 public:
     ResultantFollowupFilter();
 

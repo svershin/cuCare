@@ -16,6 +16,10 @@ using namespace std;
 
 class MedicationRenewal:public Followup
 {
+    Q_OBJECT
+
+    Q_PROPERTY(QString medication READ qGetMedication WRITE qSetMedication)
+
 public:
 
     // Constructor

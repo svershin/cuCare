@@ -1,8 +1,28 @@
 #ifndef USERFILTER_H
 #define USERFILTER_H
 
-class UserFilter
+class UserFilter : public QObject
 {
+    Q_OBJECT
+
+    Q_PROPERTY(bool usernameMatch READ usernameGetMatch WRITE usernameSetMatch)
+    Q_PROPERTY(bool firstNameMatch READ firstNameGetMatch WRITE firstNameSetMatch)
+    Q_PROPERTY(bool lastNameMatch READ lastNameGetMatch WRITE lastNameSetMatch)
+    Q_PROPERTY(bool titleMatch READ titleGetMatch WRITE titleSetMatch)
+    Q_PROPERTY(bool dateOfBirthMatch READ dateOfBirthGetMatch WRITE dateOfBirthSetMatch)
+    Q_PROPERTY(bool contactMatch READ contactGetMatch WRITE contactSetMatch)
+    Q_PROPERTY(bool addressMatch READ addressGetMatch WRITE addressSetMatch)
+    Q_PROPERTY(bool deletedMatch READ deletedGetMatch WRITE deletedSetMatch)
+
+    bool usernameMatch;
+    bool firstNameMatch;
+    bool lastNameMatch;
+    bool titleMatch;
+    bool dateOfBirthMatch;
+    bool contactMatch;
+    bool addressMatch;
+    bool deletedMatch;
+
 public:
     UserFilter();
 

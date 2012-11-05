@@ -3,6 +3,15 @@
 
 class FollowupFilter
 {
+    Q_OBJECT
+
+    Q_PROPERTY(bool idMatch READ idGetMatch WRITE idSetMatch)
+    Q_PROPERTY(bool statusMatch READ statusGetMatch statusWRITE SetMatch)
+    Q_PROPERTY(bool dateDueMatch READ dateDueGetMatch dateDueWRITE SetMatch)
+    Q_PROPERTY(bool dateRecievedMatch READ dateRecievedGetMatch WRITE dateRecievedSetMatch)
+    Q_PROPERTY(bool dateCompletedMatch READ dateCompletedGetMatch WRITE dateCompletedSetMatch)
+    Q_PROPERTY(bool deletedMatch READ deletedGetMatch WRITE deletedSetMatch)
+
 public:
     FollowupFilter();
 

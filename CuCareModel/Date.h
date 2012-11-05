@@ -9,8 +9,14 @@
 #ifndef DATE_H
 #define DATE_H
 
-class Date
+class Date : public QObject
 {
+    Q_OBJECT
+
+    Q_PROPERTY(int READ getDay WRITE setDay)
+    Q_PROPERTY(int READ getMonth WRITE setMonth)
+    Q_PROPERTY(int READ getYear WRITE setYear)
+
 public:
 
     // Constructor
@@ -40,3 +46,4 @@ private:
 #endif
 
 // EOF
+

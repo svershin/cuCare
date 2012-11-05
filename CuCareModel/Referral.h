@@ -16,6 +16,10 @@ using namespace std;
 
 class Referral:public ResultantFollowup
 {
+
+    Q_OBJECT
+
+    Q_PROPERTY(QString specialistName READ qGetSpecialistName WRITE qSetSpecialistName)
 public:
 
     // Constructor

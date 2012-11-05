@@ -1,8 +1,34 @@
 #ifndef CONSULTATIONFILTER_H
 #define CONSULTATIONFILTER_H
 
-class ConsultationFilter
+class ConsultationFilter : public QObject
 {
+    Q_OBJECT
+
+    Q_PROPERTY(bool consultIDMatch READ consultIDGetMatch WRITE consultIDSetMatch)
+    Q_PROPERTY(bool patientIdMatch READ paitentIdGetMatch WRITE patientIdSetMatch)
+    Q_PROPERTY(bool reasonMatch READ diagnosisGetMatch WRITE diagnosisSetMatch)
+    Q_PROPERTY(bool diagnosisMatch READ diagnosisGetMatch WRITE diagnosisSetMatch)
+    Q_PROPERTY(bool commentsMatch READ commentsGetMatch WRITE commentsSetMatch)
+    Q_PROPERTY(bool statusMatch READ statusGetMatch WRITE statusSetMatch)
+    Q_PROPERTY(bool dateMatch READ dateGetMatch WRITE dateSetMatch)
+    Q_PROPERTY(bool timeMatch READ timeGetMatch WRITE timeSetMatch)
+    Q_PROPERTY(bool pConsultingPhysMatch READ pConsultingPhysGetMatch WRITE pConsultingPhysSetMatch)
+    Q_PROPERTY(bool deletedMatch READ deletedGetMatch WRITE deletedSetMatch)
+
+    bool consultIDMatch;
+    bool patientIdMatch;
+    bool reasonMatch;
+    bool diagnosisMatch;
+    bool commentsMatch;
+    bool statusMatch;
+    bool dateMatch;
+    bool timeMatch;
+    bool pConsultingPhysMatch;
+    bool deletedMatch;
+
+
+
 public:
     ConsultationFilter();
 

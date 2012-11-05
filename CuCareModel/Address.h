@@ -51,36 +51,36 @@ public:
 
 
     string getCountry();
-    void setCountry(const string& value);
+    void setCountry(const string value);
 
     string getCity();
-    void setCity(const string& value);
+    void setCity(const string value);
 
     string getLineOne();
-    void setLineOne(const string& value);
+    void setLineOne(const string value);
 
     string getLineTwo();
-    void setLineTwo(const string& value);
+    void setLineTwo(const string value);
 
     string getPostalCode();
-    void setPostalCode(const string& value);
+    void setPostalCode(const string value);
 
 
     //Special getters and setters for object serialization purposes:
     QString qGetCountry();
-    void qSetCountry(const QString& value);
+    void qSetCountry(const QString value);
 
     QString qGetCity();
-    void qSetCity(const QString& value);
+    void qSetCity(const QString value);
 
     QString qGetLineOne();
-    void qSetLineOne(const QString& value);
+    void qSetLineOne(const QString value);
 
     QString qGetLineTwo();
-    void qSetLineTwo(const QString& value);
+    void qSetLineTwo(const QString value);
 
     QString qGetPostalCode();
-    void qSetPostalCode(const QString& value);
+    void qSetPostalCode(const QString value);
 
 private:
     string country;
