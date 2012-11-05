@@ -208,13 +208,17 @@ void MainWindow::showConsultationInfo(int cid)
     switch(cStat) {
     case Consultation::CSTAT_PENDING:
         ui->ConsultationStatusComboBox->setCurrentIndex(ui->ConsultationStatusComboBox->findText("Pending"));
+        break;
     case Consultation::CSTAT_OCCURED:
         ui->ConsultationStatusComboBox->setCurrentIndex(ui->ConsultationStatusComboBox->findText("Occured"));
+        break;
     case Consultation::CSTAT_COMPLETED:
         ui->ConsultationStatusComboBox->setCurrentIndex(ui->ConsultationStatusComboBox->findText("Completed"));
+        break;
     case Consultation::CSTAT_ERROR:
         //handle error case here
         ui->ConsultationStatusComboBox->setCurrentIndex(ui->ConsultationStatusComboBox->findText("Pending"));
+        break;
     }
 }
 
@@ -241,14 +245,19 @@ void MainWindow::showFollowup(int fid, int cid)
                     switch(controller->getCurrentPatient()->getConsultations()->at(i)->getFollowups()->at(j)->getType()) {
                     case 1: //Medical Test
                         showMedicalTest((MedicalTest*)controller->getCurrentPatient()->getConsultations()->at(i)->getFollowups()->at(j));
+                        break;
                     case 2: //Medication Renewal
                         showMedicationRenewal((MedicationRenewal*)controller->getCurrentPatient()->getConsultations()->at(i)->getFollowups()->at(j));
+                        break;
                     case 3: //Referral
                         showReferral((Referral*)controller->getCurrentPatient()->getConsultations()->at(i)->getFollowups()->at(j));
+                        break;
                     case 4: //ResultantFollowup
                         showResultantFollowup((ResultantFollowup*)controller->getCurrentPatient()->getConsultations()->at(i)->getFollowups()->at(j));
+                        break;
                     case 5: //ReturnConsultation
                         showReturnConsultation((ReturnConsultation*)controller->getCurrentPatient()->getConsultations()->at(i)->getFollowups()->at(j));
+                        break;
                     }
                     break;
                 }
@@ -266,15 +275,20 @@ void MainWindow::showMedicalTest(MedicalTest *pMedicalTest)
     switch(fStat) {
     case Followup::FSTAT_PENDING:
         ui->FollowupStatusComboBox->setCurrentIndex(ui->FollowupStatusComboBox->findText("Pending"));
+        break;
     case Followup::FSTAT_OVERDUE:
         ui->FollowupStatusComboBox->setCurrentIndex(ui->FollowupStatusComboBox->findText("Overdue"));
+        break;
     case Followup::FSTAT_RECEIVED:
         ui->FollowupStatusComboBox->setCurrentIndex(ui->FollowupStatusComboBox->findText("Received"));
+        break;
     case Followup::FSTAT_COMPLETED:
         ui->FollowupStatusComboBox->setCurrentIndex(ui->FollowupStatusComboBox->findText("Completed"));
+        break;
     case Followup::FSTAT_ERROR:
         //handle error case here
         ui->FollowupStatusComboBox->setCurrentIndex(ui->FollowupStatusComboBox->findText("Pending"));
+        break;
     }
 
     ui->DueDateEdit->setDate(QDate(pMedicalTest->getDateDue().getYear(),
@@ -304,15 +318,20 @@ void MainWindow::showMedicationRenewal(MedicationRenewal *pMedicationRenewal)
     switch(fStat) {
     case Followup::FSTAT_PENDING:
         ui->FollowupStatusComboBox->setCurrentIndex(ui->FollowupStatusComboBox->findText("Pending"));
+        break;
     case Followup::FSTAT_OVERDUE:
         ui->FollowupStatusComboBox->setCurrentIndex(ui->FollowupStatusComboBox->findText("Overdue"));
+        break;
     case Followup::FSTAT_RECEIVED:
         ui->FollowupStatusComboBox->setCurrentIndex(ui->FollowupStatusComboBox->findText("Received"));
+        break;
     case Followup::FSTAT_COMPLETED:
         ui->FollowupStatusComboBox->setCurrentIndex(ui->FollowupStatusComboBox->findText("Completed"));
+        break;
     case Followup::FSTAT_ERROR:
         //handle error case here
         ui->FollowupStatusComboBox->setCurrentIndex(ui->FollowupStatusComboBox->findText("Pending"));
+        break;
     }
 
     ui->DueDateEdit->setDate(QDate(pMedicationRenewal->getDateDue().getYear(),
@@ -337,15 +356,20 @@ void MainWindow::showReferral(Referral *pReferral)
     switch(fStat) {
     case Followup::FSTAT_PENDING:
         ui->FollowupStatusComboBox->setCurrentIndex(ui->FollowupStatusComboBox->findText("Pending"));
+        break;
     case Followup::FSTAT_OVERDUE:
         ui->FollowupStatusComboBox->setCurrentIndex(ui->FollowupStatusComboBox->findText("Overdue"));
+        break;
     case Followup::FSTAT_RECEIVED:
         ui->FollowupStatusComboBox->setCurrentIndex(ui->FollowupStatusComboBox->findText("Received"));
+        break;
     case Followup::FSTAT_COMPLETED:
         ui->FollowupStatusComboBox->setCurrentIndex(ui->FollowupStatusComboBox->findText("Completed"));
+        break;
     case Followup::FSTAT_ERROR:
         //handle error case here
         ui->FollowupStatusComboBox->setCurrentIndex(ui->FollowupStatusComboBox->findText("Pending"));
+        break;
     }
 
     ui->DueDateEdit->setDate(QDate(pReferral->getDateDue().getYear(),
@@ -375,15 +399,20 @@ void MainWindow::showResultantFollowup(ResultantFollowup *pResultantFollowup)
     switch(fStat) {
     case Followup::FSTAT_PENDING:
         ui->FollowupStatusComboBox->setCurrentIndex(ui->FollowupStatusComboBox->findText("Pending"));
+        break;
     case Followup::FSTAT_OVERDUE:
         ui->FollowupStatusComboBox->setCurrentIndex(ui->FollowupStatusComboBox->findText("Overdue"));
+        break;
     case Followup::FSTAT_RECEIVED:
         ui->FollowupStatusComboBox->setCurrentIndex(ui->FollowupStatusComboBox->findText("Received"));
+        break;
     case Followup::FSTAT_COMPLETED:
         ui->FollowupStatusComboBox->setCurrentIndex(ui->FollowupStatusComboBox->findText("Completed"));
+        break;
     case Followup::FSTAT_ERROR:
         //handle error case here
         ui->FollowupStatusComboBox->setCurrentIndex(ui->FollowupStatusComboBox->findText("Pending"));
+        break;
     }
 
     ui->DueDateEdit->setDate(QDate(pResultantFollowup->getDateDue().getYear(),
@@ -408,15 +437,20 @@ void MainWindow::showReturnConsultation(ReturnConsultation *pReturnConsultation)
     switch(fStat) {
     case Followup::FSTAT_PENDING:
         ui->FollowupStatusComboBox->setCurrentIndex(ui->FollowupStatusComboBox->findText("Pending"));
+        break;
     case Followup::FSTAT_OVERDUE:
         ui->FollowupStatusComboBox->setCurrentIndex(ui->FollowupStatusComboBox->findText("Overdue"));
+        break;
     case Followup::FSTAT_RECEIVED:
         ui->FollowupStatusComboBox->setCurrentIndex(ui->FollowupStatusComboBox->findText("Received"));
+        break;
     case Followup::FSTAT_COMPLETED:
         ui->FollowupStatusComboBox->setCurrentIndex(ui->FollowupStatusComboBox->findText("Completed"));
+        break;
     case Followup::FSTAT_ERROR:
         //handle error case here
         ui->FollowupStatusComboBox->setCurrentIndex(ui->FollowupStatusComboBox->findText("Pending"));
+        break;
     }
 
     ui->DueDateEdit->setDate(QDate(pReturnConsultation->getDateDue().getYear(),
@@ -510,17 +544,20 @@ void MainWindow::on_ResetFormsPushButton_clicked()
             enablePatientEditing();
         else
             showPatientInfo();
+        break;
     case 1: //Consultation Tab
         if (newConsultation)
             clearConsultationTab();
         else
             showConsultationInfo(ui->PatientTreeWidget->currentItem()->data(1, Qt::UserRole).toInt());
+        break;
     case 2:
         if (newFollowup)
             clearFollowupTab();
         else
             showFollowup(ui->PatientTreeWidget->currentItem()->data(1, Qt::UserRole).toInt(),
                          ui->PatientTreeWidget->currentItem()->parent()->data(1, Qt::UserRole).toInt());
+        break;
     }
 }
 
@@ -532,9 +569,17 @@ void MainWindow::on_PatientTreeWidget_itemClicked(QTreeWidgetItem *item)
     switch(itemType){
     case 0: //Patient has been selected
         showPatientInfo();
+        break;
     case 1: //Consultation has been selected
         showConsultationInfo(item->data(1, Qt::UserRole).toInt());
+        break;
     case 2: //Followup has been selected
         showFollowup(item->data(1, Qt::UserRole).toInt(), item->parent()->data(1, Qt::UserRole).toInt());
+        break;
     }
+}
+
+void MainWindow::on_SubmitChangesPushButton_clicked()
+{
+
 }

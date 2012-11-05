@@ -29,6 +29,8 @@ private slots:
 
     void on_PatientTreeWidget_itemClicked(QTreeWidgetItem *item);
 
+    void on_SubmitChangesPushButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     MasterController *controller;

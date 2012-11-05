@@ -117,7 +117,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="PatientInfoTab">
        <attribute name="title">
@@ -544,35 +544,49 @@
         </item>
         <item row="0" column="1" rowspan="3">
          <layout class="QGridLayout" name="FollowupDatesGridLayout">
-          <item row="0" column="0">
-           <widget class="QLabel" name="DateDueLabel">
-            <property name="text">
-             <string>Date Due:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QDateEdit" name="DueDateEdit"/>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="DateReceivedLabel">
-            <property name="text">
-             <string>Date Received:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QDateEdit" name="ReceivedDateEdit"/>
-          </item>
-          <item row="2" column="0">
+          <item row="2" column="1">
            <widget class="QLabel" name="DateCompletedLabel">
             <property name="text">
              <string>Date Completed:</string>
             </property>
            </widget>
           </item>
-          <item row="2" column="1">
+          <item row="1" column="2">
+           <widget class="QDateEdit" name="ReceivedDateEdit"/>
+          </item>
+          <item row="2" column="2">
            <widget class="QDateEdit" name="CompletedDateEdit"/>
+          </item>
+          <item row="0" column="2">
+           <widget class="QDateEdit" name="DueDateEdit"/>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLabel" name="DateDueLabel">
+            <property name="text">
+             <string>Date Due:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLabel" name="DateReceivedLabel">
+            <property name="text">
+             <string>Date Received:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QCheckBox" name="FollowupReceivedCheckBox">
+            <property name="text">
+             <string>Received</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QCheckBox" name="FollowupCompletedCheckBox">
+            <property name="text">
+             <string>Completed</string>
+            </property>
+           </widget>
           </item>
          </layout>
         </item>
