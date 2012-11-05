@@ -24,6 +24,8 @@ private slots:
 
     void on_SelectPatientPushButton_clicked();
 
+    void on_ResetFormsPushButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     MasterController *controller;
@@ -48,6 +50,7 @@ private:
 
     bool newPatient;
     bool newConsultation;
+    bool newFollowup;
 };
 
 #endif // MAINWINDOW_H
