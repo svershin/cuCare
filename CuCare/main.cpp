@@ -12,8 +12,10 @@ int main(int argc, char *argv[])
     LoginWindowDialog *loginWindow = new LoginWindowDialog(controller);
     MainWindow *mainWindow = new MainWindow(controller);
 
-    if (loginWindow->exec() == 1)
+    if (loginWindow->exec() == 1) {
         mainWindow->show();
+        return a.exec();
+    }
 
-    return a.exec();
+    return 0;
 }

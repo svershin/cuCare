@@ -48,9 +48,6 @@
        </item>
       </layout>
      </item>
-     <item row="1" column="0">
-      <widget class="QColumnView" name="PatientListColumnView"/>
-     </item>
      <item row="2" column="0">
       <layout class="QHBoxLayout" name="SelectCancelHorizontalLayout">
        <item>
@@ -81,6 +78,9 @@
         </widget>
        </item>
       </layout>
+     </item>
+     <item row="1" column="0">
+      <widget class="QListWidget" name="PatientListWidget"/>
      </item>
     </layout>
    </item>

@@ -5,6 +5,8 @@
 
 #include "MasterController/MasterController.h"
 #include "../CuCareModel/Patient.h"
+#include <vector>
+
 
 namespace Ui {
 class PatientSelectDialog;
@@ -15,8 +17,7 @@ class PatientSelectDialog : public QDialog
     Q_OBJECT
     
 public:
-    explicit PatientSelectDialog(MasterController *controllerParam, Patient *patientParam,
-                                 QWidget *parent = 0);
+    explicit PatientSelectDialog(MasterController *controllerParam, QWidget *parent = 0);
     ~PatientSelectDialog();
     
 private slots:
@@ -24,10 +25,13 @@ private slots:
 
     void on_CancelPushButton_clicked();
 
+    void on_PatientListWidget_currentRowChanged(int currentRow);
+
 private:
     Ui::PatientSelectDialog *ui;
     MasterController *controller;
-    Patient *returnPatient;
+
+    vector<Patient *> *pPatientList;
 };
 
 #endif // PATIENTSELECTDIALOG_H

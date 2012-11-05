@@ -35,8 +35,7 @@ void MainWindow::on_NewPatientPushButton_clicked()
 
 void MainWindow::on_SelectPatientPushButton_clicked()
 {
-    Patient *selectedPatient = NULL;
-    PatientSelectDialog *patientWindow = new PatientSelectDialog(controller, selectedPatient);
+    PatientSelectDialog *patientWindow = new PatientSelectDialog(controller);
 
     if (patientWindow->exec() == 1) {
         enablePatientEditing();
