@@ -27,7 +27,7 @@ private slots:
 
     void on_ResetFormsPushButton_clicked();
 
-    void on_PatientTreeWidget_itemClicked(QTreeWidgetItem *item, int column);
+    void on_PatientTreeWidget_itemClicked(QTreeWidgetItem *item);
 
 private:
     Ui::MainWindow *ui;
@@ -47,6 +47,9 @@ private:
     void showReferral(Referral *pReferral);
     void showResultantFollowup(ResultantFollowup *pResultantFollowup);
     void showReturnConsultation(ReturnConsultation *pReturnConsultation);
+
+    void clearConsultationTab();
+    void clearFollowupTab();
 
     void populatePhysicians();
     void populatePatientTree();

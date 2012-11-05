@@ -432,6 +432,26 @@ void MainWindow::showReturnConsultation(ReturnConsultation *pReturnConsultation)
     ui->ReturnConsultationPushButton->show();
 }
 
+void MainWindow::clearConsultationTab()
+{
+    ui->ReasonTextEdit->clear();
+    ui->DiagnosisTextEdit->clear();
+    ui->ConsultationCommentsTextEdit->clear();
+    ui->PhysicianSelectComboBox->setCurrentIndex(0);
+    ui->ConsultationStatusComboBox->setCurrentIndex(0);
+    ui->ConsultationDateTimeEdit->setDateTime(QDateTime(QDate(2000,1,1), QTime(0,0)));
+}
+
+void MainWindow::clearFollowupTab()
+{
+    ui->FollowupInfoTextEdit->clear();
+    ui->FollowupInfoTextEdit2->clear();
+    ui->FollowupStatusComboBox->setCurrentIndex(0);
+    ui->DueDateEdit->setDate(QDate(2000,1,1));
+    ui->ReceivedDateEdit->setDate(QDate(2000,1,1));
+    ui->CompletedDateEdit->setDate(QDate(2000,1,1));
+}
+
 void MainWindow::populatePhysicians()
 {
     string *pErrorString = NULL;
@@ -490,23 +510,31 @@ void MainWindow::on_ResetFormsPushButton_clicked()
             enablePatientEditing();
         else
             showPatientInfo();
+    case 1: //Consultation Tab
+        if (newConsultation)
+            clearConsultationTab();
+        else
+            showConsultationInfo(ui->PatientTreeWidget->currentItem()->data(1, Qt::UserRole).toInt());
+    case 2:
+        if (newFollowup)
+            clearFollowupTab();
+        else
+            showFollowup(ui->PatientTreeWidget->currentItem()->data(1, Qt::UserRole).toInt(),
+                         ui->PatientTreeWidget->currentItem()->parent()->data(1, Qt::UserRole).toInt());
     }
 }
 
-void MainWindow::on_PatientTreeWidget_itemClicked(QTreeWidgetItem *item, int column)
+void MainWindow::on_PatientTreeWidget_itemClicked(QTreeWidgetItem *item)
 {
     int itemType = item->data(0, Qt::UserRole).toInt();
-    int cid, fid;
+    //int cid, fid;
 
     switch(itemType){
     case 0: //Patient has been selected
         showPatientInfo();
     case 1: //Consultation has been selected
-        cid = item->data(1, Qt::UserRole).toInt();
-        showConsultationInfo(cid);
+        showConsultationInfo(item->data(1, Qt::UserRole).toInt());
     case 2: //Followup has been selected
-        fid = item->data(1, Qt::UserRole).toInt();
-        cid = item->parent()->data(1, Qt::UserRole).toInt();
-        showFollowup(fid, cid);
+        showFollowup(item->data(1, Qt::UserRole).toInt(), item->parent()->data(1, Qt::UserRole).toInt());
     }
 }

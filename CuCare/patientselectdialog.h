@@ -25,7 +25,7 @@ private slots:
 
     void on_CancelPushButton_clicked();
 
-    void on_PatientListWidget_currentRowChanged(int currentRow);
+    void on_PatientListWidget_currentRowChanged();
 
 private:
     Ui::PatientSelectDialog *ui;

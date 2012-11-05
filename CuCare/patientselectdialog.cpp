@@ -52,7 +52,7 @@ void PatientSelectDialog::on_CancelPushButton_clicked()
     reject();
 }
 
-void PatientSelectDialog::on_PatientListWidget_currentRowChanged(int currentRow)
+void PatientSelectDialog::on_PatientListWidget_currentRowChanged()
 {
     //enable the 'Select' button
     ui->SelectPushButton->setEnabled(true);
