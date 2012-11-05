@@ -352,12 +352,20 @@ void MainWindow::showMedicationRenewal(MedicationRenewal *pMedicationRenewal)
     ui->DueDateEdit->setDate(QDate(pMedicationRenewal->getDateDue().getYear(),
                                    pMedicationRenewal->getDateDue().getMonth(),
                                    pMedicationRenewal->getDateDue().getDay()));
-    ui->ReceivedDateEdit->setDate(QDate(pMedicationRenewal->getDateReceived().getYear(),
-                                   pMedicationRenewal->getDateReceived().getMonth(),
-                                   pMedicationRenewal->getDateReceived().getDay()));
-    ui->CompletedDateEdit->setDate(QDate(pMedicationRenewal->getDateCompleted().getYear(),
-                                   pMedicationRenewal->getDateCompleted().getMonth(),
-                                   pMedicationRenewal->getDateCompleted().getDay()));
+    if (pMedicationRenewal->getDateReceived().getYear() != 0) {
+        ui->ReceivedDateEdit->setEnabled(true);
+        ui->ReceivedDateEdit->setDate(QDate(pMedicationRenewal->getDateReceived().getYear(),
+                                            pMedicationRenewal->getDateReceived().getMonth(),
+                                            pMedicationRenewal->getDateReceived().getDay()));
+        ui->FollowupReceivedCheckBox->setChecked(true);
+    }
+    if (pMedicationRenewal->getDateCompleted().getYear() != 0) {
+        ui->CompletedDateEdit->setEnabled(true);
+        ui->CompletedDateEdit->setDate(QDate(pMedicationRenewal->getDateCompleted().getYear(),
+                                             pMedicationRenewal->getDateCompleted().getMonth(),
+                                             pMedicationRenewal->getDateCompleted().getDay()));
+        ui->FollowupCompletedCheckBox->setChecked(true);
+    }
 
     ui->FollowupInfoLabel->setText("Medication:");
     ui->FollowupInfoLabel->show();
@@ -390,12 +398,20 @@ void MainWindow::showReferral(Referral *pReferral)
     ui->DueDateEdit->setDate(QDate(pReferral->getDateDue().getYear(),
                                    pReferral->getDateDue().getMonth(),
                                    pReferral->getDateDue().getDay()));
-    ui->ReceivedDateEdit->setDate(QDate(pReferral->getDateReceived().getYear(),
-                                   pReferral->getDateReceived().getMonth(),
-                                   pReferral->getDateReceived().getDay()));
-    ui->CompletedDateEdit->setDate(QDate(pReferral->getDateCompleted().getYear(),
-                                   pReferral->getDateCompleted().getMonth(),
-                                   pReferral->getDateCompleted().getDay()));
+    if (pReferral->getDateReceived().getYear() != 0) {
+        ui->ReceivedDateEdit->setEnabled(true);
+        ui->ReceivedDateEdit->setDate(QDate(pReferral->getDateReceived().getYear(),
+                                            pReferral->getDateReceived().getMonth(),
+                                            pReferral->getDateReceived().getDay()));
+        ui->FollowupReceivedCheckBox->setChecked(true);
+    }
+    if (pReferral->getDateCompleted().getYear() != 0) {
+        ui->CompletedDateEdit->setEnabled(true);
+        ui->CompletedDateEdit->setDate(QDate(pReferral->getDateCompleted().getYear(),
+                                             pReferral->getDateCompleted().getMonth(),
+                                             pReferral->getDateCompleted().getDay()));
+        ui->FollowupCompletedCheckBox->setChecked(true);
+    }
 
     ui->FollowupInfoLabel->setText("Specialist Name:");
     ui->FollowupInfoLabel->show();
@@ -433,12 +449,20 @@ void MainWindow::showReturnConsultation(ReturnConsultation *pReturnConsultation)
     ui->DueDateEdit->setDate(QDate(pReturnConsultation->getDateDue().getYear(),
                                    pReturnConsultation->getDateDue().getMonth(),
                                    pReturnConsultation->getDateDue().getDay()));
-    ui->ReceivedDateEdit->setDate(QDate(pReturnConsultation->getDateReceived().getYear(),
-                                   pReturnConsultation->getDateReceived().getMonth(),
-                                   pReturnConsultation->getDateReceived().getDay()));
-    ui->CompletedDateEdit->setDate(QDate(pReturnConsultation->getDateCompleted().getYear(),
-                                   pReturnConsultation->getDateCompleted().getMonth(),
-                                   pReturnConsultation->getDateCompleted().getDay()));
+    if (pReturnConsultation->getDateReceived().getYear() != 0) {
+        ui->ReceivedDateEdit->setEnabled(true);
+        ui->ReceivedDateEdit->setDate(QDate(pReturnConsultation->getDateReceived().getYear(),
+                                            pReturnConsultation->getDateReceived().getMonth(),
+                                            pReturnConsultation->getDateReceived().getDay()));
+        ui->FollowupReceivedCheckBox->setChecked(true);
+    }
+    if (pReturnConsultation->getDateCompleted().getYear() != 0) {
+        ui->CompletedDateEdit->setEnabled(true);
+        ui->CompletedDateEdit->setDate(QDate(pReturnConsultation->getDateCompleted().getYear(),
+                                             pReturnConsultation->getDateCompleted().getMonth(),
+                                             pReturnConsultation->getDateCompleted().getDay()));
+        ui->FollowupCompletedCheckBox->setChecked(true);
+    }
 
     ui->ReturnConsultationPushButton->show();
 }
@@ -463,6 +487,8 @@ void MainWindow::clearFollowupTab()
     ui->CompletedDateEdit->setDate(QDate(2000,1,1));
     ui->FollowupReceivedCheckBox->setCheckState(Qt::Unchecked);
     ui->FollowupCompletedCheckBox->setCheckState(Qt::Unchecked);
+    ui->ReceivedDateEdit->setEnabled(false);
+    ui->CompletedDateEdit->setEnabled(false);
 }
 
 void MainWindow::populatePhysicians()
