@@ -103,7 +103,7 @@ bool MasterController::createPatient(Patient* pInputPatient, int physicianId, st
     if(pCurrentPatient != NULL)
         delete pCurrentPatient;
     pCurrentPatient = pInputPatient;
-//    pCurrentPatient->setId(uid);
+    pCurrentPatient->setId(uid);
 
     if(pCurrentPatient != NULL)
         return 1;
