@@ -229,7 +229,19 @@ bool MasterController::createConsultation(Consultation* pInputConsultation, stri
 
 bool MasterController::modifyConsultation(int consultId, string *pErrString)
 {
-    return 0;
+    Consultation* pConsultation2BUpdated;
+
+    for(unsigned int i=0; i < pCurrentPatient->getConsultations()->size(); i++) {
+        if(pCurrentPatient->getConsultations()->at(i)->getConsultID() == consultId)
+            pConsultation2BUpdated = pCurrentPatient->getConsultations()->at(i);
+    }
+
+    if(pConsultation2BUpdated == NULL)
+        return 0;
+
+    int requestStatus = server.pushConsultation(pErrString, )
+
+    return 1;
 }
 
 // Follow-ups ---------------------------------------------------------------------------------------
