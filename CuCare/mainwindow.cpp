@@ -244,7 +244,6 @@ void MainWindow::showFollowup(int fid, int cid)
                     ui->FollowupInfoTextEdit->hide();
                     ui->FollowupInfoLabel2->hide();
                     ui->FollowupInfoTextEdit2->hide();
-                    ui->ReturnConsultationPushButton->hide();
 
                     ui->FollowupReceivedCheckBox->setCheckState(Qt::Unchecked);
                     ui->FollowupCompletedCheckBox->setCheckState(Qt::Unchecked);
@@ -280,20 +279,20 @@ void MainWindow::showMedicalTest(MedicalTest *pMedicalTest)
     Followup::FollowupStatus fStat = pMedicalTest->getStatus();
     switch(fStat) {
     case Followup::FSTAT_PENDING:
-        ui->FollowupStatusComboBox->setCurrentIndex(ui->FollowupStatusComboBox->findText("Pending"));
+        ui->FollowupStatusComboBox->setCurrentIndex(0);
         break;
     case Followup::FSTAT_OVERDUE:
-        ui->FollowupStatusComboBox->setCurrentIndex(ui->FollowupStatusComboBox->findText("Overdue"));
+        ui->FollowupStatusComboBox->setCurrentIndex(1);
         break;
     case Followup::FSTAT_RECEIVED:
-        ui->FollowupStatusComboBox->setCurrentIndex(ui->FollowupStatusComboBox->findText("Received"));
+        ui->FollowupStatusComboBox->setCurrentIndex(2);
         break;
     case Followup::FSTAT_COMPLETED:
-        ui->FollowupStatusComboBox->setCurrentIndex(ui->FollowupStatusComboBox->findText("Completed"));
+        ui->FollowupStatusComboBox->setCurrentIndex(3);
         break;
     case Followup::FSTAT_ERROR:
         //handle error case here
-        ui->FollowupStatusComboBox->setCurrentIndex(ui->FollowupStatusComboBox->findText("Pending"));
+        ui->FollowupStatusComboBox->setCurrentIndex(0);
         break;
     }
 
@@ -463,8 +462,6 @@ void MainWindow::showReturnConsultation(ReturnConsultation *pReturnConsultation)
                                              pReturnConsultation->getDateCompleted().getDay()));
         ui->FollowupCompletedCheckBox->setChecked(true);
     }
-
-    ui->ReturnConsultationPushButton->show();
 }
 
 void MainWindow::clearConsultationTab()
@@ -587,11 +584,17 @@ void MainWindow::on_SubmitChangesPushButton_clicked()
 {
     int currentTab = ui->DisplayTabsWidget->currentIndex();
     string *pError = NULL;
+    Consultation::ConsultationStatus cStatus = Consultation::CSTAT_ERROR;
+    Followup::FollowupStatus fStatus = Followup::FSTAT_ERROR;
+    Physician *pConsultPhysician = NULL;
+    vector<Physician *> *pTempPhysicians = NULL;
+    unsigned int i, j;
 
     switch(currentTab) {
     case 0: //Patient tab
         if (newPatient) { //create patient
-            Patient *pNewPatient = new Patient(NULL, ui->FirstNameLineEdit->text().toStdString(), ui->LastNameLineEdit->text().toStdString(), ui->PatientNotesTextEdit->toPlainText().toStdString(),
+            Patient *pNewPatient = new Patient(NULL,
+                                               ui->FirstNameLineEdit->text().toStdString(), ui->LastNameLineEdit->text().toStdString(), ui->PatientNotesTextEdit->toPlainText().toStdString(),
                                                ContactInfo(ui->WorkPhoneLineEdit->text().toStdString(), ui->CellPhoneLineEdit->text().toStdString(),
                                                            ui->EmailLineEdit->text().toStdString(), ui->WorkEmailLineEdit->text().toStdString()),
                                                Address(ui->CountryLineEdit->text().toStdString(), ui->CityLineEdit->text().toStdString(), ui->Address1LineEdit->text().toStdString(),
@@ -631,12 +634,149 @@ void MainWindow::on_SubmitChangesPushButton_clicked()
                 ui->statusbar->showMessage(QString::fromStdString(*pError));
         }
         break;
-    case 1: //Consultation Tab
-        if (newConsultation) { //create Consultation
+    case 1: //Consultation Tab  
+        //Create the status object
+        switch(ui->ConsultationStatusComboBox->currentIndex()) {
+        case 0: //pending
+            cStatus = Consultation::CSTAT_PENDING;
+            break;
+        case 1: //occured
+            cStatus = Consultation::CSTAT_OCCURED;
+            break;
+        case 2: //completed
+            cStatus = Consultation::CSTAT_COMPLETED;
+            break;
+        }
 
+        //Find the corresponding physician object
+        if (controller->getPhysicianList(pTempPhysicians, pError)) {
+            for (i = 0 ; i < pTempPhysicians->size() ; i++) {
+                if (pTempPhysicians->at(i)->getId() == ui->PhysicianSelectComboBox->itemData(ui->PhysicianSelectComboBox->currentIndex(), Qt::UserRole)) {
+                    pConsultPhysician = pTempPhysicians->at(i);
+                    break;
+                }
+            }
+        }
+        else {
+            ui->statusbar->showMessage(QString::fromStdString(*pError));
+            break;
+        }
+
+        if (newConsultation) { //create Consultation
+            Consultation *pNewConsultation = new Consultation(NULL,
+                                                              ui->ReasonTextEdit->toPlainText().toStdString(), ui->DiagnosisTextEdit->toPlainText().toStdString(),
+                                                              ui->ConsultationCommentsTextEdit->toPlainText().toStdString(), cStatus,
+                                                              Date(ui->ConsultationDateTimeEdit->date().year(),
+                                                                   ui->ConsultationDateTimeEdit->date().month(),
+                                                                   ui->ConsultationDateTimeEdit->date().day()),
+                                                              Time(ui->ConsultationDateTimeEdit->time().hour(),
+                                                                   ui->ConsultationDateTimeEdit->time().minute()),
+                                                              pConsultPhysician,
+                                                              false);
+
+            if (controller->createConsultation(pNewConsultation, pError)) {
+                newConsultation = false;
+                populatePatientTree();
+                showPatientInfo();
+            }
+            else
+                ui->statusbar->showMessage(QString::fromStdString(*pError));
+        }
+        else { //modify Consultation
+            for (i = 0 ; i < controller->getCurrentPatient()->getConsultations()->size() ; i++) {
+                if (controller->getCurrentPatient()->getConsultations()->at(i)->getConsultID() == ui->PatientTreeWidget->currentItem()->data(1, Qt::UserRole).toInt())
+                    break;
+            }
+
+            controller->getCurrentPatient()->getConsultations()->at(i)->setReason(ui->ReasonTextEdit->toPlainText().toStdString());
+            controller->getCurrentPatient()->getConsultations()->at(i)->setDiagnosis(ui->DiagnosisTextEdit->toPlainText().toStdString());
+            controller->getCurrentPatient()->getConsultations()->at(i)->setComments(ui->ConsultationCommentsTextEdit->toPlainText().toStdString());
+            controller->getCurrentPatient()->getConsultations()->at(i)->setStatus(cStatus);
+            controller->getCurrentPatient()->getConsultations()->at(i)->setDate(Date(ui->ConsultationDateTimeEdit->date().year(),
+                                                                                     ui->ConsultationDateTimeEdit->date().month(),
+                                                                                     ui->ConsultationDateTimeEdit->date().day()));
+            controller->getCurrentPatient()->getConsultations()->at(i)->setTime(Time(ui->ConsultationDateTimeEdit->time().hour(),
+                                                                                     ui->ConsultationDateTimeEdit->time().minute()));
+            controller->getCurrentPatient()->getConsultations()->at(i)->setConsultingPhys(pConsultPhysician);
+
+            if (controller->modifyConsultation(controller->getCurrentPatient()->getConsultations()->at(i)->getConsultID(), pError)) {
+                populatePatientTree();
+                showPatientInfo();
+            }
+            else
+                ui->statusbar->showMessage(QString::fromStdString(*pError));
         }
         break;
     case 2: //Followup tab
+        //create the status object
+        switch(ui->FollowupStatusComboBox->currentIndex()) {
+        case 0: //pending
+            fStatus = Followup::FSTAT_PENDING;
+            break;
+        case 1: //overdue
+            fStatus = Followup::FSTAT_OVERDUE;
+            break;
+        case 2: //received
+            fStatus = Followup::FSTAT_RECEIVED;
+            break;
+        case 3: //completed
+            fStatus = Followup::FSTAT_COMPLETED;
+            break;
+        }
+
+        if (newFollowup) { //create Followup
+            //NEW GOES HERE
+        }
+        else { //modify Followup
+            //find the current followup
+            for (i = 0 ; i < controller->getCurrentPatient()->getConsultations()->size() ; i++) {
+                if (controller->getCurrentPatient()->getConsultations()->at(i)->getConsultID() == ui->PatientTreeWidget->currentItem()->parent()->data(1, Qt::UserRole).toInt()) {
+                    for (j = 0 ; j < controller->getCurrentPatient()->getConsultations()->at(i)->getFollowups()->size() ; j++) {
+                        if (controller->getCurrentPatient()->getConsultations()->at(i)->getFollowups()->at(j)->getId() == ui->PatientTreeWidget->currentItem()->data(1, Qt::UserRole).toInt())
+                            break;
+                    }
+                    break;
+                }
+            }
+
+            controller->getCurrentPatient()->getConsultations()->at(i)->getFollowups()->at(j)->setStatus(fStatus);
+            controller->getCurrentPatient()->getConsultations()->at(i)->getFollowups()->at(j)->setDateDue(Date(ui->DueDateEdit->date().year(),
+                                                                                                               ui->DueDateEdit->date().month(),
+                                                                                                               ui->DueDateEdit->date().day()));
+            if (ui->FollowupReceivedCheckBox->isChecked())
+                controller->getCurrentPatient()->getConsultations()->at(i)->getFollowups()->at(j)->setDateReceived(Date(ui->ReceivedDateEdit->date().year(),
+                                                                                                                        ui->ReceivedDateEdit->date().month(),
+                                                                                                                        ui->ReceivedDateEdit->date().day()));
+            if (ui->FollowupCompletedCheckBox->isChecked())
+                controller->getCurrentPatient()->getConsultations()->at(i)->getFollowups()->at(j)->setDateCompleted(Date(ui->CompletedDateEdit->date().year(),
+                                                                                                                         ui->CompletedDateEdit->date().month(),
+                                                                                                                         ui->CompletedDateEdit->date().day()));
+            switch(controller->getCurrentPatient()->getConsultations()->at(i)->getFollowups()->at(j)->getType()) {
+            case 1: //Medical Test
+                ((MedicalTest *)controller->getCurrentPatient()->getConsultations()->at(i)->getFollowups()->at(j))->setTestType(ui->FollowupInfoTextEdit->toPlainText().toStdString());
+                ((MedicalTest *)controller->getCurrentPatient()->getConsultations()->at(i)->getFollowups()->at(j))->setResults(ui->FollowupInfoTextEdit2->toPlainText().toStdString());
+                break;
+            case 2: //Medication Renewal
+                ((MedicationRenewal *)controller->getCurrentPatient()->getConsultations()->at(i)->getFollowups()->at(j))->setMedication(ui->FollowupInfoTextEdit->toPlainText().toStdString());
+                break;
+            case 3: //Referral
+                ((Referral*)controller->getCurrentPatient()->getConsultations()->at(i)->getFollowups()->at(j))->setSpecialistName(ui->FollowupInfoTextEdit->toPlainText().toStdString());
+                ((Referral*)controller->getCurrentPatient()->getConsultations()->at(i)->getFollowups()->at(j))->setResults(ui->FollowupInfoTextEdit2->toPlainText().toStdString());
+                break;
+            case 4: //Return Consultation
+                //Nothing extra to do here
+                break;
+            }
+
+            if ( controller->modifyFollowup(controller->getCurrentPatient()->getConsultations()->at(i)->getFollowups()->at(j)->getId(),
+                                       controller->getCurrentPatient()->getConsultations()->at(i)->getConsultID(),
+                                       pError) ) {
+                populatePatientTree();
+                showPatientInfo();
+            }
+            else
+                ui->statusbar->showMessage(QString::fromStdString(*pError));
+        }
         break;
     }
 }
