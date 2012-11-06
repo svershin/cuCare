@@ -7,14 +7,14 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    MasterController *controller = new MasterController();
+    MasterController controller;
 
-    LoginWindowDialog *loginWindow = new LoginWindowDialog(controller);
-    MainWindow *mainWindow = new MainWindow(controller);
+    LoginWindowDialog loginWindow(&controller);
+    MainWindow mainWindow(&controller);
 
 
-    if (loginWindow->exec() == 1) {
-        mainWindow->show();
+    if (loginWindow.exec() == 1) {
+        mainWindow.show();
         return a.exec();
     }
 

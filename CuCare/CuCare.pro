@@ -15,19 +15,22 @@ SOURCES += main.cpp\
     loginwindowdialog.cpp \
     mainwindow.cpp \
     MasterController/MasterController.cpp \
-    MasterController/Request.cpp
+    MasterController/Request.cpp \
+    followuptypeselectdialog.cpp
 
 HEADERS  += \
     patientselectdialog.h \
     loginwindowdialog.h \
     mainwindow.h \
     MasterController/MasterController.h \
-    MasterController/Request.h
+    MasterController/Request.h \
+    followuptypeselectdialog.h
 
 FORMS    += \
     patientselectdialog.ui \
     loginwindowdialog.ui \
-    mainwindow.ui
+    mainwindow.ui \
+    followuptypeselectdialog.ui
 
 
 unix:!macx:!symbian: LIBS += -L$$PWD/../CuCareModel/ -lCuCareModel
