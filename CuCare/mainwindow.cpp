@@ -53,9 +53,9 @@ void MainWindow::on_NewPatientPushButton_clicked()
 
 void MainWindow::on_SelectPatientPushButton_clicked()
 {
-    PatientSelectDialog patientWindow(controller);
+    PatientSelectDialog *patientWindow = new PatientSelectDialog(controller);
 
-    if (patientWindow.exec() == 1) {
+    if (patientWindow->exec() == 1) {
         enablePatientEditing();
         ui->CreateConsultationPushButton->setEnabled(true);
 
@@ -966,8 +966,8 @@ void MainWindow::on_CreateConsultationPushButton_clicked()
 void MainWindow::on_CreateFollowupPushButton_clicked()
 {
     int fType = 1;
-    FollowupTypeSelectDialog fTypeDialog(&fType);
-    if (fTypeDialog.exec()) {
+    FollowupTypeSelectDialog *fTypeDialog = new FollowupTypeSelectDialog(&fType);
+    if (fTypeDialog->exec()) {
         switch(fType) {
         case 1:
             newMedicalTest = true;
