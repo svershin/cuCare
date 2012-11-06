@@ -649,7 +649,7 @@ void MainWindow::on_SubmitChangesPushButton_clicked()
     switch(currentTab) {
     case 0: //Patient tab
         if (newPatient) { //create patient
-            Patient *pNewPatient = new Patient(NULL,
+            Patient *pNewPatient = new Patient(0,
                                                ui->FirstNameLineEdit->text().toStdString(), ui->LastNameLineEdit->text().toStdString(), ui->PatientNotesTextEdit->toPlainText().toStdString(),
                                                ContactInfo(ui->WorkPhoneLineEdit->text().toStdString(), ui->CellPhoneLineEdit->text().toStdString(),
                                                            ui->EmailLineEdit->text().toStdString(), ui->WorkEmailLineEdit->text().toStdString()),
@@ -662,7 +662,7 @@ void MainWindow::on_SubmitChangesPushButton_clicked()
                                                                                                              ui->CardExpirationDateEdit->date().month(),
                                                                                                              ui->CardExpirationDateEdit->date().day())),
                                                false);
-            if (controller->createPatient(pNewPatient, NULL, &errorString)) {
+            if (controller->createPatient(pNewPatient, 0, &errorString)) {
                 newPatient = false;
                 populatePatientTree();
                 showPatientInfo();
@@ -722,7 +722,7 @@ void MainWindow::on_SubmitChangesPushButton_clicked()
         }
 
         if (newConsultation) { //create Consultation
-            Consultation *pNewConsultation = new Consultation(NULL,
+            Consultation *pNewConsultation = new Consultation(0,
                                                               ui->ReasonTextEdit->toPlainText().toStdString(), ui->DiagnosisTextEdit->toPlainText().toStdString(),
                                                               ui->ConsultationCommentsTextEdit->toPlainText().toStdString(), cStatus,
                                                               Date(ui->ConsultationDateTimeEdit->date().year(),
@@ -796,7 +796,7 @@ void MainWindow::on_SubmitChangesPushButton_clicked()
         }
 
         if (newMedicalTest) { //create Medical Test
-            MedicalTest *pNewMedicalTest = new MedicalTest(NULL,
+            MedicalTest *pNewMedicalTest = new MedicalTest(0,
                                                            fStatus,
                                                            Date(ui->DueDateEdit->date().year(),
                                                                 ui->DueDateEdit->date().month(),
@@ -816,7 +816,7 @@ void MainWindow::on_SubmitChangesPushButton_clicked()
                 ui->statusbar->showMessage(QString::fromStdString(errorString));
         }
         else if (newMedicationRenewal) { //create Medication Renewal
-            MedicationRenewal *pNewMedicationRenewal = new MedicationRenewal(NULL,
+            MedicationRenewal *pNewMedicationRenewal = new MedicationRenewal(0,
                                                                              fStatus,
                                                                              Date(ui->DueDateEdit->date().year(),
                                                                                   ui->DueDateEdit->date().month(),
@@ -835,7 +835,7 @@ void MainWindow::on_SubmitChangesPushButton_clicked()
                 ui->statusbar->showMessage(QString::fromStdString(errorString));
         }
         else if (newReferral) { //create Referral
-            Referral *pNewReferral = new Referral(NULL,
+            Referral *pNewReferral = new Referral(0,
                                                   fStatus,
                                                   Date(ui->DueDateEdit->date().year(),
                                                        ui->DueDateEdit->date().month(),
@@ -855,7 +855,7 @@ void MainWindow::on_SubmitChangesPushButton_clicked()
                 ui->statusbar->showMessage(QString::fromStdString(errorString));
         }
         else if (newReturnConsultation) { //create Return Consultation
-            ReturnConsultation *pNewReturnConsultation = new ReturnConsultation(NULL,
+            ReturnConsultation *pNewReturnConsultation = new ReturnConsultation(0,
                                                                                 fStatus,
                                                                                 Date(ui->DueDateEdit->date().year(),
                                                                                      ui->DueDateEdit->date().month(),
