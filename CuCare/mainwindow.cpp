@@ -569,7 +569,6 @@ void MainWindow::on_ResetFormsPushButton_clicked()
 void MainWindow::on_PatientTreeWidget_itemClicked(QTreeWidgetItem *item)
 {
     int itemType = item->data(0, Qt::UserRole).toInt();
-    //int cid, fid;
 
     switch(itemType){
     case 0: //Patient has been selected
@@ -586,7 +585,60 @@ void MainWindow::on_PatientTreeWidget_itemClicked(QTreeWidgetItem *item)
 
 void MainWindow::on_SubmitChangesPushButton_clicked()
 {
+    int currentTab = ui->DisplayTabsWidget->currentIndex();
+    string *pError = NULL;
 
+    switch(currentTab) {
+    case 0: //Patient tab
+        if (newPatient) { //create patient
+            Patient *pNewPatient = new Patient(NULL, ui->FirstNameLineEdit->text().toStdString(), ui->LastNameLineEdit->text().toStdString(), ui->PatientNotesTextEdit->toPlainText().toStdString(),
+                                               ContactInfo(ui->WorkPhoneLineEdit->text().toStdString(), ui->CellPhoneLineEdit->text().toStdString(),
+                                                           ui->EmailLineEdit->text().toStdString(), ui->WorkEmailLineEdit->text().toStdString()),
+                                               Address(ui->CountryLineEdit->text().toStdString(), ui->CityLineEdit->text().toStdString(), ui->Address1LineEdit->text().toStdString(),
+                                                       ui->Address2LineEdit->text().toStdString(), ui->PostalCodeLineEdit->text().toStdString()),
+                                               Date(ui->DOBDateEdit->date().year(), ui->DOBDateEdit->date().month(), ui->DOBDateEdit->date().day()),
+                                               Date(ui->AddedDateEdit->date().year(), ui->AddedDateEdit->date().month(), ui->AddedDateEdit->date().day()),
+                                               NULL, //not storing patient's physician
+                                               HealthCard(ui->CardNumberLineEdit->text().toStdString(), Date(ui->CardExpirationDateEdit->date().year(),
+                                                                                                             ui->CardExpirationDateEdit->date().month(),
+                                                                                                             ui->CardExpirationDateEdit->date().day())),
+                                               false);
+            if (controller->createPatient(pNewPatient, NULL, pError)) {
+                newPatient = false;
+                showPatientInfo();
+            }
+            else
+                ui->statusbar->showMessage(QString::fromStdString(*pError));
+
+        }
+        else { //modify patient
+            controller->getCurrentPatient()->setFirstName(ui->FirstNameLineEdit->text().toStdString());
+            controller->getCurrentPatient()->setLastName(ui->LastNameLineEdit->text().toStdString());
+            controller->getCurrentPatient()->setNotes(ui->PatientNotesTextEdit->toPlainText().toStdString());
+            controller->getCurrentPatient()->setContact(ContactInfo(ui->WorkPhoneLineEdit->text().toStdString(), ui->CellPhoneLineEdit->text().toStdString(),
+                                                                    ui->EmailLineEdit->text().toStdString(), ui->WorkEmailLineEdit->text().toStdString()));
+            controller->getCurrentPatient()->setAddress(Address(ui->CountryLineEdit->text().toStdString(), ui->CityLineEdit->text().toStdString(), ui->Address1LineEdit->text().toStdString(),
+                                                                ui->Address2LineEdit->text().toStdString(), ui->PostalCodeLineEdit->text().toStdString()));
+            controller->getCurrentPatient()->setDateOfBirth(Date(ui->DOBDateEdit->date().year(), ui->DOBDateEdit->date().month(), ui->DOBDateEdit->date().day()));
+            controller->getCurrentPatient()->setDateAddedToSystem(Date(ui->AddedDateEdit->date().year(), ui->AddedDateEdit->date().month(), ui->AddedDateEdit->date().day()));
+            controller->getCurrentPatient()->setHealthCard(HealthCard(ui->CardNumberLineEdit->text().toStdString(), Date(ui->CardExpirationDateEdit->date().year(),
+                                                                                                                         ui->CardExpirationDateEdit->date().month(),
+                                                                                                                         ui->CardExpirationDateEdit->date().day())));
+
+            if (controller->modifyPatient(pError))
+                showPatientInfo();
+            else
+                ui->statusbar->showMessage(QString::fromStdString(*pError));
+        }
+        break;
+    case 1: //Consultation Tab
+        if (newConsultation) { //create Consultation
+
+        }
+        break;
+    case 2: //Followup tab
+        break;
+    }
 }
 
 void MainWindow::on_FollowupReceivedCheckBox_stateChanged(int arg1)
