@@ -597,13 +597,6 @@
           </property>
          </widget>
         </item>
-        <item row="6" column="0">
-         <widget class="QPushButton" name="ReturnConsultationPushButton">
-          <property name="text">
-           <string>View Return Consultation</string>
-          </property>
-         </widget>
-        </item>
        </layout>
       </widget>
      </widget>
