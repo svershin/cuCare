@@ -35,11 +35,24 @@ private slots:
 
     void on_FollowupCompletedCheckBox_stateChanged(int arg1);
 
+    void on_CreateConsultationPushButton_clicked();
+
+    void on_CreateFollowupPushButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     MasterController *controller;
 
     vector<Physician*> *pPhysicians;
+
+    bool newPatient;
+    bool newConsultation;
+    bool newMedicalTest;
+    bool newMedicationRenewal;
+    bool newReferral;
+    bool newReturnConsultation;
+
+    int currentConsultationId; //used when creating followups
 
     void enablePatientEditing();
     void disablePatientEditing();
@@ -58,10 +71,6 @@ private:
 
     void populatePhysicians();
     void populatePatientTree();
-
-    bool newPatient;
-    bool newConsultation;
-    bool newFollowup;
 };
 
 #endif // MAINWINDOW_H

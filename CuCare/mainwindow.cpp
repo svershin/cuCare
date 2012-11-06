@@ -6,7 +6,12 @@ MainWindow::MainWindow(MasterController *controllerParam, QWidget *parent) :
     ui(new Ui::MainWindow),
     controller(controllerParam),
     newPatient(false),
-    newConsultation(false)
+    newConsultation(false),
+    newMedicalTest(false),
+    newMedicationRenewal(false),
+    newReferral(false),
+    newReturnConsultation(false),
+    currentConsultationId(-1)
 {
     ui->setupUi(this);
 
@@ -554,7 +559,7 @@ void MainWindow::on_ResetFormsPushButton_clicked()
             showConsultationInfo(ui->PatientTreeWidget->currentItem()->data(1, Qt::UserRole).toInt());
         break;
     case 2:
-        if (newFollowup)
+        if (newMedicalTest || newMedicationRenewal || newReferral || newReturnConsultation)
             clearFollowupTab();
         else
             showFollowup(ui->PatientTreeWidget->currentItem()->data(1, Qt::UserRole).toInt(),
@@ -588,6 +593,8 @@ void MainWindow::on_SubmitChangesPushButton_clicked()
     Followup::FollowupStatus fStatus = Followup::FSTAT_ERROR;
     Physician *pConsultPhysician = NULL;
     vector<Physician *> *pTempPhysicians = NULL;
+    Date tempReceivedDate(0,0,0);
+    Date tempCompletedDate(0,0,0);
     unsigned int i, j;
 
     switch(currentTab) {
@@ -724,8 +731,95 @@ void MainWindow::on_SubmitChangesPushButton_clicked()
             break;
         }
 
-        if (newFollowup) { //create Followup
-            //NEW GOES HERE
+        if (ui->FollowupReceivedCheckBox->isChecked()) {
+            tempReceivedDate.setYear(ui->ReceivedDateEdit->date().year());
+            tempReceivedDate.setMonth(ui->ReceivedDateEdit->date().month());
+            tempReceivedDate.setDay(ui->ReceivedDateEdit->date().day());
+        }
+
+        if (ui->FollowupCompletedCheckBox->isChecked()) {
+            tempCompletedDate.setYear(ui->ReceivedDateEdit->date().year());
+            tempCompletedDate.setMonth(ui->ReceivedDateEdit->date().month());
+            tempCompletedDate.setDay(ui->ReceivedDateEdit->date().day());
+        }
+
+        if (newMedicalTest) { //create Medical Test
+            MedicalTest *pNewMedicalTest = new MedicalTest(NULL,
+                                                           fStatus,
+                                                           Date(ui->DueDateEdit->date().year(),
+                                                                ui->DueDateEdit->date().month(),
+                                                                ui->DueDateEdit->date().day()),
+                                                           tempReceivedDate,
+                                                           tempCompletedDate,
+                                                           ui->FollowupInfoTextEdit2->toPlainText().toStdString(),
+                                                           ui->FollowupInfoTextEdit->toPlainText().toStdString(),
+                                                           false);
+
+            if (controller->createFollowup((Followup *)pNewMedicalTest, currentConsultationId, pError)) {
+                newMedicalTest = false;
+                populatePatientTree();
+                showPatientInfo();
+            }
+            else
+                ui->statusbar->showMessage(QString::fromStdString(*pError));
+        }
+        else if (newMedicationRenewal) { //create Medication Renewal
+            MedicationRenewal *pNewMedicationRenewal = new MedicationRenewal(NULL,
+                                                                             fStatus,
+                                                                             Date(ui->DueDateEdit->date().year(),
+                                                                                  ui->DueDateEdit->date().month(),
+                                                                                  ui->DueDateEdit->date().day()),
+                                                                             tempReceivedDate,
+                                                                             tempCompletedDate,
+                                                                             ui->FollowupInfoTextEdit->toPlainText().toStdString(),
+                                                                             false);
+
+            if (controller->createFollowup((Followup *)pNewMedicationRenewal, currentConsultationId, pError)) {
+                newMedicationRenewal = false;
+                populatePatientTree();
+                showPatientInfo();
+            }
+            else
+                ui->statusbar->showMessage(QString::fromStdString(*pError));
+        }
+        else if (newReferral) { //create Referral
+            Referral *pNewReferral = new Referral(NULL,
+                                                  fStatus,
+                                                  Date(ui->DueDateEdit->date().year(),
+                                                       ui->DueDateEdit->date().month(),
+                                                       ui->DueDateEdit->date().day()),
+                                                  tempReceivedDate,
+                                                  tempCompletedDate,
+                                                  ui->FollowupInfoTextEdit2->toPlainText().toStdString(),
+                                                  ui->FollowupInfoTextEdit->toPlainText().toStdString(),
+                                                  false);
+
+            if (controller->createFollowup((Followup *)pNewReferral, currentConsultationId, pError)) {
+                newReferral = false;
+                populatePatientTree();
+                showPatientInfo();
+            }
+            else
+                ui->statusbar->showMessage(QString::fromStdString(*pError));
+        }
+        else if (newReturnConsultation) { //create Return Consultation
+            ReturnConsultation *pNewReturnConsultation = new ReturnConsultation(NULL,
+                                                                                fStatus,
+                                                                                Date(ui->DueDateEdit->date().year(),
+                                                                                     ui->DueDateEdit->date().month(),
+                                                                                     ui->DueDateEdit->date().day()),
+                                                                                tempReceivedDate,
+                                                                                tempCompletedDate,
+                                                                                NULL,
+                                                                                false);
+
+            if (controller->createFollowup((Followup *)pNewReturnConsultation, currentConsultationId, pError)) {
+                newReturnConsultation = false;
+                populatePatientTree();
+                showPatientInfo();
+            }
+            else
+                ui->statusbar->showMessage(QString::fromStdString(*pError));
         }
         else { //modify Followup
             //find the current followup
@@ -795,4 +889,14 @@ void MainWindow::on_FollowupCompletedCheckBox_stateChanged(int arg1)
         ui->CompletedDateEdit->setEnabled(false);
     else
         ui->CompletedDateEdit->setEnabled(true);
+}
+
+void MainWindow::on_CreateConsultationPushButton_clicked()
+{
+
+}
+
+void MainWindow::on_CreateFollowupPushButton_clicked()
+{
+    currentConsultationId = ui->PatientTreeWidget->currentItem()->data(1, Qt::UserRole).toInt();
 }
