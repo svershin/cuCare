@@ -19,6 +19,8 @@ MasterController::MasterController()
 // Destructor
 MasterController::~MasterController()
 {
+
+
     delete pCurrentUser;
     delete pCurrentPatient;
 }
@@ -154,7 +156,7 @@ bool MasterController::setCurrentPatient(int patientId, string *pErrString)
     ConsultationFilter inputFilterConsultation;
     inputFilterConsultation.patientIdSetMatch(true);
 
-    //will need to change as physican ids will come back as a vector of ints
+    // *** TO DO: will need to change as physican ids will come back as a vector of ints
     requestStatus = server.pullConsultation(pErrString, &inputConsultation, inputFilterConsultation, 0, pCurrentPatient->getId(), pCurrentPatient->getConsultations());
     if(!requestStatus)
         return 0; // COMMS ERROR
@@ -248,22 +250,92 @@ bool MasterController::modifyConsultation(int consultId, string *pErrString)
 
 bool MasterController::createFollowup(Followup* pInputFollowup, int consultId, string *pErrString)
 {
+    int requestStatus = 0;
     int uid = 0;
+    Consultation* pParentConsult = NULL;
 
-    int requestStatus = server.createConsultation(pErrString, pInputConsultation, pInputConsultation->getConsultingPhys()->getId(), pCurrentPatient->getId(), &uid);
-    if(!requestStatus)
-        return 0; // COMMS ERROR
+    for(unsigned int i=0; i < pCurrentPatient->getConsultations()->size(); i++) {
+        if(pCurrentPatient->getConsultations()->at(i)->getConsultID() == consultId)
+            pParentConsult = pCurrentPatient->getConsultations()->at(i);
+    }
 
-    pInputConsultation->setConsultID(uid);
+    int followupType = pInputFollowup->getType();
 
-    pCurrentPatient->getConsultations()->push_back(pInputConsultation);
+    switch(followupType) {
+    case 1: // MedicalTest
+        requestStatus = server.createMedicalTest(pErrString, (MedicalTest*)pInputFollowup, consultId, &uid);
+        if(!requestStatus)
+            return 0; // COMMS ERROR
+        break;
+    case 2: // MedicationRenewal
+        requestStatus = server.createMedicationRenewal(pErrString, (MedicationRenewal*)pInputFollowup, consultId, &uid);
+        if(!requestStatus)
+            return 0; // COMMS ERROR
+        break;
+    case 3: // Referral
+        requestStatus = server.createReferral(pErrString, (Referral*)pInputFollowup, consultId, &uid);
+        if(!requestStatus)
+            return 0; // COMMS ERROR
+        break;
+    case 4: // ReturnConsultation
+        requestStatus = server.createReturnConsultation(pErrString, (ReturnConsultation*)pInputFollowup, consultId, 0, &uid);
+        if(!requestStatus)
+            return 0; // COMMS ERROR
+        break;
+    default:
+        return 0;
+    }
+
+    pInputFollowup->setId(uid);
+    pParentConsult->getFollowups()->push_back(pInputFollowup);
 
     return 1;
 }
 
 bool MasterController::modifyFollowup(int followupId, int consultId, string *pErrString)
 {
-    return 0;
+    int requestStatus = 0;
+    Consultation* pParentConsult = NULL;
+    Followup* followup2BUpdated = NULL;
+
+    for(unsigned int i=0; i < pCurrentPatient->getConsultations()->size(); i++) {
+        if(pCurrentPatient->getConsultations()->at(i)->getConsultID() == consultId)
+            pParentConsult = pCurrentPatient->getConsultations()->at(i);
+    }
+
+    for(unsigned int i=0; i < pParentConsult->getFollowups()->size(); i++) {
+        if(pParentConsult->getFollowups()->at(i)->getId() == followupId)
+            followup2BUpdated = pParentConsult->getFollowups()->at(i);
+    }
+
+    int followupType = followup2BUpdated->getType();
+
+    switch(followupType) {
+    case 1: // MedicalTest
+        requestStatus = server.pushMedicalTest(pErrString, (MedicalTest*)followup2BUpdated, consultId);
+        if(!requestStatus)
+            return 0; // COMMS ERROR
+        break;
+    case 2: // MedicationRenewal
+        requestStatus = server.pushMedicationRenewal(pErrString, (MedicationRenewal*)followup2BUpdated, consultId);
+        if(!requestStatus)
+            return 0; // COMMS ERROR
+        break;
+    case 3: // Referral
+        requestStatus = server.pushReferral(pErrString, (Referral*)followup2BUpdated, consultId);
+        if(!requestStatus)
+            return 0; // COMMS ERROR
+        break;
+    case 4: // ReturnConsultation
+        requestStatus = server.pushReturnConsultation(pErrString, (ReturnConsultation*)followup2BUpdated, consultId, 0);
+        if(!requestStatus)
+            return 0; // COMMS ERROR
+        break;
+    default:
+        return 0;
+    }
+
+    return 1;
 }
 
 // Physicians
