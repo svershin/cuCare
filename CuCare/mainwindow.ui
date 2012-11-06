@@ -46,7 +46,7 @@
       <item>
        <widget class="QPushButton" name="ResetFormsPushButton">
         <property name="text">
-         <string>Reset Forms</string>
+         <string>Reset Fields</string>
         </property>
        </widget>
       </item>
@@ -58,16 +58,6 @@
        </widget>
       </item>
      </layout>
-    </item>
-    <item row="1" column="0" rowspan="2">
-     <widget class="QTreeView" name="treeView">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-     </widget>
     </item>
     <item row="0" column="0" colspan="3">
      <layout class="QHBoxLayout" name="MainButtonsHorizontalLayout">
@@ -418,9 +408,9 @@
          </widget>
         </item>
         <item row="8" column="0">
-         <widget class="QLabel" name="ConsultationNotesLabel">
+         <widget class="QLabel" name="ConsultationCommentsLabel">
           <property name="text">
-           <string>Notes:</string>
+           <string>Comments:</string>
           </property>
          </widget>
         </item>
@@ -455,7 +445,7 @@
          </widget>
         </item>
         <item row="9" column="0" colspan="3">
-         <widget class="QTextEdit" name="ConsultationNotesTextEdit"/>
+         <widget class="QTextEdit" name="ConsultationCommentsTextEdit"/>
         </item>
         <item row="5" column="2">
          <spacer name="verticalSpacer_4">
@@ -484,6 +474,13 @@
          <widget class="QPushButton" name="DeleteConsultationPushButton">
           <property name="text">
            <string>Delete Consultation</string>
+          </property>
+         </widget>
+        </item>
+        <item row="10" column="1">
+         <widget class="QPushButton" name="CreateFollowupPushButton">
+          <property name="text">
+           <string>Create Followup</string>
           </property>
          </widget>
         </item>
@@ -547,35 +544,49 @@
         </item>
         <item row="0" column="1" rowspan="3">
          <layout class="QGridLayout" name="FollowupDatesGridLayout">
-          <item row="0" column="0">
-           <widget class="QLabel" name="DateDueLabel">
-            <property name="text">
-             <string>Date Due:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QDateEdit" name="DueDateEdit"/>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="DateReceivedLabel">
-            <property name="text">
-             <string>Date Received:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QDateEdit" name="ReceivedDateEdit"/>
-          </item>
-          <item row="2" column="0">
+          <item row="2" column="1">
            <widget class="QLabel" name="DateCompletedLabel">
             <property name="text">
              <string>Date Completed:</string>
             </property>
            </widget>
           </item>
-          <item row="2" column="1">
+          <item row="1" column="2">
+           <widget class="QDateEdit" name="ReceivedDateEdit"/>
+          </item>
+          <item row="2" column="2">
            <widget class="QDateEdit" name="CompletedDateEdit"/>
+          </item>
+          <item row="0" column="2">
+           <widget class="QDateEdit" name="DueDateEdit"/>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLabel" name="DateDueLabel">
+            <property name="text">
+             <string>Date Due:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLabel" name="DateReceivedLabel">
+            <property name="text">
+             <string>Date Received:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QCheckBox" name="FollowupReceivedCheckBox">
+            <property name="text">
+             <string>Received</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QCheckBox" name="FollowupCompletedCheckBox">
+            <property name="text">
+             <string>Completed</string>
+            </property>
+           </widget>
           </item>
          </layout>
         </item>
@@ -586,8 +597,30 @@
           </property>
          </widget>
         </item>
+        <item row="6" column="0">
+         <widget class="QPushButton" name="ReturnConsultationPushButton">
+          <property name="text">
+           <string>View Return Consultation</string>
+          </property>
+         </widget>
+        </item>
        </layout>
       </widget>
+     </widget>
+    </item>
+    <item row="1" column="0" rowspan="2">
+     <widget class="QTreeWidget" name="PatientTreeWidget">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <column>
+       <property name="text">
+        <string notr="true">1</string>
+       </property>
+      </column>
      </widget>
     </item>
    </layout>

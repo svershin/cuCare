@@ -33,6 +33,8 @@ public:
     string getResults();
     void setResults(const string value);
 
+    virtual int getType() = 0;
+
 protected:
 private:
     string results;

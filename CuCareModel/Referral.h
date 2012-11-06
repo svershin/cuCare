@@ -34,6 +34,8 @@ public:
     string getSpecialistName();
     void setSpecialistName(const string value);
 
+    int getType();
+
 protected:
 private:
     string specialistName;

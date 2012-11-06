@@ -34,6 +34,8 @@ public:
     string getTestType();
     void setTestType(const string value);
 
+    int getType();
+
 protected:
 private:
     string testType;

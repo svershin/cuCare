@@ -33,6 +33,8 @@ public:
     string getMedication();
     void setMedication(const string value);
 
+    int getType();
+
 protected:
 private:
     string medication;

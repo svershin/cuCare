@@ -35,4 +35,6 @@ MedicationRenewal::~MedicationRenewal()
 string MedicationRenewal::getMedication() { return medication; }
 void MedicationRenewal::setMedication(const string value) { medication = value; }
 
+int MedicationRenewal::getType() { return 2; }
+
 // EOF
