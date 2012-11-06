@@ -53,6 +53,8 @@ public:
     void markDeleted();
     bool isDeleted();
 
+    virtual int getType() = 0;
+
 protected:
 private:
     int id;

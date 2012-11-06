@@ -37,4 +37,6 @@ Referral::~Referral()
 string Referral::getSpecialistName() { return specialistName; }
 void Referral::setSpecialistName(const string value) { specialistName = value; }
 
+int Referral::getType() { return 3; }
+
 // EOF

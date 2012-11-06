@@ -14,13 +14,15 @@ SOURCES += main.cpp\
     patientselectdialog.cpp \
     loginwindowdialog.cpp \
     mainwindow.cpp \
-    MasterController/MasterController.cpp
+    MasterController/MasterController.cpp \
+    MasterController/Request.cpp
 
 HEADERS  += \
     patientselectdialog.h \
     loginwindowdialog.h \
     mainwindow.h \
-    MasterController/MasterController.h
+    MasterController/MasterController.h \
+    MasterController/Request.h
 
 FORMS    += \
     patientselectdialog.ui \

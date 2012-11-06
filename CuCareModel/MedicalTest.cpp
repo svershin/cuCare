@@ -37,4 +37,6 @@ MedicalTest::~MedicalTest()
 string MedicalTest::getTestType() { return testType; }
 void MedicalTest::setTestType(const string value) { testType = value; }
 
+int MedicalTest::getType() { return 1; }
+
 // EOF

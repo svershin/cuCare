@@ -31,6 +31,8 @@ public:
     Consultation* getConsult();
     void setConsult(Consultation* const value);
 
+    int getType();
+
 protected:
 private:
     Consultation* pConsult;

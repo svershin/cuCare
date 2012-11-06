@@ -34,4 +34,5 @@ ResultantFollowup::~ResultantFollowup()
 
 string ResultantFollowup::getResults() { return results; }
 void ResultantFollowup::setResults(const string value) { results = value; }
+
 // EOF
