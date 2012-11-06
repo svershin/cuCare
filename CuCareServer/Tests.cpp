@@ -2,6 +2,7 @@
 #include "Repository.h"
 #include <iostream>
 #include "Tests.h"
+#include "../CuCareCommunications/Communications/requesthandler.h"
 
 void Tests::databaseExample()
 {
@@ -39,6 +40,65 @@ void Tests::databaseExample()
     while (pResults->nextRow());
 
     cout << "Done!\n";
+}
+
+void Tests::requestHandlerTest()
+{
+    RequestHandler requestHandler;
+
+    Physician *yellow = new Physician(3,
+                                      "WHITEBOY",
+                                      "RATFUCKER",
+                                      "DEADALUS",
+                                      Date(1,1,1),
+                                      ContactInfo("noodle",
+                                                  "nooDle",
+                                                  "noOdle",
+                                                  "nOodle"),
+                                      Address("now",
+                                              "now",
+                                              "now",
+                                              "now",
+                                              "now"),
+                                      false);
+    AdminAssistant *red = new AdminAssistant("WHITEBOY",
+                                             "RATFUCKER",
+                                             "DEADALUS",
+                                             Date(1,1,1),
+                                             ContactInfo("noodle",
+                                                         "nooDle",
+                                                         "noOdle",
+                                                         "nOodle"),
+                                             Address("now",
+                                                     "now",
+                                                     "now",
+                                                     "now",
+                                                     "now"),
+                                             false);
+
+
+
+
+    cout << "Start\n";
+    UserFilter filter;
+    filter.usernameSetMatch(true);
+
+    QByteArray testIn = MessageGenerator::pullAdminAssistantMessage(red,filter);
+
+    QVariantMap mapIn = MessageParser::qByteArrayToqvMap(testIn);
+
+    QByteArray test = requestHandler.interactWithDatabase(mapIn);
+
+    QVariantMap mapOut = MessageParser::qByteArrayToqvMap(test);
+
+    vector<AdminAssistant *> AAs;
+
+    cout << "About to parse list\n";
+
+    MessageParser::parseAdminAssistantList(mapOut.value("payload").toList(), &AAs);
+
+    cout << AAs.size() << "\n";
+    cout << AAs.at(0)->getFirstName() << "\n";
 }
 
 void Tests::repositoryTest()

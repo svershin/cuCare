@@ -16,7 +16,7 @@ class Time : public ModelObject
     Q_OBJECT
 
     Q_PROPERTY(int hour READ getHour WRITE setHour)
-    Q_PROPERTY(int hour READ getMinute WRITE setMinute)
+    Q_PROPERTY(int minute READ getMinute WRITE setMinute)
 
 public:
 

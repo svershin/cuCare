@@ -51,6 +51,35 @@ public:
 
     static bool parseCreateReply(string **ppErrString, QString reply, int **ppUid);
     static bool parsePushReply(string **ppErrString, QString reply);
+
+    static AdminAssistant* parseAdminAssistant(QVariantMap qvmap);
+    static Patient* parsePatient(QVariantMap qvmap);
+    static Consultation* parseConsultation(QVariantMap qvmap);
+    static SysAdmin* parseSysAdmin(QVariantMap qvmap);
+    static Physician* parsePhysician(QVariantMap qvmap);
+    static Referral* parseReferral(QVariantMap qvmap);
+    static MedicalTest* parseMedicalTest(QVariantMap qvmap);
+    static MedicationRenewal* parseMedicationRenewal(QVariantMap qvmap);
+    static ReturnConsultation* parseReturnConsultation(QVariantMap qvmap);
+
+    static UserFilter parseUserFilter(QVariantMap qvmap);
+    static PatientFilter parsePatientFilter(QVariantMap qvmap);
+    static ConsultationFilter parseConsultationFilter(QVariantMap qvmap);
+    static PhysicianFilter parsePhysicianFilter(QVariantMap qvmap);
+    static ReferralFilter parseReferralFilter(QVariantMap qvmap);
+    static MedicalTestFilter parseMedicalTestFilter(QVariantMap qvmap);
+    static MedicationRenewalFilter parseMedicationRenewalFilter(QVariantMap qvmap);
+    static ReturnConsultationFilter parseReturnConsultationFilter(QVariantMap qvmap);
+
+    static void parseAdminAssistantList(QList<QVariant> qvlist, vector<AdminAssistant *> *vect);
+    static void parsePatientList(QList<QVariant> qvlist, vector<Patient *> *vect);
+    static void parseConsultationList(QList<QVariant> qvlist, vector<Consultation *> *vect);
+    static void parseSysAdminList(QList<QVariant> qvlist, vector<SysAdmin *> *vect);
+    static void parsePhysicianList(QList<QVariant> qvlist, vector<Physician *> *vect);
+    static void parseReferralList(QList<QVariant> qvlist, vector<Referral *> *vect);
+    static void parseMedicalTestList(QList<QVariant> qvlist, vector<MedicalTest *> *vect);
+    static void parseMedicationRenewalList(QList<QVariant> qvlist, vector<MedicationRenewal *> *vect);
+    static void parseReturnConsultationList(QList<QVariant> qvlist, vector<ReturnConsultation *> *vect);
 };
 
 #endif // MESSAGEPARSER_H

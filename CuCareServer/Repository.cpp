@@ -527,7 +527,7 @@ void Repository::instantiateAdminAssistants(vector<AdminAssistant *> *&pResults,
     while (pQueryResult->nextRow());
 }
 
-void Repository::instantiateConsultations(vector<Consultation *> *&pResults, QueryResult *pQueryResult)
+void Repository::instantiateConsultations(vector<Consultation *> *&pResults, QueryResult *pQueryResult, vector<int> *&physicianIds)
 {
     pResults = new vector<Consultation *>();
     if(!(pQueryResult->numRows() > 0))
@@ -546,6 +546,8 @@ void Repository::instantiateConsultations(vector<Consultation *> *&pResults, Que
                                                         stoi((*pQueryResult)[11])),
                                                    NULL,
                                                    (bool)stoi((*pQueryResult)[12]));
+        physicianIds = new vector<int>();
+        physicianIds->push_back(stoi((*pQueryResult)[2]));
         pResults->push_back(retrieved);
     }
     while (pQueryResult->nextRow());
@@ -873,6 +875,7 @@ bool Repository::createUser(User *pInputUser)
 
 bool Repository::createPhysician(Physician* pInputPhysician, int* uid)
 {
+    cout << "Physician name: " << pInputPhysician->getFirstName() << "\n";
     User* pInputUser = pInputPhysician;
     if(!createUser(pInputUser))
         return false;
@@ -898,6 +901,7 @@ bool Repository::createPhysician(Physician* pInputPhysician, int* uid)
 
 bool Repository::createAdminAssistant(AdminAssistant *pInputAdminAssistant)
 {
+    cout << "Repo::CreateAA reached.  AA firstname: " << pInputAdminAssistant->getFirstName() << "\n";
     User* pInputUser = pInputAdminAssistant;
     if(!createUser(pInputUser))
         return false;
@@ -1053,13 +1057,13 @@ bool Repository::pullPatient(Patient* pPatientValues, PatientFilter patientFilte
     return true;
 }
 
-bool Repository::pullConsultation(Consultation* pConsultationValues, ConsultationFilter consultationFilter, int physicianId, int patientId, vector<Consultation*>*& pResults)
+bool Repository::pullConsultation(Consultation* pConsultationValues, ConsultationFilter consultationFilter, vector<int> *&physicianIds, int physicianId, int patientId, vector<Consultation*>*& pResults)
 {
     QueryResult* pQueryResults = NULL;
     if(!selectStatement("consultations", getConsultationConditions(pConsultationValues, consultationFilter, physicianId, patientId), consultationColumns, pQueryResults))
         return false;
 
-    instantiateConsultations(pResults, pQueryResults);
+    instantiateConsultations(pResults, pQueryResults, physicianIds);
     delete pQueryResults;
     return true;
 }

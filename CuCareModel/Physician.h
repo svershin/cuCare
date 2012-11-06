@@ -15,6 +15,8 @@ class Physician:public User
 {
     Q_OBJECT
 
+    Q_PROPERTY(int physicianId READ getId WRITE setId)
+
 public:
 
     // Constructor
@@ -35,6 +37,7 @@ public:
     int getType() { return 2; }
 
     int getId();
+    void setId(int value);
 
 protected:
 private:

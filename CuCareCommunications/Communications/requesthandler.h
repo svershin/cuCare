@@ -13,11 +13,9 @@ class RequestHandler
 public:
     RequestHandler();
 
-
+    QByteArray interactWithDatabase(QVariantMap);
 
 private:
-
-    QByteArray handleRequest(QVariantMap);
 
     ServerSocket serveSock;
     Repository *pRepo;

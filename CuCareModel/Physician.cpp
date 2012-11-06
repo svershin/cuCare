@@ -37,4 +37,6 @@ Physician::~Physician()
 
 int Physician::getId() { return id; }
 
+void Physician::setId(int value) { id = value; }
+
 // EOF

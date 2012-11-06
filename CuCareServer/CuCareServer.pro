@@ -40,3 +40,10 @@ unix:!macx:!symbian: LIBS += -L$$PWD/../CuCareCommunications/qjson/lib/ -lqjson
 
 INCLUDEPATH += $$PWD/../CuCareCommunications/qjson/include
 DEPENDPATH += $$PWD/../CuCareCommunications/qjson/include
+
+unix:!macx:!symbian: LIBS += -L$$PWD/../CuCareCommunications/Communications/ -lCommunications
+
+INCLUDEPATH += $$PWD/../CuCareCommunications/Communications
+DEPENDPATH += $$PWD/../CuCareCommunications/Communications
+
+unix:!macx:!symbian: PRE_TARGETDEPS += $$PWD/../CuCareCommunications/Communications/libCommunications.a
