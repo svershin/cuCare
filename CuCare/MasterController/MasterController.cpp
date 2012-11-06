@@ -227,7 +227,7 @@ bool MasterController::createConsultation(Consultation* pInputConsultation, stri
 
 bool MasterController::modifyConsultation(int consultId, string *pErrString)
 {
-    Consultation* pConsultation2BUpdated;
+    Consultation* pConsultation2BUpdated = NULL;
 
     for(unsigned int i=0; i < pCurrentPatient->getConsultations()->size(); i++) {
         if(pCurrentPatient->getConsultations()->at(i)->getConsultID() == consultId)
@@ -237,7 +237,9 @@ bool MasterController::modifyConsultation(int consultId, string *pErrString)
     if(pConsultation2BUpdated == NULL)
         return 0;
 
-    int requestStatus = server.pushConsultation(pErrString, )
+    int requestStatus = server.pushConsultation(pErrString, pConsultation2BUpdated, pConsultation2BUpdated->getConsultingPhys()->getId(), pCurrentPatient->getId());
+    if(!requestStatus)
+        return 0; // COMMS ERROR
 
     return 1;
 }
