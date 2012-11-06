@@ -4,7 +4,8 @@
 PatientSelectDialog::PatientSelectDialog(MasterController *controllerParam, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::PatientSelectDialog),
-    controller(controllerParam)
+    controller(controllerParam),
+    pPatientList(NULL)
 {
     ui->setupUi(this);
 
@@ -23,6 +24,9 @@ PatientSelectDialog::PatientSelectDialog(MasterController *controllerParam, QWid
     if ( controller->getPatientList(pPatientList, pErrorString) ) {
         ui->PatientListWidget->setSortingEnabled(true);
         for (unsigned int i = 0 ; i < pPatientList->size() ; i++) {
+            //Skip the patient if they are marked as deleted
+            if (pPatientList->at(i)->isDeleted())
+                continue;
             //Build the list item in the format "Lastname, Firstname"
             //Populate the list item, also storing the patient ID for simple patient selection.
             tempListItem = new QListWidgetItem(QString::fromStdString(pPatientList->at(i)->getLastName() + string(", ") + pPatientList->at(i)->getFirstName()));
@@ -31,10 +35,20 @@ PatientSelectDialog::PatientSelectDialog(MasterController *controllerParam, QWid
             ui->PatientListWidget->addItem(tempListItem);
         }
     }
+    if (pErrorString != NULL)
+        delete pErrorString;
+    if (tempListItem != NULL)
+        delete tempListItem;
 }
 
 PatientSelectDialog::~PatientSelectDialog()
 {
+    while (!pPatientList->empty()) {
+        delete pPatientList->back();
+        pPatientList->pop_back();
+    }
+    if (pPatientList != NULL)
+        delete pPatientList;
     delete ui;
 }
 
@@ -43,8 +57,13 @@ void PatientSelectDialog::on_SelectPushButton_clicked()
     int lookupId = ui->PatientListWidget->currentItem()->data(Qt::UserRole).toInt();
     string *pErrorString = NULL;
 
-    if (controller->setCurrentPatient(lookupId, pErrorString))
+    if (controller->setCurrentPatient(lookupId, pErrorString)) {
+        if (pErrorString != NULL)
+            delete pErrorString;
         accept();
+    }
+    if (pErrorString != NULL)
+        delete pErrorString;
 }
 
 void PatientSelectDialog::on_CancelPushButton_clicked()

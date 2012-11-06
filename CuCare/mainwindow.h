@@ -3,9 +3,11 @@
 
 #include <QMainWindow>
 #include <QTreeWidgetItem>
+#include <sstream>
 
 #include "MasterController/MasterController.h"
 #include "patientselectdialog.h"
+#include "followuptypeselectdialog.h"
 #include "../CuCareModel/ModelFiles.h"
 
 namespace Ui {
@@ -39,6 +41,12 @@ private slots:
 
     void on_CreateFollowupPushButton_clicked();
 
+    void on_DeletePatientPushButton_clicked();
+
+    void on_DeleteConsultationPushButton_clicked();
+
+    void on_DeleteFollowupPushButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     MasterController *controller;
@@ -71,6 +79,8 @@ private:
 
     void populatePhysicians();
     void populatePatientTree();
+
+    string intToString(int x);
 };
 
 #endif // MAINWINDOW_H

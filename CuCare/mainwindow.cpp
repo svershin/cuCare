@@ -5,6 +5,7 @@ MainWindow::MainWindow(MasterController *controllerParam, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
     controller(controllerParam),
+    pPhysicians(NULL),
     newPatient(false),
     newConsultation(false),
     newMedicalTest(false),
@@ -41,20 +42,27 @@ MainWindow::MainWindow(MasterController *controllerParam, QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
+    while (!pPhysicians->empty()) {
+        delete pPhysicians->back();
+        pPhysicians->pop_back();
+    }
+    if (pPhysicians != NULL)
+        delete pPhysicians;
     delete ui;
 }
 
 void MainWindow::on_NewPatientPushButton_clicked()
 {
-    enablePatientEditing();
     newPatient = true;
+    ui->DeletePatientPushButton->setEnabled(false);
+    enablePatientEditing();
 }
 
 void MainWindow::on_SelectPatientPushButton_clicked()
 {
-    PatientSelectDialog *patientWindow = new PatientSelectDialog(controller);
+    PatientSelectDialog patientWindow(controller);
 
-    if (patientWindow->exec() == 1) {
+    if (patientWindow.exec() == 1) {
         enablePatientEditing();
         ui->CreateConsultationPushButton->setEnabled(true);
 
@@ -147,6 +155,8 @@ void MainWindow::showPatientInfo()
     ui->DisplayTabsWidget->setTabEnabled(1, false);
     ui->DisplayTabsWidget->setTabEnabled(2, false);
 
+    ui->DeletePatientPushButton->setEnabled(true);
+
     //Populate fields with patient info
     ui->FirstNameLineEdit->setText(QString::fromStdString(controller->getCurrentPatient()->getFirstName()));
     ui->LastNameLineEdit->setText(QString::fromStdString(controller->getCurrentPatient()->getLastName()));
@@ -198,6 +208,8 @@ void MainWindow::showConsultationInfo(int cid)
     ui->DisplayTabsWidget->setTabEnabled(0, false);
     ui->DisplayTabsWidget->setTabEnabled(2, false);
 
+    ui->DeleteConsultationPushButton->setEnabled(true);
+
     //select the proper physician
     ui->PhysicianSelectComboBox->setCurrentIndex(ui->PhysicianSelectComboBox->findData(pConsultation->getConsultingPhys()->getId(), Qt::UserRole));
 
@@ -229,6 +241,20 @@ void MainWindow::showConsultationInfo(int cid)
         ui->ConsultationStatusComboBox->setCurrentIndex(ui->ConsultationStatusComboBox->findText("Pending"));
         break;
     }
+
+    if (controller->loginStatus() == MasterController::AC_LOGGED_IN_AS_PHYSICIAN) { //disable editing of certain fields if not logged in as physician
+        ui->ReasonTextEdit->setEnabled(true);
+        ui->ReasonTextEdit->setEnabled(true);
+        ui->CreateFollowupPushButton->setEnabled(true);
+    }
+    else {
+        ui->ReasonTextEdit->setEnabled(false);
+        ui->ReasonTextEdit->setEnabled(false);
+        ui->CreateFollowupPushButton->setEnabled(false);
+    }
+
+    if (pConsultation != NULL)
+        delete pConsultation;
 }
 
 void MainWindow::showFollowup(int fid, int cid)
@@ -237,6 +263,8 @@ void MainWindow::showFollowup(int fid, int cid)
         if (controller->getCurrentPatient()->getConsultations()->at(i)->getConsultID() == cid) {
             for (unsigned int j = 0 ; j < controller->getCurrentPatient()->getConsultations()->at(i)->getFollowups()->size() ; j++) {
                 if (controller->getCurrentPatient()->getConsultations()->at(i)->getFollowups()->at(j)->getId() == fid) {
+
+                    ui->DeleteFollowupPushButton->setEnabled(true);
 
                     //Switch to followup tab and disable other tabs
                     ui->DisplayTabsWidget->setTabEnabled(2, true);
@@ -254,6 +282,11 @@ void MainWindow::showFollowup(int fid, int cid)
                     ui->FollowupCompletedCheckBox->setCheckState(Qt::Unchecked);
                     ui->ReceivedDateEdit->setEnabled(false);
                     ui->CompletedDateEdit->setEnabled(false);
+
+                    if (controller->loginStatus() == MasterController::AC_LOGGED_IN_AS_PHYSICIAN) //disable editing of certain fields if not logged in as physician
+                        ui->FollowupCompletedCheckBox->setEnabled(true);
+                    else
+                        ui->FollowupCompletedCheckBox->setEnabled(false);
 
                     switch(controller->getCurrentPatient()->getConsultations()->at(i)->getFollowups()->at(j)->getType()) {
                     case 1: //Medical Test
@@ -496,12 +529,17 @@ void MainWindow::clearFollowupTab()
 void MainWindow::populatePhysicians()
 {
     string *pErrorString = NULL;
-    pPhysicians = new vector<Physician *>();
-    if (controller->getPhysicianList(pPhysicians, pErrorString)) {
+    pPhysicians = NULL;
+    if (controller->getPhysicianList(pPhysicians, pErrorString) && pPhysicians != NULL) {
         for (unsigned int i = 0 ; i < pPhysicians->size() ; i++) {
-            ui->PhysicianSelectComboBox->addItem(QString::fromStdString(pPhysicians->at(i)->getLastName() + ", " + pPhysicians->at(i)->getFirstName()), pPhysicians->at(i)->getId());
+            ui->PhysicianSelectComboBox->addItem(QString::fromStdString(pPhysicians->at(i)->getLastName() + string(", ") + pPhysicians->at(i)->getFirstName()), pPhysicians->at(i)->getId());
         }
     }
+    else
+        ui->statusbar->showMessage(QString::fromStdString(*pErrorString));
+
+    if (pErrorString != NULL)
+        delete pErrorString;
 }
 
 void MainWindow::populatePatientTree()
@@ -520,15 +558,23 @@ void MainWindow::populatePatientTree()
     pConsultations = controller->getCurrentPatient()->getConsultations();
 
     for (unsigned int i = 0 ; i < pConsultations->size() ; i++) {
+        //Skip object if marked as deleted
+        if (pConsultations->at(i)->isDeleted())
+            continue;
         pTempWidget = new QTreeWidgetItem(pPatientWidget);
-        pTempWidget->setText(0, "tempConsName");
+        pTempWidget->setText(0, QString::fromStdString(string("Consult ") + intToString(pConsultations->at(i)->getDate().getMonth())
+                                                       + string("/") + intToString(pConsultations->at(i)->getDate().getDay())));
         pTempWidget->setData(0, Qt::UserRole, 1); //Consultation
         pTempWidget->setData(1, Qt::UserRole, pConsultations->at(i)->getConsultID());
 
         pFollowups = pConsultations->at(i)->getFollowups();
         for (unsigned int j = 0 ; j < pFollowups->size() ; j++) {
+            //Skip object if marked as deleted
+            if (pFollowups->at(i)->isDeleted())
+                continue;
             pTempWidget2 = new QTreeWidgetItem(pTempWidget);
-            pTempWidget2->setText(0, "tempFupName");
+            pTempWidget2->setText(0, QString::fromStdString(string("Followup ") + intToString(pFollowups->at(j)->getDateDue().getMonth())
+                                                            + string("/") + intToString(pFollowups->at(j)->getDateDue().getDay())));
             pTempWidget2->setData(0, Qt::UserRole, 2); //Followup
             pTempWidget2->setData(1, Qt::UserRole, pFollowups->at(j)->getId());
 
@@ -539,6 +585,19 @@ void MainWindow::populatePatientTree()
     }
 
     ui->PatientTreeWidget->addTopLevelItem(pPatientWidget);
+
+    while (!pConsultations->empty()) {
+        delete pConsultations->back();
+        pConsultations->pop_back();
+    }
+    if (pConsultations != NULL)
+        delete pConsultations;
+    while (!pFollowups->empty()) {
+        delete pFollowups->back();
+        pFollowups->pop_back();
+    }
+    if (pFollowups != NULL)
+        delete pFollowups;
 }
 
 void MainWindow::on_ResetFormsPushButton_clicked()
@@ -615,6 +674,7 @@ void MainWindow::on_SubmitChangesPushButton_clicked()
                                                false);
             if (controller->createPatient(pNewPatient, NULL, pError)) {
                 newPatient = false;
+                populatePatientTree();
                 showPatientInfo();
             }
             else
@@ -635,8 +695,10 @@ void MainWindow::on_SubmitChangesPushButton_clicked()
                                                                                                                          ui->CardExpirationDateEdit->date().month(),
                                                                                                                          ui->CardExpirationDateEdit->date().day())));
 
-            if (controller->modifyPatient(pError))
+            if (controller->modifyPatient(pError)) {
+                populatePatientTree();
                 showPatientInfo();
+            }
             else
                 ui->statusbar->showMessage(QString::fromStdString(*pError));
         }
@@ -873,6 +935,17 @@ void MainWindow::on_SubmitChangesPushButton_clicked()
         }
         break;
     }
+
+    if (pError != NULL)
+        delete pError;
+    if (pConsultPhysician != NULL)
+        delete pConsultPhysician;
+    while (!pTempPhysicians->empty()) {
+        delete pTempPhysicians->back();
+        pTempPhysicians->pop_back();
+    }
+    if (pTempPhysicians != NULL)
+        delete pTempPhysicians;
 }
 
 void MainWindow::on_FollowupReceivedCheckBox_stateChanged(int arg1)
@@ -893,10 +966,141 @@ void MainWindow::on_FollowupCompletedCheckBox_stateChanged(int arg1)
 
 void MainWindow::on_CreateConsultationPushButton_clicked()
 {
-
+    newConsultation = true;
+    ui->DeleteConsultationPushButton->setEnabled(false);
+    clearConsultationTab();
+    ui->DisplayTabsWidget->setTabEnabled(1, true);
+    ui->DisplayTabsWidget->setCurrentIndex(1);
+    ui->DisplayTabsWidget->setTabEnabled(0, false);
+    ui->DisplayTabsWidget->setTabEnabled(2, false);
 }
 
 void MainWindow::on_CreateFollowupPushButton_clicked()
 {
-    currentConsultationId = ui->PatientTreeWidget->currentItem()->data(1, Qt::UserRole).toInt();
+    int fType = 1;
+    FollowupTypeSelectDialog fTypeDialog(&fType);
+    if (fTypeDialog.exec()) {
+        switch(fType) {
+        case 1:
+            newMedicalTest = true;
+            ui->FollowupInfoLabel->setText("Test Type:");
+            ui->FollowupInfoLabel->show();
+            ui->FollowupInfoLabel2->setText("Results:");
+            ui->FollowupInfoLabel2->show();
+            ui->FollowupInfoTextEdit->show();
+            ui->FollowupInfoTextEdit2->show();
+            break;
+        case 2:
+            newMedicationRenewal = true;
+            ui->FollowupInfoLabel->setText("Medication:");
+            ui->FollowupInfoLabel->show();
+            ui->FollowupInfoLabel2->hide();
+            ui->FollowupInfoTextEdit->show();
+            ui->FollowupInfoTextEdit2->hide();
+            break;
+        case 3:
+            newReferral = true;
+            ui->FollowupInfoLabel->setText("Specialist Name:");
+            ui->FollowupInfoLabel->show();
+            ui->FollowupInfoLabel2->setText("Results:");
+            ui->FollowupInfoLabel2->show();
+            ui->FollowupInfoTextEdit->show();
+            ui->FollowupInfoTextEdit2->show();
+            break;
+        case 4:
+            newReturnConsultation = true;
+            ui->FollowupInfoLabel->hide();
+            ui->FollowupInfoLabel2->hide();
+            ui->FollowupInfoTextEdit->hide();
+            ui->FollowupInfoTextEdit2->hide();
+            break;
+        }
+
+        currentConsultationId = ui->PatientTreeWidget->currentItem()->data(1, Qt::UserRole).toInt();
+        ui->DeleteFollowupPushButton->setEnabled(false);
+        clearFollowupTab();
+        ui->DisplayTabsWidget->setTabEnabled(2, true);
+        ui->DisplayTabsWidget->setCurrentIndex(2);
+        ui->DisplayTabsWidget->setTabEnabled(0, false);
+        ui->DisplayTabsWidget->setTabEnabled(1, false);
+    }
+
+}
+
+void MainWindow::on_DeletePatientPushButton_clicked()
+{
+    string *pError = NULL;
+
+    controller->getCurrentPatient()->markDeleted();
+
+    if (controller->modifyPatient(pError)) {
+        enablePatientEditing(); //called since it clears the fields
+        disablePatientEditing();
+        ui->PatientTreeWidget->clear();
+        ui->CreateConsultationPushButton->setEnabled(false);
+    }
+    else
+        ui->statusbar->showMessage(QString::fromStdString(*pError));
+
+    if (pError != NULL)
+        delete pError;
+}
+
+void MainWindow::on_DeleteConsultationPushButton_clicked()
+{
+    string *pError = NULL;
+    unsigned int i;
+
+    for (i= 0 ; i < controller->getCurrentPatient()->getConsultations()->size() ; i++) {
+        if (controller->getCurrentPatient()->getConsultations()->at(i)->getConsultID() == ui->PatientTreeWidget->currentItem()->data(1, Qt::UserRole)) {
+            controller->getCurrentPatient()->getConsultations()->at(i)->markDeleted();
+            break;
+        }
+    }
+
+    if (controller->modifyConsultation(controller->getCurrentPatient()->getConsultations()->at(i)->getConsultID(), pError)) {
+        populatePatientTree();
+        showPatientInfo();
+    }
+    else
+        ui->statusbar->showMessage(QString::fromStdString(*pError));
+
+    if (pError != NULL)
+        delete pError;
+}
+
+void MainWindow::on_DeleteFollowupPushButton_clicked()
+{
+    string *pError = NULL;
+    unsigned int i, j;
+
+    for (i= 0 ; i < controller->getCurrentPatient()->getConsultations()->size() ; i++) {
+        if (controller->getCurrentPatient()->getConsultations()->at(i)->getConsultID() == ui->PatientTreeWidget->currentItem()->parent()->data(1, Qt::UserRole)) {
+            for (j = 0 ; j < controller->getCurrentPatient()->getConsultations()->at(i)->getFollowups()->size() ; j++) {
+                if (controller->getCurrentPatient()->getConsultations()->at(i)->getFollowups()->at(j)->getId() == ui->PatientTreeWidget->currentItem()->data(1, Qt::UserRole)) {
+                    controller->getCurrentPatient()->getConsultations()->at(i)->getFollowups()->at(j)->markDeleted();
+                    break;
+                }
+            }
+            break;
+        }
+    }
+
+    if (controller->modifyFollowup(controller->getCurrentPatient()->getConsultations()->at(i)->getFollowups()->at(j)->getId(),
+                                   controller->getCurrentPatient()->getConsultations()->at(i)->getConsultID(), pError)) {
+        populatePatientTree();
+        showPatientInfo();
+    }
+    else
+        ui->statusbar->showMessage(QString::fromStdString(*pError));
+
+    if (pError != NULL)
+        delete pError;
+}
+
+string MainWindow::intToString(int x)
+{
+    stringstream tempStream;
+    tempStream << x;
+    return tempStream.str();
 }
