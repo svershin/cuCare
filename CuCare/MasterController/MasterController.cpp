@@ -213,22 +213,18 @@ Patient* MasterController::getCurrentPatient()
 bool MasterController::createConsultation(Consultation* pInputConsultation, string *pErrString)
 {
     int uid = 0;
-    int requestStatus = server.createConsultation(pErrString, pInputConsultation, pCurrentPatient->getPhysician()->getId(), pCurrentPatient->getId(), &uid);
 
+    int requestStatus = server.createConsultation(pErrString, pInputConsultation, pInputConsultation->getPhysician()->getId(), pCurrentPatient->getId(), &uid);
     if(!requestStatus)
         return 0; // COMMS ERROR
 
-/*    if(pCurrentPatient != NULL)
-        delete pCurrentPatient;
-    pCurrentPatient = pInputPatient;
-    pCurrentPatient->setId(uid);
+    pInputConsultation->setConsultID(uid);
 
-    if(pCurrentPatient != NULL)
-        return 1;
-    else */
-        return 0;
+    pCurrentPatient->getConsultations()->push_back(pInputConsultation);
 
-    // !!! need to add code here to add the consultation to currentPatient
+    return 1;
+    }
+
 }
 
 bool MasterController::modifyConsultation(int consultId, string *pErrString)
@@ -252,7 +248,15 @@ bool MasterController::modifyFollowup(int followupId, string *pErrString)
 
 bool MasterController::getPhysicianList(vector<Physician*> *pResults, string *pErrString)
 {
-    return 0;
+    Physician inputPhysician(0, "", "", "", Date(0,0,0), ContactInfo("","","",""), Address("","","","",""), false);
+    PhysicianFilter inputFilter;
+
+    int requestStatus = server.pullPhysician(pErrString, &inputPhysician, inputFilter, pResults);
+
+    if(!requestStatus)
+        return 0; // COMMS ERROR
+
+    return 1;
 }
 
 // EOF
