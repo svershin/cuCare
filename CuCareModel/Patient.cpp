@@ -38,8 +38,11 @@ Patient::Patient
 // Destructor
 Patient::~Patient()
 {
-    for(unsigned int i=0; i < Consultations.size(); i++)
-        delete Consultations[i];
+    while(!Consultations.empty())
+    {
+      delete Consultations.back();
+      Consultations.pop_back();
+    }
 }
 
 int Patient::getId() { return id; }

@@ -34,8 +34,11 @@ Consultation::Consultation
 // Destructor
 Consultation::~Consultation()
 {
-    for(unsigned int i=0; i < Followups.size(); i++)
-        delete Followups[i];
+    while(!Followups.empty())
+    {
+      delete Followups.back();
+      Followups.pop_back();
+    }
 }
 
 int Consultation::getConsultID() { return consultID; }

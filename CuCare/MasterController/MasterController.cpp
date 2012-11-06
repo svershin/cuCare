@@ -19,8 +19,8 @@ MasterController::MasterController()
 // Destructor
 MasterController::~MasterController()
 {
-
-
+    if(pCurrentPatient->getPhysician() != NULL)
+        delete pCurrentPatient->getPhysician();
     delete pCurrentUser;
     delete pCurrentPatient;
 }
