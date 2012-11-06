@@ -12,17 +12,6 @@
 
 #include "../../CuCareModel/ModelFiles.h"
 
-#include "../../CuCareModel/Filters/ConsultationFilter.h"
-#include "../../CuCareModel/Filters/FollowupFilter.h"
-#include "../../CuCareModel/Filters/MedicalTestFilter.h"
-#include "../../CuCareModel/Filters/MedicationRenewalFilter.h"
-#include "../../CuCareModel/Filters/PatientFilter.h"
-#include "../../CuCareModel/Filters/PhysicianFilter.h"
-#include "../../CuCareModel/Filters/ReferralFilter.h"
-#include "../../CuCareModel/Filters/ResultantFollowupFilter.h"
-#include "../../CuCareModel/Filters/ReturnConsultationFilter.h"
-#include "../../CuCareModel/Filters/UserFilter.h"
-
 #include "../qjson/src/serializer.h"
 #include "../qjson/src/qobjecthelper.h"
 #include "../qjson/src/parser.h"

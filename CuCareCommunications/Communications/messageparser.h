@@ -46,8 +46,8 @@ public:
         SUCCESS     //1
     };
 
-    static QVariantMap qbArrayToqvMap(QByteArray);
-    static ModelObject qvMapToModelObject(QVariantMap);
+    static QVariantMap qByteArrayToqvMap(QByteArray);
+    static ModelObject qVariantMapToModelObject(QVariantMap);
 
     static bool parseCreateReply(string **ppErrString, QString reply, int **ppUid);
     static bool parsePushReply(string **ppErrString, QString reply);

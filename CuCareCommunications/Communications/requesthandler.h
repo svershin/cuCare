@@ -3,16 +3,24 @@
 
 #include "commsinclude.h"
 #include "serversocket.h"
+#include "messenger.h"
+#include "messageparser.h"
+#include "messagegenerator.h"
+#include "../CuCareServer/Repository.h"
 
 class RequestHandler
 {
 public:
     RequestHandler();
 
-    void handleRequest(QVariantMap);
+
 
 private:
+
+    QByteArray handleRequest(QVariantMap);
+
     ServerSocket serveSock;
+    Repository *pRepo;
 };
 
 void wait();

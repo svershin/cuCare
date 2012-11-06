@@ -5,7 +5,7 @@ MessageParser::MessageParser()
 {
 }
 
-ModelObject MessageParser::qvMapToModelObject(QVariantMap qvm)
+ModelObject MessageParser::qVariantMapToModelObject(QVariantMap qvm)
 {
     ModelObject mod;
     QJson::QObjectHelper::qvariant2qobject(qvm, &mod);
@@ -13,7 +13,7 @@ ModelObject MessageParser::qvMapToModelObject(QVariantMap qvm)
 }
 
 
-QVariantMap MessageParser::qbArrayToqvMap(QByteArray qba)
+QVariantMap MessageParser::qByteArrayToqvMap(QByteArray qba)
 {
     QJson::Parser parser;
     bool ok = true;
