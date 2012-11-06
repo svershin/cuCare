@@ -48,7 +48,9 @@ DEPENDPATH += $$PWD/../../CuCareModel
 
 unix:!macx:!symbian: PRE_TARGETDEPS += $$PWD/../../CuCareModel/libCuCareModel.a
 
-unix:!macx:!symbian: LIBS += -L$$PWD/../qjson-build-desktop/lib/ -lqjson
 
-INCLUDEPATH += $$PWD/../qjson-build-desktop
-DEPENDPATH += $$PWD/../qjson-build-desktop
+
+unix:!macx:!symbian: LIBS += -L$$PWD/../qjson/lib/ -lqjson
+
+INCLUDEPATH += $$PWD/../qjson/include
+DEPENDPATH += $$PWD/../qjson/include
