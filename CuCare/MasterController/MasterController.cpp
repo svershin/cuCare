@@ -33,41 +33,41 @@ MasterController::AccessControlStatus MasterController::loginUser(string usernam
     AdminAssistant inputAdminAssistant(username, "", "", Date(0,0,0), ContactInfo("","","",""), Address("","","","",""), false);
     UserFilter inputFilterUser;
     inputFilterUser.usernameSetMatch(true);
-    vector<AdminAssistant*>* pReturnAdminAssistant = NULL;
+    vector<AdminAssistant*> pReturnAdminAssistant;
 
-    int requestStatus = server.pullAdminAssistant(pErrString, &inputAdminAssistant, inputFilterUser, pReturnAdminAssistant);
+    int requestStatus = server.pullAdminAssistant(pErrString, &inputAdminAssistant, inputFilterUser, &pReturnAdminAssistant);
 
     if(!requestStatus)
         return AC_FAILED; // COMMS ERROR
 
-    if(!pReturnAdminAssistant->empty() )
-        return authorize(pReturnAdminAssistant->front());
+    if(!pReturnAdminAssistant.empty() )
+        return authorize(pReturnAdminAssistant.front());
 
     // Try to see if the user is a valid Physician
     Physician inputPhysician(0, username, "", "", Date(0,0,0), ContactInfo("","","",""), Address("", "", "", "", ""), false);
     PhysicianFilter inputFilterPhysician;
     inputFilterPhysician.usernameSetMatch(true);
-    vector<Physician*>* pReturnPhysician = NULL;
+    vector<Physician*> pReturnPhysician;
 
-    requestStatus = server.pullPhysician(pErrString, &inputPhysician, inputFilterPhysician, pReturnPhysician);
+    requestStatus = server.pullPhysician(pErrString, &inputPhysician, inputFilterPhysician, &pReturnPhysician);
 
     if(!requestStatus)
         return AC_FAILED; // COMMS ERROR
 
-    if(!pReturnPhysician->empty() )
-        return authorize(pReturnPhysician->front());
+    if(!pReturnPhysician.empty() )
+        return authorize(pReturnPhysician.front());
 
     // Try to see if the user is a valid Physician
     SysAdmin inputSysAdmin(username, "", "", Date(0,0,0), ContactInfo("","","",""), Address("", "", "", "", ""), false);
-    vector<SysAdmin*>* pReturnSysAdmin = NULL;
+    vector<SysAdmin*> pReturnSysAdmin;
 
-    requestStatus = server.pullSysAdmin(pErrString, &inputSysAdmin, inputFilterUser, pReturnSysAdmin);
+    requestStatus = server.pullSysAdmin(pErrString, &inputSysAdmin, inputFilterUser, &pReturnSysAdmin);
 
     if(!requestStatus)
         return AC_FAILED; // COMMS ERROR
 
-    if(!pReturnSysAdmin->empty() )
-        return authorize(pReturnSysAdmin->front());
+    if(!pReturnSysAdmin.empty() )
+        return authorize(pReturnSysAdmin.front());
 
     return AC_FAILED;
 }
@@ -141,14 +141,14 @@ bool MasterController::setCurrentPatient(int patientId, string *pErrString)
     Patient inputPatient(patientId, "", "", "", ContactInfo("","","",""), Address("","","","",""), Date(0,0,0), Date(0,0,0), NULL, HealthCard("", Date(0,0,0)), false);
     PatientFilter inputFilter;
     inputFilter.idSetMatch(true);
-    vector<Patient*>* pResults = NULL;
+    vector<Patient*> pResults;
 
-    int requestStatus = server.pullPatient(pErrString, &inputPatient, inputFilter, 0, pResults);
+    int requestStatus = server.pullPatient(pErrString, &inputPatient, inputFilter, 0, &pResults);
     if(!requestStatus)
         return 0; // COMMS ERROR
 
-    if(!pResults->empty()) {
-        pCurrentPatient = pResults->front();
+    if(!pResults.empty()) {
+        pCurrentPatient = pResults.front();
     } else
         return 0;
 
@@ -156,12 +156,24 @@ bool MasterController::setCurrentPatient(int patientId, string *pErrString)
     ConsultationFilter inputFilterConsultation;
     inputFilterConsultation.patientIdSetMatch(true);
 
-    // *** TO DO: will need to change as physican ids will come back as a vector of ints
-    requestStatus = server.pullConsultation(pErrString, &inputConsultation, inputFilterConsultation, 0, pCurrentPatient->getId(), pCurrentPatient->getConsultations());
+    vector<int> physicianIds;
+
+    requestStatus = server.pullConsultation(pErrString, &inputConsultation, inputFilterConsultation, &physicianIds, 0, pCurrentPatient->getId(), pCurrentPatient->getConsultations());
     if(!requestStatus)
         return 0; // COMMS ERROR
 
-    // Need to populate physicians into every consultation
+    for(unsigned int i=0; i < pCurrentPatient->getConsultations()->size(); i++) {
+        Physician inputPhysician(physicianIds.at(i), "", "", "", Date(0,0,0), ContactInfo("","","",""), Address("","","","",""), false);
+        PhysicianFilter inputPhysicianFilter;
+        inputPhysicianFilter.idSetMatch(true);
+        vector<Physician*> pResults;
+
+        requestStatus = server.pullPhysician(pErrString, &inputPhysician, inputPhysicianFilter, &pResults);
+        if(!requestStatus)
+            return 0; // COMMS ERROR
+
+        pCurrentPatient->getConsultations()->at(i)->setConsultingPhys(pResults.front());
+    }
 
     for(unsigned int i=0; i < pCurrentPatient->getConsultations()->size(); i++) {
         Referral pReferralValues(0, (Followup::FollowupStatus)0, Date(0,0,0), Date(0,0,0), Date(0,0,0), "", "", false);

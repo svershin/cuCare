@@ -43,7 +43,7 @@ public:
     int pullAdminAssistant(string *pErrString, AdminAssistant *pPhysicianValues, UserFilter inputFilter, vector<AdminAssistant*> *pOutputAdminAssistants);
     int pullSysAdmin(string *pErrString, SysAdmin *pSysAdminValues, UserFilter inputFilter, vector<SysAdmin*> *pOutputSysAdmins);
     int pullPatient(string *pErrString, Patient *pPatientValues, PatientFilter inputFilter, int physicianId, vector<Patient*> *pOutputPatients);
-    int pullConsultation(string *pErrString, Consultation *pConsultationValues, ConsultationFilter inputFilter, int physicianId, int patientId, vector<Consultation*> *pOutputConsultations);
+    int pullConsultation(string *pErrString, Consultation *pConsultationValues, ConsultationFilter inputFilter, vector<int> *physicianIds, int physicianId, int patientId, vector<Consultation*> *pOutputConsultations);
     int pullReferral(string *pErrString, Referral *pReferralValues, ReferralFilter inputFilter, int consultationId, vector<Referral*> *pOutputReferral);
     int pullMedicalTest(string *pErrString, MedicalTest *pMedicalTestValues, MedicalTestFilter inputFilter, int consultationId, vector<MedicalTest*> *pOutputMedicalTests);
     int pullReturnConsultation(string *pErrString, ReturnConsultation *pReturnConsultationValues, ReturnConsultationFilter inputFilter, int consultationId, int nextConsultationId, vector<ReturnConsultation*> *pOutputReturnConsultation);
