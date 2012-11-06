@@ -98,15 +98,17 @@ public:
 
     /* createFollowup() - Creates a new follow-up record in storage, and adds it to the associated consultation in pCurrentPatient
        pInputFollowup - A (new) ptr to a Followup object (can be ptr to subclass) with the new data (DO NOT DELETE, this will get attached to currentPatient)
+       consultId - A valid UID for a consultation record (HINT: must set & get currentPatient first, then pick an existing consultation)
        pErrString - A ptr to a string that will be populated with the error message (if any)
     */
-    bool createFollowup(Followup* pInputFollowup, string *pErrString);
+    bool createFollowup(Followup* pInputFollowup, int consultId, string *pErrString);
 
     /* modifyFollowup() - Pushes changes to a followup record to storage
        followupId - A valid UID for a followup record (HINT: must set & get currentPatient first, then pick an existing followup)
+       consultId - A valid UID for a consultation record (HINT: must set & get currentPatient first, then pick an existing consultation)
        pErrString - A ptr to a string that will be populated with the error message (if any)
     */
-    bool modifyFollowup(int followupId, string *pErrString);
+    bool modifyFollowup(int followupId, int consultId, string *pErrString);
 
     // PHYSICIANS
 

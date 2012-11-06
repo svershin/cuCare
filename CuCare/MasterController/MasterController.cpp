@@ -246,12 +246,22 @@ bool MasterController::modifyConsultation(int consultId, string *pErrString)
 
 // Follow-ups ---------------------------------------------------------------------------------------
 
-bool MasterController::createFollowup(Followup* pInputFollowup, string *pErrString)
+bool MasterController::createFollowup(Followup* pInputFollowup, int consultId, string *pErrString)
 {
-    return 0;
+    int uid = 0;
+
+    int requestStatus = server.createConsultation(pErrString, pInputConsultation, pInputConsultation->getConsultingPhys()->getId(), pCurrentPatient->getId(), &uid);
+    if(!requestStatus)
+        return 0; // COMMS ERROR
+
+    pInputConsultation->setConsultID(uid);
+
+    pCurrentPatient->getConsultations()->push_back(pInputConsultation);
+
+    return 1;
 }
 
-bool MasterController::modifyFollowup(int followupId, string *pErrString)
+bool MasterController::modifyFollowup(int followupId, int consultId, string *pErrString)
 {
     return 0;
 }
