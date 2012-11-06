@@ -1,9 +1,42 @@
 #include "requesthandler.h"
 #include <iostream>
 
-RequestHandler::RequestHandler()
-    :pRepo (new Repository())
+RequestHandler::RequestHandler(Object *parent)
+    :QObject(parent),
+     pRepo (new Repository())
 {
+    serveSock = new QTcpServer(this);
+    QObject::connect(serveSock, SIGNAL(newConnection()), this, SLOT(handleRequest()));
+}
+
+int RequestHandler::startListening(quint16 port)
+{
+    if(serveSock->listen(QHostAddress::Any, port))
+    {
+       return true;
+    }
+    else
+    {
+        return false;
+        serveSock->close();
+    }
+
+}
+
+int RequestHandler::stopListening()
+{
+    serveSock->close();
+}
+
+void RequestHandler::handleRequest()
+{
+    QTcpSocket *tempSock = serveSock->nextPendingConnection();
+    QByteArray requestMessage = tempSock->readAll();
+    QByteArray replyMessage = interactWithDatabase(MessageParser::qByteArrayToqvMap(requestMessage));
+    tempSock->write(replyMessage);
+    tempSock->disconnectFromHost();
+    delete tempSock;
+    return;
 }
 
 QByteArray RequestHandler::interactWithDatabase(QVariantMap reqMap)

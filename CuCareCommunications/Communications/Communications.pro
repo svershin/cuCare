@@ -14,8 +14,6 @@ CONFIG += staticlib
 
 SOURCES += \
     request.cpp \
-    clientsocket.cpp \
-    serversocket.cpp \
     requesthandler.cpp \
     messageparser.cpp \
     messagegenerator.cpp \
@@ -24,13 +22,10 @@ SOURCES += \
 
 HEADERS += \
     request.h \
-    clientsocket.h \
-    serversocket.h \
     requesthandler.h \
     messageparser.h \
     messagegenerator.h \
     commsinclude.h \
-    testclass2.h \
     messenger.h
 unix:!symbian {
     maemo5 {

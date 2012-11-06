@@ -11,7 +11,12 @@ Request::~Request()
 
 int Request::sendRecieve(string *pErrString, QByteArray input, QVariantMap *output)
 {
-
+    QTcpSocket clientSock = new QTcpSocket();
+    clientSock->connectToHost(serverIPAddress, serverPort);
+    clientSock->write(input);
+    clientSock->waitForBytesWritten();
+    QByteArray replyMessage = clientSock->readAll();
+    *output = MessageParser::qByteArrayToqvMap(replyMessage);
 }
 
 //Creation functions

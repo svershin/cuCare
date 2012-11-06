@@ -8,20 +8,29 @@
 #include "messagegenerator.h"
 #include "../CuCareServer/Repository.h"
 
-class RequestHandler
+class RequestHandler : public QObject
 {
+
+    Q_OBJECT
+
 public:
-    RequestHandler();
+    RequestHandler(QObject *parent = 0);
 
     QByteArray interactWithDatabase(QVariantMap);
 
-private:
+    int startListening(quint16);
 
-    ServerSocket serveSock;
+    int stopListening();
+
+public slots:
+    void handleRequest();
+
+private:
+    QTcpServer *serveSock;
     Repository *pRepo;
 };
 
-void wait();
+
 
 
 #endif // REQUESTHANDLER_H
