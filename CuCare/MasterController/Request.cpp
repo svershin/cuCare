@@ -105,7 +105,7 @@ int Request::pullPatient(string *pErrString, Patient *pPatientValues, PatientFil
     return 0;
 }
 
-int Request::pullConsultation(string *pErrString, Consultation *pConsultationValues, ConsultationFilter inputFilter, int physicianId, int patientId, vector<Consultation*> *pOutputConsultations)
+int Request::pullConsultation(string *pErrString, Consultation *pConsultationValues, ConsultationFilter inputFilter, vector<int> *physicianIds, int physicianId, int patientId, vector<Consultation*> *pOutputConsultations)
 {
     return 0;
 }
