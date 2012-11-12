@@ -13,20 +13,19 @@ TEMPLATE = lib
 CONFIG += staticlib
 
 SOURCES += \
-    request.cpp \
-    requesthandler.cpp \
-    messageparser.cpp \
-    messagegenerator.cpp \
-    testclass2.cpp \
-    messenger.cpp
+    main.cpp \
+    ClientNetworkInterface.cpp \
+    Translator.cpp \
+    ClientSocket.cpp \
+    ServerNetworkInterface.cpp \
+    ServerSocket.cpp
 
 HEADERS += \
-    request.h \
-    requesthandler.h \
-    messageparser.h \
-    messagegenerator.h \
-    commsinclude.h \
-    messenger.h
+    ClientNetworkInterface.h \
+    Translator.h \
+    ClientSocket.h \
+    ServerNetworkInterface.h \
+    ServerSocket.h
 unix:!symbian {
     maemo5 {
         target.path = /opt/usr/lib
