@@ -1,0 +1,3 @@
+# Hashes of file build rules.
+49ee0ce0e4be51a1008d0b58c5950568 src/moc_parserrunnable.cxx
+4e398e07a2c04b0dc9a708a738ca50eb src/moc_serializerrunnable.cxx
