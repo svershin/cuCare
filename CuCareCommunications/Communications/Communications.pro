@@ -13,7 +13,6 @@ TEMPLATE = lib
 CONFIG += staticlib
 
 SOURCES += \
-    main.cpp \
     ClientNetworkInterface.cpp \
     Translator.cpp \
     ClientSocket.cpp \
@@ -34,17 +33,3 @@ unix:!symbian {
     }
     INSTALLS += target
 }
-
-unix:!macx:!symbian: LIBS += -L$$PWD/../../CuCareModel/ -lCuCareModel
-
-INCLUDEPATH += $$PWD/../../CuCareModel
-DEPENDPATH += $$PWD/../../CuCareModel
-
-unix:!macx:!symbian: PRE_TARGETDEPS += $$PWD/../../CuCareModel/libCuCareModel.a
-
-
-
-unix:!macx:!symbian: LIBS += -L$$PWD/../qjson/lib/ -lqjson
-
-INCLUDEPATH += $$PWD/../qjson/include
-DEPENDPATH += $$PWD/../qjson/include
