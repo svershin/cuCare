@@ -24,12 +24,6 @@ bool ServerSocket::startListening(quint16 port)
             close();
             return false;
         }
-
-    while(1)
-
-    {
-        waitForNewConnection(-1);
-    }
 }
 
 bool ServerSocket::stopListening()

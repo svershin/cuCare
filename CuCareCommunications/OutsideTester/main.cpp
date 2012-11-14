@@ -1,3 +1,4 @@
+#include <QtCore>
 #include <QtGlobal>
 #include <iostream>
 #include "ServerSocket.h"
@@ -9,47 +10,53 @@
 
 using namespace std;
 
-bool testClientSocket()
+bool testClientSocket(quint16 port)
 {
+    cout << "Testing Client..." << endl;
     ClientSocket* clie = new ClientSocket();
     QByteArray toSend = QByteArray("Here's a message!");
     cout << "Message to send: " << QString(toSend).toStdString() << endl;
-    QByteArray qba = clie->sendReceive(QHostAddress(QString("127.0.0.1")), (quint16)60004, toSend);
+    QByteArray qba = clie->sendReceive(QHostAddress(QString("127.0.0.1")), port, toSend);
     cout << "Received string: " << QString(qba).toStdString() << endl;
     return 1;
 }
 
-bool runServerSocket()
+int runServerSocket(int argc, char* argv[])
 {
+    cout << "Testing Server..." << endl;
     ServerSocket *serv = new ServerSocket();
     serv->startListening((quint16)60004);
 
-    return 1;
 }
 
 int main(int argc, char* argv[])
 {
-    cout << argc << endl;
-    string input = "";
+
+
     if(argc > 1)
     {
-    input = argv[1];
-    }
-
-
-    if(input == "serve")
-    {
-        runServerSocket();
+        string input = string(argv[1]);
+        if(input == "server")
+        {
+            QCoreApplication consoleApp(argc, argv);
+            runServerSocket(argc, argv);
+            return consoleApp.exec();
+        }
+        else if(input == "client")
+        {
+            testClientSocket((quint16)60004);
+        }
+        else
+        {
+            cout << "Invalid Input..." << endl;
+            return -1;
+        }
     }
     else
     {
-        testClientSocket();
+        cout << "No arguments provided. Must specify either \"client\" or \"server\"" << endl;
+        return -1;
     }
-    //cout << input << endl;
-    //testClientSocket();
-
-
-    return 1;
 }
 
 
