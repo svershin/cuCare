@@ -1,7 +1,6 @@
 #include "ServerSocket.h"
 #include <iostream>
 
-
 ServerSocket::ServerSocket()
     :QTcpServer()
 {
@@ -26,7 +25,11 @@ bool ServerSocket::startListening(quint16 port)
             return false;
         }
 
-    waitForNewConnection(-1);
+    while(1)
+
+    {
+        waitForNewConnection(-1);
+    }
 }
 
 bool ServerSocket::stopListening()
@@ -36,17 +39,22 @@ bool ServerSocket::stopListening()
 
 void ServerSocket::handleIncomingConnection()
 {
+    std::cout << "New Connection initiated!" << std::endl;
     QTcpSocket *tempSock = nextPendingConnection();
     tempSock->waitForReadyRead();
     QByteArray requestMessage = tempSock->readAll();
 
-    std::cout << "Received message: " << QString(requestMessage).toStdString() << endl;
+    std::cout << "Received message: " << QString(requestMessage).toStdString() << std::endl;
 
     //QByteArray replyMessage = ServerTranslator::interactWithStorage(requestMessage);
     QByteArray replyMessage = QByteArray("Got it!"); //TODO: this line (the the left) is just test code. Something like the line above will be in the real implementation.
 
-    tempSock->write(replyMessage);
-    tempSock->disconnectFromHost();
+    qint64 written = tempSock->write(replyMessage);
+
+    std::cout << "Bytes written: " << written << std::endl;
+
+    tempSock->waitForDisconnected();
+
     delete tempSock;
     return;
 }

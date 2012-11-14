@@ -28,6 +28,14 @@ QByteArray ClientSocket::sendReceive(QHostAddress serverIP, quint16 serverPort, 
         std::cout << "Failed to connect to server" << endl;
         throw "Failed to connect to server";
     }
-    waitForReadyRead();
-    return readAll();
+    if(!waitForReadyRead(30000))
+    {
+        std::cout << "Timed out waiting for server response" << endl;
+        throw "Timed out waiting for server response";
+    }
+
+    QByteArray reply = readAll();
+    disconnectFromHost();
+
+    return reply;
 }
