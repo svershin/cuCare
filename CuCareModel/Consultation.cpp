@@ -8,41 +8,29 @@
 
 #include "Consultation.h"
 
-// Constructor
-Consultation::Consultation
-(   int consultIDParam,
-    string reasonParam,
-    string diagnosisParam,
-    string commentsParam,
-    Consultation::ConsultationStatus statusParam,
-    Date dateParam,
-    Time timeParam,
-    Physician* pConsultingPhysParam,
-    bool deletedParam)
-    : consultID (consultIDParam),
-      reason (reasonParam),
-      diagnosis (diagnosisParam),
-      comments (commentsParam),
-      status (statusParam),
-      date (dateParam),
-      time (timeParam),
-      pConsultingPhys (pConsultingPhysParam),
-      deleted (deletedParam)
+//You will need these includes
+#include "StringProperty.h"
+#include "IntProperty.h"
+
+Consultation::Consultation()
 {
+    //This is where properties get added.
+    //Use IntProperty or StringProperty depending on the type
+    //First parmeter is the property name.  It should be the same as the name of the data member
+    //Second parameter is always this
+    //Third parameter is the virtual get method from ModelObject.  &ModelObject::nameOfGetMethod
+    //There are no brackets after the method name - watch out, the autocomplete will try to put them in for you.
+    //Fourth paremeter is the virtual set method from ModelObject.  Same format.
+    getProperties()->push_back(new IntProperty("consultId", this, &ModelObject::getConsultId, &ModelObject::setConsultId));
+    getProperties()->push_back(new StringProperty("reason", this, &ModelObject::getReason, &ModelObject::setReason));
 }
 
-// Destructor
 Consultation::~Consultation()
 {
-    while(!Followups.empty())
-    {
-      delete Followups.back();
-      Followups.pop_back();
-    }
 }
 
-int Consultation::getConsultID() { return consultID; }
-void Consultation::setConsultID(int newConsultID) { consultID = newConsultID; }
+int Consultation::getConsultId() { return consultID; }
+void Consultation::setConsultId(int newConsultID) { consultID = newConsultID; }
 
 string Consultation::getReason() { return reason; }
 void Consultation::setReason(const string value) { reason = value; }
@@ -56,17 +44,24 @@ void Consultation::setComments(const string value) { comments = value; }
 Consultation::ConsultationStatus Consultation::getStatus() { return status; }
 void Consultation::setStatus(const ConsultationStatus value) { status = value; }
 
-Date Consultation::getDate() { return date; }
-void Consultation::setDate(const Date value) { date = value; }
+int Consultation::getDay() { return date.getDay(); }
+void Consultation::setDay(int value) { date.setDay(value); }
 
-Time Consultation::getTime() { return time; }
-void Consultation::setTime(const Time value) { time = value; }
+int Consultation::getMonth() { return date.getMonth(); }
+void Consultation::setMonth(int value) { date.setMonth(value); }
 
-Physician* Consultation::getConsultingPhys() { return pConsultingPhys; }
-void Consultation::setConsultingPhys(Physician* const value) { pConsultingPhys = value; }
+int Consultation::getYear() { return date.getYear(); }
+void Consultation::setYear(int value) { date.setYear(value); }
 
-vector<Followup*>* Consultation::getFollowups() { return &Followups; }
+int Consultation::getHour() { return time.getHour(); }
+void Consultation::setHour(int value) { time.setHour(value); }
 
-void Consultation::markDeleted() { deleted = true; }
-bool Consultation::isDeleted() { return deleted; }
+int Consultation::getMinute() { return time.getMinute(); }
+void Consultation::setMinute(int value) { time.setMinute(value); }
+
+int Consultation::getConsultingPhysId() { return consultingPhysId; }
+void Consultation::setConsultingPhysId(int value) { consultingPhysId = value; }
+
+vector<int>* Consultation::getFollowupIds() { return &Followups; }
+
 // EOF

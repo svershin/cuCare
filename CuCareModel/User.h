@@ -13,10 +13,11 @@
 #include "Date.h"
 #include "ContactInfo.h"
 #include "Address.h"
+#include "ModelObject.h"
 
 using namespace std;
 
-class User
+class User : public ModelObject
 {
 public:
 

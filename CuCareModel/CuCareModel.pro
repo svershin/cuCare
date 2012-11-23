@@ -37,7 +37,12 @@ SOURCES += \
     Filters/ResultantFollowupFilter.cpp \
     Filters/ReturnConsultationFilter.cpp \
     Filters/UserFilter.cpp \
-    Filters/MedicalTestFilter.cpp
+    Filters/MedicalTestFilter.cpp \
+    ModelObject.cpp \
+    Property.cpp \
+    StringProperty.cpp \
+    IntProperty.cpp \
+    Utility.cpp
 
 HEADERS += \
     User.h \
@@ -66,8 +71,12 @@ HEADERS += \
     Filters/PatientFilter.h \
     Filters/MedicationRenewalFilter.h \
     Filters/FollowupFilter.h \
-    Filters/ConsultationFilter.h \
-    Filters/MedicalTestFilter.h
+    Filters/MedicalTestFilter.h \
+    ModelObject.h \
+    Property.h \
+    StringProperty.h \
+    IntProperty.h \
+    Utility.h
 unix:!symbian {
     maemo5 {
         target.path = /opt/usr/lib

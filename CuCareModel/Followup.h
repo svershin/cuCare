@@ -10,8 +10,9 @@
 #define FOLLOWUP_H
 
 #include "Date.h"
+#include "ModelObject.h"
 
-class Followup
+class Followup : public ModelObject
 {
 public:
 

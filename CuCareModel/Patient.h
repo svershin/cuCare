@@ -17,10 +17,11 @@
 #include "Address.h"
 #include "HealthCard.h"
 #include "Physician.h"
+#include "ModelObject.h"
 
 using namespace std;
 
-class Patient
+class Patient : public ModelObject
 {
 public:
 
