@@ -1,7 +1,7 @@
 #include "Database.h"
 #include <iostream>
 #include <stdlib.h>
-#include <sqlite3.h>
+#include "sqlite3.h"
 #include "QueryResult.h"
 
 Database::Database()

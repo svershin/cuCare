@@ -16,18 +16,20 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp \
-    Database.cpp \
-    sqlite3.c \
-    QueryResult.cpp \
     Tests.cpp \
-    Repository.cpp
+    Storage/sqlite3.c \
+    Storage/QueryResult.cpp \
+    Storage/Database.cpp \
+    Storage/StorageObject.cpp \
+    Storage/Repository.cpp
 
 HEADERS += \
-    Database.h \
-    sqlite3.h \
-    QueryResult.h \
     Tests.h \
-    Repository.h
+    Storage/sqlite3.h \
+    Storage/QueryResult.h \
+    Storage/Database.h \
+    Storage/StorageObject.h \
+    Storage/Repository.h
 
 unix:!macx:!symbian: LIBS += -L$$PWD/../CuCareModel/ -lCuCareModel
 
@@ -35,3 +37,6 @@ INCLUDEPATH += $$PWD/../CuCareModel
 DEPENDPATH += $$PWD/../CuCareModel
 
 unix:!macx:!symbian: PRE_TARGETDEPS += $$PWD/../CuCareModel/libCuCareModel.a
+
+OTHER_FILES += \
+    Storage/dbcreate.sql

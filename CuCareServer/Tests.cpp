@@ -1,5 +1,5 @@
-#include "Database.h"
-#include "Repository.h"
+#include "Storage/Database.h"
+#include "Storage/Repository.h"
 #include <iostream>
 #include "Tests.h"
 
@@ -44,7 +44,7 @@ void Tests::databaseExample()
 void Tests::repositoryTest()
 {
     cout << "Starting test.\n";
-    Repository* pRepo = new Repository();
+    //Repository* pRepo = new Repository();
 //    AdminAssistant* newAA = new AdminAssistant("Im a test!",
 //                                               "cellophane",
 //                                               "not cellophane",
@@ -151,49 +151,49 @@ void Tests::repositoryTest()
 //        cout << err << "\n";
 //    }
 
-    Physician* newPhys = new Physician(0,
-                                       "phys1!",
-                                       "cellophane",
-                                       "not cellophane",
-                                       Date(12,
-                                            12,
-                                            2012),
-                                       ContactInfo("613-256-6880",
-                                                   "613-293-8843",
-                                                   "ddenis@connect.carleton.ca",
-                                                   "ddenis@gmail.com"),
-                                       Address("Canada",
-                                               "Ottawa",
-                                               "1268 Cobden Road",
-                                               "nooooo",
-                                               "K2C 3A2"),
-                                       false);
-    int uid1 = 0, uid2 = 0;
-    if(!pRepo->createPhysician(newPhys, &uid1))
-        cout << "Error: " << pRepo->getDbErrorText();
-    Physician* otherNewPhys = new Physician(0,
-                                            "phys2!",
-                                            "cellophane",
-                                            "not cellophane",
-                                            Date(12,
-                                                 12,
-                                                 2012),
-                                            ContactInfo("613-256-6880",
-                                                        "613-293-8843",
-                                                        "ddenis@connect.carleton.ca",
-                                                        "ddenis@gmail.com"),
-                                            Address("Canada",
-                                                    "Ottawa",
-                                                    "1268 Cobden Road",
-                                                    "nooooo",
-                                                    "K2C 3A2"),
-                                            false);
-    if(!pRepo->createPhysician(otherNewPhys, &uid2))
-        cout << "Error: " << pRepo->getDbErrorText();
+//    Physician* newPhys = new Physician(0,
+//                                       "phys1!",
+//                                       "cellophane",
+//                                       "not cellophane",
+//                                       Date(12,
+//                                            12,
+//                                            2012),
+//                                       ContactInfo("613-256-6880",
+//                                                   "613-293-8843",
+//                                                   "ddenis@connect.carleton.ca",
+//                                                   "ddenis@gmail.com"),
+//                                       Address("Canada",
+//                                               "Ottawa",
+//                                               "1268 Cobden Road",
+//                                               "nooooo",
+//                                               "K2C 3A2"),
+//                                       false);
+//    int uid1 = 0, uid2 = 0;
+//    if(!pRepo->createPhysician(newPhys, &uid1))
+//        cout << "Error: " << pRepo->getDbErrorText();
+//    Physician* otherNewPhys = new Physician(0,
+//                                            "phys2!",
+//                                            "cellophane",
+//                                            "not cellophane",
+//                                            Date(12,
+//                                                 12,
+//                                                 2012),
+//                                            ContactInfo("613-256-6880",
+//                                                        "613-293-8843",
+//                                                        "ddenis@connect.carleton.ca",
+//                                                        "ddenis@gmail.com"),
+//                                            Address("Canada",
+//                                                    "Ottawa",
+//                                                    "1268 Cobden Road",
+//                                                    "nooooo",
+//                                                    "K2C 3A2"),
+//                                            false);
+//    if(!pRepo->createPhysician(otherNewPhys, &uid2))
+//        cout << "Error: " << pRepo->getDbErrorText();
 
-    cout << uid1 << ", " << uid2 << "\n";
+//    cout << uid1 << ", " << uid2 << "\n";
 
-    delete pRepo;
-    cout << "Completion.\n";
+//    delete pRepo;
+//    cout << "Completion.\n";
 }
 
