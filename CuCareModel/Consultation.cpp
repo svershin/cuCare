@@ -64,4 +64,9 @@ void Consultation::setConsultingPhysId(int value) { consultingPhysId = value; }
 
 vector<int>* Consultation::getFollowupIds() { return &Followups; }
 
+string Consultation::getTableName()
+{
+    return tableName;
+}
+
 // EOF

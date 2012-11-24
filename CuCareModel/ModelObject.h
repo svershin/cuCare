@@ -12,7 +12,7 @@ class ModelObject
 public:
     ModelObject();
 
-    void abstract() = 0;
+    virtual string getTableName() = 0;
 
     list<Property*>* getProperties();
 

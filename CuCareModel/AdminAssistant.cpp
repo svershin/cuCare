@@ -32,4 +32,9 @@ AdminAssistant::~AdminAssistant()
 {
 }
 
+string AdminAssistant::getTableName()
+{
+    return tableName;
+}
+
 // EOF

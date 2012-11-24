@@ -29,6 +29,9 @@ public:
 
     int getType() { return 3; }
 
+    string getTableName();
+
+    static const string tableName = "adminassistant";
 protected:
 private:
 };

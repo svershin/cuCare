@@ -21,7 +21,8 @@ SOURCES += main.cpp \
     Storage/QueryResult.cpp \
     Storage/Database.cpp \
     Storage/StorageObject.cpp \
-    Storage/Repository.cpp
+    Storage/Repository.cpp \
+    Storage/RepoModel.cpp
 
 HEADERS += \
     Tests.h \
@@ -29,7 +30,8 @@ HEADERS += \
     Storage/QueryResult.h \
     Storage/Database.h \
     Storage/StorageObject.h \
-    Storage/Repository.h
+    Storage/Repository.h \
+    Storage/RepoModel.h
 
 unix:!macx:!symbian: LIBS += -L$$PWD/../CuCareModel/ -lCuCareModel
 

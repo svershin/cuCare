@@ -92,6 +92,13 @@ public:
     //But there's no associated property
     vector<int>* getFollowupIds();
 
+    //Model objects need to know the name of the table they'll be stored in
+    //It's just the class name in all lowercase, no spaces
+    //The function should just return the static variable.
+    string getTableName();
+
+    static const string tableName = "adminassistant";
+
     //These changes to get and set methods need to be reflected in the .cpp file too
 
 protected:

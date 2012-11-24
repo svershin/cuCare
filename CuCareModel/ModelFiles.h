@@ -12,6 +12,7 @@
 #include "HealthCard.h"
 #include "MedicalTest.h"
 #include "MedicationRenewal.h"
+#include "ModelObject.h"
 #include "Patient.h"
 #include "Physician.h"
 #include "Referral.h"

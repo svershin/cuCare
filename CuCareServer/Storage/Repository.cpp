@@ -98,7 +98,7 @@ bool Repository::updateStatement(StorageObject sObj)
 bool Repository::selectStatement(StorageObject sObj, QueryResult *&results)
 {
     stringstream statement;
-    statement << "SELECT * FROM " << sObj.getTable() << " WHERE ";
+    statement << "SELECT * FROM " << sObj.getTable() << " WHERE ";  //TODO: column names
     bool firstvalue = true;
     map<string, string> values = sObj.getValues();
     for(map<string, string>::iterator it = values.begin(); it != values.end(); it++)
