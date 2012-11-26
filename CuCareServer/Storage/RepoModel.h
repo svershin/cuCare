@@ -10,6 +10,9 @@ public:
     RepoModel();
 
     string getAuditCommand();
+
+    bool dbexists();
+    void createDb();
 };
 
 #endif // REPOMODEL_H

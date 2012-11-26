@@ -16,7 +16,8 @@ SOURCES += main.cpp\
     mainwindow.cpp \
     MasterController/MasterController.cpp \
     MasterController/Request.cpp \
-    followuptypeselectdialog.cpp
+    followuptypeselectdialog.cpp \
+    ObjectInterpreter/ObjectInterpreter.cpp
 
 HEADERS  += \
     patientselectdialog.h \
@@ -24,7 +25,8 @@ HEADERS  += \
     mainwindow.h \
     MasterController/MasterController.h \
     MasterController/Request.h \
-    followuptypeselectdialog.h
+    followuptypeselectdialog.h \
+    ObjectInterpreter/ObjectInterpreter.h
 
 FORMS    += \
     patientselectdialog.ui \
