@@ -31,7 +31,7 @@ public:
         CSTAT_COMPLETED
     };
 
-    Consultation (); //Change constructor to a default one
+    Consultation (); //Change constructor to a default one - this has to be done even in the data classes like Date, Time, Address etc...
 
     ~Consultation();
 
@@ -93,11 +93,13 @@ public:
     vector<int>* getFollowupIds();
 
     //Model objects need to know the name of the table they'll be stored in
-    //It's just the class name in all lowercase, no spaces
+    //It's just the class name in all lowercase, no spaces, with an s at the end
+    //Although what you write doesn't actually matter, as it'll never be compared to a literal, only to itself
     //The function should just return the static variable.
+    //The function exists so that you can ask a pointer of the base class for the object's table name
     string getTableName();
 
-    static const string tableName = "adminassistant";
+    static const string TABLE_NAME;
 
     //These changes to get and set methods need to be reflected in the .cpp file too
 

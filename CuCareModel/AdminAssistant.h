@@ -31,7 +31,7 @@ public:
 
     string getTableName();
 
-    static const string tableName = "adminassistant";
+    static const string TABLE_NAME;
 protected:
 private:
 };

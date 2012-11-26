@@ -22,7 +22,8 @@ SOURCES += main.cpp \
     Storage/Database.cpp \
     Storage/StorageObject.cpp \
     Storage/Repository.cpp \
-    Storage/RepoModel.cpp
+    Storage/RepoModel.cpp \
+    Storage/Sqlite3Database.cpp
 
 HEADERS += \
     Tests.h \
@@ -31,7 +32,8 @@ HEADERS += \
     Storage/Database.h \
     Storage/StorageObject.h \
     Storage/Repository.h \
-    Storage/RepoModel.h
+    Storage/RepoModel.h \
+    Storage/Sqlite3Database.h
 
 unix:!macx:!symbian: LIBS += -L$$PWD/../CuCareModel/ -lCuCareModel
 

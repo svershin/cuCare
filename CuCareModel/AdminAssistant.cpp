@@ -27,6 +27,8 @@ AdminAssistant::AdminAssistant
 {
 }
 
+const string TABLE_NAME = "adminassistants";
+
 // Destructor
 AdminAssistant::~AdminAssistant()
 {
@@ -34,7 +36,7 @@ AdminAssistant::~AdminAssistant()
 
 string AdminAssistant::getTableName()
 {
-    return tableName;
+    return TABLE_NAME;
 }
 
 // EOF

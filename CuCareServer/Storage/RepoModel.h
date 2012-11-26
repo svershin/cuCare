@@ -2,6 +2,7 @@
 #define REPOMODEL_H
 
 #include "../../CuCareModel/ModelFiles.h"
+#include <sstream>
 
 class RepoModel
 {

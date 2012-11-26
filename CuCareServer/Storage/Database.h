@@ -12,31 +12,26 @@ class Database
 {
 public:
     Database();
-    ~Database();
+    virtual ~Database();
 
-    bool open();
+    virtual bool open() = 0;
 
     //For issuing sql statements which do not return results
-    bool command(const string query);
+    virtual bool command(const string query) = 0;
 
     //For issuing sql statements which do return results
-    bool query(const string query, QueryResult*& pOutResults);
+    virtual bool query(const string query, QueryResult*& pOutResults) = 0;
 
-    int lastUid();
+    virtual int lastUid() = 0;
 
     string getErrorText();
     const string dbFilename;
 
-    bool close();
+    virtual bool close();
 
-private:
-    bool errorCheck();
-
-    string errorText;
-    sqlite3 *pDb;
+protected:
     bool connected;
-
-
+    string errorText;
 };
 
 #endif

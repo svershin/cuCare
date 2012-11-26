@@ -29,8 +29,10 @@ Consultation::~Consultation()
 {
 }
 
-int Consultation::getConsultId() { return consultID; }
-void Consultation::setConsultId(int newConsultID) { consultID = newConsultID; }
+const string TABLE_NAME = "consultations";
+
+int Consultation::getConsultId() { return consultId; }
+void Consultation::setConsultId(int newConsultId) { consultId = newConsultId; }
 
 string Consultation::getReason() { return reason; }
 void Consultation::setReason(const string value) { reason = value; }
@@ -62,11 +64,11 @@ void Consultation::setMinute(int value) { time.setMinute(value); }
 int Consultation::getConsultingPhysId() { return consultingPhysId; }
 void Consultation::setConsultingPhysId(int value) { consultingPhysId = value; }
 
-vector<int>* Consultation::getFollowupIds() { return &Followups; }
+vector<int>* Consultation::getFollowupIds() { return &followupids; }
 
 string Consultation::getTableName()
 {
-    return tableName;
+    return TABLE_NAME;
 }
 
 // EOF

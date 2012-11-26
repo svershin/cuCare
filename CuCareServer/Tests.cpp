@@ -1,11 +1,11 @@
-#include "Storage/Database.h"
+#include "Storage/Sqlite3Database.h"
 #include "Storage/Repository.h"
 #include <iostream>
 #include "Tests.h"
 
 void Tests::databaseExample()
 {
-    Database * db = new Database();
+    Database * db = new Sqlite3Database();
 
     cout << "Created the database.\n";
 

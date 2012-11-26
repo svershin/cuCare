@@ -18,7 +18,7 @@ public:
     bool create(StorageObject sObj, int &uid);
     bool push(StorageObject sObj);
     bool pull(StorageObject sObj, list<StorageObject> *&pResults);
-    bool runAudit(Date today);
+    bool runAudit(int day, int month, int year);
 
     string getErrorText();
 private:

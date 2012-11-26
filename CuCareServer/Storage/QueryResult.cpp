@@ -3,10 +3,11 @@
 #include <stdio.h>
 #include <iostream>
 
-QueryResult::QueryResult(vector< vector <string>* >* pResults)
-    :currRow(0)
+QueryResult::QueryResult(vector< vector <string>* >* pResults, map<int, string>* pColumns)
+    : pRows(pResults),
+      pColNames (pColumns),
+      currRow(0)
 {
-    pRows = pResults;
 }
 
 QueryResult::~QueryResult()
@@ -14,6 +15,7 @@ QueryResult::~QueryResult()
     for(unsigned int i = 0; i < pRows->size(); i++)
         delete pRows->at(i);
     delete pRows;
+    delete pColNames;
 }
 
 void QueryResult::setRow(const unsigned int row) throw (string)
@@ -51,4 +53,9 @@ string QueryResult::operator [](const unsigned int index) throw (string)
         return pRows->at(currRow)->at(index);
     else
         throw "Row index out of bounds.";
+}
+
+string QueryResult::getColName(int index)
+{
+    return (*pColNames)[index];
 }
