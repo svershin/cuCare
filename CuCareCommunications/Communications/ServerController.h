@@ -1,25 +1,29 @@
-#ifndef CLIENTNETWORKINTERFACE_H
-#define CLIENTNETWORKINTERFACE_H
+#ifndef SERVERCONTROLLER_H
+#define SERVERCONTROLLER_H
 
-#include <QtNetwork>
+#include <iostream>
 #include <string>
-#include "AbstractNetworkMessenger.h"
-#include "ClientNetworkTranslator.h"
+#include "ServerController.h"
 
 using namespace std;
 
-class ClientNetworkInterface : public AbstractNetworkMessenger
+class ServerController
 {
 public:
-    ClientNetworkInterface(string serverIPParam, quint16 serverPortParam);
+
+    ~ServerController();
+
+    static ServerController getInstance();
 
     bool create(string objectType, map<string, string> *pObjectMap, int *pOutID, string *pErrorString);
     bool push(string objectType, map<string, string> *pObjectMap, string *pErrorString);
     bool pull(string objectType, map<string, string> *pObjectMap, list< map<string, string> *> *pObjectList, string *pErrorString);
 
 private:
-    QHostAddress serverIP;
-    quint16 serverPort;
+    ServerController();
+    static bool haveInstance;
+    static ServerController *instance;
+    //Repository repo;
 };
 
-#endif // CLIENTNETWORKINTERFACE_H
+#endif // SERVERCONTROLLER_H

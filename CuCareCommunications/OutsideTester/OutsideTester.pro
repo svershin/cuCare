@@ -8,7 +8,7 @@ QT       += core network
 
 QT       -= gui
 
-TARGET = OutsideTester
+TARGET = OutsideTests
 CONFIG   += console
 CONFIG   -= app_bundle
 
@@ -26,3 +26,8 @@ unix:!macx:!symbian: PRE_TARGETDEPS += $$PWD/../Communications/libCommunications
 
 
 
+
+unix:!macx:!symbian: LIBS += -L$$PWD/../qjson/build/lib/ -lqjson
+
+INCLUDEPATH += $$PWD/../qjson/build
+DEPENDPATH += $$PWD/../qjson/build

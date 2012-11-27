@@ -1,5 +1,7 @@
 #include "ServerNetworkInterface.h"
 
-ServerNetworkInterface::ServerNetworkInterface()
+ServerNetworkInterface::ServerNetworkInterface(quint port)
 {
+    listener = new ServerNetworkListener();
+    listener->startListening(port);
 }

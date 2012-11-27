@@ -1,19 +1,18 @@
 #include <QtCore>
 #include <QtGlobal>
 #include <iostream>
-#include "ServerSocket.h"
-#include "ClientSocket.h"
-//#include "../qjson/src/parser.h"
-//#include "../qjson/src/serializer.h"
-//#include "../qjson/src/qobjecthelper.h"
-
+#include "ServerNetworkListener.h"
+#include "ClientNetworkConnection.h"
+#include "AbstractNetworkMessenger.h"
+#include "../qjson/src/serializer.h"
+#include "../qjson/src/parser.h"
 
 using namespace std;
 
 bool testClientSocket(quint16 port)
 {
     cout << "Testing Client..." << endl;
-    ClientSocket* clie = new ClientSocket();
+    ClientNetworkConnection* clie = new ClientNetworkConnection();
     QByteArray toSend = QByteArray("Here's a message!");
     cout << "Message to send: " << QString(toSend).toStdString() << endl;
     QByteArray qba = clie->sendReceive(QHostAddress(QString("127.0.0.1")), port, toSend);
@@ -24,9 +23,47 @@ bool testClientSocket(quint16 port)
 int runServerSocket(int argc, char* argv[])
 {
     cout << "Testing Server..." << endl;
-    ServerSocket *serv = new ServerSocket();
+    ServerNetworkListener *serv = new ServerNetworkListener();
     serv->startListening((quint16)60004);
 
+}
+
+int testCereal()
+{
+    cout << "Testing Cerealization..." << endl;
+    map<string, string> objMap, outMap;
+    objMap[string("key1")] = string("value1");
+    objMap[string("key2")] = string("value2");
+    objMap[string("key3")] = string("value3");
+
+    //newMap = AbstractNetworkMessenger::qStringMapToStringMap(AbstractNetworkMessenger::stringMapToQStringMap(origMap));
+    QVariantMap reqQMap = AbstractNetworkMessenger::packRequest(AbstractNetworkMessenger::CREATE, "Patient", objMap);
+    qDebug() << reqQMap << endl << endl << endl;
+
+
+    QJson::Serializer serial;
+    QByteArray qbar = serial.serialize(reqQMap);
+    QJson::Parser parse;
+    QVariant outQVar = parse.parse(qbar);
+    QVariantMap outQMap = outQVar.toMap();
+
+
+
+    //outMap = AbstractNetworkMessenger::qVariantMapToStringMap(outQMap);
+
+    qDebug() << outQMap << endl;
+    //qDebug() << (int) AbstractNetworkMessenger::unpackRequestType(outQMap) << endl;
+    //qDebug() << QString::fromStdString(AbstractNetworkMessenger::unpackRequestObjectType(outQMap)) << endl;
+    //qDebug() << AbstractNetworkMessenger::stringMapToQVariantMap(AbstractNetworkMessenger::unpackRequestObjectMap(outQMap)) << endl;
+
+    cout << "finished" << endl;
+    cout << "extra text" << endl;
+}
+
+
+void testSandbox(string *pstr)
+{
+    *pstr = string("bigcow");
 }
 
 int main(int argc, char* argv[])
@@ -46,15 +83,26 @@ int main(int argc, char* argv[])
         {
             testClientSocket((quint16)60004);
         }
+        else if(input == "cereal")
+        {
+            testCereal();
+        }
+        else if(input == "sand")
+        {
+            string* pstr = new string("hey");
+            testSandbox(pstr);
+            cout << *pstr << endl;
+        }
         else
         {
             cout << "Invalid Input..." << endl;
             return -1;
         }
+
     }
     else
     {
-        cout << "No arguments provided. Must specify either \"client\" or \"server\"" << endl;
+        cout << "No arguments provided." << endl;
         return -1;
     }
 }
