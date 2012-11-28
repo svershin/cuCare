@@ -1,10 +1,33 @@
 #include "Repository.h"
+#include "Sqlite3Database.h"
 
 Repository::Repository()
     : db (NULL),
-      errorText ("")
+      errorText (""),
+      rModel ()
 {
-    //instantiate db
+    db = new Sqlite3Database();
+
+    if(!rModel.dbexists(db))
+            firstTimeRun = true;
+
+    int timeout = 0;
+    bool success = false;
+    while(timeout < 30)
+    {
+        if(db->open())
+        {
+            success = true;
+            break;
+        }
+        sleep(1);
+        timeout++;
+    }
+    if(!success)
+        throw "Connection to db timed out.";
+
+    if(firstTimeRun)
+        rModel.createDb(db);
 }
 
 Repository::~Repository()
@@ -32,7 +55,7 @@ bool Repository::pull(StorageObject sObj, list<StorageObject> *&pResults)
     if(!selectStatement(sObj, queryResult))
         return false;
     pResults = new list<StorageObject>();
-    //instantiate(queryResult, pResults);
+    //instantiate(queryResult, pResults, sObj.getTable());
     return true;
 }
 
@@ -120,6 +143,21 @@ bool Repository::selectStatement(StorageObject sObj, QueryResult *&results)
 
     string query = statement.str();
     return db->query(query, results);
+}
+
+bool Repository::instantiate(QueryResult *pResults, list<StorageObject> *pObjects, StorageObject pullObject)
+{
+    if(!(pResults->numRows() > 0))
+        return;
+    map<string, string> values;
+    do
+    {
+        for(int i = 0; i < pResults->rowSize(); i++)
+            values[pResults->getColName(i)] = pResults[i];
+        StorageObject newObject(pullObject.getTable(), pullObject.getIdName(), values);
+        pObjects->push_back(newObject);
+    }
+    while(pQueryResult->nextRow());
 }
 
 

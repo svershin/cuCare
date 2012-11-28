@@ -15,3 +15,14 @@ string RepoModel::getAuditCommand()
 //              << "' > dueday)) AND status = '" << Followup::FSTAT_PENDING << "';";
     return "";
 }
+
+bool RepoModel::dbexists(Database db)
+{
+    ifstream dbfile(db->dbFilename.c_str());
+    return dbfile; //Casts to true if file exists.
+}
+
+void RepoModel::createDb(Database db)
+{
+    //DO things with model classes to make tables
+}
