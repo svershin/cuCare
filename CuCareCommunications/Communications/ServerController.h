@@ -26,9 +26,9 @@ public:
 
 
     //Functions dealing with repository access
-    bool create(string objectType, map<string, string> *pObjectMap, int *pOutID, string *pErrorString);
-    bool push(string objectType, map<string, string> *pObjectMap, string *pErrorString);
-    bool pull(string objectType, map<string, string> *pObjectMap, list< map<string, string> *> *pObjectList, string *pErrorString);
+    bool create(string tableName, string idKey, map<string, string> *pObjectMap, int *pOutID, string *pErrorString);
+    bool push(string tableName, string idKey, map<string, string> *pObjectMap, string *pErrorString);
+    bool pull(string tableName, string idKey, map<string, string> *pObjectMap, list< map<string, string> *> *pObjectList, string *pErrorString);
 
 
 public slots:

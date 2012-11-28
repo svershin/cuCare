@@ -6,13 +6,13 @@ ClientNetworkInterface::ClientNetworkInterface(string serverIPParam, quint16 ser
       serverPort(serverPortParam)
 {}
 
-bool ClientNetworkInterface::create(string objectType, map<string, string> *pObjectMap, int *pOutID, string *pErrorString)
+bool ClientNetworkInterface::create(string tableName, string idKey, map<string, string> *pObjectMap, int *pOutID, string *pErrorString)
 {
     QVariantMap requestMessage, replyMessage;
 
     try
     {
-        requestMessage = packRequest(CREATE, objectType, *pObjectMap);
+        requestMessage = packRequest(CREATE, tableName, idKey, *pObjectMap);
         replyMessage = ClientNetworkTranslator::makeRequest(serverIP, serverPort, requestMessage);
         if(SUCCESS_REPLY == unpackReplyStatus(replyMessage))
         {
@@ -36,13 +36,13 @@ bool ClientNetworkInterface::create(string objectType, map<string, string> *pObj
     }
 }
 
-bool ClientNetworkInterface::push(string objectType, map<string, string> *pObjectMap, string *pErrorString)
+bool ClientNetworkInterface::push(string tableName, string idKey, map<string, string> *pObjectMap, string *pErrorString)
 {
     QVariantMap requestMessage, replyMessage;
 
     try
     {
-        requestMessage = packRequest(PUSH, objectType, *pObjectMap);
+        requestMessage = packRequest(PUSH, tableName, idKey, *pObjectMap);
         replyMessage = ClientNetworkTranslator::makeRequest(serverIP, serverPort, requestMessage);
         if(SUCCESS_REPLY == unpackReplyStatus(replyMessage))
         {
@@ -65,12 +65,12 @@ bool ClientNetworkInterface::push(string objectType, map<string, string> *pObjec
     }
 }
 
-bool ClientNetworkInterface::pull(string objectType, map<string, string> *pObjectMap, list< map<string, string> *> *pObjectList, string *pErrorString)
+bool ClientNetworkInterface::pull(string tableName, string idKey, map<string, string> *pObjectMap, list< map<string, string> *> *pObjectList, string *pErrorString)
 {
 
     try
     {
-        QVariantMap requestMessage = packRequest(CREATE, objectType, *pObjectMap);
+        QVariantMap requestMessage = packRequest(PULL, tableName, idKey, *pObjectMap);
         QVariantMap replyMessage = ClientNetworkTranslator::makeRequest(serverIP, serverPort, requestMessage);
         if(SUCCESS_REPLY == unpackReplyStatus(replyMessage))
         {
@@ -95,15 +95,4 @@ bool ClientNetworkInterface::pull(string objectType, map<string, string> *pObjec
 }
 
 
-QHostAddress ClientNetworkInterface::makeAndCheckQHostAddress(QString IPStr)
-{
-    QHostAddress IPAddr(IPStr);
-    if(!IPAddr.isNull())
-    {
-        return IPAddr;
-    }
-    else
-    {
-        throw(string("invalid IP address given"));
-    }
-}
+

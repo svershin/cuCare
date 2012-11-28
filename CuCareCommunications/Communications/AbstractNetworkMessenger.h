@@ -3,11 +3,13 @@
 
 #include <QtGlobal>
 #include <QtCore>
+#include <QtNetwork>
 
 using namespace std;
 
 #define REQUEST_TYPE_KEY "RequestType"
-#define REQUEST_OBJECT_TYPE_KEY "ObjectType"
+#define REQUEST_TABLE_NAME_KEY "TableName"
+#define REQUEST_ID_KEY_KEY "ID_Key"
 #define REQUEST_OBJECT_MAP_KEY "ObjectMap"
 
 #define REPLY_STATUS_KEY "Status"
@@ -33,7 +35,16 @@ public:
                       SUCCESS_REPLY   //1
                      };
 
-    static QVariantMap packRequest(RequestType requestType, string objectType, const map<string, string>& objectMap);
+    static void qVariantMapToStringMap(const QVariantMap& inMap, map<string, string> *pOutMap);
+    static map<string, string> qVariantMapToStringMap(const QVariantMap& inMap);
+
+    static void mapListToQVariantList(const list< map<string, string> *>& inList, QVariantList *pOutList);
+    static QVariantList mapListToQVariantList(const list< map<string, string> *>& inList);
+
+    static void qVariantListToMapList(const QVariantList& inList, list< map<string, string>* >* pOutList);
+    static list< map<string, string> *> qVariantListToMapList(const QVariantList& inList);
+
+    static QVariantMap packRequest(RequestType requestType, string tableName, string idKey, const map<string, string>& objectMap);
 
     static QVariantMap packCreateReply(const int& id);
     static QVariantMap packPushReply();
@@ -42,7 +53,8 @@ public:
 
     //Functions to unpack pieces of a request
     static  RequestType unpackRequestType(const QVariantMap& requestMap);
-    static  string unpackRequestObjectType(const QVariantMap& requestMap);
+    static  string unpackRequestTableName(const QVariantMap& requestMap);
+    static  string unpackRequestIdKey(const QVariantMap& requestMap);
     static  void unpackRequestObjectMap(const QVariantMap& requestMap, map<string, string>* pOutMap);
 
     //Function to unpack pieces of a reply
@@ -54,16 +66,9 @@ public:
     static void stringMapToQVariantMap(const map<string, string>& inMap, QVariantMap *pOutMap);
     static QVariantMap stringMapToQVariantMap(const map<string, string>& inMap);
 
-    static void qVariantMapToStringMap(const QVariantMap& inMap, map<string, string> *pOutMap);
-    static map<string, string> qVariantMapToStringMap(const QVariantMap& inMap);
-
-    static void mapListToQVariantList(const list< map<string, string> *>& inList, QVariantList *pOutList);
-    static QVariantList mapListToQVariantList(const list< map<string, string> *>& inList);
-
-    static void qVariantListToMapList(const QVariantList& inList, list< map<string, string>* >* pOutList);
-    static list< map<string, string> *> qVariantListToMapList(const QVariantList& inList);
-
     static void destroyListContents(list< map<string, string> *> offList);
+
+    static QHostAddress makeAndCheckQHostAddress(QString IPStr); //wrapper for making a QHostAddress (will throw an exception if it's not properly made)
 
 };
 

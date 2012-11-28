@@ -7,7 +7,8 @@ ServerNetworkRequestInterpreter::ServerNetworkRequestInterpreter()
 QVariantMap ServerNetworkRequestInterpreter::interpretAndHandleRequest(QVariantMap requestMessage)
 {
     RequestType reqType = unpackRequestType(requestMessage);
-    string objectType = unpackRequestObjectType(requestMessage);
+    string tableName = unpackRequestTableName(requestMessage);
+    string idKey = unpackRequestIdKey(requestMessage);
     map<string, string> objectMap; unpackRequestObjectMap(requestMessage, &objectMap);
     string errorString;
     QVariantMap returnMap;
@@ -17,7 +18,7 @@ QVariantMap ServerNetworkRequestInterpreter::interpretAndHandleRequest(QVariantM
         case CREATE:
         {
             int outID = -1;
-            if(ServerController::getInstance()->create(objectType, &objectMap, &outID, &errorString))
+            if(ServerController::getInstance()->create(tableName, idKey, &objectMap, &outID, &errorString))
             {
                  returnMap = packCreateReply(outID);
             }
@@ -30,7 +31,7 @@ QVariantMap ServerNetworkRequestInterpreter::interpretAndHandleRequest(QVariantM
 
         case PUSH:
         {
-            if(ServerController::getInstance()->push(objectType, &objectMap, &errorString))
+            if(ServerController::getInstance()->push(tableName, idKey, &objectMap, &errorString))
             {
                 returnMap = packPushReply();
             }
@@ -44,7 +45,7 @@ QVariantMap ServerNetworkRequestInterpreter::interpretAndHandleRequest(QVariantM
         case PULL:
         {
             list< map<string, string> *> outMap;
-            if(ServerController::getInstance()->pull(objectType, &objectMap, &outMap, &errorString))
+            if(ServerController::getInstance()->pull(tableName, idKey, &objectMap, &outMap, &errorString))
             {
                 returnMap = packPullReply(outMap);
                 AbstractNetworkMessenger::destroyListContents(outMap);

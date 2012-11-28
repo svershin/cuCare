@@ -14,6 +14,8 @@ void CommsTests::testServerSide()
 
     ServerController *control = ServerController::getInstance();
     control->runAudit();
+
+
     map<string, string> patmap;
     int id;
     int *pId = &id;

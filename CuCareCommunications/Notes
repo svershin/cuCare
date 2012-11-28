@@ -1,2 +1,4 @@
-- Test for sending large strings
+Changes:
+-Using QJson now.
+-New "tableName" parameter in ClientNetworkInterface
 	

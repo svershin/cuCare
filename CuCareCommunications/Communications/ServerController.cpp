@@ -78,11 +78,11 @@ ServerController *ServerController::getInstance()
         pErrorString will hold an error message in the event of an unsuccessful create
     */
 //
-bool ServerController::create(string objectType, map<string, string> *pObjectMap, int *pOutID, string *pErrorString)
+bool ServerController::create(string tableName, string idKey, map<string, string> *pObjectMap, int *pOutID, string *pErrorString)
 {
     try
     {
-        if(repository.create(StorageObject(string("I don't know what this is"), objectType, *pObjectMap), *pOutID))
+        if(repository.create(StorageObject(tableName, idKey, *pObjectMap), *pOutID))
         {
             return true;
         }
@@ -114,11 +114,11 @@ bool ServerController::create(string objectType, map<string, string> *pObjectMap
         pErrorString will hold an error message in the event of an unsuccessful push
     */
 //
-bool ServerController::push(string objectType, map<string, string> *pObjectMap, string *pErrorString)
+bool ServerController::push(string tableName, string idKey, map<string, string> *pObjectMap, string *pErrorString)
 {
     try
     {
-        if(repository.push(StorageObject(string("I don't know what this is"), objectType, *pObjectMap)))
+        if(repository.push(StorageObject(tableName, idKey, *pObjectMap)))
         {
             return true;
         }
@@ -152,14 +152,14 @@ bool ServerController::push(string objectType, map<string, string> *pObjectMap, 
         pErrorString will hold an error message in the event of an unsuccessful pull
     */
 //
-bool ServerController::pull(string objectType, map<string, string> *pObjectMap, list< map<string, string> *> *pObjectList, string *pErrorString)
+bool ServerController::pull(string tableName, string idKey, map<string, string> *pObjectMap, list< map<string, string> *> *pObjectList, string *pErrorString)
 {
     list<StorageObject> *pStorageObjectList = NULL;// confirm that Repository will be newing this stuff
 
 
     try
     {
-        if(repository.pull(StorageObject(string("I don't know what this is"), objectType, *pObjectMap), pStorageObjectList))
+        if(repository.pull(StorageObject(tableName, idKey, *pObjectMap), pStorageObjectList))
         {
             if(pObjectList == NULL) {throw(string("null list pointer returned on server"));}
             list<StorageObject>::iterator it = pStorageObjectList->begin();
@@ -203,8 +203,8 @@ bool ServerController::pull(string objectType, map<string, string> *pObjectMap, 
 //
 void ServerController::runAudit()
 {
-
-    if(! repository.runAudit(1, 1, 1))
+    QDate now = QDate::currentDate();
+    if(! repository.runAudit(now.day(), now.month(), now.year()))
     {
         cout << "audit process failure" << endl;
     }

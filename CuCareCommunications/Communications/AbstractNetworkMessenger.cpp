@@ -4,6 +4,16 @@ using namespace std;
 
 AbstractNetworkMessenger::~AbstractNetworkMessenger(){}
 
+
+/*
+  STRING MAP TO Q VARIANT MAP
+  Purpose:
+    convert a map of strings into a QVariantMap
+
+  Output parameters:
+    pOutMap must have memory allocated to it prior to calling this function. It gets populated with a QVariantMap that corresponds to the input map
+  */
+//
 void AbstractNetworkMessenger::stringMapToQVariantMap(const map<string, string>& inMap, QVariantMap *pOutMap)
 {
     if(! pOutMap->empty())  { throw (string("non-empty QVariantMap passed in stringMapToQVariantMap")); }
@@ -109,12 +119,13 @@ void AbstractNetworkMessenger::destroyListContents(list< map<string, string> *> 
 }
 
 
-QVariantMap AbstractNetworkMessenger::packRequest(RequestType requestType, string objectType, const map<string, string>& objectMap)
+QVariantMap AbstractNetworkMessenger::packRequest(RequestType requestType, string tableName, string idKey, const map<string, string>& objectMap)
 {
     QVariantMap outMap;
 
     outMap[QString(REQUEST_TYPE_KEY)] = QVariant(QString::number(requestType) );
-    outMap[QString(REQUEST_OBJECT_TYPE_KEY)] = QVariant (QString::fromStdString(objectType) );
+    outMap[QString(REQUEST_TABLE_NAME_KEY)] = QVariant(QString::fromStdString(tableName) );
+    outMap[QString(REQUEST_ID_KEY_KEY)] = QVariant (QString::fromStdString(idKey) );
 
     QVariantMap variantObjectMap;
     stringMapToQVariantMap(objectMap, &variantObjectMap);
@@ -179,16 +190,29 @@ AbstractNetworkMessenger::RequestType AbstractNetworkMessenger::unpackRequestTyp
     }
 }
 
-string AbstractNetworkMessenger::unpackRequestObjectType(const QVariantMap& requestMap)
+string AbstractNetworkMessenger::unpackRequestTableName(const QVariantMap& requestMap)
 {
-    QString messageKey(REQUEST_OBJECT_TYPE_KEY);
+    QString messageKey(REQUEST_TABLE_NAME_KEY);
     if(requestMap.contains(messageKey))
     {
         return requestMap[messageKey].toString().toStdString();
     }
     else
     {
-        throw(string("request is missing ")+= string(REQUEST_OBJECT_TYPE_KEY)+= string(" field"));
+        throw(string("request is missing ")+= string(REQUEST_TABLE_NAME_KEY)+= string(" field"));
+    }
+}
+
+string AbstractNetworkMessenger::unpackRequestIdKey(const QVariantMap& requestMap)
+{
+    QString messageKey(REQUEST_ID_KEY_KEY);
+    if(requestMap.contains(messageKey))
+    {
+        return requestMap[messageKey].toString().toStdString();
+    }
+    else
+    {
+        throw(string("request is missing ")+= string(REQUEST_ID_KEY_KEY)+= string(" field"));
     }
 }
 
@@ -261,5 +285,18 @@ string AbstractNetworkMessenger::unpackErrorReplyContents(const QVariantMap& rep
     else
     {
         throw(string("server reply is missing ")+= string(REPLY_ERROR_MESSAGE_KEY)+= string(" field"));
+    }
+}
+
+QHostAddress AbstractNetworkMessenger::makeAndCheckQHostAddress(QString IPStr)
+{
+    QHostAddress IPAddr(IPStr);
+    if(!IPAddr.isNull())
+    {
+        return IPAddr;
+    }
+    else
+    {
+        throw(string("invalid IP address given"));
     }
 }

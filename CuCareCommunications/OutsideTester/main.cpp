@@ -44,7 +44,7 @@ void testCereal()
     objMap[string("key3")] = string("value3");
 
     //newMap = AbstractNetworkMessenger::qStringMapToStringMap(AbstractNetworkMessenger::stringMapToQStringMap(origMap));
-    QVariantMap reqQMap = AbstractNetworkMessenger::packRequest(AbstractNetworkMessenger::CREATE, "Patient", objMap);
+    QVariantMap reqQMap = AbstractNetworkMessenger::packRequest(AbstractNetworkMessenger::CREATE, "A Table", "Patient", objMap);
     qDebug() << reqQMap << endl << endl << endl;
 
 
@@ -60,7 +60,7 @@ void testCereal()
 
     qDebug() << outQMap << endl;
     //qDebug() << (int) AbstractNetworkMessenger::unpackRequestType(outQMap) << endl;
-    //qDebug() << QString::fromStdString(AbstractNetworkMessenger::unpackRequestObjectType(outQMap)) << endl;
+    //qDebug() << QString::fromStdString(AbstractNetworkMessenger::unpackRequestIdKey(outQMap)) << endl;
     //qDebug() << AbstractNetworkMessenger::stringMapToQVariantMap(AbstractNetworkMessenger::unpackRequestObjectMap(outQMap)) << endl;
 
     cout << "finished" << endl;
@@ -79,8 +79,6 @@ void testSandbox(string *aStr)
 
 int main(int argc, char* argv[])
 {
-
-
     if(argc > 1)
     {
         string input = string(argv[1]);
