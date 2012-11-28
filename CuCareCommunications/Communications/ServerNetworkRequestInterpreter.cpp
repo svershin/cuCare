@@ -47,6 +47,7 @@ QVariantMap ServerNetworkRequestInterpreter::interpretAndHandleRequest(QVariantM
             if(ServerController::getInstance()->pull(objectType, &objectMap, &outMap, &errorString))
             {
                 returnMap = packPullReply(outMap);
+                AbstractNetworkMessenger::destroyListContents(outMap);
             }
             else
             {

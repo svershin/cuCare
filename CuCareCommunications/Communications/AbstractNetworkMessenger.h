@@ -48,9 +48,6 @@ public:
     static void unpackPullReplyContents(const QVariantMap& replyMap, list< map<string, string>* > *pOutList);
     static string unpackErrorReplyContents(const QVariantMap& replyMap);
 
-
-//private:
-
     static void stringMapToQVariantMap(const map<string, string>& inMap, QVariantMap *pOutMap);
     static QVariantMap stringMapToQVariantMap(const map<string, string>& inMap);
 
@@ -62,6 +59,8 @@ public:
 
     static void qVariantListToMapList(const QVariantList& inList, list< map<string, string>* >* pOutList);
     static list< map<string, string> *> qVariantListToMapList(const QVariantList& inList);
+
+    static void destroyListContents(list< map<string, string> *> offList);
 
 };
 

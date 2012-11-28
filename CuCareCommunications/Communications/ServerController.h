@@ -6,6 +6,10 @@
 #include <string>
 #include "ServerController.h"
 #include "AuditTimer.h"
+#include "../OutsideTester/Repository.h" //TODO:THIS IS A STUB
+#include "../OutsideTester/Repository.cpp" //TODO:THIS IS A STUB
+#include "../OutsideTester/StorageObject.h" //TODO:THIS IS A STUB
+#include "../OutsideTester/StorageObject.cpp" //TODO:THIS IS A STUB
 
 using namespace std;
 
@@ -38,7 +42,7 @@ private:
     static ServerController *instance;
 
     AuditTimer ticker;
-    //Repository repository;
+    Repository repository;
 };
 
 #endif // SERVERCONTROLLER_H

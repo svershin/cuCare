@@ -95,6 +95,20 @@ list< map<string, string> *> AbstractNetworkMessenger::qVariantListToMapList(con
 }
 
 
+
+void AbstractNetworkMessenger::destroyListContents(list< map<string, string> *> offList)
+{
+    list< map<string, string> *>::const_iterator it = offList.begin();
+    while(it != offList.end())
+    {
+        delete (*it);
+        it++;
+    }
+
+    return;
+}
+
+
 QVariantMap AbstractNetworkMessenger::packRequest(RequestType requestType, string objectType, const map<string, string>& objectMap)
 {
     QVariantMap outMap;

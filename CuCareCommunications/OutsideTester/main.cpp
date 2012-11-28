@@ -7,6 +7,10 @@
 #include "../qjson/src/serializer.h"
 #include "../qjson/src/parser.h"
 #include <QTime>
+//#include "CommsTesting.h"
+//#include "Repository.h"
+
+int testNumber = 0;
 
 using namespace std;
 
@@ -63,12 +67,14 @@ int testCereal()
 }
 
 
-void testSandbox()
+
+void testSandbox(string *aStr)
 {
     //QTime tim = QTime::fromString("9:45:00", "h:mm:ss");
-    qDebug() << QHostAddress("nonsense").isNull();
-
+    delete aStr;
 }
+
+
 
 int main(int argc, char* argv[])
 {
@@ -93,7 +99,9 @@ int main(int argc, char* argv[])
         }
         else if(input == "sand")
         {
-            testSandbox();
+            string *str = new string("hey");
+            testSandbox(str);
+
         }
         else
         {

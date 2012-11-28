@@ -80,8 +80,27 @@ ServerController *ServerController::getInstance()
 //
 bool ServerController::create(string objectType, map<string, string> *pObjectMap, int *pOutID, string *pErrorString)
 {
-    (*pOutID) = 9000;
-    return true;
+    try
+    {
+        if(repository.create(StorageObject(string("I don't know what this is"), string("stuff"), *pObjectMap), *pOutID))
+        {
+            return true;
+        }
+        else
+        {
+            throw(string("unkown error saving to storage"));
+        }
+    }
+    catch(string errStr)
+    {
+        *pErrorString = errStr;
+        return false;
+    }
+    catch(...)
+    {
+        *pErrorString = "an unkown error occurred";
+        return false;
+    }
 }
 
 
@@ -97,7 +116,27 @@ bool ServerController::create(string objectType, map<string, string> *pObjectMap
 //
 bool ServerController::push(string objectType, map<string, string> *pObjectMap, string *pErrorString)
 {
-    return true;
+    try
+    {
+        if(repository.push(StorageObject(string("I don't know what this is"), string("stuff"), *pObjectMap)))
+        {
+            return true;
+        }
+        else
+        {
+            throw(string("unkown error saving to storage"));
+        }
+    }
+    catch(string errStr)
+    {
+        *pErrorString = errStr;
+        return false;
+    }
+    catch(...)
+    {
+        *pErrorString = "an unkown error occurred";
+        return false;
+    }
 }
 
 
@@ -115,10 +154,42 @@ bool ServerController::push(string objectType, map<string, string> *pObjectMap, 
 //
 bool ServerController::pull(string objectType, map<string, string> *pObjectMap, list< map<string, string> *> *pObjectList, string *pErrorString)
 {
-    map<string, string> *newMap = new map<string, string>();
-    (*newMap)[string("first one key")] = string("first one value");
-    (*newMap)[string("second one key")] = string("second one value");
-    pObjectList->push_back(newMap);
+    list<StorageObject> *pStorageObjectList = NULL;// confirm that Repository will be newing this stuff
+
+
+    try
+    {
+        if(repository.pull(StorageObject(string("I don't know what this is"), string("stuff"), *pObjectMap), pStorageObjectList))
+        {
+            if(pObjectList == NULL) {throw(string("null list pointer returned on server"));}
+            list<StorageObject>::iterator it = pStorageObjectList->begin();
+            while(it != pStorageObjectList->end())
+            {
+                map<string, string> *tempPObjectMap = new map<string, string>();
+                *tempPObjectMap = it->getValues();
+                pObjectList->push_back(tempPObjectMap);
+                it++;
+            }
+
+            delete pStorageObjectList;
+            return true;
+        }
+        else
+        {
+            delete pStorageObjectList;
+            throw(string("unkown error saving to storage"));
+        }
+    }
+    catch(string errStr)
+    {
+        *pErrorString = errStr;
+        return false;
+    }
+    catch(...)
+    {
+        *pErrorString = "an unkown error occurred";
+        return false;
+    }
     return true;
 }
 
@@ -132,7 +203,7 @@ bool ServerController::pull(string objectType, map<string, string> *pObjectMap, 
 //
 void ServerController::runAudit()
 {
-    //repository
+    repository.runAudit(1, 1, 1);
 }
 
 
