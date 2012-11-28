@@ -7,8 +7,9 @@
 #include "../qjson/src/serializer.h"
 #include "../qjson/src/parser.h"
 #include <QTime>
-//#include "CommsTesting.h"
-//#include "Repository.h"
+#include "Repository.h"
+#include "StorageObject.h"
+#include "CommsTests.h"
 
 int testNumber = 0;
 
@@ -34,7 +35,7 @@ void runServerSocket(int argc, char* argv[])
     return;
 }
 
-int testCereal()
+void testCereal()
 {
     cout << "Testing Cerealization..." << endl;
     map<string, string> objMap, outMap;
@@ -102,6 +103,12 @@ int main(int argc, char* argv[])
             string *str = new string("hey");
             testSandbox(str);
 
+        }
+        else if(input == "simpleTests")
+        {
+            CommsTests testing;
+
+            testing.testServerSide();
         }
         else
         {

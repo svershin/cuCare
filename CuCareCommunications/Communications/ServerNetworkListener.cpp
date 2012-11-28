@@ -25,11 +25,13 @@ bool ServerNetworkListener::startListening(quint16 port)
             close();
             return false;
         }
+    return true;
 }
 
 bool ServerNetworkListener::stopListening()
 {
     close();
+    return true;
 }
 
 void ServerNetworkListener::handleIncomingConnection()

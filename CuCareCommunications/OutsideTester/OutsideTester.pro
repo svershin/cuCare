@@ -16,9 +16,7 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp \
-    CommsTesting.cpp \
-    Repository.cpp \
-    StorageObject.cpp
+    CommsTests.cpp
 
 unix:!macx:!symbian: LIBS += -L$$PWD/../Communications/ -lCommunications
 
@@ -36,6 +34,12 @@ INCLUDEPATH += $$PWD/../qjson/build
 DEPENDPATH += $$PWD/../qjson/build
 
 HEADERS += \
-    CommsTesting.h \
-    Repository.h \
-    StorageObject.h
+    CommsTests.h
+
+
+unix:!macx:!symbian: LIBS += -L$$PWD/../TestStubLibrary/ -lTestStubLibrary
+
+INCLUDEPATH += $$PWD/../TestStubLibrary
+DEPENDPATH += $$PWD/../TestStubLibrary
+
+unix:!macx:!symbian: PRE_TARGETDEPS += $$PWD/../TestStubLibrary/libTestStubLibrary.a

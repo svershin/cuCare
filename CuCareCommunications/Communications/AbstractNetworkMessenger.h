@@ -20,7 +20,10 @@ class AbstractNetworkMessenger
 public:
     virtual ~AbstractNetworkMessenger() = 0;
 
+#ifndef QT_DEBUG
 //protected:
+#endif //QT_DEBUG
+
     enum RequestType {CREATE,   //0
                       PUSH,     //1
                       PULL      //2

@@ -1,6 +1,7 @@
 #ifndef STORAGEOBJECT_H
 #define STORAGEOBJECT_H
 
+#include <QtCore>
 #include <string>
 #include <map>
 #include <list>

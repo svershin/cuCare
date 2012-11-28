@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += network xml
+QT       += network
 
 QT       -= gui
 
@@ -54,3 +54,12 @@ INCLUDEPATH += $$PWD/
 DEPENDPATH += $$PWD/
 
 unix:!macx:!symbian: PRE_TARGETDEPS += $$PWD/libCommunications.a
+
+
+
+unix:!macx:!symbian: LIBS += -L$$PWD/../TestStubLibrary/ -lTestStubLibrary
+
+INCLUDEPATH += $$PWD/../TestStubLibrary
+DEPENDPATH += $$PWD/../TestStubLibrary
+
+unix:!macx:!symbian: PRE_TARGETDEPS += $$PWD/../TestStubLibrary/libTestStubLibrary.a

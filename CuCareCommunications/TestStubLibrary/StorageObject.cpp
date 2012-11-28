@@ -6,8 +6,7 @@ StorageObject::StorageObject(string tableParam, string idNameParam, map<string, 
     : table (tableParam),
       idName (idNameParam),
       values (valueParam)
-{
-}
+{}
 
 string StorageObject::getTable() { return table; }
 

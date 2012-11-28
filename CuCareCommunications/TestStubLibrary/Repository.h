@@ -1,6 +1,7 @@
 #ifndef REPOSITORY_H
 #define REPOSITORY_H
 
+#include <QtCore>
 #include "StorageObject.h"
 
 /*

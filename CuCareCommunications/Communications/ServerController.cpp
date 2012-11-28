@@ -82,7 +82,7 @@ bool ServerController::create(string objectType, map<string, string> *pObjectMap
 {
     try
     {
-        if(repository.create(StorageObject(string("I don't know what this is"), string("stuff"), *pObjectMap), *pOutID))
+        if(repository.create(StorageObject(string("I don't know what this is"), objectType, *pObjectMap), *pOutID))
         {
             return true;
         }
@@ -118,7 +118,7 @@ bool ServerController::push(string objectType, map<string, string> *pObjectMap, 
 {
     try
     {
-        if(repository.push(StorageObject(string("I don't know what this is"), string("stuff"), *pObjectMap)))
+        if(repository.push(StorageObject(string("I don't know what this is"), objectType, *pObjectMap)))
         {
             return true;
         }
@@ -159,7 +159,7 @@ bool ServerController::pull(string objectType, map<string, string> *pObjectMap, 
 
     try
     {
-        if(repository.pull(StorageObject(string("I don't know what this is"), string("stuff"), *pObjectMap), pStorageObjectList))
+        if(repository.pull(StorageObject(string("I don't know what this is"), objectType, *pObjectMap), pStorageObjectList))
         {
             if(pObjectList == NULL) {throw(string("null list pointer returned on server"));}
             list<StorageObject>::iterator it = pStorageObjectList->begin();
@@ -203,7 +203,12 @@ bool ServerController::pull(string objectType, map<string, string> *pObjectMap, 
 //
 void ServerController::runAudit()
 {
-    repository.runAudit(1, 1, 1);
+
+    if(! repository.runAudit(1, 1, 1))
+    {
+        cout << "audit process failure" << endl;
+    }
+
 }
 
 

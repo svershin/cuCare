@@ -6,10 +6,8 @@
 #include <string>
 #include "ServerController.h"
 #include "AuditTimer.h"
-#include "../OutsideTester/Repository.h" //TODO:THIS IS A STUB
-#include "../OutsideTester/Repository.cpp" //TODO:THIS IS A STUB
-#include "../OutsideTester/StorageObject.h" //TODO:THIS IS A STUB
-#include "../OutsideTester/StorageObject.cpp" //TODO:THIS IS A STUB
+#include "../TestStubLibrary/Repository.h" //TODO:THIS IS A STUB
+#include "../TestStubLibrary/StorageObject.h" //TODO:THIS IS A STUB
 
 using namespace std;
 
