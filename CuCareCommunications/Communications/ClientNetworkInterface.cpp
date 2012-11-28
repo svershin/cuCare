@@ -1,15 +1,14 @@
 #include "ClientNetworkInterface.h"
 
 ClientNetworkInterface::ClientNetworkInterface(string serverIPParam, quint16 serverPortParam)
-{
-    serverIP = QHostAddress(QString::fromStdString(serverIPParam));
-    serverPort = serverPortParam;
-}
+    :
+      serverIP(makeAndCheckQHostAddress(QString::fromStdString(serverIPParam))),
+      serverPort(serverPortParam)
+{}
 
 bool ClientNetworkInterface::create(string objectType, map<string, string> *pObjectMap, int *pOutID, string *pErrorString)
 {
     QVariantMap requestMessage, replyMessage;
-    int outID;
 
     try
     {
@@ -92,5 +91,19 @@ bool ClientNetworkInterface::pull(string objectType, map<string, string> *pObjec
     {
         *pErrorString = errStr;
         return false;
+    }
+}
+
+
+QHostAddress ClientNetworkInterface::makeAndCheckQHostAddress(QString IPStr)
+{
+    QHostAddress IPAddr(IPStr);
+    if(!IPAddr.isNull())
+    {
+        return IPAddr;
+    }
+    else
+    {
+        throw(string("invalid IP address given"));
     }
 }

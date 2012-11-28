@@ -15,7 +15,8 @@ CONFIG   -= app_bundle
 TEMPLATE = app
 
 
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    CommsTesting.cpp
 
 unix:!macx:!symbian: LIBS += -L$$PWD/../Communications/ -lCommunications
 
@@ -31,3 +32,6 @@ unix:!macx:!symbian: LIBS += -L$$PWD/../qjson/build/lib/ -lqjson
 
 INCLUDEPATH += $$PWD/../qjson/build
 DEPENDPATH += $$PWD/../qjson/build
+
+HEADERS += \
+    CommsTesting.h

@@ -7,6 +7,7 @@ class ServerNetworkInterface
 {
 public:
     ServerNetworkInterface(quint16 port);
+    ~ServerNetworkInterface();
 
 private:
     ServerNetworkListener *listener;

@@ -3,6 +3,7 @@
 
 #include <QtCore>
 #include "ServerController.h"
+#include "AbstractNetworkMessenger.h"
 
 class ServerNetworkRequestInterpreter : public AbstractNetworkMessenger
 {
@@ -11,7 +12,7 @@ public:
 
     static QVariantMap interpretAndHandleRequest(QVariantMap);
 
-    static QVariantMap giveErrorReply(const QString& errorString);
+    static QVariantMap giveErrorReply(const string& errorString);
 };
 
 #endif // SERVERNETWORKREQUESTINTERPRETER_H

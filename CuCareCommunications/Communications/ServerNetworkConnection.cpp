@@ -1,12 +1,12 @@
 #include "ServerNetworkConnection.h"
 
-ServerNetworkConnection::ServerNetworkConnection(QTcpSocket connectedSocketParam)
+ServerNetworkConnection::ServerNetworkConnection(QTcpSocket *connectedSocketParam)
 {
     connectedSocket = connectedSocketParam;
 }
 
 
-~ServerNetworkConnection()
+ServerNetworkConnection::~ServerNetworkConnection()
 {
     delete connectedSocket;
 }
@@ -33,5 +33,5 @@ void ServerNetworkConnection::handleRequest()
         connectedSocket->write(ServerNetworkTranslator::giveErrorReply(string("unknown server error")));
     }
 
-    tempSock->waitForDisconnected();
+    connectedSocket->waitForDisconnected();
 }

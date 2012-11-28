@@ -20,6 +20,8 @@ public:
 private:
     QHostAddress serverIP;
     quint16 serverPort;
+
+    static QHostAddress makeAndCheckQHostAddress(QString IPStr); //wrapper for making a QHostAddress (will throw an exception if it's not properly made)
 };
 
 #endif // CLIENTNETWORKINTERFACE_H

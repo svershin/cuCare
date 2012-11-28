@@ -1,5 +1,7 @@
 #include "AbstractNetworkTranslator.h"
 
+AbstractNetworkTranslator::~AbstractNetworkTranslator() {}
+
 QByteArray AbstractNetworkTranslator::serializeMessage(const QVariantMap& inMessage)
 {
     QJson::Serializer cerealizer;

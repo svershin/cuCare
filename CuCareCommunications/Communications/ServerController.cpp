@@ -4,16 +4,55 @@
 
 using namespace std;
 
-ServerController::ServerController()//Repository repoParam
-{
 
-}
-
+/*
+  DESTRUCTOR
+  */
+//
 ServerController::~ServerController()
 {
     haveInstance = false;
 }
 
+
+
+/*
+  MAKE INSTANCE
+  Purpose:
+    Instantiates the Singleton ServerController object.
+
+  Return value:
+    If creation was successful, true is returned. If an instance of ServerController already existed, false is returned.
+
+  IMPORTANT NOTE:
+    timeString must be of format "h:mm:ss", and use 24-hour time. Example: use strings like "9:45:45" or "23:34:56".
+    If in invalid timeString is encountered, a string exception will be thrown.
+    */
+//
+bool ServerController::makeInstance(const string& timeString)
+{
+    if(haveInstance)
+    {
+        return false;
+    }
+    else
+    {
+        instance = new ServerController(timeString);
+        haveInstance = true;
+        return true;
+    }
+}
+
+
+
+/*
+  GET INSTANCE
+    Purpose:
+        Accesses the static instance of ServerController
+    Return value:
+        Pointer to the static instance of ServerController
+    */
+//
 ServerController *ServerController::getInstance()
 {
     if(haveInstance)
@@ -22,28 +61,95 @@ ServerController *ServerController::getInstance()
     }
     else
     {
-        instance = new ServerController();
-        haveInstance = true;
-        return instance;
+        throw(string("ServerController has not been instantiated"));
     }
 }
 
+
+
+/*
+  CREATE
+    Purpose:
+        Create a new object in the database
+    Return value:
+        bool indicating whether or not the creation was successful
+    Output parameters:
+        pOutID will hold the ID of the newly created object
+        pErrorString will hold an error message in the event of an unsuccessful create
+    */
+//
 bool ServerController::create(string objectType, map<string, string> *pObjectMap, int *pOutID, string *pErrorString)
 {
     (*pOutID) = 9000;
     return true;
 }
 
+
+/*
+  PUSH
+    Purpose:
+        Push changes to an object to the database
+    Return value:
+        bool indicating whether or not the push was successful
+    Output parameters:
+        pErrorString will hold an error message in the event of an unsuccessful push
+    */
+//
 bool ServerController::push(string objectType, map<string, string> *pObjectMap, string *pErrorString)
 {
     return true;
 }
 
+
+
+/*
+  PULL
+    Purpose:
+        Pull data about objects from the database
+    Return value:
+        bool indicating whether or not the pull was successful
+    Output parameters:
+        pObjectList is a pointer to a list of map pointers. The maps are newed' inside this function. pObjectList is not.
+        pErrorString will hold an error message in the event of an unsuccessful pull
+    */
+//
 bool ServerController::pull(string objectType, map<string, string> *pObjectMap, list< map<string, string> *> *pObjectList, string *pErrorString)
 {
     map<string, string> *newMap = new map<string, string>();
-    newMap[string("first one key")] = string("first one value");
-    newMap[string("second one key")] = string("second one value");
+    (*newMap)[string("first one key")] = string("first one value");
+    (*newMap)[string("second one key")] = string("second one value");
     pObjectList->push_back(newMap);
     return true;
 }
+
+
+
+/*
+  RUN AUDIT
+    Purpose:
+        Run the server's daily audit process - update overdue follow-ups in the database
+    */
+//
+void ServerController::runAudit()
+{
+    //repository
+}
+
+
+/*
+  CONSTRUCTOR
+    */
+//
+ServerController::ServerController(string timeOfDay)
+    :
+      ticker (AuditTimer(timeOfDay, this)),
+      repository(Repository())
+{}
+
+
+/*
+    Initialization of the static data members that deal with the Singleton nature of ServerController
+    */
+bool ServerController::haveInstance = false;
+
+ServerController *ServerController::instance = NULL;

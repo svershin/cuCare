@@ -5,6 +5,8 @@
 #include <QtNetwork>
 #include "AbstractNetworkTranslator.h"
 
+using namespace std;
+
 class ServerNetworkTranslator : public AbstractNetworkTranslator
 {
 

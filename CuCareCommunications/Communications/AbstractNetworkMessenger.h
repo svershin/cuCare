@@ -18,9 +18,7 @@ using namespace std;
 class AbstractNetworkMessenger
 {
 public:
-
     virtual ~AbstractNetworkMessenger() = 0;
-
 
 //protected:
     enum RequestType {CREATE,   //0
@@ -36,7 +34,7 @@ public:
 
     static QVariantMap packCreateReply(const int& id);
     static QVariantMap packPushReply();
-    static QVariantMap packPullReply(const list< map<string, string > >& pInList);
+    static QVariantMap packPullReply(const list< map<string, string > *>& pInList);
     static QVariantMap packErrorReply(const string& errorString);
 
     //Functions to unpack pieces of a request
@@ -56,11 +54,11 @@ public:
     static void stringMapToQVariantMap(const map<string, string>& inMap, QVariantMap *pOutMap);
     static QVariantMap stringMapToQVariantMap(const map<string, string>& inMap);
 
-    static void qVariantMapToStringMap(const QVariantMap& inMap, map<string, string>* pOutMap);
+    static void qVariantMapToStringMap(const QVariantMap& inMap, map<string, string> *pOutMap);
     static map<string, string> qVariantMapToStringMap(const QVariantMap& inMap);
 
-    static void mapListToQVariantList(const list< map<string, string> >& inList, QVariantList *pOutList);
-    static QVariantList mapListToQVariantList(const list< map<string, string> >& inList);
+    static void mapListToQVariantList(const list< map<string, string> *>& inList, QVariantList *pOutList);
+    static QVariantList mapListToQVariantList(const list< map<string, string> *>& inList);
 
     static void qVariantListToMapList(const QVariantList& inList, list< map<string, string>* >* pOutList);
     static list< map<string, string> *> qVariantListToMapList(const QVariantList& inList);

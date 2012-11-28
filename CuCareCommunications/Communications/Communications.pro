@@ -23,7 +23,9 @@ SOURCES += \
     ServerNetworkConnection.cpp \
     ClientNetworkTranslator.cpp \
     ServerNetworkTranslator.cpp \
-    ServerController.cpp
+    ServerController.cpp \
+    AuditTimer.cpp \
+    Repository.cpp
 
 HEADERS += \
     ClientNetworkInterface.h \
@@ -36,7 +38,9 @@ HEADERS += \
     ServerNetworkConnection.h \
     ClientNetworkTranslator.h \
     ServerNetworkTranslator.h \
-    ServerController.h
+    ServerController.h \
+    AuditTimer.h \
+    Repository.h
 unix:!symbian {
     maemo5 {
         target.path = /opt/usr/lib

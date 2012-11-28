@@ -7,7 +7,7 @@
 class ServerNetworkConnection
 {
 public:
-    ServerNetworkConnection();
+    ServerNetworkConnection(QTcpSocket *connectedSocketParam);
     ~ServerNetworkConnection();
 
     void handleRequest();

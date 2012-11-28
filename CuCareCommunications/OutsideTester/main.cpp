@@ -6,6 +6,7 @@
 #include "AbstractNetworkMessenger.h"
 #include "../qjson/src/serializer.h"
 #include "../qjson/src/parser.h"
+#include <QTime>
 
 using namespace std;
 
@@ -20,12 +21,13 @@ bool testClientSocket(quint16 port)
     return 1;
 }
 
-int runServerSocket(int argc, char* argv[])
+void runServerSocket(int argc, char* argv[])
 {
     cout << "Testing Server..." << endl;
     ServerNetworkListener *serv = new ServerNetworkListener();
     serv->startListening((quint16)60004);
 
+    return;
 }
 
 int testCereal()
@@ -61,9 +63,11 @@ int testCereal()
 }
 
 
-void testSandbox(string *pstr)
+void testSandbox()
 {
-    *pstr = string("bigcow");
+    //QTime tim = QTime::fromString("9:45:00", "h:mm:ss");
+    qDebug() << QHostAddress("nonsense").isNull();
+
 }
 
 int main(int argc, char* argv[])
@@ -89,9 +93,7 @@ int main(int argc, char* argv[])
         }
         else if(input == "sand")
         {
-            string* pstr = new string("hey");
-            testSandbox(pstr);
-            cout << *pstr << endl;
+            testSandbox();
         }
         else
         {

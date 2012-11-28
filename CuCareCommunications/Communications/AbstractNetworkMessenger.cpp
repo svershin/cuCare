@@ -2,6 +2,8 @@
 
 using namespace std;
 
+AbstractNetworkMessenger::~AbstractNetworkMessenger(){}
+
 void AbstractNetworkMessenger::stringMapToQVariantMap(const map<string, string>& inMap, QVariantMap *pOutMap)
 {
     if(! pOutMap->empty())  { throw (string("non-empty QVariantMap passed in stringMapToQVariantMap")); }
@@ -18,13 +20,13 @@ void AbstractNetworkMessenger::stringMapToQVariantMap(const map<string, string>&
 
 QVariantMap AbstractNetworkMessenger::stringMapToQVariantMap(const map<string, string> &inMap)
 {
-    QVariantMap outMap();
+    QVariantMap outMap;
     stringMapToQVariantMap(inMap, &outMap);
     return outMap;
 }
 
 
-void AbstractNetworkMessenger::qVariantMapToStringMap(const QVariantMap& inMap, map<string, string>* pOutMap)
+void AbstractNetworkMessenger::qVariantMapToStringMap(const QVariantMap& inMap, map<string, string> *pOutMap)
 {
     if(! pOutMap->empty())  { throw (string("non-empty map passed in qVariantMapToStringMap")); }
 
@@ -37,9 +39,9 @@ void AbstractNetworkMessenger::qVariantMapToStringMap(const QVariantMap& inMap, 
     return;
 }
 
-map<string, string> AbstractNetworkMessenger::qVariantMapToStringMap(const map<string, string> &inMap)
+map<string, string> AbstractNetworkMessenger::qVariantMapToStringMap(const QVariantMap &inMap)
 {
-    map<string, string> outMap();
+    map<string, string> outMap;
     qVariantMapToStringMap(inMap, &outMap);
     return outMap;
 }
@@ -49,7 +51,7 @@ void AbstractNetworkMessenger::mapListToQVariantList(const list< map<string, str
 {
     if(! pOutList->empty())  { throw (string("non-empty list passed in mapListToQVariantList")); }
 
-    list< map<string, string> >::const_iterator it = inList.begin();
+    list< map<string, string> *>::const_iterator it = inList.begin();
     while(it != inList.end())
     {
         QVariantMap tempMap;
@@ -61,11 +63,11 @@ void AbstractNetworkMessenger::mapListToQVariantList(const list< map<string, str
     return;
 }
 
-QVariantList AbstractNetworkMessenger::qVariantListToMapList(const list< map<string, string> *>& inList)
+QVariantList AbstractNetworkMessenger::mapListToQVariantList(const list< map<string, string> *>& inList)
 {
     QVariantList outList;
-    qVariantListToMapList(inList, outList);
-    return;
+    mapListToQVariantList(inList, &outList);
+    return outList;
 }
 
 
@@ -85,20 +87,13 @@ void AbstractNetworkMessenger::qVariantListToMapList(const QVariantList& inList,
     return;
 }
 
-list< map<string, string> *> AbstractNetworkMessenger::qVariantListToMapList(const QVariantList inList)
+list< map<string, string> *> AbstractNetworkMessenger::qVariantListToMapList(const QVariantList& inList)
 {
     list< map<string, string> *> outList;
-    qVariantListToMapList(inList, outList);
-    return;
+    qVariantListToMapList(inList, &outList);
+    return outList;
 }
 
-
-list< map<string, string> *> AbstractNetworkMessenger::mapListToQVariantList(const list< map<string, string> >& inList)
-{
-    list< map<string, string> *> outList;
-    mapListToQVariantList(inList, outList);
-    return;
-}
 
 QVariantMap AbstractNetworkMessenger::packRequest(RequestType requestType, string objectType, const map<string, string>& objectMap)
 {
