@@ -84,8 +84,9 @@ public:
 		int getYear();
 		void setYear(const int value);
 
+    static const string TABLE_NAME;
+
 private:
-	static const string TABLE_NAME;
 	int userId;
 	string username;
 	string firstName;

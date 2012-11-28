@@ -72,8 +72,8 @@ public:
 	vector<int>* getFollowupIds();
 	void addFollowupId(const int value);
 
+    static const string TABLE_NAME;
 private:
-	static const string TABLE_NAME;
 	int consultId;
 	string reason;
 	string diagnosis;

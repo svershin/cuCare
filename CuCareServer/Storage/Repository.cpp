@@ -8,8 +8,7 @@ Repository::Repository()
 {
     db = new Sqlite3Database();
 
-    if(!rModel.dbexists(db))
-            firstTimeRun = true;
+    bool firstTimeRun = !rModel.dbexists(db);
 
     int timeout = 0;
     bool success = false;
@@ -55,22 +54,13 @@ bool Repository::pull(StorageObject sObj, list<StorageObject> *&pResults)
     if(!selectStatement(sObj, queryResult))
         return false;
     pResults = new list<StorageObject>();
-    //instantiate(queryResult, pResults, sObj.getTable());
+    instantiate(queryResult, pResults, sObj);
     return true;
 }
 
 bool Repository::runAudit(int day, int month, int year)
-{//    string table = Followup::TABLE_NAME;
-    //    stringstream statement;
-    //    statement << "UPDATE " << table << " SET status = '" << Followup::FSTAT_OVERDUE
-    //              << "' WHERE ('" << today.getYear() << "' > dueyear OR ('" << today.getYear()
-    //              << "' = dueyear AND '" << today.getMonth() << "' > duemonth) OR ('" << today.getYear()
-    //              << "' = dueyear AND '" << today.getMonth() << "' = duemonth AND '" << today.getDay()
-    //              << "' > dueday)) AND status = '" << Followup::FSTAT_PENDING << "';";
-    //TODO: Break this out into another object, so that repo doesn't depend on the model at all.
-
-//    return db->command(statement.str());
-    return false;
+{
+    return db->command(rModel.getAuditCommand(day, month, year));
 }
 
 bool Repository::insertStatement(StorageObject sObj)
@@ -145,19 +135,23 @@ bool Repository::selectStatement(StorageObject sObj, QueryResult *&results)
     return db->query(query, results);
 }
 
-bool Repository::instantiate(QueryResult *pResults, list<StorageObject> *pObjects, StorageObject pullObject)
+void Repository::instantiate(QueryResult *pResults, list<StorageObject> *pObjects, StorageObject pullObject)
 {
     if(!(pResults->numRows() > 0))
         return;
     map<string, string> values;
     do
     {
-        for(int i = 0; i < pResults->rowSize(); i++)
-            values[pResults->getColName(i)] = pResults[i];
+        for(unsigned int i = 0; i < pResults->rowSize(); i++)
+        {
+            string name = pResults->getColName(i);
+            string value = (*pResults)[i];
+            values[name] = value;
+        }
         StorageObject newObject(pullObject.getTable(), pullObject.getIdName(), values);
         pObjects->push_back(newObject);
     }
-    while(pQueryResult->nextRow());
+    while(pResults->nextRow());
 }
 
 

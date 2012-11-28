@@ -31,7 +31,7 @@ private:
     bool updateStatement(StorageObject sObj);
     bool selectStatement(StorageObject sObj, QueryResult *&results);
 
-    void instantiate(QueryResult *results, list<StorageObject> *pObjects);
+    void instantiate(QueryResult *results, list<StorageObject> *pObjects, StorageObject pullObject);
 };
 
 #endif // REPOSITORY_H
