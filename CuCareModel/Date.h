@@ -14,9 +14,11 @@ class Date
 public:
 
     // Constructor
-    Date (int DayParam,
-          int MonthParam,
-          int YearParam);
+    Date ();
+
+    Date(int DayParam,
+         int MonthParam,
+         int YearParam);
 
     // Destructor
     ~Date();

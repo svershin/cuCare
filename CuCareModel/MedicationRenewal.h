@@ -1,9 +1,8 @@
 // COMP 3004 FALL 2012
-// Assignment 2: cuCare Prototype
+// Assignment 4: cuCare Prototype #2
 // Team: The Four Puppeteers
-// Contributing Editors: Sergey Vershinin
 //
-// MedicationRenewal.h - Declaration of base class MedicationRenewal
+// MedicationRenewal.h - Declaration of class MedicationRenewal
 // Member functions are defined in MedicationRenewal.cpp
 
 #ifndef MEDICATIONRENEWAL_H
@@ -17,29 +16,22 @@ using namespace std;
 class MedicationRenewal:public Followup
 {
 public:
+	// Constructor
+	MedicationRenewal ();
 
-    // Constructor
-    MedicationRenewal (int idParam,
-                       FollowupStatus statusParam,
-                       Date dateDueParam,
-                       Date dateReceivedParam,
-                       Date dateCompletedParam,
-                       string medicationParam,
-                       bool deletedParam);
+	// Declaration of functions declared as virtual in ModelObject 
 
-    // Destructor
-    ~MedicationRenewal();
+	ObjectType getObjectType();
 
-    string getMedication();
-    void setMedication(const string value);
+	// Class attribute get() & set() methods
 
-    int getType();
+	string getMedication();
+	void setMedication(const string value);
 
-protected:
 private:
-    string medication;
+	string medication;
 };
 
-#endif
+#endif // MEDICATIONRENEWAL_H
 
 // EOF

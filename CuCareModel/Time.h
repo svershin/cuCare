@@ -14,8 +14,9 @@ class Time
 public:
 
     // Constructor
-    Time (int hourParam,
-          int minuteParam);
+    Time ();
+
+    Time(int hourParam, int minuteParam);
 
     // Destructor
     ~Time();

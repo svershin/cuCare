@@ -1,9 +1,8 @@
 // COMP 3004 FALL 2012
-// Assignment 2: cuCare Prototype
+// Assignment 4: cuCare Prototype #2
 // Team: The Four Puppeteers
-// Contributing Editors: Sergey Vershinin
 //
-// ResultantFollowup.h - Declaration of base class ResultantFollowup
+// ResultantFollowup.h - Declaration of class ResultantFollowup
 // Member functions are defined in ResultantFollowup.cpp
 
 #ifndef RESULTANTFOLLOWUP_H
@@ -14,33 +13,22 @@
 
 using namespace std;
 
-class ResultantFollowup:public Followup
+class ResultantFollowup : public Followup
 {
 public:
+	// Constructor
+	ResultantFollowup ();
 
-    // Constructor
-    ResultantFollowup (int idParam,
-                       FollowupStatus statusParam,
-                       Date dateDueParam,
-                       Date dateReceivedParam,
-                       Date dateCompletedParam,
-                       string resultsParam,
-                       bool deletedParam);
+	// Class attribute get() & set() methods
 
-    // Destructor
-    ~ResultantFollowup();
+	string getResults();
+	void setResults(const string value);
 
-    string getResults();
-    void setResults(const string value);
-
-    virtual int getType() = 0;
-
-protected:
 private:
-    string results;
+		string results;
 };
 
 
-#endif
+#endif // RESULTANTFOLLOWUP_H
 
 // EOF

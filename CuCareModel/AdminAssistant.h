@@ -1,7 +1,6 @@
 // COMP 3004 FALL 2012
-// Assignment 2: cuCare Prototype
+// Assignment 4: cuCare Prototype #2
 // Team: The Four Puppeteers
-// Contributing Editors: Sergey Vershinin
 //
 // AdminAssistant.h - Declaration of base class AdminAssistant
 // Member functions are defined in AdminAssistant.cpp
@@ -11,32 +10,14 @@
 
 #include "User.h"
 
-class AdminAssistant:public User
+class AdminAssistant : public User
 {
 public:
+	// Declaration of functions declared as virtual in ModelObject 
 
-    // Constructor
-    AdminAssistant (string usernameParam,
-                    string firstNameParam,
-                    string lastNameParam,
-                    Date dateOfBirthParam,
-                    ContactInfo contactParam,
-                    Address addressParam,
-                    bool deletedParam);
-
-    // Destructor
-    ~AdminAssistant();
-
-    int getType() { return 3; }
-
-    string getTableName();
-
-    static const string TABLE_NAME;
-protected:
-private:
+	ObjectType getObjectType();
 };
 
-
-#endif
+#endif // ADMINASSISTANT_H
 
 // EOF

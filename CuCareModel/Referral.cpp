@@ -1,42 +1,25 @@
 // COMP 3004 FALL 2012
-// Assignment 2: cuCare Prototype
+// Assignment 4: cuCare Prototype #2
 // Team: The Four Puppeteers
-// Contributing Editors: Sergey Vershinin
 //
-// Referral.h - Declaration of base class Referral
-// Member functions are defined in Referral.cpp
+// ReturnConsultation.cpp - Implementation of class ReturnConsultation
+// Function and attribute declarations are in ReturnConsultation.h
 
 #include "Referral.h"
+#include "StringProperty.h"
 
 // Constructor
-Referral::Referral
-(   int idParam,
-    FollowupStatus statusParam,
-    Date dateDueParam,
-    Date dateReceivedParam,
-    Date dateCompletedParam,
-    string resultsParam,
-    string specialistNameParam,
-    bool deletedParam)
-    : ResultantFollowup (idParam,
-                         statusParam,
-                         dateDueParam,
-                         dateReceivedParam,
-                         dateCompletedParam,
-                         resultsParam,
-                         deletedParam),
-      specialistName (specialistNameParam)
-{
+Referral::Referral(){
+    getProperties()->push_back(new StringProperty("specialistname", this, &ModelObject::getSpecialistName, &ModelObject::setSpecialistName));
 }
 
-// Destructor
-Referral::~Referral()
-{
-}
+// Definition of functions declared as virtual in ModelObject 
+
+ModelObject::ObjectType Referral::getObjectType() { return REFERRAL; }
+
+// Class attribute get() & set() methods
 
 string Referral::getSpecialistName() { return specialistName; }
 void Referral::setSpecialistName(const string value) { specialistName = value; }
-
-int Referral::getType() { return 3; }
 
 // EOF
