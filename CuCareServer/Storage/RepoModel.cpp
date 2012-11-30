@@ -67,6 +67,7 @@ string RepoModel::getConsultationTableCommand()
             }
         first = false;
     }
+    statement << ", " << OBJECT_TYPE_PROPERTY_NAME << " TEXT DEFAULT NULL";
     statement << ");";
     return statement.str();
     //statement << ", FOREIGN KEY (physicianid) REFERENCES" << User::TABLE_NAME << "(physicianid));";
@@ -106,6 +107,7 @@ string RepoModel::getFollowupTableCommand()
     }
     statement << ", nextconsultationid TEXT DEFAULT NULL"; //OH GOD WHY IS THIS SO UGLY
     statement << ", testtype TEXT DEFAULT NULL";
+    statement << ", " << OBJECT_TYPE_PROPERTY_NAME << " TEXT DEFAULT NULL";
     statement << ", medication TEXT DEFAULT NULL);";
     return statement.str();
     //statement << ", FOREIGN KEY (physicianid) REFERENCES" << User::TABLE_NAME << "(physicianid)"; Can't do this till we know what fields are ints and what fields are strings
@@ -143,6 +145,7 @@ string RepoModel::getPatientTableCommand()
             }
         first = false;
     }
+    statement << ", " << OBJECT_TYPE_PROPERTY_NAME << " TEXT DEFAULT NULL";
     statement << ");";
     return statement.str();
 }
@@ -179,6 +182,7 @@ string RepoModel::getUserTableCommand()
             }
         first = false;
     }
+    statement << ", " << OBJECT_TYPE_PROPERTY_NAME << " TEXT DEFAULT NULL";
     statement << ", UNIQUE (username));";
     return statement.str();
 }

@@ -1,6 +1,8 @@
 #include "Factory.h"
 #include "Warehouse.h"
 
+    //TODO: Interface with comms
+
 Factory::Factory()
     : warehouse (new Warehouse(this))
 {
@@ -18,6 +20,7 @@ void Factory::create(ModelObject *object)
     ObjectInterpreter::ObjectToProperties(object, &objectProps);
     string tableName = object->getTableName();
     int uid;
+
     //uid = comms.doStuff(things);
 
     CALL_MEM_FUN((*this), instantiationMap[object->getObjectType()]) (&objectProps, uid);
@@ -36,7 +39,6 @@ void Factory::modify(ModelObject *object)
 
 list<int> Factory::pull(ModelObject *filteredObject)
 {
-    //TODO: Filters map doesn't currently have, objectType, or idName in it
     map<string, string> filteredProps;
     ObjectInterpreter::ObjectToProperties(filteredObject, &filteredProps);
     string tableName = filteredObject->getTableName();
@@ -49,7 +51,7 @@ list<int> Factory::pull(ModelObject *filteredObject)
         map<string, string> *objectProps = (*it);
 
         //TODO: Make sure Mike does not send back the tableName in the map
-        //TODO: Fix storage to work with an extra 'object type' parameter
+        //TODO: Fix storage to work with an extra 'object type' parameter <- This should be fixed now
         //Object type is a special property.  It is used to decide which instantiation function to call.
         ModelObject::ObjectType type = (ModelObject::ObjectType)(Utility::stoi((*objectProps)[OBJECT_TYPE_PROPERTY_NAME]));
 
