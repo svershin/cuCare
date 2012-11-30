@@ -2,6 +2,7 @@
 #define REPOMODEL_H
 
 #include "../../CuCareModel/ModelFiles.h"
+#include "Database.h"
 #include <sstream>
 
 class RepoModel
@@ -11,8 +12,8 @@ public:
 
     string getAuditCommand();
 
-    bool dbexists();
-    void createDb();
+    bool dbexists(Database db);
+    void createDb(Database db);
 };
 
 #endif // REPOMODEL_H

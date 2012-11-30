@@ -18,10 +18,12 @@ class ContactInfo
 public:
 
     // Constructor
-    ContactInfo (string workPhoneParam,
-                 string cellPhoneParam,
-                 string emailParam,
-                 string workEmailParam);
+    ContactInfo ();
+
+    ContactInfo(string workPhoneParam,
+                string cellPhoneParam,
+                string emailParam,
+                string workEmailParam);
 
     // Destructor
     ~ContactInfo();

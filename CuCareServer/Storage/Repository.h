@@ -3,6 +3,7 @@
 
 #include "StorageObject.h"
 #include "Database.h"
+#include "RepoModel.h"
 #include <list>
 #include <sstream>
 
@@ -24,12 +25,13 @@ public:
 private:
     Database* db;
     string errorText;
+    RepoModel rModel;
 
     bool insertStatement(StorageObject sObj);
     bool updateStatement(StorageObject sObj);
     bool selectStatement(StorageObject sObj, QueryResult *&results);
 
-    void instantiate(QueryResult &results, list<StorageObject> *pObjects);
+    void instantiate(QueryResult *results, list<StorageObject> *pObjects);
 };
 
 #endif // REPOSITORY_H

@@ -1,9 +1,8 @@
 // COMP 3004 FALL 2012
-// Assignment 2: cuCare Prototype
+// Assignment 4: cuCare Prototype #2
 // Team: The Four Puppeteers
-// Contributing Editors: Sergey Vershinin
 //
-// Physician.h - Declaration of base class Physician
+// Physician.h - Declaration of class Physician
 // Member functions are defined in Physician.cpp
 
 #ifndef PHYSICIAN_H
@@ -11,33 +10,25 @@
 
 #include "User.h"
 
-class Physician:public User
+class Physician : public User
 {
 public:
+    Physician();
 
-    // Constructor
-    Physician (int idParam,
-               string usernameParam,
-               string firstNameParam,
-               string lastNameParam,
-               Date dateOfBirthParam,
-               ContactInfo contactParam,
-               Address addressParam,
-               bool deletedParam);
+    // Declaration of functions declared as virtual in ModelObject 
 
-    // Destructor
-    ~Physician();
+    ObjectType getObjectType();
 
-    int getType() { return 2; }
+    // Class attribute get() & set() methods
 
-    int getId();
+    int getPhysicianId();
+    void setPhysicianId(const int value);
 
-protected:
 private:
-    int id;
+    int physicianId;
 };
 
 
-#endif
+#endif // PHYSICIAN_H
 
 // EOF

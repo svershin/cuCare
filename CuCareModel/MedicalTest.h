@@ -1,13 +1,12 @@
 // COMP 3004 FALL 2012
-// Assignment 2: cuCare Prototype
+// Assignment 4: cuCare Prototype #2
 // Team: The Four Puppeteers
-// Contributing Editors: Sergey Vershinin
 //
-// Test.h - Declaration of base class Test
-// Member functions are defined in Test.cpp
+// MedicalTest.h - Declaration of class MedicalTest
+// Member functions are defined in MedicalTest.cpp
 
-#ifndef TEST_H
-#define TEST_H
+#ifndef MDEICALTEST_H
+#define MDEICALTEST_H
 
 #include <string>
 #include "ResultantFollowup.h"
@@ -17,31 +16,22 @@ using namespace std;
 class MedicalTest:public ResultantFollowup
 {
 public:
+	// Constructor
+	MedicalTest();
 
-    // Constructor
-    MedicalTest (int idParam,
-                 FollowupStatus statusParam,
-                 Date dateDueParam,
-                 Date dateReceivedParam,
-                 Date dateCompletedParam,
-                 string resultsParam,
-                 string testTypeParam,
-                 bool deletedParam);
+	// Declaration of functions declared as virtual in ModelObject 
 
-    // Destructor
-    ~MedicalTest();
+	ObjectType getObjectType();
 
-    string getTestType();
-    void setTestType(const string value);
+	// Class attribute get() & set() methods
 
-    int getType();
+	string getTestType();
+	void setTestType(const string value);
 
-protected:
 private:
-    string testType;
+	string testType;
 };
 
-
-#endif
+#endif // MDEICALTEST_H
 
 // EOF

@@ -1,9 +1,8 @@
 // COMP 3004 FALL 2012
-// Assignment 2: cuCare Prototype
+// Assignment 4: cuCare Prototype #2
 // Team: The Four Puppeteers
-// Contributing Editors: Sergey Vershinin
 //
-// Followup.h - Declaration of base class Followup
+// Followup.h - Declaration of class Followup
 // Member functions are defined in Followup.cpp
 
 #ifndef FOLLOWUP_H
@@ -15,58 +14,66 @@
 class Followup : public ModelObject
 {
 public:
+	// Constructor
+	Followup ();
 
-    enum FollowupStatus
-    {
-        FSTAT_ERROR,
-        FSTAT_PENDING,
-        FSTAT_OVERDUE,
-        FSTAT_RECEIVED,
-        FSTAT_COMPLETED
-    };
+	// Declaration of functions declared as virtual in ModelObject 
 
-    // Constructor
-    Followup (int idParam,
-              FollowupStatus statusParam,
-              Date dateDueParam,
-              Date dateReceivedParam,
-              Date dateCompletedParam,
-              bool deletedParam);
+	string getTableName();
 
-    // Destructor
-    ~Followup();
+	// Class attribute get() & set() methods
 
-    int getId();
-    void setId(int newId);
+	int getId();
+	void setId(const int value);
 
-    FollowupStatus getStatus();
-    void setStatus(const FollowupStatus value);
+    int getFStatus();
+    void setFStatus(const int value);
 
-    Date getDateDue();
-    void setDateDue(const Date value);
+	Date getDateDue();
+	void setDateDue(const Date value);
 
-    Date getDateReceived();
-    void setDateReceived(const Date value);
+		int getDay();
+		void setDay(const int value);
 
-    Date getDateCompleted();
-    void setDateCompleted(const Date value);
+		int getMonth();
+		void setMonth(const int value);
 
-    void markDeleted();
-    bool isDeleted();
+		int getYear();
+		void setYear(const int value);
 
-    virtual int getType() = 0;
+	Date getDateReceived();
+	void setDateReceived(const Date value);
 
-protected:
+		int getDay1();
+		void setDay1(const int value);
+
+		int getMonth1();
+		void setMonth1(const int value);
+
+		int getYear1();
+		void setYear1(const int value);
+
+	Date getDateCompleted();
+	void setDateCompleted(const Date value);
+
+		int getDay2();
+		void setDay2(const int value);
+
+		int getMonth2();
+		void setMonth2(const int value);
+
+		int getYear2();
+		void setYear2(const int value);
+
+        static const string TABLE_NAME;
 private:
-    int id;
-    FollowupStatus status;
-    Date dateDue;
-    Date dateReceived;
-    Date dateCompleted;
-    bool deleted;
+	int id;
+	FollowupStatus status;
+	Date dateDue;
+	Date dateReceived;
+	Date dateCompleted;
 };
 
-
-#endif
+#endif // FOLLOWUP_H
 
 // EOF

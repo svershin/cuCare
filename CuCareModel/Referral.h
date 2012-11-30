@@ -1,9 +1,8 @@
 // COMP 3004 FALL 2012
-// Assignment 2: cuCare Prototype
+// Assignment 4: cuCare Prototype #2
 // Team: The Four Puppeteers
-// Contributing Editors: Sergey Vershinin
 //
-// Referral.h - Declaration of base class Referral
+// Referral.h - Declaration of class Referral
 // Member functions are defined in Referral.cpp
 
 #ifndef REFERRAL_H
@@ -17,31 +16,22 @@ using namespace std;
 class Referral:public ResultantFollowup
 {
 public:
+	// Constructor
+	Referral ();
 
-    // Constructor
-    Referral (int idParam,
-              FollowupStatus statusParam,
-              Date dateDueParam,
-              Date dateReceivedParam,
-              Date dateCompletedParam,
-              string resultsParam,
-              string specialistNameParam,
-              bool deletedParam);
+	// Declaration of functions declared as virtual in ModelObject 
 
-    // Destructor
-    ~Referral();
+	ObjectType getObjectType();
 
-    string getSpecialistName();
-    void setSpecialistName(const string value);
+	// Class attribute get() & set() methods
 
-    int getType();
+	string getSpecialistName();
+	void setSpecialistName(const string value);
 
-protected:
 private:
-    string specialistName;
+	string specialistName;
 };
 
-
-#endif
+#endif // REFERRAL_H
 
 // EOF

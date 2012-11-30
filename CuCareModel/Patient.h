@@ -1,7 +1,6 @@
 // COMP 3004 FALL 2012
-// Assignment 2: cuCare Prototype
+// Assignment 4: cuCare Prototype #2
 // Team: The Four Puppeteers
-// Contributing Editors: Sergey Vershinin
 //
 // Patient.h - Declaration of base class Patient
 // Member functions are defined in Patient.cpp
@@ -11,12 +10,10 @@
 
 #include <vector>
 #include <string>
-#include "Consultation.h"
 #include "ContactInfo.h"
 #include "Date.h"
 #include "Address.h"
 #include "HealthCard.h"
-#include "Physician.h"
 #include "ModelObject.h"
 
 using namespace std;
@@ -24,75 +21,123 @@ using namespace std;
 class Patient : public ModelObject
 {
 public:
+	// Constructor
+	Patient ();
 
-    // Constructor
-    Patient (int idParam,
-             string firstNameParam,
-             string lastNameParam,
-             string notesParam,
-             ContactInfo contactParam,
-             Address addressParam,
-             Date dateOfBirthParam,
-             Date dateAddedToSystemParam,
-             Physician* pPhysicianParam,
-             HealthCard healthCardParam,
-             bool deletedParam);
+	// Declaration of functions declared as virtual in ModelObject 
 
-    // Destructor
-    ~Patient();
+	string getTableName();
 
-    int getId();
-    void setId(int value);
+	ObjectType getObjectType();
 
-    string getFirstName();
-    void setFirstName(const string value);
+	// Class attribute get() & set() methods
 
-    string getLastName();
-    void setLastName(const string value);
+	int getId();
+	void setId(const int value);
 
-    string getNotes();
-    void setNotes(const string value);
+	string getFirstName();
+	void setFirstName(const string value);
 
-    ContactInfo getContact();
-    void setContact(const ContactInfo value);
+	string getLastName();
+	void setLastName(const string value);
 
-    Address getAddress();
-    void setAddress(const Address value);
+	Address getAddress();
+	void setAddress(const Address value);
 
-    Date getDateOfBirth();
-    void setDateOfBirth(const Date value);
+		string getCountry();
+		void setCountry(const string value);
 
-    Date getDateAddedToSystem();
-    void setDateAddedToSystem(const Date value);
+		string getCity();
+		void setCity(const string value);
 
-    HealthCard getHealthCard();
-    void setHealthCard(const HealthCard value);
+		string getLineOne();
+		void setLineOne(const string value);
 
-    Physician* getPhysician();
-    void setPhysician(Physician* const value);
+		string getLineTwo();
+		void setLineTwo(const string value);
 
-    vector<Consultation*>* getConsultations();
+		string getPostalCode();
+		void setPostalCode(const string value);
 
-    void markDeleted();
-    bool isDeleted();
+	ContactInfo getContact();
+	void setContact(const ContactInfo value);
 
-protected:
+		string getWorkPhone();
+		void setWorkPhone(const string value);
+
+		string getCellPhone();
+		void setCellPhone(const string value);
+
+		string getEmail();
+		void setEmail(const string value);
+
+		string getWorkEmail();
+		void setWorkEmail(const string value);
+
+	Date getDateOfBirth();
+	void setDateOfBirth(const Date value);
+
+		int getDay();
+		void setDay(const int value);
+
+		int getMonth();
+		void setMonth(const int value);
+
+		int getYear();
+		void setYear(const int value);
+
+	Date getDateAddedToSystem();
+	void setDateAddedToSystem(const Date value);
+
+		int getDay1();
+		void setDay1(const int value);
+
+		int getMonth1();
+		void setMonth1(const int value);
+
+		int getYear1();
+		void setYear1(const int value);
+
+	HealthCard getHealthCard();
+	void setHealthCard(const HealthCard value);
+
+		string getHCNumber();
+		void setHCNumber(const string value);
+
+		int getHCExpiryDay();
+		void setHCExpiryDay(const int value);
+
+		int getHCExpiryMonth();
+		void setHCExpiryMonth(const int value);
+
+		int getHCExpiryYear();
+		void setHCExpiryYear(const int value);
+
+	string getNotes();
+	void setNotes(const string value);
+
+	int getPhysicianId();
+	void setPhysicianId(int const value);
+
+	vector<int>* getConsultationIds();
+	void addConsultationId(const int value);
+
+    static const string TABLE_NAME;
 private:
-    int id;
-    string firstName;
-    string lastName;
-    string notes;
-    ContactInfo contact;
-    Address address;
-    Date dateOfBirth;
-    Date dateAddedToSystem;
-    Physician* pPhysician;
-    HealthCard healthCard;
-    bool deleted;
-    vector<Consultation*> Consultations;
+	int patientId;
+	string firstName;
+	string lastName;
+	Address address;
+	ContactInfo contact;
+	Date dateOfBirth;
+	Date dateAddedToSystem;
+	HealthCard healthCard;
+	string notes;
+	int pPhysicianId;
+	vector<int> consultationIds;
 };
 
 
-#endif
+#endif // PATIENT_H
 
 // EOF

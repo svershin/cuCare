@@ -18,6 +18,8 @@ class Address
 public:
 
     // Constructor
+    Address ();
+
     Address (string countryParam,
              string cityParam,
              string lineOneParam,
