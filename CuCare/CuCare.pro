@@ -11,21 +11,9 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-    patientselectdialog.cpp \
-    loginwindowdialog.cpp \
-    mainwindow.cpp \
-    MasterController/MasterController.cpp \
-    MasterController/Request.cpp \
-    followuptypeselectdialog.cpp \
     ObjectInterpreter/ObjectInterpreter.cpp
 
 HEADERS  += \
-    patientselectdialog.h \
-    loginwindowdialog.h \
-    mainwindow.h \
-    MasterController/MasterController.h \
-    MasterController/Request.h \
-    followuptypeselectdialog.h \
     ObjectInterpreter/ObjectInterpreter.h
 
 FORMS    += \
