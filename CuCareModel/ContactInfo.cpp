@@ -8,6 +8,14 @@
 
 #include "ContactInfo.h"
 
+ContactInfo::ContactInfo()
+    : workPhone (""),
+      cellPhone (""),
+      email (""),
+      workEmail ("")
+{
+}
+
 // Constructor
 ContactInfo::ContactInfo
 (	string workPhoneParam,

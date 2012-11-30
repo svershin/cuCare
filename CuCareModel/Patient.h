@@ -27,6 +27,7 @@ public:
 	// Declaration of functions declared as virtual in ModelObject 
 
 	string getTableName();
+    string getIdName();
 
 	ObjectType getObjectType();
 
@@ -123,6 +124,8 @@ public:
 	void addConsultationId(const int value);
 
     static const string TABLE_NAME;
+    static const string ID_NAME;
+
 private:
 	int patientId;
 	string firstName;

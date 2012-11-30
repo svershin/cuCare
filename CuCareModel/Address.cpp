@@ -8,6 +8,15 @@
 
 #include "Address.h"
 
+Address::Address()
+    : country (""),
+      city (""),
+      lineOne (""),
+      lineTwo (""),
+      postalCode ("")
+{
+}
+
 // Constructor
 Address::Address
 (   string countryParam,

@@ -11,10 +11,14 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-    ObjectInterpreter/ObjectInterpreter.cpp
+    ObjectInterpreter/ObjectInterpreter.cpp \
+    ClientDataStorage/Factory.cpp \
+    ClientDataStorage/Warehouse.cpp
 
 HEADERS  += \
-    ObjectInterpreter/ObjectInterpreter.h
+    ObjectInterpreter/ObjectInterpreter.h \
+    ClientDataStorage/Factory.h \
+    ClientDataStorage/Warehouse.h
 
 FORMS    += \
     patientselectdialog.ui \

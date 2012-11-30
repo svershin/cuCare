@@ -25,6 +25,7 @@ public:
 	// Declaration of functions declared as virtual in ModelObject 
 
 	string getTableName();
+    string getIdName();
 
 	ObjectType getObjectType();
 
@@ -72,10 +73,12 @@ public:
 	vector<int>* getFollowupIds();
 	void addFollowupId(const int value);
 
+    static const string TABLE_NAME;
+    static const string ID_NAME;
+
 private:
-	static const string TABLE_NAME;
 	int consultId;
-	string reason;
+    string reason;
 	string diagnosis;
 	string comments;
 	ConsultationStatus status;

@@ -24,6 +24,7 @@ public:
 	// Declaration of functions declared as virtual in ModelObject 
 
 	string getTableName();
+    string getIdName();
 
 	// Class attribute get() & set() methods
 
@@ -84,8 +85,10 @@ public:
 		int getYear();
 		void setYear(const int value);
 
+        static const string TABLE_NAME;
+        static const string ID_NAME;
+
 private:
-	static const string TABLE_NAME;
 	int userId;
 	string username;
 	string firstName;

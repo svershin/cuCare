@@ -8,6 +8,13 @@
 
 #include "Date.h"
 
+Date::Date()
+    : day (0),
+      month (0),
+      year (0)
+{
+}
+
 // Constructor
 Date::Date
 (   int DayParam,

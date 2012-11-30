@@ -11,7 +11,7 @@
 
 // Constructor
 Patient::Patient() {
-	getProperties()->push_back(new IntProperty("patientid", this, &ModelObject::getId, &ModelObject::setId));
+    getProperties()->push_back(new IntProperty(ID_NAME, this, &ModelObject::getId, &ModelObject::setId));
 	getProperties()->push_back(new StringProperty("firstname", this, &ModelObject::getFirstName, &ModelObject::setFirstName));
 	getProperties()->push_back(new StringProperty("lastname", this, &ModelObject::getLastName, &ModelObject::setLastName));
 	getProperties()->push_back(new StringProperty("country", this, &ModelObject::getCountry, &ModelObject::setCountry));
@@ -40,10 +40,12 @@ Patient::Patient() {
 // Static attribute definition
 
 const string Patient::TABLE_NAME = "PATIENTS";
+const string Patient::ID_NAME = "patientid";
 
 // Definition of functions declared as virtual in ModelObject 
 
 string Patient::getTableName() { return Patient::TABLE_NAME; }
+string Patient::getIdName() { return ID_NAME; }
 
 ModelObject::ObjectType Patient::getObjectType() { return PATIENT; }
 

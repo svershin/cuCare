@@ -8,6 +8,12 @@
 
 #include "Time.h"
 
+Time::Time()
+    : hour (0),
+      minute (0)
+{
+}
+
 // Constructor
 Time::Time
 (   int hourParam,

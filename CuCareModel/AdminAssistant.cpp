@@ -7,6 +7,11 @@
 
 #include "AdminAssistant.h"
 
+AdminAssistant::AdminAssistant()
+{
+    getProperties()->push_back(new IntProperty("physicianid", this, &ModelObject::getPhysicianId, &ModelObject::setPhysicianId));
+}
+
 // Definition of functions declared as virtual in ModelObject 
 
 ModelObject::ObjectType AdminAssistant::getObjectType() { return ADMINASSISTANT; }

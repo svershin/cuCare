@@ -10,6 +10,8 @@
 
 #include <string>
 #include <list>
+#define OBJECT_TYPE_PROPERTY_NAME "objectType"
+#define ID_NAME_PROPERTY_NAME "idname"
 class Property;
 
 using namespace std;
@@ -21,6 +23,7 @@ public:
 
 	enum ObjectType
 	{
+        OBJECT_ERROR,
 		ADMINASSISTANT,
 		SYSADMIN,
 		PHYSICIAN,
@@ -59,14 +62,15 @@ public:
 	// Functions to be implemented by leaf Model classes
 
 	virtual string getTableName() = 0;
+    virtual string getIdName() = 0;
 
-	virtual ObjectType getObjectType();
+    virtual ObjectType getObjectType();
 
 	// ModelObject member functions
 
 	list<Property*>* getProperties();
 
-	int isDeleted();
+    int isDeleted();
     void markDeleted(int value);
 
 	// Child class member function declarations (enables Properties functionality)

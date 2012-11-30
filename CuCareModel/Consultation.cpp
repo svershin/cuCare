@@ -10,7 +10,7 @@
 #include "IntProperty.h"
 
 Consultation::Consultation() {
-	getProperties()->push_back(new IntProperty("consultationid", this, &ModelObject::getId, &ModelObject::setId));
+    getProperties()->push_back(new IntProperty(ID_NAME, this, &ModelObject::getId, &ModelObject::setId));
 	getProperties()->push_back(new IntProperty("physicianid", this, &ModelObject::getPhysicianId, &ModelObject::setPhysicianId));
 	getProperties()->push_back(new StringProperty("reason", this, &ModelObject::getReason, &ModelObject::setReason));
 	getProperties()->push_back(new StringProperty("diagnosis", this, &ModelObject::getDiagnosis, &ModelObject::setDiagnosis));
@@ -26,10 +26,12 @@ Consultation::Consultation() {
 // Static attribute definition
 
 const string Consultation::TABLE_NAME = "CONSULTATIONS";
+const string Consultation::ID_NAME = "consultationid";
 
 // Definition of functions declared as virtual in ModelObject 
 
 string Consultation::getTableName() { return TABLE_NAME; }
+string Consultation::getIdName() { return ID_NAME; }
 
 ModelObject::ObjectType Consultation::getObjectType() { return CONSULTATION; }
 

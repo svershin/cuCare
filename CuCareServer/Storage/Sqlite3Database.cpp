@@ -62,7 +62,7 @@ bool Sqlite3Database::query(string query, QueryResult*& pOutResults)
 
     //This data will be used to create a QueryResult
     vector< vector <string>* >* pRows = new vector< vector <string>* >();
-    map<int, string>* pColNames = new vector<string>();
+    map<int, string>* pColNames = new map<int, string>();
 
     //If nothing goes wrong with the query, we get SQLITE_OK
     if(sqlite3_prepare_v2(pDb, query.c_str(), -1, &pStatement, 0) == SQLITE_OK)
@@ -89,7 +89,7 @@ bool Sqlite3Database::query(string query, QueryResult*& pOutResults)
         }
     }
 
-    pOutResults = new QueryResult(pRows);
+    pOutResults = new QueryResult(pRows, pColNames);
 
     return errorCheck();
 }

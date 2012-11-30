@@ -11,7 +11,7 @@
 
 // Constructor
 User::User() {
-	getProperties()->push_back(new IntProperty("userId", this, &ModelObject::getId, &ModelObject::setId));
+    getProperties()->push_back(new IntProperty(ID_NAME, this, &ModelObject::getId, &ModelObject::setId));
 	getProperties()->push_back(new StringProperty("username", this, &ModelObject::getUsername, &ModelObject::setUsername));
 	getProperties()->push_back(new StringProperty("firstname", this, &ModelObject::getFirstName, &ModelObject::setFirstName));
 	getProperties()->push_back(new StringProperty("lastname", this, &ModelObject::getLastName, &ModelObject::setLastName));
@@ -32,10 +32,12 @@ User::User() {
 // Static attribute definition
 
 const string User::TABLE_NAME = "USERS";
+const string User::ID_NAME = "userid";
 
 // Definition of functions declared as virtual in ModelObject 
 
 string User::getTableName() { return TABLE_NAME; }
+string User::getIdName() { return ID_NAME; }
 
 // Class attribute get() & set() methods
 

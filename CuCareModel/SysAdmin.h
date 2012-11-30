@@ -13,6 +13,8 @@
 class SysAdmin:public User
 {
 public:
+    SysAdmin();
+
     // Declaration of functions declared as virtual in ModelObject 
 
     ObjectType getObjectType();

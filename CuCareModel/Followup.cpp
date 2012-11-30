@@ -10,7 +10,7 @@
 
 // Constructor
 Followup::Followup () {
-    getProperties()->push_back(new IntProperty("followupid", this, &ModelObject::getId, &ModelObject::setId));
+    getProperties()->push_back(new IntProperty(ID_NAME, this, &ModelObject::getId, &ModelObject::setId));
     getProperties()->push_back(new IntProperty("dueday", this, &ModelObject::getDay, &ModelObject::setDay));
     getProperties()->push_back(new IntProperty("duemonth", this, &ModelObject::getMonth, &ModelObject::setMonth));
     getProperties()->push_back(new IntProperty("dueyear", this, &ModelObject::getYear, &ModelObject::setYear));
@@ -26,10 +26,12 @@ Followup::Followup () {
 // Static attribute definition
 
 const string Followup::TABLE_NAME = "FOLLOWUPS";
+const string Followup::ID_NAME = "followupid";
 
 // Definition of functions declared as virtual in ModelObject
 
 string Followup::getTableName() { return TABLE_NAME; }
+string Followup::getIdName() { return ID_NAME; }
 
 // Class attribute get() & set() methods
 

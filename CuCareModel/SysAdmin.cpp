@@ -7,6 +7,11 @@
 
 #include "SysAdmin.h"
 
+SysAdmin::SysAdmin()
+{
+
+}
+
 // Definition of functions declared as virtual in ModelObject 
 
 ModelObject::ObjectType SysAdmin::getObjectType() { return ModelObject::SYSADMIN; }

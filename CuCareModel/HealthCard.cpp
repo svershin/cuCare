@@ -7,6 +7,12 @@
 
 #include "HealthCard.h"
 
+HealthCard::HealthCard()
+    : number (""),
+      expiry ()
+{
+}
+
 // Constructor
 HealthCard::HealthCard(string numberParam, Date expiryParam)
     : number (numberParam),

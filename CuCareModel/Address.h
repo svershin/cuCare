@@ -18,7 +18,7 @@ class Address
 public:
 
     // Constructor
-    Address ();
+    Address();
 
     Address (string countryParam,
              string cityParam,

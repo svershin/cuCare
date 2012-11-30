@@ -20,6 +20,7 @@ public:
 	// Declaration of functions declared as virtual in ModelObject 
 
 	string getTableName();
+    string getIdName();
 
 	// Class attribute get() & set() methods
 
@@ -66,6 +67,8 @@ public:
 		void setYear2(const int value);
 
         static const string TABLE_NAME;
+        static const string ID_NAME;
+
 private:
 	int id;
 	FollowupStatus status;

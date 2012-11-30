@@ -24,6 +24,8 @@ list<Property*>* ModelObject::getProperties() { return &properties; }
 int ModelObject::isDeleted() { return (int)deleted; }
 void ModelObject::markDeleted(int value) { deleted = true; }
 
+ModelObject::ObjectType ModelObject::getObjectType() { return ModelObject::OBJECT_ERROR; }
+
 // From User.h
 
 int ModelObject::getId() { return 0; }

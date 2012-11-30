@@ -13,6 +13,7 @@
 class AdminAssistant : public User
 {
 public:
+    AdminAssistant();
 	// Declaration of functions declared as virtual in ModelObject 
 
 	ObjectType getObjectType();
