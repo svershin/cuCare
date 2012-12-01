@@ -1,5 +1,6 @@
-#include "Storage/Sqlite3Database.h"
-#include "Storage/Repository.h"
+#include "../CuCureStorage/Sqlite3Database.h"
+#include "../CuCureStorage/Repository.h"
+#include "../CuCareModel/Utility.h"
 #include <iostream>
 #include "Tests.h"
 
@@ -73,6 +74,20 @@ void Tests::repositoryTest()
         pRepo->create(test, uid);
 
         cout << "Creation finished.  Uid is: " << uid << endl;
+
+        map<string, string> filter;
+        filter["userid"] = Utility::itos(uid);
+
+        StorageObject pullTest("USERS", "userid", filter);
+
+        list<StorageObject> *pulled;
+        pRepo->pull(pullTest,pulled);
+
+        cout << "Pulled: " << pulled->size() << " objects." << endl;
+
+        for(list<StorageObject>::iterator it = pulled->begin(); it != pulled->end(); ++it)
+            for(map<string, string>::iterator mapit = (*it).getValues().begin(); (*it).getValues().end(); ++it)
+                cout << mapit->first << " : " << mapit->second << endl;
     }
     catch (char const *err)
     {
