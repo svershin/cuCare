@@ -1,5 +1,5 @@
 #include "RepoModel.h"
-#include "Property.h"
+#include "../CuCareModel/Property.h"
 
 RepoModel::RepoModel()
 {

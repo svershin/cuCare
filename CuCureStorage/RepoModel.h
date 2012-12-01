@@ -1,7 +1,7 @@
 #ifndef REPOMODEL_H
 #define REPOMODEL_H
 
-#include "../../CuCareModel/ModelFiles.h"
+#include "../CuCareModel/ModelFiles.h"
 #include "Database.h"
 #include <sstream>
 #include <fstream>
