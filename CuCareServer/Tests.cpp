@@ -44,156 +44,39 @@ void Tests::databaseExample()
 void Tests::repositoryTest()
 {
     cout << "Starting test.\n";
-    //Repository* pRepo = new Repository();
-//    AdminAssistant* newAA = new AdminAssistant("Im a test!",
-//                                               "cellophane",
-//                                               "not cellophane",
-//                                               Date(12,
-//                                                    12,
-//                                                    2012),
-//                                               ContactInfo("613-256-6880",
-//                                                           "613-293-8843",
-//                                                           "ddenis@connect.carleton.ca",
-//                                                           "ddenis@gmail.com"),
-//                                               Address("Canada",
-//                                                       "Ottawa",
-//                                                       "1268 Cobden Road",
-//                                                       "nooooo",
-//                                                       "K2C 3A2"),
-//                                               false);
-//    try
-//    {
-//        if(pRepo->createAdminAssistant(newAA))
-//            cout << "Created successfully.\n";
-//    }
-//    catch(char const * err)
-//    {
-//        cout << err << "\n";
-//    }
+    try
+    {
+        Repository* pRepo = new Repository();
 
-//    cout << "Attempting to pull - will wait for confirm to start.\n";
-//    string answer;
-//    cin >> answer;
-//    UserFilter filter;
-//    filter.usernameSetMatch(true);
-//    vector<AdminAssistant *>* results = NULL;
-//    try
-//    {
-//        if(!pRepo->pullAdminAssistant(newAA, filter, results))
-//            cout << "Failed to pull.\n";
-//        else if(results->size() > 0)
-//        {
-//            cout << "Pulled successfully - " << results->size() << " entries.\n";
-//            newAA = (*results)[0];
-//        }
-//        else
-//            cout << "No results.\n";
-//        cout << newAA->getUsername() << ", " <<
-//                newAA->getFirstName() << ", " <<
-//                newAA->getLastName() << ", " <<
-//                newAA->getDateOfBirth().getDay() << ", " <<
-//                newAA->getDateOfBirth().getMonth() << ", " <<
-//                newAA->getDateOfBirth().getYear() << ", " <<
-//                newAA->getContact().getWorkPhone() << ", " <<
-//                newAA->getContact().getCellPhone() << ", " <<
-//                newAA->getContact().getEmail() << ", " <<
-//                newAA->getContact().getWorkEmail() << ", " <<
-//                newAA->getAddress().getCountry() << ", " <<
-//                newAA->getAddress().getCity() << ", " <<
-//                newAA->getAddress().getLineOne() << ", " <<
-//                newAA->getAddress().getLineTwo() << ", " <<
-//                newAA->getAddress().getPostalCode() << ", " <<
-//                newAA->isDeleted() << "\n";
-//    }
-//    catch(char const * err)
-//    {
-//        cout << err << "\n";
-//    }
+        map<string, string> userparams;
+        userparams["deleted"] = "0";
+        userparams["userid"] = "1";
+        userparams["username"] = "Guy1";
+        userparams["firstname"] = "firstname";
+        userparams["lastname"] = "lastname";
+        userparams["country"] = "Canada";
+        userparams["city"] = "ottawa";
+        userparams["addresslineone"] = "1268 Cobden";
+        userparams["addresslinetwo"] = "front door";
+        userparams["postalcode"] = "k22 22k";
+        userparams["workphone"] = "work phoen";
+        userparams["cellphone"] = "cell pheon";
+        userparams["email"] = "textemaildefaultnull";
+        userparams["workemail"] = "theworkemail";
+        userparams["birthday"] = "dayofbirth";
+        userparams["birthmonth"] = "january";
+        userparams["birthyear"] = "1659";
+        userparams["objectType"] = "1";
 
-//    newAA->setFirstName("NOT Noodles");
+        StorageObject test("USERS", "userid", userparams);
+        int uid = 999;
+        pRepo->create(test, uid);
 
-//    cout << "Attempting to push changes.\n";
-//    if(pRepo->pushUser(newAA))
-//        cout << "Pushed successfully\n";
-//    else
-//        cout << pRepo->getDbErrorText() << "\n";
-
-//    try
-//    {
-//        if(!pRepo->pullAdminAssistant(newAA, filter, results))
-//            cout << "Failed to pull.\n";
-//        else if(results->size() > 0)
-//        {
-//            newAA = (*results)[0];
-//            cout << "Pulled successfully.\n";
-//        }
-//        else
-//            cout << "No results.\n";
-//        cout << newAA->getUsername() << ", " <<
-//                newAA->getFirstName() << ", " <<
-//                newAA->getLastName() << ", " <<
-//                newAA->getDateOfBirth().getDay() << ", " <<
-//                newAA->getDateOfBirth().getMonth() << ", " <<
-//                newAA->getDateOfBirth().getYear() << ", " <<
-//                newAA->getContact().getWorkPhone() << ", " <<
-//                newAA->getContact().getCellPhone() << ", " <<
-//                newAA->getContact().getEmail() << ", " <<
-//                newAA->getContact().getWorkEmail() << ", " <<
-//                newAA->getAddress().getCountry() << ", " <<
-//                newAA->getAddress().getCity() << ", " <<
-//                newAA->getAddress().getLineOne() << ", " <<
-//                newAA->getAddress().getLineTwo() << ", " <<
-//                newAA->getAddress().getPostalCode() << ", " <<
-//                newAA->isDeleted() << "\n";
-//    }
-//    catch(const char * err)
-//    {
-//        cout << err << "\n";
-//    }
-
-//    Physician* newPhys = new Physician(0,
-//                                       "phys1!",
-//                                       "cellophane",
-//                                       "not cellophane",
-//                                       Date(12,
-//                                            12,
-//                                            2012),
-//                                       ContactInfo("613-256-6880",
-//                                                   "613-293-8843",
-//                                                   "ddenis@connect.carleton.ca",
-//                                                   "ddenis@gmail.com"),
-//                                       Address("Canada",
-//                                               "Ottawa",
-//                                               "1268 Cobden Road",
-//                                               "nooooo",
-//                                               "K2C 3A2"),
-//                                       false);
-//    int uid1 = 0, uid2 = 0;
-//    if(!pRepo->createPhysician(newPhys, &uid1))
-//        cout << "Error: " << pRepo->getDbErrorText();
-//    Physician* otherNewPhys = new Physician(0,
-//                                            "phys2!",
-//                                            "cellophane",
-//                                            "not cellophane",
-//                                            Date(12,
-//                                                 12,
-//                                                 2012),
-//                                            ContactInfo("613-256-6880",
-//                                                        "613-293-8843",
-//                                                        "ddenis@connect.carleton.ca",
-//                                                        "ddenis@gmail.com"),
-//                                            Address("Canada",
-//                                                    "Ottawa",
-//                                                    "1268 Cobden Road",
-//                                                    "nooooo",
-//                                                    "K2C 3A2"),
-//                                            false);
-//    if(!pRepo->createPhysician(otherNewPhys, &uid2))
-//        cout << "Error: " << pRepo->getDbErrorText();
-
-//    cout << uid1 << ", " << uid2 << "\n";
-
-//    delete pRepo;
-//    cout << "Completion.\n";
+        cout << "Creation finished.  Uid is: " << uid << endl;
+    }
+    catch (char const *err)
+    {
+        cout << err << endl;
+    }
 }
 

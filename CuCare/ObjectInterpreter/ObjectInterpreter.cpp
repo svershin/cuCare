@@ -12,7 +12,6 @@ void ObjectInterpreter::ObjectToProperties(ModelObject *modelObject, map<string,
     for(list<Property*>::iterator it = objectProps->begin(); it != objectProps->end(); ++it)
         (*properties)[(*it)->getName()] = (*it)->getValue();
 
-    //TODO: find out if Mike takes tableName seperately or if I'm supposed to put it in the map
     (*properties)[OBJECT_TYPE_PROPERTY_NAME] = modelObject->getObjectType();
     (*properties)[ID_NAME_PROPERTY_NAME] = modelObject->getIdName();
 }

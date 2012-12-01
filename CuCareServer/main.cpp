@@ -11,6 +11,8 @@ int main(int argc, char *argv[])
     //Tests::databaseExample();
     Tests::repositoryTest();
 
+    cout << "Finished.\n";
+
     return a.exec();
 }
 

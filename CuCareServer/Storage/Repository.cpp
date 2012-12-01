@@ -6,6 +6,8 @@ Repository::Repository()
       errorText (""),
       rModel ()
 {
+    cout << "Creating repository." << endl;
+
     db = new Sqlite3Database();
 
     bool firstTimeRun = !rModel.dbexists(db);

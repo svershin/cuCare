@@ -20,6 +20,7 @@ string RepoModel::getAuditCommand(int day, int month, int year)
 bool RepoModel::dbexists(Database *db)
 {
     ifstream dbfile(db->dbFilename.c_str());
+    cout << "Checking for db: " << (bool)dbfile << endl;
     return dbfile; //Casts to true if file exists.
 }
 
@@ -29,10 +30,6 @@ void RepoModel::createDb(Database *db)
     db->command(getFollowupTableCommand());
     db->command(getConsultationTableCommand());
     db->command(getPatientTableCommand());
-
-    //For the physicianid autoincrement, there needs to be a dummy entry with a physid of zero.
-    if(!db->command("INSERT INTO physicians (username, physicianid) VALUES ('dummyentry', 0);"))
-        throw "Error inserting dummy entry.";
 }
 
 string RepoModel::getConsultationTableCommand()

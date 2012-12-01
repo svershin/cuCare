@@ -50,8 +50,6 @@ list<int> Factory::pull(ModelObject *filteredObject)
     {
         map<string, string> *objectProps = (*it);
 
-        //TODO: Make sure Mike does not send back the tableName in the map
-        //TODO: Fix storage to work with an extra 'object type' parameter <- This should be fixed now
         //Object type is a special property.  It is used to decide which instantiation function to call.
         ModelObject::ObjectType type = (ModelObject::ObjectType)(Utility::stoi((*objectProps)[OBJECT_TYPE_PROPERTY_NAME]));
 
