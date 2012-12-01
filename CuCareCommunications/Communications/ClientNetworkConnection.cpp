@@ -17,11 +17,10 @@ ClientNetworkConnection& ClientNetworkConnection::operator=(const ClientNetworkC
 
 QByteArray ClientNetworkConnection::sendReceive(QHostAddress serverIP, quint16 serverPort, QByteArray request)
 {
-    requestMessage = request;
     connectToHost(serverIP, serverPort);
     if(!waitForConnected())
     {
-        std::cout << "Failed to connect to server" << endl;
+        std::cout << "Failed to connect to server. IP: " << serverIP.toString().toStdString() << " Port: " << serverPort << endl;
         throw string("Failed to connect to server");
     }
 

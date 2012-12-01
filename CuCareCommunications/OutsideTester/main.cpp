@@ -10,61 +10,65 @@
 #include "Repository.h"
 #include "StorageObject.h"
 #include "CommsTests.h"
+using namespace std;
+
 
 int testNumber = 0;
 
-using namespace std;
-
-bool testClientSocket(quint16 port)
+void printStringMap(map<string, string> strMap)
 {
-    cout << "Testing Client..." << endl;
-    ClientNetworkConnection* clie = new ClientNetworkConnection();
-    QByteArray toSend = QByteArray("Here's a message!");
-    cout << "Message to send: " << QString(toSend).toStdString() << endl;
-    QByteArray qba = clie->sendReceive(QHostAddress(QString("127.0.0.1")), port, toSend);
-    cout << "Received string: " << QString(qba).toStdString() << endl;
-    return 1;
+    map<string, string>::const_iterator it = strMap.begin();
+    while(it != strMap.end())
+    {
+        cout << it->first << " : " << it->second << endl;
+        it++;
+    }
+    cout << endl;
 }
 
-void runServerSocket(int argc, char* argv[])
+void printStorageObject(StorageObject& store)
 {
-    cout << "Testing Server..." << endl;
-    ServerNetworkListener *serv = new ServerNetworkListener();
-    serv->startListening((quint16)60004);
-
-    return;
+    cout << store.getTable() << endl;
+    cout << store.getIdName() << endl;
+    map<string, string> strMap = store.getValues();
+    printStringMap(strMap);
+    cout << endl;
 }
+
+
+
+
 
 void testCereal()
 {
-    cout << "Testing Cerealization..." << endl;
-    map<string, string> objMap, outMap;
-    objMap[string("key1")] = string("value1");
-    objMap[string("key2")] = string("value2");
-    objMap[string("key3")] = string("value3");
+//    cout << "Testing Cerealization..." << endl;
+//    map<string, string> objMap, outMap;
+//    objMap[string("key1")] = string("value1");
+//    objMap[string("key2")] = string("value2");
+//    objMap[string("key3")] = string("value3");
 
     //newMap = AbstractNetworkMessenger::qStringMapToStringMap(AbstractNetworkMessenger::stringMapToQStringMap(origMap));
-    QVariantMap reqQMap = AbstractNetworkMessenger::packRequest(AbstractNetworkMessenger::CREATE, "A Table", "Patient", objMap);
-    qDebug() << reqQMap << endl << endl << endl;
+    //QVariantMap reqQMap = AbstractNetworkMessenger::packRequest(AbstractNetworkMessenger::CREATE, "A Table", "Patient", objMap);
+    //qDebug() << reqQMap << endl << endl << endl;
 
 
-    QJson::Serializer serial;
-    QByteArray qbar = serial.serialize(reqQMap);
-    QJson::Parser parse;
-    QVariant outQVar = parse.parse(qbar);
-    QVariantMap outQMap = outQVar.toMap();
+//    QJson::Serializer serial;
+//    QByteArray qbar = serial.serialize(reqQMap);
+//    QJson::Parser parse;
+//    QVariant outQVar = parse.parse(qbar);
+//    QVariantMap outQMap = outQVar.toMap();
 
 
 
     //outMap = AbstractNetworkMessenger::qVariantMapToStringMap(outQMap);
 
-    qDebug() << outQMap << endl;
+    //qDebug() << outQMap << endl;
     //qDebug() << (int) AbstractNetworkMessenger::unpackRequestType(outQMap) << endl;
     //qDebug() << QString::fromStdString(AbstractNetworkMessenger::unpackRequestIdKey(outQMap)) << endl;
     //qDebug() << AbstractNetworkMessenger::stringMapToQVariantMap(AbstractNetworkMessenger::unpackRequestObjectMap(outQMap)) << endl;
 
-    cout << "finished" << endl;
-    cout << "extra text" << endl;
+//    cout << "finished" << endl;
+//    cout << "extra text" << endl;
 }
 
 
@@ -82,19 +86,19 @@ int main(int argc, char* argv[])
     if(argc > 1)
     {
         string input = string(argv[1]);
-        if(input == "server")
+        if(input == "serverStart")
         {
             QCoreApplication consoleApp(argc, argv);
-            runServerSocket(argc, argv);
+            testNumber = 2;
+            cout << "Starting server..." << endl;
+            ServerController::makeInstance("1:13:00");
+            ServerNetworkInterface sni((quint16)9000);
+            //CommsTests::startUpServer();
             return consoleApp.exec();
         }
-        else if(input == "client")
+        else if(input == "clientTests")
         {
-            testClientSocket((quint16)60004);
-        }
-        else if(input == "cereal")
-        {
-            testCereal();
+            CommsTests::testClientSide();
         }
         else if(input == "sand")
         {
@@ -102,11 +106,31 @@ int main(int argc, char* argv[])
             testSandbox(str);
 
         }
-        else if(input == "simpleTests")
+        else if(input == "serverTests")
         {
-            CommsTests testing;
-
-            testing.testServerSide();
+            QCoreApplication consoleApp(argc, argv);
+            CommsTests::testServerSide();
+            return consoleApp.exec();
+        }
+        else if(input == "basicServer")
+        {
+            QCoreApplication consoleApp(argc, argv);
+            ServerNetworkListener server;
+            server.startListening((quint16)9000);
+            return consoleApp.exec();
+        }
+        else if(input == "basicClient")
+        {
+            QTcpSocket socket;
+            socket.connectToHost(QHostAddress(QString("127.0.0.1")), (quint16)9000);
+            if(socket.waitForConnected())
+            {
+                cout << "worked" << endl;
+            }
+            else
+            {
+                cout << "didn't work" << endl;
+            }
         }
         else
         {

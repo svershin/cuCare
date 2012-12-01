@@ -2,3 +2,7 @@ Changes:
 -Using QJson now.
 -New "tableName" parameter in ClientNetworkInterface
 	
+
+
+Things to think about:
+-What happens to a server exception that 

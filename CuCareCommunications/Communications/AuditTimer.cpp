@@ -1,12 +1,16 @@
 #include "AuditTimer.h"
 #include <QTime>
+#include <iostream>
+
+using namespace std;
 
 AuditTimer::AuditTimer(string dailyTimeoutStr, QObject *parent)
     : QTimer()
 {
-    connect(this, SIGNAL(timeout()), this, SLOT(set24HourInterval()));
+    connect(this, SIGNAL(timeout()), this, SLOT(start24HourTick()));
     connect(this, SIGNAL(timeout()), parent, SLOT(runAudit()));
-    setInitialInterval(dailyTimeoutStr);
+
+    start(findInitialInterval(dailyTimeoutStr));
 }
 
 AuditTimer::AuditTimer(const AuditTimer& origin)
@@ -19,7 +23,7 @@ AuditTimer::~AuditTimer()
 }
 
 
-void AuditTimer::setInitialInterval(string dailyTime)
+int AuditTimer::findInitialInterval(string dailyTime)
 {
     QTime dailyTimeoutTime = QTime::fromString(QString::fromStdString(dailyTime), "h:mm:ss");
 
@@ -28,11 +32,11 @@ void AuditTimer::setInitialInterval(string dailyTime)
         int timeToWait = QTime::currentTime().msecsTo(dailyTimeoutTime);
         if(timeToWait < 0)
         {
-            setInterval(MSECS_IN_A_DAY + timeToWait);
+            return MSECS_IN_A_DAY + timeToWait;
         }
         else
         {
-            setInterval(timeToWait);
+            return timeToWait;
         }
     }
     else
@@ -40,10 +44,10 @@ void AuditTimer::setInitialInterval(string dailyTime)
         throw(string("Invalid time string passed in the creation of an AuditTimer"));
     }
 
-    return;
+    return -1;
 }
 
-void AuditTimer::set24HourInterval()
+void AuditTimer::start24HourTick()
 {
-    setInterval(MSECS_IN_A_DAY);
+    start(MSECS_IN_A_DAY);
 }

@@ -7,13 +7,17 @@
 #include "ServerNetworkListener.h"
 #include "ServerNetworkRequestInterpreter.h"
 #include "ServerNetworkTranslator.h"
+#include "ClientNetworkInterface.h"
+#include "AbstractNetworkMessenger.h"
 
 class CommsTests
 {
 public:
     CommsTests();
 
-    void testServerSide();
+    static void testServerSide();
+
+    static void testClientSide();
 };
 
 #endif // COMMSTESTS_H

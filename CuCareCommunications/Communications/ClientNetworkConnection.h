@@ -18,9 +18,6 @@ public:
 
     //sendReceive is a high level function that attempts to send a request to the destination host (the cuCare server, in this case) and wait for a reply.
     QByteArray sendReceive(QHostAddress serverIP, quint16 serverPort, QByteArray request);
-
-private:
-    QByteArray requestMessage;
 };
 
 #endif // CLIENTNETWORKCONNECTION_H

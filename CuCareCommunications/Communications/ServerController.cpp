@@ -203,12 +203,17 @@ bool ServerController::pull(string tableName, string idKey, map<string, string> 
 //
 void ServerController::runAudit()
 {
+
     QDate now = QDate::currentDate();
+
+    cout << QDateTime::currentDateTime().toString().toStdString() << ": Running Audit Process" << endl;
+
     if(! repository.runAudit(now.day(), now.month(), now.year()))
     {
-        cout << "audit process failure" << endl;
+        cout << "audit process failure at " << now.toString().toStdString() << endl;
     }
 
+    return;
 }
 
 

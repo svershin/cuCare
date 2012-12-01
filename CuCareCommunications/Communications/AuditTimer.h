@@ -18,10 +18,10 @@ public:
 
     ~AuditTimer();
 
-    void setInitialInterval(string dailyTime);
+    int findInitialInterval(string dailyTime);
 
 public slots:
-    void set24HourInterval();
+    void start24HourTick();
 
 };
 

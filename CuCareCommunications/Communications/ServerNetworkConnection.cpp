@@ -1,9 +1,8 @@
 #include "ServerNetworkConnection.h"
 
 ServerNetworkConnection::ServerNetworkConnection(QTcpSocket *connectedSocketParam)
-{
-    connectedSocket = connectedSocketParam;
-}
+    : connectedSocket(connectedSocketParam)
+{}
 
 
 ServerNetworkConnection::~ServerNetworkConnection()
@@ -22,7 +21,6 @@ void ServerNetworkConnection::handleRequest()
 
     qint64 written = connectedSocket->write(ServerNetworkTranslator::translateAndHandleRequest(requestMessage));
 
-    std::cout << "Bytes written: " << written << std::endl;
     }
     catch (string errorString)
     {
@@ -34,4 +32,7 @@ void ServerNetworkConnection::handleRequest()
     }
 
     connectedSocket->waitForDisconnected();
+    connectedSocket->disconnect();
+
+    return;
 }
