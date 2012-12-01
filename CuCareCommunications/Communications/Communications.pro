@@ -49,9 +49,15 @@ unix:!symbian {
 }
 
 
-unix:!macx:!symbian: LIBS += -L$$PWD/../TestStubLibrary/ -lTestStubLibrary
 
-INCLUDEPATH += $$PWD/../TestStubLibrary
-DEPENDPATH += $$PWD/../TestStubLibrary
+unix:!macx:!symbian: LIBS += -L$$PWD/../../CuCareStorage/ -lCuCareStorage
 
-unix:!macx:!symbian: PRE_TARGETDEPS += $$PWD/../TestStubLibrary/libTestStubLibrary.a
+INCLUDEPATH += $$PWD/../../CuCareStorage
+DEPENDPATH += $$PWD/../../CuCareStorage
+
+
+
+unix:!macx:!symbian: LIBS += -L$$PWD/../qjson/build/lib/ -lqjson
+
+INCLUDEPATH += $$PWD/../qjson/build
+DEPENDPATH += $$PWD/../qjson/build

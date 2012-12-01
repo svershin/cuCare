@@ -1,9 +1,9 @@
 // COMP 3004 FALL 2012
-// Assignment 2: cuCare Prototype
+// Assignment 4: cuCare Prototype #2
 // Team: The Four Puppeteers
-// Contributing Editors: Sergey Vershinin, Mike Yuill
+// Contributing Editors: Sergey Vershinin
 //
-// Referral.h - Declaration of base class Referral
+// Referral.h - Declaration of class Referral
 // Member functions are defined in Referral.cpp
 
 #ifndef REFERRAL_H
@@ -16,42 +16,23 @@ using namespace std;
 
 class Referral:public ResultantFollowup
 {
-
-    Q_OBJECT
-
-    Q_PROPERTY(QString specialistName READ qGetSpecialistName WRITE qSetSpecialistName)
 public:
+	// Constructor
+	Referral ();
 
-    // Constructor
-    Referral (int idParam,
-              FollowupStatus statusParam,
-              Date dateDueParam,
-              Date dateReceivedParam,
-              Date dateCompletedParam,
-              string resultsParam,
-              string specialistNameParam,
-              bool deletedParam);
+	// Declaration of functions declared as virtual in ModelObject 
 
-    Referral();
+	ObjectType getObjectType();
 
-    // Destructor
-    ~Referral();
+	// Class attribute get() & set() methods
 
-    string getSpecialistName();
-    void setSpecialistName(const string value);
+	string getSpecialistName();
+	void setSpecialistName(const string value);
 
-
-    //Special getters and setters for serialization purposes
-    QString qGetSpecialistName();
-    void qSetSpecialistName(const QString value);
-
-
-protected:
 private:
-    string specialistName;
+	string specialistName;
 };
 
-
-#endif
+#endif // REFERRAL_H
 
 // EOF

@@ -12,6 +12,7 @@
 #include "HealthCard.h"
 #include "MedicalTest.h"
 #include "MedicationRenewal.h"
+#include "ModelObject.h"
 #include "Patient.h"
 #include "Physician.h"
 #include "Referral.h"
@@ -20,17 +21,5 @@
 #include "SysAdmin.h"
 #include "Time.h"
 #include "User.h"
-#include "modelobject.h"
-
-#include "Filters/ConsultationFilter.h"
-#include "Filters/FollowupFilter.h"
-#include "Filters/MedicalTestFilter.h"
-#include "Filters/MedicationRenewalFilter.h"
-#include "Filters/PatientFilter.h"
-#include "Filters/PhysicianFilter.h"
-#include "Filters/ReferralFilter.h"
-#include "Filters/ResultantFollowupFilter.h"
-#include "Filters/ReturnConsultationFilter.h"
-#include "Filters/UserFilter.h"
 
 #endif // MODELFILES_H

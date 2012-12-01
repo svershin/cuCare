@@ -1,66 +1,81 @@
 // COMP 3004 FALL 2012
-// Assignment 2: cuCare Prototype
+// Assignment 4: cuCare Prototype #2
 // Team: The Four Puppeteers
-// Contributing Editors: Sergey Vershinin, Mike Yuill
+// Contributing Editors: Sergey Vershinin
 //
-// Followup.h - Declaration of base class Followup
-// Member functions are defined in Followup.cpp
+// Followup.cpp - Implementation of class Followup
+// Function and attribute declarations are in Followup.h
 
 #include "Followup.h"
+#include "IntProperty.h"
 
 // Constructor
-Followup::Followup
-(   int idParam,
-    Followup::FollowupStatus statusParam,
-    Date dateDueParam,
-    Date dateReceivedParam,
-    Date dateCompletedParam,
-    bool deletedParam)
-    : id (idParam),
-      status (statusParam),
-      dateDue (dateDueParam),
-      dateReceived (dateReceivedParam),
-      dateCompleted (dateCompletedParam),
-      deleted (deletedParam)
-{}
-
-Followup::Followup(){}
-
-// Destructor
-Followup::~Followup()
-{
+Followup::Followup () {
+    getProperties()->push_back(new IntProperty(ID_NAME, this, &ModelObject::getId, &ModelObject::setId));
+    getProperties()->push_back(new IntProperty("dueday", this, &ModelObject::getDay, &ModelObject::setDay));
+    getProperties()->push_back(new IntProperty("duemonth", this, &ModelObject::getMonth, &ModelObject::setMonth));
+    getProperties()->push_back(new IntProperty("dueyear", this, &ModelObject::getYear, &ModelObject::setYear));
+    getProperties()->push_back(new IntProperty("receivedday", this, &ModelObject::getDay1, &ModelObject::setDay1));
+    getProperties()->push_back(new IntProperty("receivedmonth", this, &ModelObject::getMonth1, &ModelObject::setMonth1));
+    getProperties()->push_back(new IntProperty("receivedyear", this, &ModelObject::getYear1, &ModelObject::setYear1));
+    getProperties()->push_back(new IntProperty("completedday", this, &ModelObject::getDay2, &ModelObject::setDay2));
+    getProperties()->push_back(new IntProperty("completedmonth", this, &ModelObject::getMonth2, &ModelObject::setMonth2));
+    getProperties()->push_back(new IntProperty("completedyear", this, &ModelObject::getYear2, &ModelObject::setYear2));
+    getProperties()->push_back(new IntProperty("status", this, &ModelObject::getFStatus, &ModelObject::setFStatus));
 }
 
-int Followup::getId() { return id; }
-void Followup::setId(int newId) { id = newId; }
+// Static attribute definition
 
-Followup::FollowupStatus Followup::getStatus() { return status; }
-void Followup::setStatus(const FollowupStatus value) { status = value; }
+const string Followup::TABLE_NAME = "FOLLOWUPS";
+const string Followup::ID_NAME = "followupid";
+
+// Definition of functions declared as virtual in ModelObject
+
+string Followup::getTableName() { return TABLE_NAME; }
+string Followup::getIdName() { return ID_NAME; }
+
+// Class attribute get() & set() methods
+
+int Followup::getId() { return id; }
+void Followup::setId(const int value) { id = value; }
+
+int Followup::getFStatus() { return (int)status; }
+void Followup::setFStatus(const int value) { status = (FollowupStatus)value; }
 
 Date Followup::getDateDue() { return dateDue; }
 void Followup::setDateDue(const Date value) { dateDue = value; }
 
+	int Followup::getDay() { return dateDue.getDay(); }
+	void Followup::setDay(const int value) { dateDue.setDay(value); }
+
+	int Followup::getMonth() { return dateDue.getMonth(); }
+	void Followup::setMonth(const int value) { dateDue.setMonth(value); }
+
+	int Followup::getYear() { return dateDue.getYear(); }
+	void Followup::setYear(const int value) { dateDue.setYear(value); }
+
 Date Followup::getDateReceived() { return dateReceived; }
 void Followup::setDateReceived(const Date value) { dateReceived = value; }
+
+	int Followup::getDay1() { return dateReceived.getDay(); }
+	void Followup::setDay1(const int value) { dateReceived.setDay(value); }
+
+	int Followup::getMonth1() { return dateReceived.getMonth(); }
+	void Followup::setMonth1(const int value) { dateReceived.setMonth(value); }
+
+	int Followup::getYear1() { return dateReceived.getYear(); }
+	void Followup::setYear1(const int value) { dateReceived.setYear(value); }
 
 Date Followup::getDateCompleted() { return dateCompleted; }
 void Followup::setDateCompleted(const Date value) { dateCompleted = value; }
 
-void Followup::markDeleted() { deleted = true; }
-bool Followup::isDeleted() { return deleted; }
+	int Followup::getDay2() { return dateCompleted.getDay(); }
+	void Followup::setDay2(const int value) { dateCompleted.setDay(value); }
 
+	int Followup::getMonth2() { return dateCompleted.getMonth(); }
+	void Followup::setMonth2(const int value) { dateCompleted.setMonth(value); }
 
-// Special getters and setters for serialization purposes
-//
-QVariantMap Followup::qGetDateDue(){return QJson::QObjectHelper::qobject2qvariant(&dateDue);}
-void Followup::qSetDateDue(const QVariantMap value){QJson::QObjectHelper::qvariant2qobject(value, &dateDue);}
-
-QVariantMap Followup::qGetDateReceived(){return QJson::QObjectHelper::qobject2qvariant(&dateReceived);}
-void Followup::qSetDateReceived(const QVariantMap value){QJson::QObjectHelper::qvariant2qobject(value, &dateReceived);}
-
-QVariantMap Followup::qGetDateCompleted(){return QJson::QObjectHelper::qobject2qvariant(&dateCompleted);}
-void Followup::qSetDateCompleted(const QVariantMap value){QJson::QObjectHelper::qvariant2qobject(value, &dateCompleted);}
-
-void Followup::qPutDeleted(const bool value){deleted = value;}
+	int Followup::getYear2() { return dateCompleted.getYear(); }
+	void Followup::setYear2(const int value) { dateCompleted.setYear(value); }
 
 // EOF

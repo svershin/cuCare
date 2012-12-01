@@ -1,5 +1,5 @@
 // COMP 3004 FALL 2012
-// Assignment 2: cuCare Prototype
+// Assignment 4: cuCare Prototype #2
 // Team: The Four Puppeteers
 // Contributing Editors: Sergey Vershinin, Mike Yuill
 //
@@ -11,33 +11,15 @@
 
 #include "User.h"
 
-class AdminAssistant:public User
+class AdminAssistant : public User
 {
-    Q_OBJECT
-
 public:
-
-    // Constructor
-    AdminAssistant (string usernameParam,
-                    string firstNameParam,
-                    string lastNameParam,
-                    Date dateOfBirthParam,
-                    ContactInfo contactParam,
-                    Address addressParam,
-                    bool deletedParam);
-
-    // Destructor
     AdminAssistant();
+	// Declaration of functions declared as virtual in ModelObject 
 
-    ~AdminAssistant();
-
-    int getType() { return 3; }
-
-protected:
-private:
+	ObjectType getObjectType();
 };
 
-
-#endif
+#endif // ADMINASSISTANT_H
 
 // EOF

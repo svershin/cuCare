@@ -1,45 +1,20 @@
 // COMP 3004 FALL 2012
-// Assignment 2: cuCare Prototype
+// Assignment 4: cuCare Prototype #2
 // Team: The Four Puppeteers
-// Contributing Editors: Sergey Vershinin, Mike Yuill
+// Contributing Editors: Sergey Vershinin
 //
-// ResultantFollowup.h - Declaration of base class ResultantFollowup
-// Member functions are defined in ResultantFollowup.cpp
+// ResultantFollowup.cpp - Implementation of class ResultantFollowup
+// Function and attribute declarations are in ResultantFollowup.h
 
 #include "ResultantFollowup.h"
+#include "StringProperty.h"
 
 // Constructor
-ResultantFollowup::ResultantFollowup
-(   int idParam,
-    FollowupStatus statusParam,
-    Date dateDueParam,
-    Date dateReceivedParam,
-    Date dateCompletedParam,
-    string resultsParam,
-    bool deletedParam)
-    : Followup (idParam,
-                statusParam,
-                dateDueParam,
-                dateReceivedParam,
-                dateCompletedParam,
-                deletedParam),
-      results (resultsParam)
-{
-}
-
-ResultantFollowup::ResultantFollowup(){}
-
-// Destructor
-ResultantFollowup::~ResultantFollowup()
-{
+ResultantFollowup::ResultantFollowup() {
+	getProperties()->push_back(new StringProperty("results", this, &ModelObject::getResults, &ModelObject::setResults));
 }
 
 string ResultantFollowup::getResults() { return results; }
 void ResultantFollowup::setResults(const string value) { results = value; }
 
-
-//Special getters and setters for serialization purposes
-//
-QString ResultantFollowup::qGetResults(){QString::fromStdString(results);}
-void ResultantFollowup::qSetResults(const QString value){results = value.toStdString();}
 // EOF

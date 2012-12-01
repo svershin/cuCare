@@ -1,20 +1,25 @@
 // COMP 3004 FALL 2012
-// Assignment 2: cuCare Prototype
+// Assignment 4: cuCare Prototype #2
 // Team: The Four Puppeteers
-// Contributing Editors: Sergey Vershinin, Mike Yuill
+// Contributing Editors: Sergey Vershinin
 //
-// HealthCard.h - Declaration of base class HealthCard
-// Member functions are defined in HealthCard.cpp
+// HealthCard.cpp - Implementation of class HealthCard
+// Function and attribute declarations are in HealthCard.h
 
 #include "HealthCard.h"
+
+HealthCard::HealthCard()
+    : number (""),
+      expiry ()
+{
+}
 
 // Constructor
 HealthCard::HealthCard(string numberParam, Date expiryParam)
     : number (numberParam),
       expiry (expiryParam)
-{}
-
-HealthCard::HealthCard(){}
+{
+}
 
 // Destructor
 HealthCard::~HealthCard()
@@ -27,13 +32,6 @@ void HealthCard::setNumber(const string value) { number = value; }
 Date HealthCard::getExpiry() { return expiry; }
 void HealthCard::setExpiry(const Date value) { expiry = value; }
 
-
-//Special getters and setters for serialization purposes
-//
-QString HealthCard::qGetNumber(){return QString::fromStdString(number);}
-void HealthCard::qSetNumber(const QString value){number = value.toStdString();}
-
-QVariantMap HealthCard::qGetExpiry(){return QJson::QObjectHelper::qobject2qvariant(&expiry);}
-void HealthCard::qSetExpiry(const QVariantMap value){QJson::QObjectHelper::qvariant2qobject(value, &expiry);}
+Date* HealthCard::getExpiryPtr() { return &expiry; }
 
 // EOF

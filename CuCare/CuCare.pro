@@ -11,21 +11,20 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-    patientselectdialog.cpp \
-    loginwindowdialog.cpp \
-    mainwindow.cpp \
-    MasterController/MasterController.cpp
+    ObjectInterpreter/ObjectInterpreter.cpp \
+    ClientDataStorage/Factory.cpp \
+    ClientDataStorage/Warehouse.cpp
 
 HEADERS  += \
-    patientselectdialog.h \
-    loginwindowdialog.h \
-    mainwindow.h \
-    MasterController/MasterController.h
+    ObjectInterpreter/ObjectInterpreter.h \
+    ClientDataStorage/Factory.h \
+    ClientDataStorage/Warehouse.h
 
 FORMS    += \
     patientselectdialog.ui \
     loginwindowdialog.ui \
-    mainwindow.ui
+    mainwindow.ui \
+    followuptypeselectdialog.ui
 
 
 unix:!macx:!symbian: LIBS += -L$$PWD/../CuCareModel/ -lCuCareModel

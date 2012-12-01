@@ -1,7 +1,7 @@
 // COMP 3004 FALL 2012
 // Assignment 2: cuCare Prototype
 // Team: The Four Puppeteers
-// Contributing Editors: Sergey Vershinin, Mike Yuill
+// Contributing Editors: Sergey Vershinin
 //
 // Address.h - Declaration of base class Address
 // Member functions are defined in Address.cpp
@@ -9,44 +9,25 @@
 #ifndef ADDRESS_H
 #define ADDRESS_H
 
-
-#include <QObject>
-#include <QtGlobal>
-#include <QString>
 #include <string>
-#include "modelobject.h"
 
 using namespace std;
 
-class Address : public ModelObject
+class Address
 {
-
-    Q_OBJECT
-
-    Q_PROPERTY(QString country READ qGetCountry WRITE qSetCountry)
-    Q_PROPERTY(QString city READ qGetCity WRITE qSetCity)
-    Q_PROPERTY(QString lineOne READ qGetLineOne WRITE qSetLineOne)
-    Q_PROPERTY(QString lineTwo READ qGetLineTwo WRITE qSetLineTwo)
-    Q_PROPERTY(QString postalCode READ qGetPostalCode WRITE qSetPostalCode)
-
-
 public:
 
-    // Regular Constructor
+    // Constructor
+    Address();
+
     Address (string countryParam,
              string cityParam,
              string lineOneParam,
              string lineTwoParam,
              string postalCodeParam);
 
-    //Blank constructor
-    Address();
-
-
-
     // Destructor
     ~Address();
-
 
     string getCountry();
     void setCountry(const string value);
@@ -63,23 +44,7 @@ public:
     string getPostalCode();
     void setPostalCode(const string value);
 
-
-    //Special getters and setters for object serialization purposes:
-    QString qGetCountry();
-    void qSetCountry(const QString value);
-
-    QString qGetCity();
-    void qSetCity(const QString value);
-
-    QString qGetLineOne();
-    void qSetLineOne(const QString value);
-
-    QString qGetLineTwo();
-    void qSetLineTwo(const QString value);
-
-    QString qGetPostalCode();
-    void qSetPostalCode(const QString value);
-
+protected:
 private:
     string country;
     string city;

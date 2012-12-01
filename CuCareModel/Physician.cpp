@@ -1,42 +1,26 @@
 // COMP 3004 FALL 2012
-// Assignment 2: cuCare Prototype
+// Assignment 4: cuCare Prototype #2
 // Team: The Four Puppeteers
-// Contributing Editors: Sergey Vershinin, Mike Yuill
+// Contributing Editors: Sergey Vershinin
 //
-// Physician.h - Declaration of base class Physician
-// Member functions are defined in Physician.cpp
+// Physician.cpp - Implementation of class Physician
+// Function and attribute declarations are in Physician.h
 
+#include "IntProperty.h"
 #include "Physician.h"
 
 // Constructor
-Physician::Physician
-(	int idParam,
-    string usernameParam,
-    string firstNameParam,
-    string lastNameParam,
-    Date dateOfBirthParam,
-    ContactInfo contactParam,
-    Address addressParam,
-    bool deletedParam)
-    : User (usernameParam,
-            firstNameParam,
-            lastNameParam,
-            dateOfBirthParam,
-            contactParam,
-            addressParam,
-            deletedParam),
-      id (idParam)
-{}
-
-Physician::Physician(){}
-
-// Destructor
-Physician::~Physician()
-{
+Physician::Physician() {
+      getProperties()->push_back(new IntProperty("physicianid", this, &ModelObject::getPhysicianId, &ModelObject::setPhysicianId));
 }
 
-int Physician::getId() { return id; }
+// Definition of functions declared as virtual in ModelObject 
 
-void Physician::setId(int value) { id = value; }
+ModelObject::ObjectType Physician::getObjectType() { return ModelObject::PHYSICIAN; }
+
+// Class attribute get() & set() methods
+
+int Physician::getPhysicianId() { return physicianId; };
+void Physician::setPhysicianId(const int value) { physicianId = value; }
 
 // EOF

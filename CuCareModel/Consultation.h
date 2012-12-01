@@ -1,9 +1,9 @@
 // COMP 3004 FALL 2012
-// Assignment 2: cuCare Prototype
+// Assignment 4: cuCare Prototype #2
 // Team: The Four Puppeteers
-// Contributing Editors: Sergey Vershinin, Mike Yuill
+// Contributing Editors: Sergey Vershinin
 //
-// Consultation.h - Declaration of base class Consultation
+// Consultation.h - Declaration of class Consultation
 // Member functions are defined in Consultation.cpp
 
 #ifndef CONSULTATION_H
@@ -13,121 +13,82 @@
 #include <vector>
 #include "Date.h"
 #include "Time.h"
-#include "Followup.h"
-#include "Physician.h"
-#include <QtGlobal>
-#include <QVariantMap>
-#include "modelobject.h"
+#include "ModelObject.h"
 
 using namespace std;
 
 class Consultation : public ModelObject
 {
-    Q_OBJECT
-
-    Q_PROPERTY(int consultID READ getConsultID WRITE setConsultID)
-    Q_PROPERTY(QString reason READ qGetReason WRITE qSetReason)
-    Q_PROPERTY(QString diagnosis READ qGetDiagnosis WRITE qSetDiagnosis)
-    Q_PROPERTY(QString comments READ qGetComments WRITE qSetComments)
-    Q_PROPERTY(ConsultationStatus status READ getStatus WRITE setStatus)
-    Q_PROPERTY(QVariantMap date READ qGetDate)
-    Q_PROPERTY(QVariantMap time READ qGetTime)
-    Q_PROPERTY(bool deleted READ isDeleted WRITE qPutDeleted)
-    Q_ENUMS(ConsultationStatus)
-
-
-
-
 public:
+	// Constructor
+	Consultation ();
 
-    enum ConsultationStatus
-    {
-        CSTAT_ERROR,
-        CSTAT_PENDING,
-        CSTAT_OCCURED,
-        CSTAT_COMPLETED
-    };
+	// Declaration of functions declared as virtual in ModelObject 
 
-    // Regular Constructor
-    Consultation (int consultIDParam,
-                  string reasonParam,
-                  string diagnosisParam,
-                  string commentsParam,
-                  ConsultationStatus statusParam,
-                  Date dateParam,
-                  Time timeParam,
-                  Physician* pConsultingPhysParam,
-                  bool deletedParam);
+	string getTableName();
+    string getIdName();
 
-    Consultation();
+	ObjectType getObjectType();
 
+	// Class attribute get() & set() methods
 
-    // Destructor
-    ~Consultation();
+	int getId();
+	void setId(const int value);
 
-    int getConsultID();
-    void setConsultID(int newConsultID);
+	string getReason();
+	void setReason(const string value);
 
-    string getReason();
-    void setReason(const string value);
+	string getDiagnosis();
+	void setDiagnosis(const string value);
 
-    string getDiagnosis();
-    void setDiagnosis(const string value);
+	string getComments();
+	void setComments(const string value);
 
-    string getComments();
-    void setComments(const string value);
+    int getCStatus();
+    void setCStatus(const int value);
 
-    ConsultationStatus getStatus();
-    void setStatus(const ConsultationStatus value);
+	Date getDate();
+	void setDate(const Date value);
 
-    Date getDate();
-    void setDate(const Date value);
+		int getDay();
+		void setDay(int value);
 
-    Time getTime();
-    void setTime(const Time value);
+		int getMonth();
+		void setMonth(int value);
 
-    Physician* getConsultingPhys();
-    void setConsultingPhys(Physician* const value);
+		int getYear();
+		void setYear(int value);
 
-    vector<Followup*>* getFollowups();
+	Time getTime();
+	void setTime(const Time value);
 
-    void markDeleted();
-    bool isDeleted();
+		int getHour();
+		void setHour(int value);
 
+		int getMinute();
+		void setMinute(int value);
 
-    //Special getters and setters for serialization purposes
-    QString qGetReason();
-    void qSetReason(const QString value);
+	int getPhysicianId();
+	void setPhysicianId(int value);
 
-    QString qGetDiagnosis();
-    void qSetDiagnosis(const QString value);
+	vector<int>* getFollowupIds();
+	void addFollowupId(const int value);
 
-    QString qGetComments();
-    void qSetComments(const QString value);
+    static const string TABLE_NAME;
+    static const string ID_NAME;
 
-    QVariantMap qGetDate();
-    //void qSetDate(const QVariantMap value);
-
-    QVariantMap qGetTime();
-    //void qSetTime(const QVariantMap value);
-
-    void qPutDeleted(const bool value);
-
-protected:
 private:
-    int consultID;
+	int consultId;
     string reason;
-    string diagnosis;
-    string comments;
-    ConsultationStatus status;
-    Date date;
-    Time time;
-    vector<Followup*> Followups;
-    Physician* pConsultingPhys;
-    bool deleted;
+	string diagnosis;
+	string comments;
+	ConsultationStatus status;
+	Date date;
+	Time time;
+	vector<int> followupIds;
+	int consultingPhysId;
 };
 
-
-#endif
+#endif // CONSULTATION_H
 
 // EOF

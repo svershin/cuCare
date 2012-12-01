@@ -1,7 +1,7 @@
 // COMP 3004 FALL 2012
 // Assignment 2: cuCare Prototype
 // Team: The Four Puppeteers
-// Contributing Editors: Sergey Vershinin, Mike Yuill
+// Contributing Editors: Sergey Vershinin
 //
 // Date.h - Declaration of base class Date
 // Member functions are defined in Date.cpp
@@ -9,25 +9,16 @@
 #ifndef DATE_H
 #define DATE_H
 
-#include <QObject>
-#include "modelobject.h"
-
-class Date : public ModelObject
+class Date
 {
-    Q_OBJECT
-
-    Q_PROPERTY(int day READ getDay WRITE setDay)
-    Q_PROPERTY(int month READ getMonth WRITE setMonth)
-    Q_PROPERTY(int year READ getYear WRITE setYear)
-
 public:
 
     // Constructor
-    Date (int DayParam,
-          int MonthParam,
-          int YearParam);
+    Date ();
 
-    Date();
+    Date(int DayParam,
+         int MonthParam,
+         int YearParam);
 
     // Destructor
     ~Date();
@@ -51,4 +42,3 @@ private:
 #endif
 
 // EOF
-

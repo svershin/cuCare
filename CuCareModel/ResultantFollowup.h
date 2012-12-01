@@ -1,9 +1,9 @@
 // COMP 3004 FALL 2012
-// Assignment 2: cuCare Prototype
+// Assignment 4: cuCare Prototype #2
 // Team: The Four Puppeteers
-// Contributing Editors: Sergey Vershinin, Mike Yuill
+// Contributing Editors: Sergey Vershinin
 //
-// ResultantFollowup.h - Declaration of base class ResultantFollowup
+// ResultantFollowup.h - Declaration of class ResultantFollowup
 // Member functions are defined in ResultantFollowup.cpp
 
 #ifndef RESULTANTFOLLOWUP_H
@@ -14,43 +14,23 @@
 
 using namespace std;
 
-class ResultantFollowup:public Followup
+class ResultantFollowup : public Followup
 {
-    Q_OBJECT
-
-    Q_PROPERTY(QString results READ qGetResults WRITE qSetResults)
-
 public:
+	// Constructor
+	ResultantFollowup ();
 
-    // Constructor
-    ResultantFollowup (int idParam,
-                       FollowupStatus statusParam,
-                       Date dateDueParam,
-                       Date dateReceivedParam,
-                       Date dateCompletedParam,
-                       string resultsParam,
-                       bool deletedParam);
+	// Class attribute get() & set() methods
 
-    ResultantFollowup();
-
-    // Destructor
-    ~ResultantFollowup();
-
-    string getResults();
-    void setResults(const string value);
-
-
-    //Special getters and setters for serialization purposes
-    QString qGetResults();
-    void qSetResults(const QString value);
-
+	string getResults();
+	void setResults(const string value);
 
 protected:
 private:
-    string results;
+		string results;
 };
 
 
-#endif
+#endif // RESULTANTFOLLOWUP_H
 
 // EOF

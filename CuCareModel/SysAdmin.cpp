@@ -1,36 +1,20 @@
 // COMP 3004 FALL 2012
-// Assignment 2: cuCare Prototype
+// Assignment 4: cuCare Prototype #2
 // Team: The Four Puppeteers
-// Contributing Editors: Sergey Vershinin, Mike Yuill
+// Contributing Editors: Sergey Vershinin
 //
-// SysAdmin.h - Declaration of base class SysAdmin
-// Member functions are defined in SysAdmin.cpp
+// SysAdmin.cpp - Implementation of class SysAdmin
+// Function and attribute declarations are in SysAdmin.h
 
 #include "SysAdmin.h"
 
-// Constructor
-SysAdmin::SysAdmin
-(	string usernameParam,
-    string firstNameParam,
-    string lastNameParam,
-    Date dateOfBirthParam,
-    ContactInfo contactParam,
-    Address addressParam,
-    bool deletedParam)
-    : User (usernameParam,
-            firstNameParam,
-            lastNameParam,
-            dateOfBirthParam,
-            contactParam,
-            addressParam,
-            deletedParam)
-{}
-
-SysAdmin::SysAdmin(){}
-
-// Destructor
-SysAdmin::~SysAdmin()
+SysAdmin::SysAdmin()
 {
+
 }
+
+// Definition of functions declared as virtual in ModelObject 
+
+ModelObject::ObjectType SysAdmin::getObjectType() { return ModelObject::SYSADMIN; }
 
 // EOF

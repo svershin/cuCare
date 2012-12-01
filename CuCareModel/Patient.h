@@ -1,7 +1,7 @@
 // COMP 3004 FALL 2012
-// Assignment 2: cuCare Prototype
+// Assignment 4: cuCare Prototype #2
 // Team: The Four Puppeteers
-// Contributing Editors: Sergey Vershinin, Mike Yuill
+// Contributing Editors: Sergey Vershinin
 //
 // Patient.h - Declaration of base class Patient
 // Member functions are defined in Patient.cpp
@@ -11,134 +11,137 @@
 
 #include <vector>
 #include <string>
-#include "Consultation.h"
 #include "ContactInfo.h"
 #include "Date.h"
 #include "Address.h"
 #include "HealthCard.h"
-#include "Physician.h"
-#include "modelobject.h"
+#include "ModelObject.h"
 
 using namespace std;
 
 class Patient : public ModelObject
 {
-
-    Q_OBJECT
-
-    Q_PROPERTY(int id READ getId WRITE setId)
-    Q_PROPERTY(QString firstName READ qGetFirstName WRITE qSetFirstName)
-    Q_PROPERTY(QString lastName READ qGetLastName WRITE qSetLastName)
-    Q_PROPERTY(QString notes READ qGetNotes WRITE qSetNotes)
-    Q_PROPERTY(QVariantMap contact READ qGetContact WRITE qSetContact)
-    Q_PROPERTY(QVariantMap address READ qGetAddress WRITE qSetAddress)
-    Q_PROPERTY(QVariantMap dateOfBirth READ qGetDateOfBirth WRITE qSetDateOfBirth)
-    Q_PROPERTY(QVariantMap dateAddedToSystem READ qGetDateAddedToSystem WRITE qSetDateAddedToSystem)
-    Q_PROPERTY(QVariantMap healthCard READ qGetHealthCard WRITE qSetHealthCard)
-    Q_PROPERTY(bool deleted READ isDeleted WRITE qPutDeleted)
-
-
-
 public:
+	// Constructor
+	Patient ();
 
-    // Constructor
-    Patient (int idParam,
-             string firstNameParam,
-             string lastNameParam,
-             string notesParam,
-             ContactInfo contactParam,
-             Address addressParam,
-             Date dateOfBirthParam,
-             Date dateAddedToSystemParam,
-             Physician* pPhysicianParam,
-             HealthCard healthCardParam,
-             bool deletedParam);
+	// Declaration of functions declared as virtual in ModelObject 
 
-    Patient();
+	string getTableName();
+    string getIdName();
 
-    // Destructor
-    ~Patient();
+	ObjectType getObjectType();
 
-    int getId();
-    void setId(int value);
+	// Class attribute get() & set() methods
 
-    string getFirstName();
-    void setFirstName(const string value);
+	int getId();
+	void setId(const int value);
 
-    string getLastName();
-    void setLastName(const string value);
+	string getFirstName();
+	void setFirstName(const string value);
 
-    string getNotes();
-    void setNotes(const string value);
+	string getLastName();
+	void setLastName(const string value);
 
-    ContactInfo getContact();
-    void setContact(const ContactInfo value);
+	Address getAddress();
+	void setAddress(const Address value);
 
-    Address getAddress();
-    void setAddress(const Address value);
+		string getCountry();
+		void setCountry(const string value);
 
-    Date getDateOfBirth();
-    void setDateOfBirth(const Date value);
+		string getCity();
+		void setCity(const string value);
 
-    Date getDateAddedToSystem();
-    void setDateAddedToSystem(const Date value);
+		string getLineOne();
+		void setLineOne(const string value);
 
-    HealthCard getHealthCard();
-    void setHealthCard(const HealthCard value);
+		string getLineTwo();
+		void setLineTwo(const string value);
 
-    Physician* getPhysician();
-    void setPhysician(Physician* const value);
+		string getPostalCode();
+		void setPostalCode(const string value);
 
-    vector<Consultation*>* getConsultations();
+	ContactInfo getContact();
+	void setContact(const ContactInfo value);
 
-    void markDeleted();
-    bool isDeleted();
+		string getWorkPhone();
+		void setWorkPhone(const string value);
 
+		string getCellPhone();
+		void setCellPhone(const string value);
 
-    //Special getters and setters for serialization purposes
-    QString qGetFirstName();
-    void qSetFirstName(const QString value);
+		string getEmail();
+		void setEmail(const string value);
 
-    QString qGetLastName();
-    void qSetLastName(const QString value);
+		string getWorkEmail();
+		void setWorkEmail(const string value);
 
-    QString qGetNotes();
-    void qSetNotes(const QString value);
+	Date getDateOfBirth();
+	void setDateOfBirth(const Date value);
 
-    QVariantMap qGetContact();
-    void qSetContact(const QVariantMap value);
+		int getDay();
+		void setDay(const int value);
 
-    QVariantMap qGetAddress();
-    void qSetAddress(const QVariantMap value);
+		int getMonth();
+		void setMonth(const int value);
 
-    QVariantMap qGetDateOfBirth();
-    void qSetDateOfBirth(const QVariantMap value);
+		int getYear();
+		void setYear(const int value);
 
-    QVariantMap qGetDateAddedToSystem();
-    void qSetDateAddedToSystem(const QVariantMap value);
+	Date getDateAddedToSystem();
+	void setDateAddedToSystem(const Date value);
 
-    QVariantMap qGetHealthCard();
-    void qSetHealthCard(const QVariantMap value);
+		int getDay1();
+		void setDay1(const int value);
 
-    void qPutDeleted(const bool value);
+		int getMonth1();
+		void setMonth1(const int value);
 
-protected:
+		int getYear1();
+		void setYear1(const int value);
+
+	HealthCard getHealthCard();
+	void setHealthCard(const HealthCard value);
+
+		string getHCNumber();
+		void setHCNumber(const string value);
+
+		int getHCExpiryDay();
+		void setHCExpiryDay(const int value);
+
+		int getHCExpiryMonth();
+		void setHCExpiryMonth(const int value);
+
+		int getHCExpiryYear();
+		void setHCExpiryYear(const int value);
+
+	string getNotes();
+	void setNotes(const string value);
+
+	int getPhysicianId();
+	void setPhysicianId(int const value);
+
+	vector<int>* getConsultationIds();
+	void addConsultationId(const int value);
+
+    static const string TABLE_NAME;
+    static const string ID_NAME;
+
 private:
-    int id;
-    string firstName;
-    string lastName;
-    string notes;
-    ContactInfo contact;
-    Address address;
-    Date dateOfBirth;
-    Date dateAddedToSystem;
-    Physician* pPhysician;
-    HealthCard healthCard;
-    bool deleted;
-    vector<Consultation*> Consultations;
+	int patientId;
+	string firstName;
+	string lastName;
+	Address address;
+	ContactInfo contact;
+	Date dateOfBirth;
+	Date dateAddedToSystem;
+	HealthCard healthCard;
+	string notes;
+	int pPhysicianId;
+	vector<int> consultationIds;
 };
 
 
-#endif
+#endif // PATIENT_H
 
 // EOF

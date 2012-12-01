@@ -1,99 +1,83 @@
 // COMP 3004 FALL 2012
-// Assignment 2: cuCare Prototype
+// Assignment 4: cuCare Prototype #2
 // Team: The Four Puppeteers
-// Contributing Editors: Sergey Vershinin, Mike Yuill
+// Contributing Editors: Sergey Vershinin
 //
-// Followup.h - Declaration of base class Followup
+// Followup.h - Declaration of class Followup
 // Member functions are defined in Followup.cpp
 
 #ifndef FOLLOWUP_H
 #define FOLLOWUP_H
 
 #include "Date.h"
-#include <QVariant>
-#include "modelobject.h"
+#include "ModelObject.h"
 
 class Followup : public ModelObject
 {
-    Q_OBJECT
-
-    Q_PROPERTY(int id READ getId WRITE setId)
-    Q_PROPERTY(FollowupStatus status READ getStatus WRITE setStatus)
-    Q_PROPERTY(QVariantMap dateDue READ qGetDateDue WRITE qSetDateDue)
-    Q_PROPERTY(QVariantMap dateReceived READ qGetDateReceived WRITE qSetDateDue)
-    Q_PROPERTY(QVariantMap dateCompleted READ qGetDateCompleted WRITE qSetDateCompleted)
-    Q_PROPERTY(bool deleted READ isDeleted WRITE qPutDeleted)
-    Q_ENUMS(FollowupStatus)
-
-
-
 public:
+	// Constructor
+	Followup ();
 
-    enum FollowupStatus
-    {
-        FSTAT_ERROR,
-        FSTAT_PENDING,
-        FSTAT_OVERDUE,
-        FSTAT_RECEIVED,
-        FSTAT_COMPLETED
-    };
+	// Declaration of functions declared as virtual in ModelObject 
 
-    // Constructor
-    Followup (int idParam,
-              FollowupStatus statusParam,
-              Date dateDueParam,
-              Date dateReceivedParam,
-              Date dateCompletedParam,
-              bool deletedParam);
+	string getTableName();
+    string getIdName();
 
+	// Class attribute get() & set() methods
 
-    Followup();
+	int getId();
+	void setId(const int value);
 
-    // Destructor
-    ~Followup();
+    int getFStatus();
+    void setFStatus(const int value);
 
-    int getId();
-    void setId(int newId);
+	Date getDateDue();
+	void setDateDue(const Date value);
 
-    FollowupStatus getStatus();
-    void setStatus(const FollowupStatus value);
+		int getDay();
+		void setDay(const int value);
 
-    Date getDateDue();
-    void setDateDue(const Date value);
+		int getMonth();
+		void setMonth(const int value);
 
-    Date getDateReceived();
-    void setDateReceived(const Date value);
+		int getYear();
+		void setYear(const int value);
 
-    Date getDateCompleted();
-    void setDateCompleted(const Date value);
+	Date getDateReceived();
+	void setDateReceived(const Date value);
 
-    void markDeleted();
-    bool isDeleted();
+		int getDay1();
+		void setDay1(const int value);
 
+		int getMonth1();
+		void setMonth1(const int value);
 
-    //Special getters and setters for serialization purposes
-    QVariantMap qGetDateDue();
-    void qSetDateDue(const QVariantMap value);
+		int getYear1();
+		void setYear1(const int value);
 
-    QVariantMap qGetDateReceived();
-    void qSetDateReceived(const QVariantMap value);
+	Date getDateCompleted();
+	void setDateCompleted(const Date value);
 
-    QVariantMap qGetDateCompleted();
-    void qSetDateCompleted(const QVariantMap value);
+		int getDay2();
+		void setDay2(const int value);
 
-    void qPutDeleted(const bool value);
+		int getMonth2();
+		void setMonth2(const int value);
 
-protected:
+		int getYear2();
+		void setYear2(const int value);
+
+        static const string TABLE_NAME;
+        static const string ID_NAME;
+
 private:
-    int id;
-    FollowupStatus status;
-    Date dateDue;
-    Date dateReceived;
-    Date dateCompleted;
-    bool deleted;
+	int id;
+	FollowupStatus status;
+	Date dateDue;
+	Date dateReceived;
+	Date dateCompleted;
 };
 
-
-#endif
+#endif // FOLLOWUP_H
 
 // EOF

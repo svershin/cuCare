@@ -1,12 +1,19 @@
 // COMP 3004 FALL 2012
 // Assignment 2: cuCare Prototype
 // Team: The Four Puppeteers
-// Contributing Editors: Sergey Vershinin, Mike Yuill
+// Contributing Editors: Sergey Vershinin
 //
 // Date.h - Declaration of base class Date
 // Member functions are defined in Date.cpp
 
 #include "Date.h"
+
+Date::Date()
+    : day (0),
+      month (0),
+      year (0)
+{
+}
 
 // Constructor
 Date::Date
@@ -18,9 +25,6 @@ Date::Date
       year (YearParam)
 {
 }
-
-//Blank constructor
-Date::Date(){}
 
 // Destructor
 Date::~Date()

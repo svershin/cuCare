@@ -1,9 +1,9 @@
 // COMP 3004 FALL 2012
-// Assignment 2: cuCare Prototype
+// Assignment 4: cuCare Prototype #2
 // Team: The Four Puppeteers
-// Contributing Editors: Sergey Vershinin, Mike Yuill
+// Contributing Editors: Sergey Vershinin
 //
-// HealthCard.h - Declaration of base class HealthCard
+// HealthCard.h - Declaration of storage class HealthCard
 // Member functions are defined in HealthCard.cpp
 
 #ifndef HEALTHCARD_H
@@ -11,25 +11,17 @@
 
 #include <string>
 #include "Date.h"
-#include <QString>
-#include <QVariantMap>
 
 using namespace std;
 
-class HealthCard : public ModelObject
+class HealthCard
 {
-
-    Q_OBJECT
-
-    Q_PROPERTY(QString number READ qGetNumber WRITE qSetNumber)
-    Q_PROPERTY(QVariantMap expiry READ qGetExpiry WRITE qSetExpiry)
-
 public:
 
     // Constructor
-    HealthCard(string numberParam, Date expiryParam);
-
     HealthCard();
+
+    HealthCard(string numberParam, Date expiryParam);
 
     // Destructor
     ~HealthCard();
@@ -40,13 +32,7 @@ public:
     Date getExpiry();
     void setExpiry(const Date value);
 
-
-    //Special getters and setters for serialization purposes
-    QString qGetNumber();
-    void qSetNumber(const QString value);
-
-    QVariantMap qGetExpiry();
-    void qSetExpiry(const QVariantMap value);
+    Date* getExpiryPtr();
 
 protected:
 private:

@@ -1,44 +1,33 @@
 // COMP 3004 FALL 2012
-// Assignment 2: cuCare Prototype
+// Assignment 4: cuCare Prototype #2
 // Team: The Four Puppeteers
-// Contributing Editors: Sergey Vershinin, Mike Yuill
+// Contributing Editors: Sergey Vershinin
 //
-// ReturnConsultation.h - Declaration of base class ReturnConsultation
+// ReturnConsultation.h - Declaration of class ReturnConsultation
 // Member functions are defined in ReturnConsultation.cpp
 
 #ifndef RETURNCONSULTAION_H
 #define RETURNCONSULTAION_H
 
-#include "Consultation.h"
 #include "Followup.h"
 
-class ReturnConsultation:public Followup
+class ReturnConsultation : public Followup
 {
-    Q_OBJECT
-
 public:
-
     // Constructor
-    ReturnConsultation (int idParam,
-                        FollowupStatus statusParam,
-                        Date dateDueParam,
-                        Date dateReceivedParam,
-                        Date dateCompletedParam,
-                        Consultation* pConsultParam,
-                        bool deletedParam);
+    ReturnConsultation ();
 
-    ReturnConsultation();
+    // Declaration of functions declared as virtual in ModelObject 
 
-    // Destructor
-    ~ReturnConsultation();
+    ObjectType getObjectType();
 
-    Consultation* getConsult();
-    void setConsult(Consultation* const value);
+    // Class attribute get() & set() methods
 
+    int getConsultId();
+    void setConsultId(const int value);
 
-protected:
 private:
-    Consultation* pConsult;
+    int consultId;
 };
 
 #endif
