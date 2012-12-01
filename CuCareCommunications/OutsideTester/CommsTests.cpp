@@ -92,7 +92,7 @@ void CommsTests::testClient1()
     ClientNetworkInterface cni(string("127.0.0.1"), (quint16)60003);
 
     cni.create(tableName, idKey, &patmap, pId, &errorString);
-
+    /*
     //printStringMap(patmap);
 
     if(!((*pId) == 654321)) {cout << "id mismatch in ServerController" << endl;}
@@ -109,6 +109,7 @@ void CommsTests::testClient1()
 
     //printStringMap((*(objectList.front())));
     //printStringMap((*(objectList.back())));
+    */
 }
 
 void CommsTests::testClient2()
