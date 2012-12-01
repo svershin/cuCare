@@ -17,7 +17,9 @@ public:
 
     static void testServerSide();
 
-    static void testClientSide();
+    static void testClient1();
+
+    static void testClient2();
 };
 
 #endif // COMMSTESTS_H

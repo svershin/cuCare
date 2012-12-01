@@ -48,14 +48,6 @@ unix:!symbian {
     INSTALLS += target
 }
 
-unix:!macx:!symbian: LIBS += -L$$PWD/ -lCommunications
-
-INCLUDEPATH += $$PWD/
-DEPENDPATH += $$PWD/
-
-unix:!macx:!symbian: PRE_TARGETDEPS += $$PWD/libCommunications.a
-
-
 
 unix:!macx:!symbian: LIBS += -L$$PWD/../TestStubLibrary/ -lTestStubLibrary
 

@@ -17,8 +17,6 @@ void ServerNetworkConnection::handleRequest()
     connectedSocket->waitForReadyRead();
     QByteArray requestMessage = connectedSocket->readAll();
 
-    std::cout << "Received message: " << QString(requestMessage).toStdString() << std::endl;
-
     qint64 written = connectedSocket->write(ServerNetworkTranslator::translateAndHandleRequest(requestMessage));
 
     }

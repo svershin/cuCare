@@ -18,6 +18,10 @@ TEMPLATE = app
 SOURCES += main.cpp \
     CommsTests.cpp
 
+HEADERS += \
+    CommsTests.h
+
+
 unix:!macx:!symbian: LIBS += -L$$PWD/../Communications/ -lCommunications
 
 INCLUDEPATH += $$PWD/../Communications

@@ -10,6 +10,7 @@
 #include "Repository.h"
 #include "StorageObject.h"
 #include "CommsTests.h"
+
 using namespace std;
 
 
@@ -73,10 +74,19 @@ void testCereal()
 
 
 
-void testSandbox(string *aStr)
+void testSandbox()
 {
-    //QTime tim = QTime::fromString("9:45:00", "h:mm:ss");
-    delete aStr;
+    QVariantMap inMap, outMap;
+    inMap.insert("First Thing", "Second Thing");
+
+    QJson::Serializer ser;
+    QJson::Parser par;
+
+    QByteArray jsonData = ser.serialize(inMap);
+
+    outMap = par.parse(jsonData).toMap();
+
+    qDebug() << outMap;
 }
 
 
@@ -86,52 +96,75 @@ int main(int argc, char* argv[])
     if(argc > 1)
     {
         string input = string(argv[1]);
-        if(input == "serverStart")
-        {
-            QCoreApplication consoleApp(argc, argv);
-            testNumber = 2;
-            cout << "Starting server..." << endl;
-            ServerController::makeInstance("1:13:00");
-            ServerNetworkInterface sni((quint16)9000);
-            //CommsTests::startUpServer();
-            return consoleApp.exec();
-        }
-        else if(input == "clientTests")
-        {
-            CommsTests::testClientSide();
-        }
-        else if(input == "sand")
-        {
-            string *str = new string("hey");
-            testSandbox(str);
 
-        }
-        else if(input == "serverTests")
+        // SIMPLE SERVER TESTS
+        if(input == "serverTest")
         {
             QCoreApplication consoleApp(argc, argv);
             CommsTests::testServerSide();
             return consoleApp.exec();
         }
-        else if(input == "basicServer")
+
+        // START RUNNING A SERVER ON PORT
+        else if(input == "serverStart1")
         {
+            try
+            {
             QCoreApplication consoleApp(argc, argv);
-            ServerNetworkListener server;
-            server.startListening((quint16)9000);
+            testNumber = 2;
+            cout << "Starting server..." << endl;
+
+            ServerController::makeInstance("1:13:00");
+            ServerNetworkInterface sni((quint16)60003);
+
+
+            //CommsTests::startUpServer();
             return consoleApp.exec();
+            }
+            catch(string err)
+            {
+                cout << "Error: " << err << endl;
+                return -1;
+            }
         }
-        else if(input == "basicClient")
+
+        else if(input == "serverStart2")
         {
-            QTcpSocket socket;
-            socket.connectToHost(QHostAddress(QString("127.0.0.1")), (quint16)9000);
-            if(socket.waitForConnected())
+            try
             {
-                cout << "worked" << endl;
+            QCoreApplication consoleApp(argc, argv);
+            testNumber = 1;
+            cout << "Starting server..." << endl;
+
+            ServerController::makeInstance("1:13:00");
+            ServerNetworkInterface sni((quint16)60003);
+
+
+            //CommsTests::startUpServer();
+            return consoleApp.exec();
             }
-            else
+            catch(string err)
             {
-                cout << "didn't work" << endl;
+                cout << "Error: " << err << endl;
+                return -1;
             }
         }
+
+        else if(input == "clientTest1")
+        {
+            CommsTests::testClient1();
+        }
+
+        else  if(input == "clientTest2")
+        {
+            CommsTests::testClient2();
+        }
+
+        else if(input == "sand")
+        {
+            testSandbox();
+        }
+
         else
         {
             cout << "Invalid Input..." << endl;

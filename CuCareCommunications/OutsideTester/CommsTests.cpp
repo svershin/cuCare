@@ -72,7 +72,7 @@ void CommsTests::testServerSide()
 }
 
 
-void CommsTests::testClientSide()
+void CommsTests::testClient1()
 {
     testNumber = 0;
 
@@ -89,7 +89,7 @@ void CommsTests::testClientSide()
     //ClientNetworkConnection cnc;
     //cnc.sendReceive(QHostAddress(QString::fromStdString(string("127.0.0.1"))), (quint16)60003, QVariant(QString("Hi")).toByteArray());
 
-    ClientNetworkInterface cni(string("127.0.0.1"), (quint16)9000);
+    ClientNetworkInterface cni(string("127.0.0.1"), (quint16)60003);
 
     cni.create(tableName, idKey, &patmap, pId, &errorString);
 
@@ -109,4 +109,29 @@ void CommsTests::testClientSide()
 
     //printStringMap((*(objectList.front())));
     //printStringMap((*(objectList.back())));
+}
+
+void CommsTests::testClient2()
+{
+    map<string, string> patmap;
+    patmap["Name"] = "Oswald";
+    patmap["Gender"] = "Scree";
+    string idKey("AnIdKey");
+    string tableName("ATableName");
+    int id = -1;
+    int *pId = &id;
+    string errorString;
+
+    ClientNetworkInterface cni(string("127.0.0.1"), (quint16)60003);
+
+    if(! cni.create(tableName, idKey, &patmap, pId, &errorString))
+    {
+        cout << "Successfully failed! " << "Output string: " << errorString << endl;
+    }
+    else
+    {
+        cout << "Unsuccessful failure!" << endl;
+    }
+
+
 }
