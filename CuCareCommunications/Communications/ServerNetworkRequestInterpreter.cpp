@@ -13,6 +13,9 @@ QVariantMap ServerNetworkRequestInterpreter::interpretAndHandleRequest(QVariantM
     string errorString;
     QVariantMap returnMap;
 
+    //cout << "Here's your stuff: " << endl;
+    //qDebug() << requestMessage;
+
     switch(reqType)
     {
         case CREATE:
@@ -67,5 +70,6 @@ QVariantMap ServerNetworkRequestInterpreter::interpretAndHandleRequest(QVariantM
 
 QVariantMap ServerNetworkRequestInterpreter::giveErrorReply(const string &errorString)
 {
+    //cout << "Server error encountered: " << errorString << endl;
     return packErrorReply(errorString);
 }

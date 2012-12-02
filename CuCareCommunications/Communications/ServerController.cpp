@@ -96,6 +96,12 @@ bool ServerController::create(string tableName, string idKey, map<string, string
         *pErrorString = errStr;
         return false;
     }
+    catch(char const* errStr)
+    {
+        *pErrorString = errStr;
+        return false;
+    }
+
     catch(...)
     {
         *pErrorString = "an unkown error occurred";
@@ -166,7 +172,7 @@ bool ServerController::pull(string tableName, string idKey, map<string, string> 
             while(it != pStorageObjectList->end())
             {
                 map<string, string> *tempPObjectMap = new map<string, string>();
-                *tempPObjectMap = it->getValues();
+                tempPObjectMap = it->getValues();
                 pObjectList->push_back(tempPObjectMap);
                 it++;
             }
