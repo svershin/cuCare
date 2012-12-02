@@ -72,7 +72,7 @@ void PatientSelectDialogWindow::refreshList()
 {
     list<Patient *> pPatientList;
     PatientData::FilterType filterType = PatientData::NO_FILTER;
-    PatientData::FollowupStatus followupStatus = PatientData::FSTAT_ERROR;
+    ModelObject::FollowupStatus followupStatus = ModelObject::FSTAT_ERROR;
 
     QListWidgetItem *tempListItem = NULL;
 
@@ -95,16 +95,16 @@ void PatientSelectDialogWindow::refreshList()
     {
         switch(ui->FollowupStatusFilterComboBox->currentIndex()) {
         case 1:
-            followupStatus = PatientData::FSTAT_PENDING;
+            followupStatus = ModelObject::FSTAT_PENDING;
 
         case 2:
-            followupStatus = PatientData::FSTAT_OVERDUE;
+            followupStatus = ModelObject::FSTAT_OVERDUE;
 
         case 3:
-            followupStatus = PatientData::FSTAT_RECEIVED;
+            followupStatus = ModelObject::FSTAT_RECEIVED;
 
         case 4:
-            followupStatus = PatientData::FSTAT_COMPLETED;
+            followupStatus = ModelObject::FSTAT_COMPLETED;
         }
     }
 

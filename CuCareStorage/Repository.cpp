@@ -136,6 +136,7 @@ bool Repository::selectStatement(StorageObject sObj, QueryResult *&results)
     statement << ";";
 
     string query = statement.str();
+    cout << query << endl;
     return db->query(query, results);
 }
 

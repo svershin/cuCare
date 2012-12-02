@@ -41,6 +41,7 @@ public:
 
 	enum ConsultationStatus
 	{
+        CSTAT_ERROR,
         CSTAT_PENDING,
         CSTAT_OCCURED,
         CSTAT_COMPLETED
@@ -50,6 +51,7 @@ public:
 
 	enum FollowupStatus
 	{
+        FSTAT_ERROR,
         FSTAT_PENDING,
         FSTAT_OVERDUE,
         FSTAT_RECEIVED,

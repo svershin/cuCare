@@ -31,7 +31,7 @@ public:
     int create(ModelObject *object, int parentId = -1);
     void modify(ModelObject *object);
     list<int> pull(ModelObject *filteredObject, int parentId = -1);
-
+    list<int> pullPatientsByFollowupStatus(ModelObject::FollowupStatus status);
 
 private:
     Factory factory;

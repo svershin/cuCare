@@ -16,17 +16,9 @@ public:
         FILTER_BY_PHYSICIAN_AND_FOLLOWUP_STATUS
     };
 
-    enum FollowupStatus {
-        FSTAT_ERROR,
-        FSTAT_PENDING,
-        FSTAT_OVERDUE,
-        FSTAT_RECEIVED,
-        FSTAT_COMPLETED
-    };
-
     PatientData();
 
-    list<Patient*> getPatientList(FilterType filterType, int physicianId, FollowupStatus followupStatus); // TODO pull by Followup type AND pull by FU type AND physician
+    list<Patient*> getPatientList(FilterType filterType, int physicianId, ModelObject::FollowupStatus followupStatus);
 
     Patient* getFullPatient(int patientId);
     int createPatient(Patient *patient);
@@ -36,7 +28,7 @@ public:
     int createConsultation(Consultation *consult, int parentId);
     void modifyConsultation(Consultation *consult);
 
-    Followup* getFollowup(int followupId); // TODO : use the same strategy as in AccessControl to figure out what type of Follow-up it is, and then use getX to get the object poiinter
+    Followup* getFollowup(int followupId);
     int createFollowup(Followup *followup, int parentId);
     void modifyFollowup(Followup *followup);
 
@@ -44,6 +36,9 @@ public:
 
 private:
     ClientData& clientData;
+
+    list<int> getPatientsByPhysician(int physicianId);
+    list<int> getPatientsByFollowupStatus(ModelObject::FollowupStatus fstatus);
 };
 
 #endif // PATIENTDATA_H

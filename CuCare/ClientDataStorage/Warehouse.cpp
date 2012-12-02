@@ -63,7 +63,7 @@ AdminAssistant* Warehouse::getAdminAssistant(int index)
 
         parentFactory->pull(&filterObject);
     }
-    return AdminAssistants[index];
+    return 0 == AdminAssistants.count(index) ? NULL : AdminAssistants[index];
 }
 
 SysAdmin* Warehouse::getSysAdmin(int index)
@@ -84,7 +84,7 @@ SysAdmin* Warehouse::getSysAdmin(int index)
 
         parentFactory->pull(&filterObject);
     }
-    return SysAdmins[index];
+    return 0 == SysAdmins.count(index) ? NULL : SysAdmins[index];
 }
 
 Physician* Warehouse::getPhysician(int index)
@@ -105,7 +105,7 @@ Physician* Warehouse::getPhysician(int index)
 
         parentFactory->pull(&filterObject);
     }
-    return Physicians[index];
+    return 0 == Physicians.count(index) ? NULL : Physicians[index];
 }
 
 Consultation* Warehouse::getConsultation(int index)
@@ -126,7 +126,7 @@ Consultation* Warehouse::getConsultation(int index)
 
         parentFactory->pull(&filterObject);
     }
-    return Consultations[index];
+    return 0 == Consultations.count(index) ? NULL : Consultations[index];
 }
 
 Patient* Warehouse::getPatient(int index)
@@ -147,7 +147,7 @@ Patient* Warehouse::getPatient(int index)
 
         parentFactory->pull(&filterObject);
     }
-    return Patients[index];
+    return 0 == Patients.count(index) ? NULL : Patients[index];
 }
 
 Referral* Warehouse::getReferral(int index)
@@ -168,7 +168,7 @@ Referral* Warehouse::getReferral(int index)
 
         parentFactory->pull(&filterObject);
     }
-    return Referrals[index];
+    return 0 == Referrals.count(index) ? NULL : Referrals[index];
 }
 
 ReturnConsultation* Warehouse::getReturnConsultation(int index)
@@ -189,7 +189,7 @@ ReturnConsultation* Warehouse::getReturnConsultation(int index)
 
         parentFactory->pull(&filterObject);
     }
-    return ReturnConsultations[index];
+    return 0 == ReturnConsultations.count(index) ? NULL : ReturnConsultations[index];
 }
 
 MedicationRenewal* Warehouse::getMedicationRenewal(int index)
@@ -210,7 +210,7 @@ MedicationRenewal* Warehouse::getMedicationRenewal(int index)
 
         parentFactory->pull(&filterObject);
     }
-    return MedicationRenewals[index];
+    return 0 == MedicationRenewals.count(index) ? NULL : MedicationRenewals[index];
 }
 
 MedicalTest* Warehouse::getMedicalTest(int index)
@@ -231,7 +231,7 @@ MedicalTest* Warehouse::getMedicalTest(int index)
 
         parentFactory->pull(&filterObject);
     }
-    return MedicalTests[index];
+    return 0 == MedicalTests.count(index) ? NULL : MedicalTests[index];
 }
 
 void Warehouse::addAdminAssistant(AdminAssistant *newObject)

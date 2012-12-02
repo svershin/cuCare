@@ -776,6 +776,8 @@ void PatientViewWindow::showConsultationInfo(int cid)
     case Consultation::CSTAT_COMPLETED:
         ui->ConsultationStatusComboBox->setCurrentIndex(ui->ConsultationStatusComboBox->findText("Completed"));
         break;
+    default:
+        ui->StatusLabel->setText(QString::fromStdString(string("Consultation status error.")));
     }
 }
 
@@ -823,6 +825,8 @@ void PatientViewWindow::showFollowupInfo(int fid)
     case Followup::FSTAT_COMPLETED:
         ui->FollowupStatusComboBox->setCurrentIndex(3);
         break;
+    default:
+        ui->StatusLabel->setText(QString::fromStdString(string("Followup status error.")));
     }
 
     ui->DueDateEdit->setDate(QDate(tempFollowup->getYear(),

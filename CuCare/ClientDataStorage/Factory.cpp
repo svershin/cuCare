@@ -1,11 +1,9 @@
 #include "Factory.h"
 #include "Warehouse.h"
 
-    //TODO: Interface with comms
-
 Factory::Factory()
     : warehouse (new Warehouse(this)),
-      cni ("134.117.28.49", (quint16)60003)
+      cni ("192.168.2.5", (quint16)60003)
 {
     instantiationMap[ModelObject::ADMINASSISTANT] = &Factory::instantiateAdminAssistant;
     instantiationMap[ModelObject::SYSADMIN] = &Factory::instantiateSysAdmin;
@@ -70,13 +68,17 @@ void Factory::modify(ModelObject *object)
 list<int> Factory::pull(ModelObject *filteredObject, int parentId)
 {
     map<string, string> filteredProps;
-    ObjectInterpreter::ObjectToProperties(filteredObject, &filteredProps);
+    ObjectInterpreter::ObjectToProperties(filteredObject, &filteredProps, parentId);
     string tableName = filteredObject->getTableName();
     string errString;
-    list<map<string, string> *>* objectsList;
+    list<map<string, string> *>* objectsList = NULL;
+
+    cout << "Got to comms." << endl;
 
     if(!cni.pull(tableName, filteredObject->getIdName(), &filteredProps, objectsList, &errString))
         throw errString;
+
+    cout << "Got past comms." << endl;
 
     list<int> pulledIds;
 
@@ -110,7 +112,7 @@ list<int> Factory::pullPatientsByFollowupStatus(ModelObject::FollowupStatus stat
               << " = b." << PARENT_ID_PROPERTY_NAME << " LEFT OUTER JOIN " << Followup::TABLE_NAME << "c ON b." << Consultation::ID_NAME
               << " = c." << PARENT_ID_PROPERTY_NAME;
     string errString;
-    list<map<string, string> *>* objectsList;
+    list<map<string, string> *>* objectsList = NULL;
 
     if(!cni.pull(tablename.str(), "", &filteredProps, objectsList, &errString))
         throw errString;

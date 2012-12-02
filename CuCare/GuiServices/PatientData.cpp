@@ -5,33 +5,67 @@ PatientData::PatientData()
 {
 }
 
-list<Patient*> PatientData::getPatientList(PatientData::FilterType filterType, int physicianId, PatientData::FollowupStatus followupStatus)
+list<Patient*> PatientData::getPatientList(PatientData::FilterType filterType, int physicianId, ModelObject::FollowupStatus followupStatus)
 {
     Patient patientFilter;
-
-    if(filterType == NO_FILTER) {
-        patientFilter.getProperties()->clear();
-    }
-    else if(filterType == FILTER_BY_PHYSICIAN) {
-        patientFilter.setPhysicianId(physicianId);
-        list<Property*> *filters = patientFilter.getProperties();
-        Property *idProp = NULL;
-        for(list<Property*>::iterator it = filters->begin(); it != filters->end(); ++it)
-            if((*it)->getName() == "physicianid")
-                idProp = (*it);
-        filters->clear();
-        filters->push_back(idProp);
-    }
-    else // TEMPORARY BECAUSE FILTERING BY FOLLOWUP IS NOT DONE
-        patientFilter.getProperties()->clear();
-
     list<Patient*> patientList;
-    list<int> patientIds = clientData.pull(&patientFilter);
+    list<int> patientIds;
+
+    list<int> fupList;
+    list<int> physList;
+
+    switch(filterType)
+    {
+    case (NO_FILTER):
+        patientFilter.getProperties()->clear();
+        patientIds = clientData.pull(&patientFilter);
+        break;
+    case (FILTER_BY_PHYSICIAN):
+        patientIds = getPatientsByPhysician(physicianId);
+        break;
+    case (FILTER_BY_FOLLOWUP_STATUS):
+        patientIds = clientData.pullPatientsByFollowupStatus(followupStatus);
+        break;
+    case (FILTER_BY_PHYSICIAN_AND_FOLLOWUP_STATUS):
+        physList = getPatientsByPhysician(physicianId);
+        fupList = clientData.pullPatientsByFollowupStatus(followupStatus);
+
+        //Only add patients that show up in both lists
+        for(list<int>::iterator physIt = physList.begin(); physIt != physList.end(); ++physIt)
+            for(list<int>::iterator fupIt = fupList.begin(); fupIt != fupList.end(); ++fupIt)
+                if((*physIt) == (*fupIt))
+                    patientIds.push_back((*physIt));
+        break;
+    default:
+        throw "Invalid filter type.";
+    }
 
     for(list<int>::iterator it = patientIds.begin(); it != patientIds.end(); ++it)
         patientList.push_back(clientData.getPatient(*it));
 
     return patientList;
+}
+
+list<int> PatientData::getPatientsByPhysician(int physicianId)
+{
+    //Set up the filter
+    Patient patientFilter;
+    patientFilter.setPhysicianId(physicianId);
+    list<Property*> *filters = patientFilter.getProperties();
+    Property *idProp = NULL;
+    for(list<Property*>::iterator it = filters->begin(); it != filters->end(); ++it)
+        if((*it)->getName() == "physicianid")
+            idProp = (*it);
+    filters->clear();
+    filters->push_back(idProp);
+
+    //Do the pull
+    return clientData.pull(&patientFilter);
+}
+
+list<int> PatientData::getPatientsByFollowupStatus(ModelObject::FollowupStatus fstatus)
+{
+    return clientData.pullPatientsByFollowupStatus(fstatus);
 }
 
 Patient *PatientData::getFullPatient(int patientId)
@@ -101,8 +135,10 @@ Followup *PatientData::getFollowup(int followupId)
         return returnFollowup;
 
     returnFollowup = clientData.getReturnConsultation(followupId);
+    if(returnFollowup != NULL)
+        return returnFollowup;
 
-    return returnFollowup;
+    throw "Followup with the given id does not exist.";
 }
 
 int PatientData::createFollowup(Followup *followup, int parentId)

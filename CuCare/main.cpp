@@ -1,4 +1,7 @@
 #include <QtGui/QApplication>
+#include "GUI/windowcontroller.h"
+#include "GuiServices/AccessControl.h"
+#include "GuiServices/PatientData.h"
 
 
 
@@ -125,19 +128,37 @@ void testAllTheThings()
 
 int main(int argc, char *argv[])
 {
-    //QApplication a(argc, argv);
+    QApplication a(argc, argv);
+
+//    try
+//    {
+//        testAllTheThings();
+//    }
+//    catch(char const * err)
+//    {
+//        cout << err << endl;
+//    }
+//    catch(string err)
+//    {
+//        cout << err << endl;
+//    }
+
+    AccessControl *ac = new AccessControl();
+    PatientData *pd = new PatientData();
+
+    WindowController *wc = new WindowController(ac, pd);
 
     try
     {
-        testAllTheThings();
-    }
-    catch(char const * err)
-    {
-        cout << err << endl;
+        wc->start();
     }
     catch(string err)
     {
-        cout << err << endl;
+        cout << "FATAL EXCEPTION: " << err << endl;
+    }
+    catch(char const * err)
+    {
+        cout << "FATAL EXCEPTION: " << err << endl;
     }
 
     return 0;

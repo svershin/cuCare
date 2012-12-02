@@ -66,3 +66,8 @@ void ClientData::modify(ModelObject *object) {
 list<int> ClientData::pull(ModelObject *filteredObject, int parentId) {
     return factory.pull(filteredObject, parentId);
 }
+
+list<int> ClientData::pullPatientsByFollowupStatus(ModelObject::FollowupStatus status)
+{
+    return factory.pullPatientsByFollowupStatus(status);
+}

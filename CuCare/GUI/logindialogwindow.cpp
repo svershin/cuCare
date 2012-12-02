@@ -24,14 +24,21 @@ void LoginDialogWindow::on_LogInPushButton_clicked()
 
 bool LoginDialogWindow::checkUsername()
 {
+    cout << "Checking username" << endl;
     AccessControl::LoginStatus status = AccessControl::AC_LOGGED_OUT;
 
     try {
         status = accessControl->verifyUsername(ui->UsernameLineEdit->text().toStdString());
     }
-    catch (char * err) {
+    catch (char const * err) {
         ui->StatusLabel->setText(QString::fromStdString(err));
     }
+    catch (string err)
+    {
+        ui->StatusLabel->setText(QString::fromStdString(err));
+    }
+
+    cout << "Passed accesscontrol" << endl;
 
     if (status == AccessControl::AC_LOGGED_IN_AS_PHYSICIAN
             || status == AccessControl::AC_LOGGED_IN_AS_ADMINASSISTANT)
