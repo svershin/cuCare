@@ -72,8 +72,46 @@ list<int> Factory::pull(ModelObject *filteredObject, int parentId)
     return pulledIds;
 }
 
-list<int> Factory::pullPatientsByFollowupStatus(ModelObject::FollowupStatus)
+list<int> Factory::pullPatientsByFollowupStatus(ModelObject::FollowupStatus status)
 {
+    //This pull is specialized for the sake of efficiency.
+    //The table name includes joins, allowing the SQL to do most of the work for the query
+    //Unfortunately this ties the factory to the storage implementation to some degree
+    //In future versions, we would like to find a better way to solve this problem
+    map<string, string> filteredProps;
+    filteredProps["status"] = Utility::itos((int)status);
+    filteredProps[ID_NAME_PROPERTY_NAME] = "";
+
+    stringstream tablename;
+    tablename << Patient::TABLE_NAME << "a LEFT OUTER JOIN " << Consultation::TABLE_NAME << "b ON a." << Patient::ID_NAME
+              << " = b." << PARENT_ID_PROPERTY_NAME << " LEFT OUTER JOIN " << Followup::TABLE_NAME << "c ON b." << Consultation::ID_NAME
+              << " = c." << PARENT_ID_PROPERTY_NAME;
+    string errString;
+    list<map<string, string> *>* objectsList;
+
+    if(!cni.pull(tablename.str(), "", &filteredProps, objectsList, &errString))
+        throw errString;
+
+    list<int> pulledIds;
+
+    for(list<map<string, string> *>::iterator it = objectsList->begin(); it != objectsList->end(); ++it)
+    {
+        map<string, string> *objectProps = (*it);
+
+        //Object type is a special property.  It is used to decide which instantiation function to call.
+        ModelObject::ObjectType type = (ModelObject::ObjectType)(Utility::stoi((*objectProps)[OBJECT_TYPE_PROPERTY_NAME]));
+
+        int pulledId = CALL_MEM_FUN((*this), instantiationMap[type]) (objectProps, -1);
+
+        pulledIds.push_back(pulledId);
+    }
+
+    return pulledIds;
+}
+
+Warehouse *Factory::getWarehouse()
+{
+    return warehouse;
 }
 
 int Factory::propertyify(map<string, string> *properties, ModelObject *newObject, int uid)
