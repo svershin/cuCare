@@ -10,7 +10,9 @@
 #include "StringProperty.h"
 
 // Constructor
-Referral::Referral(){
+Referral::Referral()
+    : specialistName("")
+{
     getProperties()->push_back(new StringProperty("specialistname", this, &ModelObject::getSpecialistName, &ModelObject::setSpecialistName));
 }
 

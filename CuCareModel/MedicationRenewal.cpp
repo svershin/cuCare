@@ -10,7 +10,9 @@
 #include "StringProperty.h"
 
 // Constructor
-MedicationRenewal::MedicationRenewal(){
+MedicationRenewal::MedicationRenewal()
+    : medication("")
+{
 	getProperties()->push_back(new StringProperty("medication", this, &ModelObject::getMedication, &ModelObject::setMedication));
 }
 

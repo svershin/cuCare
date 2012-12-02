@@ -10,7 +10,9 @@
 #include "StringProperty.h"
 
 // Constructor
-MedicalTest::MedicalTest() {
+MedicalTest::MedicalTest()
+    : testType("")
+{
 	getProperties()->push_back(new StringProperty("testtype", this, &ModelObject::getTestType, &ModelObject::setTestType));
 }
 

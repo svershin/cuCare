@@ -10,7 +10,9 @@
 #include "Physician.h"
 
 // Constructor
-Physician::Physician() {
+Physician::Physician()
+    : physicianId(0)
+{
       getProperties()->push_back(new IntProperty("physicianid", this, &ModelObject::getPhysicianId, &ModelObject::setPhysicianId));
 }
 

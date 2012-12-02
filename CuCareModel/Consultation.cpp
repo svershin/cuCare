@@ -10,7 +10,14 @@
 #include "StringProperty.h"
 #include "IntProperty.h"
 
-Consultation::Consultation() {
+Consultation::Consultation()
+    : consultId (0),
+      reason (""),
+      diagnosis (""),
+      comments (""),
+      status (CSTAT_PENDING),
+      consultingPhysId (0)
+{
     getProperties()->push_back(new IntProperty(ID_NAME, this, &ModelObject::getId, &ModelObject::setId));
 	getProperties()->push_back(new IntProperty("physicianid", this, &ModelObject::getPhysicianId, &ModelObject::setPhysicianId));
 	getProperties()->push_back(new StringProperty("reason", this, &ModelObject::getReason, &ModelObject::setReason));

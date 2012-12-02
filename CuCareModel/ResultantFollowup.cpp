@@ -10,7 +10,9 @@
 #include "StringProperty.h"
 
 // Constructor
-ResultantFollowup::ResultantFollowup() {
+ResultantFollowup::ResultantFollowup()
+    : results("")
+{
 	getProperties()->push_back(new StringProperty("results", this, &ModelObject::getResults, &ModelObject::setResults));
 }
 

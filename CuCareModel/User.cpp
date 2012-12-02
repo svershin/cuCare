@@ -11,7 +11,12 @@
 #include "IntProperty.h"
 
 // Constructor
-User::User() {
+User::User()
+    : userId (0),
+      username (""),
+      firstName (""),
+      lastName ("")
+{
     getProperties()->push_back(new IntProperty(ID_NAME, this, &ModelObject::getId, &ModelObject::setId));
 	getProperties()->push_back(new StringProperty("username", this, &ModelObject::getUsername, &ModelObject::setUsername));
 	getProperties()->push_back(new StringProperty("firstname", this, &ModelObject::getFirstName, &ModelObject::setFirstName));

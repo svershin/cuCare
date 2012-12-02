@@ -11,7 +11,13 @@
 #include "IntProperty.h"
 
 // Constructor
-Patient::Patient() {
+Patient::Patient()
+    : patientId (0),
+      firstName (""),
+      lastName (""),
+      notes (""),
+      pPhysicianId (0)
+{
     getProperties()->push_back(new IntProperty(ID_NAME, this, &ModelObject::getId, &ModelObject::setId));
 	getProperties()->push_back(new StringProperty("firstname", this, &ModelObject::getFirstName, &ModelObject::setFirstName));
 	getProperties()->push_back(new StringProperty("lastname", this, &ModelObject::getLastName, &ModelObject::setLastName));
