@@ -234,6 +234,18 @@ MedicalTest* Warehouse::getMedicalTest(int index)
     return MedicalTests[index];
 }
 
+void Warehouse::addAdminAssistant(AdminAssistant *newObject)
+{
+    if(1 == AdminAssistants.count(newObject->getId()))
+    {
+        AdminAssistant *obsolete = AdminAssistants[newObject->getId()];
+        AdminAssistants[newObject->getId()] = newObject;
+        delete obsolete;
+    }
+    else
+        AdminAssistants[newObject->getId()] = newObject;
+}
+
 void Warehouse::addSysAdmin(SysAdmin *newObject)
 {
     if(1 == SysAdmins.count(newObject->getId()))
@@ -318,15 +330,15 @@ void Warehouse::addMedicationRenewal(MedicationRenewal *newObject)
         MedicationRenewals[newObject->getId()] = newObject;
 }
 
-void Warehouse::addMedicalTest(MedicationRenewal *newObject)
+void Warehouse::addMedicalTest(MedicalTest *newObject)
 {
-    if(1 == MedicationRenewals.count(newObject->getId()))
+    if(1 == MedicalTests.count(newObject->getId()))
     {
-        MedicationRenewal *obsolete = MedicationRenewals[newObject->getId()];
-        MedicationRenewals[newObject->getId()] = newObject;
+        MedicalTest *obsolete = MedicalTests[newObject->getId()];
+        MedicalTests[newObject->getId()] = newObject;
         delete obsolete;
     }
     else
-        MedicationRenewals[newObject->getId()] = newObject;
+        MedicalTests[newObject->getId()] = newObject;
 }
 

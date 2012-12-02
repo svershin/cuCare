@@ -12,6 +12,7 @@
 #include <list>
 #define OBJECT_TYPE_PROPERTY_NAME "objectType"
 #define ID_NAME_PROPERTY_NAME "idname"
+#define PARENT_ID_PROPERTY_NAME "parentid"
 class Property;
 
 using namespace std;

@@ -4,7 +4,8 @@
     //TODO: Interface with comms
 
 Factory::Factory()
-    : warehouse (new Warehouse(this))
+    : warehouse (new Warehouse(this)),
+      cni ("127.0.0.1", (quint16)60003)
 {
     instantiationMap[ModelObject::ADMINASSISTANT] = &Factory::instantiateAdminAssistant;
 }
@@ -14,16 +15,20 @@ Factory::~Factory()
     delete warehouse;
 }
 
-void Factory::create(ModelObject *object)
+int Factory::create(ModelObject *object, int parentId)
 {
     map<string, string> objectProps;
-    ObjectInterpreter::ObjectToProperties(object, &objectProps);
+    ObjectInterpreter::ObjectToProperties(object, &objectProps, parentId);
     string tableName = object->getTableName();
     int uid;
+    string errString;
 
-    //uid = comms.doStuff(things);
+    if(!cni.create(tableName, object->getIdName(), &objectProps, &uid, &errString) )
+        throw errString;
 
     CALL_MEM_FUN((*this), instantiationMap[object->getObjectType()]) (&objectProps, uid);
+
+    return uid;
 }
 
 void Factory::modify(ModelObject *object)
@@ -31,19 +36,25 @@ void Factory::modify(ModelObject *object)
     map<string, string> objectProps;
     ObjectInterpreter::ObjectToProperties(object, &objectProps);
     string tableName = object->getTableName();
+    string errString;
 
-    //comms.doOtherStuff(things)
+    if(!cni.push(tableName, object->getIdName(), &objectProps, &errString) )
+        throw errString;
 
     CALL_MEM_FUN((*this), instantiationMap[object->getObjectType()]) (&objectProps, object->getId());
 }
 
-list<int> Factory::pull(ModelObject *filteredObject)
+list<int> Factory::pull(ModelObject *filteredObject, int parentId)
 {
     map<string, string> filteredProps;
     ObjectInterpreter::ObjectToProperties(filteredObject, &filteredProps);
     string tableName = filteredObject->getTableName();
+    string errString;
+    list<map<string, string> *>* objectsList;
 
-    list<map<string, string> *>* objectsList = NULL; // = comms.getStuff(things)
+    if(!cni.pull(tableName, filteredObject->getIdName(), &filteredProps, objectsList, &errString))
+        throw errString;
+
     list<int> pulledIds;
 
     for(list<map<string, string> *>::iterator it = objectsList->begin(); it != objectsList->end(); ++it)
@@ -59,6 +70,10 @@ list<int> Factory::pull(ModelObject *filteredObject)
     }
 
     return pulledIds;
+}
+
+list<int> Factory::pullPatientsByFollowupStatus(ModelObject::FollowupStatus)
+{
 }
 
 int Factory::propertyify(map<string, string> *properties, ModelObject *newObject, int uid)
