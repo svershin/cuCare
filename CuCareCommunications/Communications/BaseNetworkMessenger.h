@@ -1,5 +1,5 @@
-#ifndef ABSTRACTNETWORKMESSENGER_H
-#define ABSTRACTNETWORKMESSENGER_H
+#ifndef BASENETWORKMESSENGER_H
+#define BASENETWORKMESSENGER_H
 
 #include <QtGlobal>
 #include <QtCore>
@@ -17,10 +17,10 @@ using namespace std;
 #define REPLY_OBJECT_MAP_LIST_KEY "ObjectMapList"
 #define REPLY_ERROR_MESSAGE_KEY "ErrorMessage"
 
-class AbstractNetworkMessenger
+class BaseNetworkMessenger
 {
 public:
-    virtual ~AbstractNetworkMessenger() = 0;
+    virtual ~BaseNetworkMessenger() = 0;
 
 #ifndef QT_DEBUG
 //protected:
@@ -82,5 +82,5 @@ public:
 
 };
 
-#endif // ABSTRACTNETWORKMESSENGER_H
+#endif // BASENETWORKMESSENGER_H
 

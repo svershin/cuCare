@@ -3,10 +3,10 @@
 
 #include <QtCore>
 #include <QtNetwork>
-#include "AbstractNetworkTranslator.h"
+#include "BaseNetworkTranslator.h"
 #include "ClientNetworkConnection.h"
 
-class ClientNetworkTranslator : public AbstractNetworkTranslator
+class ClientNetworkTranslator : public BaseNetworkTranslator
 {
 public:
     virtual ~ClientNetworkTranslator() = 0;

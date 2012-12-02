@@ -1,5 +1,5 @@
 #include "ServerNetworkRequestInterpreter.h"
-#include "AbstractNetworkMessenger.h"
+#include "BaseNetworkMessenger.h"
 
 ServerNetworkRequestInterpreter::~ServerNetworkRequestInterpreter(){}
 
@@ -50,7 +50,7 @@ QVariantMap ServerNetworkRequestInterpreter::interpretAndHandleRequest(QVariantM
             if(ServerController::getInstance()->pull(tableName, idKey, &objectMap, &outMap, &errorString))
             {
                 returnMap = packPullReply(outMap);
-                AbstractNetworkMessenger::destroyListContents(outMap);
+                BaseNetworkMessenger::destroyListContents(outMap);
             }
             else
             {

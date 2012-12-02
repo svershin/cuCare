@@ -59,12 +59,12 @@ void CommsTests::testServerSide()
 
 
 
-    QVariantMap createReq = AbstractNetworkMessenger::packRequest(AbstractNetworkMessenger::CREATE, tableName, idKey, patmap);
-    QVariantMap pushReq = AbstractNetworkMessenger::packRequest(AbstractNetworkMessenger::PUSH, tableName, idKey, patmap);
-    QVariantMap pullReq = AbstractNetworkMessenger::packRequest(AbstractNetworkMessenger::PULL, tableName, idKey, patmap);
+    QVariantMap createReq = BaseNetworkMessenger::packRequest(BaseNetworkMessenger::CREATE, tableName, idKey, patmap);
+    QVariantMap pushReq = BaseNetworkMessenger::packRequest(BaseNetworkMessenger::PUSH, tableName, idKey, patmap);
+    QVariantMap pullReq = BaseNetworkMessenger::packRequest(BaseNetworkMessenger::PULL, tableName, idKey, patmap);
 
     QVariantMap interpretResult1 = ServerNetworkRequestInterpreter::interpretAndHandleRequest(createReq);
-    if(!654321 == AbstractNetworkMessenger::unpackCreateReplyContents(interpretResult1)){cout << "bad return value for create in ServerNetworkRequestInterpreter" << endl;}
+    if(!654321 == BaseNetworkMessenger::unpackCreateReplyContents(interpretResult1)){cout << "bad return value for create in ServerNetworkRequestInterpreter" << endl;}
 
 
 

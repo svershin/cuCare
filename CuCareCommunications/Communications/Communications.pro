@@ -16,29 +16,29 @@ SOURCES += \
     ClientNetworkInterface.cpp \
     ClientNetworkConnection.cpp \
     ServerNetworkListener.cpp \
-    AbstractNetworkMessenger.cpp \
     ServerNetworkInterface.cpp \
     ServerNetworkRequestInterpreter.cpp \
-    AbstractNetworkTranslator.cpp \
     ServerNetworkConnection.cpp \
     ClientNetworkTranslator.cpp \
     ServerNetworkTranslator.cpp \
     ServerController.cpp \
-    AuditTimer.cpp
+    AuditTimer.cpp \
+    BaseNetworkMessenger.cpp \
+    BaseNetworkTranslator.cpp
 
 HEADERS += \
     ClientNetworkInterface.h \
     ClientNetworkConnection.h \
     ServerNetworkListener.h \
-    AbstractNetworkMessenger.h \
     ServerNetworkInterface.h \
     ServerNetworkRequestInterpreter.h \
-    AbstractNetworkTranslator.h \
     ServerNetworkConnection.h \
     ClientNetworkTranslator.h \
     ServerNetworkTranslator.h \
     ServerController.h \
-    AuditTimer.h
+    AuditTimer.h \
+    BaseNetworkMessenger.h \
+    BaseNetworkTranslator.h
 unix:!symbian {
     maemo5 {
         target.path = /opt/usr/lib

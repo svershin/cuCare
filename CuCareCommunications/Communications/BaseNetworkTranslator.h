@@ -1,5 +1,5 @@
-#ifndef ABSTRACTNETWORKTRANSLATOR_H
-#define ABSTRACTNETWORKTRANSLATOR_H
+#ifndef BASENETWORKTRANSLATOR_H
+#define BASENETWORKTRANSLATOR_H
 
 #include <QtCore>
 #include <QtNetwork>
@@ -8,10 +8,10 @@
 #include "../qjson/src/parser.h"
 
 
-class AbstractNetworkTranslator
+class BaseNetworkTranslator
 {
 public:
-    virtual ~AbstractNetworkTranslator() = 0;
+    virtual ~BaseNetworkTranslator() = 0;
 
 #ifndef QT_DEBUG
 protected:
@@ -21,5 +21,5 @@ protected:
     static QVariantMap deserializeMessage(const QByteArray& inMessage);
 };
 
-#endif // ABSTRACTNETWORKTRANSLATOR_H
+#endif // BASENETWORKTRANSLATOR_H
 

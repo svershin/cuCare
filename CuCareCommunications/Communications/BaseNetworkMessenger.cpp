@@ -1,8 +1,8 @@
-#include "AbstractNetworkMessenger.h"
+#include "BaseNetworkMessenger.h"
 
 using namespace std;
 
-AbstractNetworkMessenger::~AbstractNetworkMessenger(){}
+BaseNetworkMessenger::~BaseNetworkMessenger(){}
 
 
 /*
@@ -14,7 +14,7 @@ AbstractNetworkMessenger::~AbstractNetworkMessenger(){}
     pOutMap must have memory allocated to it prior to calling this function. It gets populated with a QVariantMap that corresponds to the input map
   */
 //
-void AbstractNetworkMessenger::stringMapToQVariantMap(const map<string, string>& inMap, QVariantMap *pOutMap)
+void BaseNetworkMessenger::stringMapToQVariantMap(const map<string, string>& inMap, QVariantMap *pOutMap)
 {
     if(! pOutMap->empty())  { throw (string("non-empty QVariantMap passed in stringMapToQVariantMap")); }
 
@@ -28,7 +28,7 @@ void AbstractNetworkMessenger::stringMapToQVariantMap(const map<string, string>&
     return;
 }
 
-QVariantMap AbstractNetworkMessenger::stringMapToQVariantMap(const map<string, string> &inMap)
+QVariantMap BaseNetworkMessenger::stringMapToQVariantMap(const map<string, string> &inMap)
 {
     QVariantMap outMap;
     stringMapToQVariantMap(inMap, &outMap);
@@ -36,7 +36,7 @@ QVariantMap AbstractNetworkMessenger::stringMapToQVariantMap(const map<string, s
 }
 
 
-void AbstractNetworkMessenger::qVariantMapToStringMap(const QVariantMap& inMap, map<string, string> *pOutMap)
+void BaseNetworkMessenger::qVariantMapToStringMap(const QVariantMap& inMap, map<string, string> *pOutMap)
 {
     if(! pOutMap->empty())  { throw (string("non-empty map passed in qVariantMapToStringMap")); }
 
@@ -49,7 +49,7 @@ void AbstractNetworkMessenger::qVariantMapToStringMap(const QVariantMap& inMap, 
     return;
 }
 
-map<string, string> AbstractNetworkMessenger::qVariantMapToStringMap(const QVariantMap &inMap)
+map<string, string> BaseNetworkMessenger::qVariantMapToStringMap(const QVariantMap &inMap)
 {
     map<string, string> outMap;
     qVariantMapToStringMap(inMap, &outMap);
@@ -57,7 +57,7 @@ map<string, string> AbstractNetworkMessenger::qVariantMapToStringMap(const QVari
 }
 
 
-void AbstractNetworkMessenger::mapListToQVariantList(const list< map<string, string>* >& inList, QVariantList *pOutList)
+void BaseNetworkMessenger::mapListToQVariantList(const list< map<string, string>* >& inList, QVariantList *pOutList)
 {
     if(! pOutList->empty())  { throw (string("non-empty list passed in mapListToQVariantList")); }
 
@@ -73,7 +73,7 @@ void AbstractNetworkMessenger::mapListToQVariantList(const list< map<string, str
     return;
 }
 
-QVariantList AbstractNetworkMessenger::mapListToQVariantList(const list< map<string, string> *>& inList)
+QVariantList BaseNetworkMessenger::mapListToQVariantList(const list< map<string, string> *>& inList)
 {
     QVariantList outList;
     mapListToQVariantList(inList, &outList);
@@ -81,7 +81,7 @@ QVariantList AbstractNetworkMessenger::mapListToQVariantList(const list< map<str
 }
 
 
-void AbstractNetworkMessenger::qVariantListToMapList(const QVariantList& inList, list< map<string, string>* >* pOutList)
+void BaseNetworkMessenger::qVariantListToMapList(const QVariantList& inList, list< map<string, string>* >* pOutList)
 {
     if(! pOutList->empty())  { throw (string("non-empty list passed in qVariantListToMapList")); }
 
@@ -97,7 +97,7 @@ void AbstractNetworkMessenger::qVariantListToMapList(const QVariantList& inList,
     return;
 }
 
-list< map<string, string> *> AbstractNetworkMessenger::qVariantListToMapList(const QVariantList& inList)
+list< map<string, string> *> BaseNetworkMessenger::qVariantListToMapList(const QVariantList& inList)
 {
     list< map<string, string> *> outList;
     qVariantListToMapList(inList, &outList);
@@ -106,7 +106,7 @@ list< map<string, string> *> AbstractNetworkMessenger::qVariantListToMapList(con
 
 
 
-void AbstractNetworkMessenger::destroyListContents(list< map<string, string> *> offList)
+void BaseNetworkMessenger::destroyListContents(list< map<string, string> *> offList)
 {
     list< map<string, string> *>::const_iterator it = offList.begin();
     while(it != offList.end())
@@ -119,7 +119,7 @@ void AbstractNetworkMessenger::destroyListContents(list< map<string, string> *> 
 }
 
 
-QVariantMap AbstractNetworkMessenger::packRequest(RequestType requestType, string tableName, string idKey, const map<string, string>& objectMap)
+QVariantMap BaseNetworkMessenger::packRequest(RequestType requestType, string tableName, string idKey, const map<string, string>& objectMap)
 {
     QVariantMap outMap;
 
@@ -134,7 +134,7 @@ QVariantMap AbstractNetworkMessenger::packRequest(RequestType requestType, strin
     return outMap;
 }
 
-QVariantMap AbstractNetworkMessenger::packCreateReply(const int& id)
+QVariantMap BaseNetworkMessenger::packCreateReply(const int& id)
 {
     QVariantMap outMap;
 
@@ -144,7 +144,7 @@ QVariantMap AbstractNetworkMessenger::packCreateReply(const int& id)
     return outMap;
 }
 
-QVariantMap AbstractNetworkMessenger::packPushReply()
+QVariantMap BaseNetworkMessenger::packPushReply()
 {
     QVariantMap outMap;
 
@@ -153,7 +153,7 @@ QVariantMap AbstractNetworkMessenger::packPushReply()
     return outMap;
 }
 
-QVariantMap AbstractNetworkMessenger::packPullReply(const list< map<string, string > *>& pInList)
+QVariantMap BaseNetworkMessenger::packPullReply(const list< map<string, string > *>& pInList)
 {
     QVariantMap outMap;
 
@@ -166,7 +166,7 @@ QVariantMap AbstractNetworkMessenger::packPullReply(const list< map<string, stri
     return outMap;
 }
 
-QVariantMap AbstractNetworkMessenger::packErrorReply(const string& errorString)
+QVariantMap BaseNetworkMessenger::packErrorReply(const string& errorString)
 {
     QVariantMap outMap;
 
@@ -177,7 +177,7 @@ QVariantMap AbstractNetworkMessenger::packErrorReply(const string& errorString)
 }
 
 //Functions to unpack pieces of a request
-AbstractNetworkMessenger::RequestType AbstractNetworkMessenger::unpackRequestType(const QVariantMap& requestMap)
+BaseNetworkMessenger::RequestType BaseNetworkMessenger::unpackRequestType(const QVariantMap& requestMap)
 {
     QString messageKey(REQUEST_TYPE_KEY);
     if(requestMap.contains(messageKey))
@@ -190,7 +190,7 @@ AbstractNetworkMessenger::RequestType AbstractNetworkMessenger::unpackRequestTyp
     }
 }
 
-string AbstractNetworkMessenger::unpackRequestTableName(const QVariantMap& requestMap)
+string BaseNetworkMessenger::unpackRequestTableName(const QVariantMap& requestMap)
 {
     QString messageKey(REQUEST_TABLE_NAME_KEY);
     if(requestMap.contains(messageKey))
@@ -203,7 +203,7 @@ string AbstractNetworkMessenger::unpackRequestTableName(const QVariantMap& reque
     }
 }
 
-string AbstractNetworkMessenger::unpackRequestIdKey(const QVariantMap& requestMap)
+string BaseNetworkMessenger::unpackRequestIdKey(const QVariantMap& requestMap)
 {
     QString messageKey(REQUEST_ID_KEY_KEY);
     if(requestMap.contains(messageKey))
@@ -217,7 +217,7 @@ string AbstractNetworkMessenger::unpackRequestIdKey(const QVariantMap& requestMa
 }
 
 
-    void AbstractNetworkMessenger::unpackRequestObjectMap(const QVariantMap& requestMap, map<string, string> *pOutMap)
+    void BaseNetworkMessenger::unpackRequestObjectMap(const QVariantMap& requestMap, map<string, string> *pOutMap)
 {
     QString messageKey(REQUEST_OBJECT_MAP_KEY);
     if(requestMap.contains(messageKey))
@@ -233,7 +233,7 @@ string AbstractNetworkMessenger::unpackRequestIdKey(const QVariantMap& requestMa
 
 
 //Function to unpack pieces of a reply
-AbstractNetworkMessenger::ReplyStatus AbstractNetworkMessenger::unpackReplyStatus(const QVariantMap& replyMap)
+BaseNetworkMessenger::ReplyStatus BaseNetworkMessenger::unpackReplyStatus(const QVariantMap& replyMap)
 {
     QString messageKey(REPLY_STATUS_KEY);
     if(replyMap.contains(messageKey))
@@ -247,7 +247,7 @@ AbstractNetworkMessenger::ReplyStatus AbstractNetworkMessenger::unpackReplyStatu
 
 }
 
-int AbstractNetworkMessenger::unpackCreateReplyContents(const QVariantMap& replyMap)
+int BaseNetworkMessenger::unpackCreateReplyContents(const QVariantMap& replyMap)
 {
     QString messageKey(REPLY_ID_KEY);
     if(replyMap.contains(messageKey))
@@ -261,7 +261,7 @@ int AbstractNetworkMessenger::unpackCreateReplyContents(const QVariantMap& reply
 }
 
 
-void AbstractNetworkMessenger::unpackPullReplyContents(const QVariantMap& replyMap, list< map<string, string>* > *pOutList)
+void BaseNetworkMessenger::unpackPullReplyContents(const QVariantMap& replyMap, list< map<string, string>* > *pOutList)
 {
     QString messageKey(REPLY_OBJECT_MAP_LIST_KEY);
     if(replyMap.contains(messageKey))
@@ -275,7 +275,7 @@ void AbstractNetworkMessenger::unpackPullReplyContents(const QVariantMap& replyM
     }
 }
 
-string AbstractNetworkMessenger::unpackErrorReplyContents(const QVariantMap& replyMap)
+string BaseNetworkMessenger::unpackErrorReplyContents(const QVariantMap& replyMap)
 {
     QString messageKey(REPLY_ERROR_MESSAGE_KEY);
     if(replyMap.contains(messageKey))
@@ -288,7 +288,7 @@ string AbstractNetworkMessenger::unpackErrorReplyContents(const QVariantMap& rep
     }
 }
 
-QHostAddress AbstractNetworkMessenger::makeAndCheckQHostAddress(QString IPStr)
+QHostAddress BaseNetworkMessenger::makeAndCheckQHostAddress(QString IPStr)
 {
     QHostAddress IPAddr(IPStr);
     if(!IPAddr.isNull())

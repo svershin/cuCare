@@ -3,12 +3,12 @@
 
 #include <QtNetwork>
 #include <string>
-#include "AbstractNetworkMessenger.h"
+#include "BaseNetworkMessenger.h"
 #include "ClientNetworkTranslator.h"
 
 using namespace std;
 
-class ClientNetworkInterface : public AbstractNetworkMessenger
+class ClientNetworkInterface : public BaseNetworkMessenger
 {
 public:
     ClientNetworkInterface(string serverIPParam, quint16 serverPortParam);

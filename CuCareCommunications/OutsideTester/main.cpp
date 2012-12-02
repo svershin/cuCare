@@ -3,7 +3,7 @@
 #include <iostream>
 #include "ServerNetworkListener.h"
 #include "ClientNetworkConnection.h"
-#include "AbstractNetworkMessenger.h"
+#include "BaseNetworkMessenger.h"
 #include "../qjson/src/serializer.h"
 #include "../qjson/src/parser.h"
 #include <QTime>
@@ -48,8 +48,8 @@ void testCereal()
 //    objMap[string("key2")] = string("value2");
 //    objMap[string("key3")] = string("value3");
 
-    //newMap = AbstractNetworkMessenger::qStringMapToStringMap(AbstractNetworkMessenger::stringMapToQStringMap(origMap));
-    //QVariantMap reqQMap = AbstractNetworkMessenger::packRequest(AbstractNetworkMessenger::CREATE, "A Table", "Patient", objMap);
+    //newMap = BaseNetworkMessenger::qStringMapToStringMap(BaseNetworkMessenger::stringMapToQStringMap(origMap));
+    //QVariantMap reqQMap = BaseNetworkMessenger::packRequest(BaseNetworkMessenger::CREATE, "A Table", "Patient", objMap);
     //qDebug() << reqQMap << endl << endl << endl;
 
 
@@ -61,12 +61,12 @@ void testCereal()
 
 
 
-    //outMap = AbstractNetworkMessenger::qVariantMapToStringMap(outQMap);
+    //outMap = BaseNetworkMessenger::qVariantMapToStringMap(outQMap);
 
     //qDebug() << outQMap << endl;
-    //qDebug() << (int) AbstractNetworkMessenger::unpackRequestType(outQMap) << endl;
-    //qDebug() << QString::fromStdString(AbstractNetworkMessenger::unpackRequestIdKey(outQMap)) << endl;
-    //qDebug() << AbstractNetworkMessenger::stringMapToQVariantMap(AbstractNetworkMessenger::unpackRequestObjectMap(outQMap)) << endl;
+    //qDebug() << (int) BaseNetworkMessenger::unpackRequestType(outQMap) << endl;
+    //qDebug() << QString::fromStdString(BaseNetworkMessenger::unpackRequestIdKey(outQMap)) << endl;
+    //qDebug() << BaseNetworkMessenger::stringMapToQVariantMap(BaseNetworkMessenger::unpackRequestObjectMap(outQMap)) << endl;
 
 //    cout << "finished" << endl;
 //    cout << "extra text" << endl;

@@ -3,9 +3,9 @@
 
 #include <QtCore>
 #include "ServerController.h"
-#include "AbstractNetworkMessenger.h"
+#include "BaseNetworkMessenger.h"
 
-class ServerNetworkRequestInterpreter : public AbstractNetworkMessenger
+class ServerNetworkRequestInterpreter : public BaseNetworkMessenger
 {
 public:
     virtual ~ServerNetworkRequestInterpreter() = 0;

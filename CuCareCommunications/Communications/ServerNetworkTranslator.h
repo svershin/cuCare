@@ -3,11 +3,11 @@
 
 #include <QtCore>
 #include <QtNetwork>
-#include "AbstractNetworkTranslator.h"
+#include "BaseNetworkTranslator.h"
 
 using namespace std;
 
-class ServerNetworkTranslator : public AbstractNetworkTranslator
+class ServerNetworkTranslator : public BaseNetworkTranslator
 {
 
 public:

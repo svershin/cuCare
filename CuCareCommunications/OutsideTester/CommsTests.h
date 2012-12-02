@@ -8,7 +8,7 @@
 #include "ServerNetworkRequestInterpreter.h"
 #include "ServerNetworkTranslator.h"
 #include "ClientNetworkInterface.h"
-#include "AbstractNetworkMessenger.h"
+#include "BaseNetworkMessenger.h"
 
 class CommsTests
 {
