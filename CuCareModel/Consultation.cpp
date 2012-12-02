@@ -12,9 +12,9 @@
 
 Consultation::Consultation()
     : consultId (0),
-      reason (""),
-      diagnosis (""),
-      comments (""),
+      reason ("0"),
+      diagnosis ("0"),
+      comments ("0"),
       status (CSTAT_PENDING),
       consultingPhysId (0)
 {

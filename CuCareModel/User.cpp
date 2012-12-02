@@ -13,9 +13,9 @@
 // Constructor
 User::User()
     : userId (0),
-      username (""),
-      firstName (""),
-      lastName ("")
+      username ("0"),
+      firstName ("0"),
+      lastName ("0")
 {
     getProperties()->push_back(new IntProperty(ID_NAME, this, &ModelObject::getId, &ModelObject::setId));
 	getProperties()->push_back(new StringProperty("username", this, &ModelObject::getUsername, &ModelObject::setUsername));

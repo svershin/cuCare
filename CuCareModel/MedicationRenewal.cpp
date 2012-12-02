@@ -11,7 +11,7 @@
 
 // Constructor
 MedicationRenewal::MedicationRenewal()
-    : medication("")
+    : medication("0")
 {
 	getProperties()->push_back(new StringProperty("medication", this, &ModelObject::getMedication, &ModelObject::setMedication));
 }

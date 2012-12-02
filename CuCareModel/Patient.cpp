@@ -13,9 +13,9 @@
 // Constructor
 Patient::Patient()
     : patientId (0),
-      firstName (""),
-      lastName (""),
-      notes (""),
+      firstName ("0"),
+      lastName ("0"),
+      notes ("0"),
       pPhysicianId (0)
 {
     getProperties()->push_back(new IntProperty(ID_NAME, this, &ModelObject::getId, &ModelObject::setId));

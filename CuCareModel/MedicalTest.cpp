@@ -11,7 +11,7 @@
 
 // Constructor
 MedicalTest::MedicalTest()
-    : testType("")
+    : testType("0")
 {
 	getProperties()->push_back(new StringProperty("testtype", this, &ModelObject::getTestType, &ModelObject::setTestType));
 }

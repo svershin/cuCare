@@ -11,7 +11,7 @@
 
 // Constructor
 Referral::Referral()
-    : specialistName("")
+    : specialistName("0")
 {
     getProperties()->push_back(new StringProperty("specialistname", this, &ModelObject::getSpecialistName, &ModelObject::setSpecialistName));
 }

@@ -11,7 +11,7 @@
 
 // Constructor
 ResultantFollowup::ResultantFollowup()
-    : results("")
+    : results("0")
 {
 	getProperties()->push_back(new StringProperty("results", this, &ModelObject::getResults, &ModelObject::setResults));
 }
