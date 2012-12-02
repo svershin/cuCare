@@ -11,7 +11,7 @@ class ServerNetworkTranslator : public AbstractNetworkTranslator
 {
 
 public:
-    ServerNetworkTranslator();
+    virtual ~ServerNetworkTranslator() = 0;
 
     static QByteArray translateAndHandleRequest(const QByteArray& message);
     static QByteArray giveErrorReply(const string& errorString);

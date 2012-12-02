@@ -1,8 +1,7 @@
 #include "ServerNetworkRequestInterpreter.h"
 #include "AbstractNetworkMessenger.h"
 
-ServerNetworkRequestInterpreter::ServerNetworkRequestInterpreter()
-{}
+ServerNetworkRequestInterpreter::~ServerNetworkRequestInterpreter(){}
 
 QVariantMap ServerNetworkRequestInterpreter::interpretAndHandleRequest(QVariantMap requestMessage)
 {

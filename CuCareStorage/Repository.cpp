@@ -108,6 +108,7 @@ bool Repository::updateStatement(StorageObject sObj)
     statement << " WHERE " << sObj.getIdName() << " = '" << idValue << "';";
 
     string command = statement.str();
+    cout << command << endl;
     return db->command(command);
 }
 

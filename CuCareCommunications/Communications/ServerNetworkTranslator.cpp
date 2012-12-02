@@ -1,7 +1,7 @@
 #include "ServerNetworkTranslator.h"
 #include "ServerNetworkRequestInterpreter.h"
 
-ServerNetworkTranslator::ServerNetworkTranslator(){}
+ServerNetworkTranslator::~ServerNetworkTranslator(){}
 
 QByteArray ServerNetworkTranslator::translateAndHandleRequest(const QByteArray& requestBytes)
 {

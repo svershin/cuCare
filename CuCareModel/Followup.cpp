@@ -10,7 +10,10 @@
 #include "IntProperty.h"
 
 // Constructor
-Followup::Followup () {
+Followup::Followup ()
+    : id(0),
+      status(FSTAT_PENDING)
+{
     getProperties()->push_back(new IntProperty(ID_NAME, this, &ModelObject::getId, &ModelObject::setId));
     getProperties()->push_back(new IntProperty("dueday", this, &ModelObject::getDay, &ModelObject::setDay));
     getProperties()->push_back(new IntProperty("duemonth", this, &ModelObject::getMonth, &ModelObject::setMonth));

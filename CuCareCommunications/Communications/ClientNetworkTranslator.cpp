@@ -2,9 +2,7 @@
 
 using namespace std;
 
-ClientNetworkTranslator::ClientNetworkTranslator()
-{
-}
+ClientNetworkTranslator::~ClientNetworkTranslator(){}
 
 QVariantMap ClientNetworkTranslator::makeRequest(QHostAddress IP, quint16 port, QVariantMap requestMap)
 {
