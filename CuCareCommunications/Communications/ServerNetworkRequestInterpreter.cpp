@@ -1,8 +1,7 @@
 #include "ServerNetworkRequestInterpreter.h"
 #include "AbstractNetworkMessenger.h"
 
-ServerNetworkRequestInterpreter::ServerNetworkRequestInterpreter()
-{}
+ServerNetworkRequestInterpreter::~ServerNetworkRequestInterpreter(){}
 
 QVariantMap ServerNetworkRequestInterpreter::interpretAndHandleRequest(QVariantMap requestMessage)
 {
@@ -12,6 +11,9 @@ QVariantMap ServerNetworkRequestInterpreter::interpretAndHandleRequest(QVariantM
     map<string, string> objectMap; unpackRequestObjectMap(requestMessage, &objectMap);
     string errorString;
     QVariantMap returnMap;
+
+    //cout << "Here's your stuff: " << endl;
+    //qDebug() << requestMessage;
 
     switch(reqType)
     {
@@ -67,5 +69,6 @@ QVariantMap ServerNetworkRequestInterpreter::interpretAndHandleRequest(QVariantM
 
 QVariantMap ServerNetworkRequestInterpreter::giveErrorReply(const string &errorString)
 {
+    //cout << "Server error encountered: " << errorString << endl;
     return packErrorReply(errorString);
 }

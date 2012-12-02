@@ -9,7 +9,7 @@
 class ClientNetworkTranslator : public AbstractNetworkTranslator
 {
 public:
-    ClientNetworkTranslator();
+    virtual ~ClientNetworkTranslator() = 0;
 
     //Function that serializes a request map
     static QVariantMap makeRequest(QHostAddress IP, quint16 port, QVariantMap requestMap);

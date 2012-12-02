@@ -71,9 +71,9 @@ bool Repository::insertStatement(StorageObject sObj)
     stringstream valueBracket;
     statement << "INSERT INTO " << sObj.getTable() << "(" << sObj.getIdName();
     valueBracket << "(NULL";
-    map<string, string> values = sObj.getValues();
-    values.erase(sObj.getIdName());
-    for(map<string, string>::iterator it = values.begin(); it != values.end(); it++)
+    map<string, string> *values = sObj.getValues();
+    values->erase(sObj.getIdName());
+    for(map<string, string>::iterator it = values->begin(); it != values->end(); it++)
     {
         statement << ", " << it->first;
         valueBracket << ", '" << it->second << "'";
@@ -83,6 +83,7 @@ bool Repository::insertStatement(StorageObject sObj)
     statement << valueBracket.str() << ";";
 
     string command = statement.str();
+    cout << command << endl;
     return db->command(command);
 }
 
@@ -91,10 +92,10 @@ bool Repository::updateStatement(StorageObject sObj)
     stringstream statement;
     statement << "UPDATE " << sObj.getTable() << " SET ";
     bool firstvalue = true;
-    map<string, string> values = sObj.getValues();
-    string idValue = values[sObj.getIdName()];
-    values.erase(sObj.getIdName());
-    for(map<string, string>::iterator it = values.begin(); it != values.end(); it++)
+    map<string, string> *values = sObj.getValues();
+    string idValue = (*values)[sObj.getIdName()];
+    values->erase(sObj.getIdName());
+    for(map<string, string>::iterator it = values->begin(); it != values->end(); it++)
     {
         if(firstvalue)
         {
@@ -107,6 +108,7 @@ bool Repository::updateStatement(StorageObject sObj)
     statement << " WHERE " << sObj.getIdName() << " = '" << idValue << "';";
 
     string command = statement.str();
+    cout << command << endl;
     return db->command(command);
 }
 
@@ -120,8 +122,8 @@ bool Repository::selectStatement(StorageObject sObj, QueryResult *&results)
     stringstream statement;
     statement << "SELECT * FROM " << sObj.getTable() << " WHERE ";
     bool firstvalue = true;
-    map<string, string> values = sObj.getValues();
-    for(map<string, string>::iterator it = values.begin(); it != values.end(); it++)
+    map<string, string> *values = sObj.getValues();
+    for(map<string, string>::iterator it = values->begin(); it != values->end(); it++)
     {
         if(firstvalue)
         {

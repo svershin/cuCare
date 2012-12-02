@@ -8,7 +8,7 @@
 class ServerNetworkRequestInterpreter : public AbstractNetworkMessenger
 {
 public:
-    ServerNetworkRequestInterpreter();
+    virtual ~ServerNetworkRequestInterpreter() = 0;
 
     static QVariantMap interpretAndHandleRequest(QVariantMap);
 

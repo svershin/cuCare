@@ -16,7 +16,7 @@ StorageObject::StorageObject(string tableParam, string idNameParam, map<string, 
 
 string StorageObject::getTable() { return table; }
 
-map<string, string>& StorageObject::getValues() { return values; }
+map<string, string>* StorageObject::getValues() { return &values; }
 
 string StorageObject::getIdName() { return idName; }
 void StorageObject::setIdName(string value) { idName = value; }
