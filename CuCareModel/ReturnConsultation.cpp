@@ -10,7 +10,9 @@
 #include "IntProperty.h"
 
 // Constructor
-ReturnConsultation::ReturnConsultation() {
+ReturnConsultation::ReturnConsultation()
+    : consultId(0)
+{
     getProperties()->push_back(new IntProperty("nextconsultationid", this, &ModelObject::getConsultId, &ModelObject::setConsultId));
 }
 

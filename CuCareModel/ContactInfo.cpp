@@ -9,10 +9,10 @@
 #include "ContactInfo.h"
 
 ContactInfo::ContactInfo()
-    : workPhone (""),
-      cellPhone (""),
-      email (""),
-      workEmail ("")
+    : workPhone ("0"),
+      cellPhone ("0"),
+      email ("0"),
+      workEmail ("0")
 {
 }
 

@@ -9,7 +9,7 @@
 #include "HealthCard.h"
 
 HealthCard::HealthCard()
-    : number (""),
+    : number ("0"),
       expiry ()
 {
 }

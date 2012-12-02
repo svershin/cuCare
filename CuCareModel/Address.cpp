@@ -9,11 +9,11 @@
 #include "Address.h"
 
 Address::Address()
-    : country (""),
-      city (""),
-      lineOne (""),
-      lineTwo (""),
-      postalCode ("")
+    : country ("0"),
+      city ("0"),
+      lineOne ("0"),
+      lineTwo ("0"),
+      postalCode ("0")
 {
 }
 
