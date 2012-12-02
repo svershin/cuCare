@@ -18,7 +18,7 @@ Referral::Referral()
 
 // Definition of functions declared as virtual in ModelObject 
 
-ModelObject::ObjectType Referral::getObjectType() { return REFERRAL; }
+ModelObject::ObjectType Referral::getObjectType() { return ModelObject::REFERRAL; }
 
 // Class attribute get() & set() methods
 

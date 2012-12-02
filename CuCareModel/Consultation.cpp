@@ -41,7 +41,7 @@ const string Consultation::ID_NAME = "consultationid";
 string Consultation::getTableName() { return TABLE_NAME; }
 string Consultation::getIdName() { return ID_NAME; }
 
-ModelObject::ObjectType Consultation::getObjectType() { return CONSULTATION; }
+ModelObject::ObjectType Consultation::getObjectType() { return ModelObject::CONSULTATION; }
 
 // Class attribute get() & set() methods
 

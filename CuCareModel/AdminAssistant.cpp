@@ -14,6 +14,6 @@ AdminAssistant::AdminAssistant()
 
 // Definition of functions declared as virtual in ModelObject 
 
-ModelObject::ObjectType AdminAssistant::getObjectType() { return ADMINASSISTANT; }
+ModelObject::ObjectType AdminAssistant::getObjectType() { return ModelObject::ADMINASSISTANT; }
 
 // EOF

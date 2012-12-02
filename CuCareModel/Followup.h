@@ -23,6 +23,8 @@ public:
 	string getTableName();
     string getIdName();
 
+    ModelObject::ObjectType getObjectType() = 0;
+
 	// Class attribute get() & set() methods
 
 	int getId();

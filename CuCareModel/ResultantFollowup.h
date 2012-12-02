@@ -22,6 +22,8 @@ public:
 
 	// Class attribute get() & set() methods
 
+    ModelObject::ObjectType getObjectType() = 0;
+
 	string getResults();
 	void setResults(const string value);
 

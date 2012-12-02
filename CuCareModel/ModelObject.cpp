@@ -8,7 +8,10 @@
 #include "ModelObject.h"
 #include "IntProperty.h"
 
-ModelObject::ModelObject() : properties () {
+ModelObject::ModelObject()
+    : properties (),
+      deleted (false)
+{
 	getProperties()->push_back(new IntProperty("deleted", this, &ModelObject::isDeleted, &ModelObject::markDeleted));
 }
 

@@ -54,7 +54,7 @@ const string Patient::ID_NAME = "patientid";
 string Patient::getTableName() { return Patient::TABLE_NAME; }
 string Patient::getIdName() { return ID_NAME; }
 
-ModelObject::ObjectType Patient::getObjectType() { return PATIENT; }
+ModelObject::ObjectType Patient::getObjectType() { return ModelObject::PATIENT; }
 
 // Class attribute get() & set() methods
 

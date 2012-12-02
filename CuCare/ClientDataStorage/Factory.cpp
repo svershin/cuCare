@@ -8,6 +8,14 @@ Factory::Factory()
       cni ("134.117.28.49", (quint16)60003)
 {
     instantiationMap[ModelObject::ADMINASSISTANT] = &Factory::instantiateAdminAssistant;
+    instantiationMap[ModelObject::SYSADMIN] = &Factory::instantiateSysAdmin;
+    instantiationMap[ModelObject::PHYSICIAN] = &Factory::instantiatePhysician;
+    instantiationMap[ModelObject::CONSULTATION] = &Factory::instantiateConsultation;
+    instantiationMap[ModelObject::PATIENT] = &Factory::instantiatePatient;
+    instantiationMap[ModelObject::REFERRAL] = &Factory::instantiateReferral;
+    instantiationMap[ModelObject::MEDICALTEST] = &Factory::instantiateReturnConsultation;
+    instantiationMap[ModelObject::MEDICATIONRENEWAL] = &Factory::instantiateMedicalTest;
+    instantiationMap[ModelObject::RETURNCONSULTATION] = &Factory::instantiateMedicationRenewal;
 }
 
 Factory::~Factory()
@@ -36,6 +44,8 @@ int Factory::create(ModelObject *object, int parentId)
         throw errString;
 
     cout << "Got past comms." << endl;
+    cout << "uid: " << uid << endl;
+    cout << "objectType: " << object->getObjectType() << endl;
 
     CALL_MEM_FUN((*this), instantiationMap[object->getObjectType()]) (&objectProps, uid);
 

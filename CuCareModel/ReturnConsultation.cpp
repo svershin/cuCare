@@ -18,7 +18,7 @@ ReturnConsultation::ReturnConsultation()
 
 // Definition of functions declared as virtual in ModelObject 
 
-ModelObject::ObjectType ReturnConsultation::getObjectType() { return RETURNCONSULTATION; }
+ModelObject::ObjectType ReturnConsultation::getObjectType() { return ModelObject::RETURNCONSULTATION; }
 
 // Class attribute get() & set() methods
 

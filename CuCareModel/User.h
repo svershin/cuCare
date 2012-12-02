@@ -27,12 +27,14 @@ public:
 	string getTableName();
     string getIdName();
 
+    ModelObject::ObjectType getObjectType() = 0;
+
 	// Class attribute get() & set() methods
 
 	int getId();
 	void setId(const int value);
 
-	string getUsername();
+    string getUsername();
     void setUsername(const string value);
 
 	string getFirstName();

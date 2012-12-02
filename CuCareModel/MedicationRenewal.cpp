@@ -18,7 +18,7 @@ MedicationRenewal::MedicationRenewal()
 
 // Definition of functions declared as virtual in ModelObject 
 
-ModelObject::ObjectType MedicationRenewal::getObjectType() { return MEDICATIONRENEWAL; }
+ModelObject::ObjectType MedicationRenewal::getObjectType() { return ModelObject::MEDICATIONRENEWAL; }
 
 // Class attribute get() & set() methods
 

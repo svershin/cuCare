@@ -18,7 +18,7 @@ MedicalTest::MedicalTest()
 
 // Definition of functions declared as virtual in ModelObject 
 
-ModelObject::ObjectType MedicalTest::getObjectType() { return MEDICALTEST; }
+ModelObject::ObjectType MedicalTest::getObjectType() { return ModelObject::MEDICALTEST; }
 
 // Class attribute get() & set() methods
 
