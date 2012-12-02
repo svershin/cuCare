@@ -145,7 +145,8 @@ void Patient::setNotes(const string value) { notes = value; }
 int Patient::getPhysicianId() { return pPhysicianId; }
 void Patient::setPhysicianId(const int value) { pPhysicianId = value; }
 
-vector<int>* Patient::getConsultationIds() { return &consultationIds; }
+list<int>* Patient::getConsultationIds() { return &consultationIds; }
+void Patient::setConsultationIds(list<int> newConsultationIds) { consultationIds = newConsultationIds; }
 void Patient::addConsultationId(const int value) { consultationIds.push_back(value); }
 
 // EOF

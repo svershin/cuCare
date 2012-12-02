@@ -10,7 +10,7 @@
 #define CONSULTATION_H
 
 #include <string>
-#include <vector>
+#include <list>
 #include "Date.h"
 #include "Time.h"
 #include "ModelObject.h"
@@ -71,7 +71,8 @@ public:
 	int getPhysicianId();
 	void setPhysicianId(int value);
 
-	vector<int>* getFollowupIds();
+    list<int>* getFollowupIds();
+    void setFollowupIds(list<int>);
 	void addFollowupId(const int value);
 
     static const string TABLE_NAME;
@@ -85,7 +86,7 @@ private:
 	ConsultationStatus status;
 	Date date;
 	Time time;
-	vector<int> followupIds;
+    list<int> followupIds;
 	int consultingPhysId;
 };
 

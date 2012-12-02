@@ -82,9 +82,10 @@ void Consultation::setTime(const Time value) { time = value; }
 	void Consultation::setHour(const int value) { time.setHour(value); }
 
 	int Consultation::getMinute() { return time.getMinute(); }
-	void Consultation::setMinute(const int value) { time.setMinute(value); }
+    void Consultation::setMinute(const int value) { time.setMinute(value); }
 
-vector<int>* Consultation::getFollowupIds() { return &followupIds; }
-void Consultation::addFollowupId(const int value) { followupIds.push_back(value); }
+    list<int>* Consultation::getFollowupIds() { return &followupIds; }
+    void Consultation::setFollowupIds(list<int> newFollowupIds) { followupIds = newFollowupIds; }
+    void Consultation::addFollowupId(const int value) { followupIds.push_back(value); }
 
 // EOF

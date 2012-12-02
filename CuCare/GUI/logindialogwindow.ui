@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>LoginWindowDialog</class>
- <widget class="QDialog" name="LoginWindowDialog">
+ <class>LoginDialogWindow</class>
+ <widget class="QDialog" name="LoginDialogWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -23,10 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Log In</string>
-  </property>
-  <property name="modal">
-   <bool>true</bool>
+   <string>Dialog</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_3">
    <item row="0" column="0">
@@ -104,14 +101,21 @@
        </property>
       </spacer>
      </item>
-     <item row="2" column="2" alignment="Qt::AlignRight|Qt::AlignBottom">
-      <widget class="QLabel" name="VersionLabel">
-       <property name="text">
-        <string>CuCare v.0.0.1</string>
-       </property>
-      </widget>
-     </item>
     </layout>
+   </item>
+   <item row="1" column="0">
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="StatusLabel">
+     <property name="text">
+      <string>CuCare v1.0</string>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

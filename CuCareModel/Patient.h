@@ -121,8 +121,9 @@ public:
 	int getPhysicianId();
 	void setPhysicianId(int const value);
 
-	vector<int>* getConsultationIds();
-	void addConsultationId(const int value);
+    list<int>* getConsultationIds();
+    void setConsultationIds(list<int> newConsultationIds);
+    void addConsultationId(const int value);
 
     static const string TABLE_NAME;
     static const string ID_NAME;
@@ -138,7 +139,7 @@ private:
 	HealthCard healthCard;
 	string notes;
 	int pPhysicianId;
-	vector<int> consultationIds;
+    list<int> consultationIds;
 };
 
 

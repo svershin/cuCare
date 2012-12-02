@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>PatientSelectDialog</class>
- <widget class="QDialog" name="PatientSelectDialog">
+ <class>PatientSelectDialogWindow</class>
+ <widget class="QDialog" name="PatientSelectDialogWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -23,21 +23,57 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Select Patient</string>
-  </property>
-  <property name="modal">
-   <bool>true</bool>
+   <string>Dialog</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
    <item row="0" column="0">
     <layout class="QGridLayout" name="gridLayout">
      <item row="0" column="0">
-      <layout class="QHBoxLayout" name="FilterHorizontalLayout">
+      <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
-        <widget class="QComboBox" name="FilterComboBox"/>
+        <widget class="QLabel" name="FilterLabel">
+         <property name="text">
+          <string>Filter by:</string>
+         </property>
+        </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="FilterLineEdit"/>
+        <widget class="QComboBox" name="PhysicianFilterComboBox">
+         <item>
+          <property name="text">
+           <string>Physician...</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="FollowupStatusFilterComboBox">
+         <item>
+          <property name="text">
+           <string>Followup Status...</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Pending</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Overdue</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Received</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Completed</string>
+          </property>
+         </item>
+        </widget>
        </item>
        <item>
         <widget class="QPushButton" name="FilterPushButton">
@@ -47,6 +83,9 @@
         </widget>
        </item>
       </layout>
+     </item>
+     <item row="1" column="0">
+      <widget class="QListWidget" name="PatientListWidget"/>
      </item>
      <item row="2" column="0">
       <layout class="QHBoxLayout" name="SelectCancelHorizontalLayout">
@@ -79,10 +118,21 @@
        </item>
       </layout>
      </item>
-     <item row="1" column="0">
-      <widget class="QListWidget" name="PatientListWidget"/>
-     </item>
     </layout>
+   </item>
+   <item row="1" column="0">
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="StatusLabel">
+     <property name="text">
+      <string>Select a Patient.</string>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
