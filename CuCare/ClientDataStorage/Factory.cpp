@@ -5,7 +5,7 @@
 
 Factory::Factory()
     : warehouse (new Warehouse(this)),
-      cni ("127.0.0.1", (quint16)60003)
+      cni ("134.117.28.49", (quint16)60003)
 {
     instantiationMap[ModelObject::ADMINASSISTANT] = &Factory::instantiateAdminAssistant;
 }
@@ -23,10 +23,23 @@ int Factory::create(ModelObject *object, int parentId)
     int uid;
     string errString;
 
+    cout << "About to call comms." << endl;
+
+    cout << "tableName: " << tableName << endl;
+    cout << "map: " << endl;
+    for(map<string, string>::iterator it = objectProps.begin(); it != objectProps.end(); ++it)
+        cout << it->first << ", " << it->second << endl;
+
+
+    cout << "About to really call comms." << endl;
     if(!cni.create(tableName, object->getIdName(), &objectProps, &uid, &errString) )
         throw errString;
 
+    cout << "Got past comms." << endl;
+
     CALL_MEM_FUN((*this), instantiationMap[object->getObjectType()]) (&objectProps, uid);
+
+    cout << "Got past instantiation." <<endl;
 
     return uid;
 }

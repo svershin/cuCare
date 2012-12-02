@@ -12,16 +12,25 @@ bool ClientNetworkInterface::create(string tableName, string idKey, map<string, 
 
     try
     {
+
         requestMessage = packRequest(CREATE, tableName, idKey, *pObjectMap);
+        cout << "Calling makeRequest..." << endl;
+
         replyMessage = ClientNetworkTranslator::makeRequest(serverIP, serverPort, requestMessage);
+        cout << "After makeRequest..." << endl;
+
         if(SUCCESS_REPLY == unpackReplyStatus(replyMessage))
         {
+            unpackCreateReplyContents(replyMessage);
+
             *pOutID = unpackCreateReplyContents(replyMessage);
+
             return true;
         }
         else if(FAILURE_REPLY == unpackReplyStatus(replyMessage))
         {
-            unpackErrorReplyContents(replyMessage);
+            *pErrorString = unpackErrorReplyContents(replyMessage);
+
             return false;
         }
         else
@@ -50,7 +59,7 @@ bool ClientNetworkInterface::push(string tableName, string idKey, map<string, st
         }
         else if(FAILURE_REPLY == unpackReplyStatus(replyMessage))
         {
-            unpackErrorReplyContents(replyMessage);
+            *pErrorString = unpackErrorReplyContents(replyMessage);
             return false;
         }
         else
@@ -79,7 +88,7 @@ bool ClientNetworkInterface::pull(string tableName, string idKey, map<string, st
         }
         else if(FAILURE_REPLY == unpackReplyStatus(replyMessage))
         {
-            unpackErrorReplyContents(replyMessage);
+            *pErrorString = unpackErrorReplyContents(replyMessage);
             return false;
         }
         else

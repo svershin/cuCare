@@ -10,12 +10,15 @@ using namespace std;
 
 void testAllTheThings()
 {
+    cout << "Starting test." << endl;
     Factory *fact = new Factory();
     Warehouse *wh = fact->getWarehouse();
 
     Patient patient;
     patient.setCountry("MONONONONONOKE");
     patient.setCellPhone("99999999");
+
+    cout << "Sending create." << endl;
 
     fact->create(&patient);
 
@@ -37,7 +40,7 @@ void testAllTheThings()
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
+    //QApplication a(argc, argv);
 
     try
     {
