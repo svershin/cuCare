@@ -32,6 +32,8 @@ public:
     //A specialized pull for this complicated type of filter
     list<int> pullPatientsByFollowupStatus(ModelObject::FollowupStatus);
 
+    Warehouse* getWarehouse();
+
 private:
     typedef int (Factory::*InstantiationFunction) (map<string, string> *properties, int uid);
 

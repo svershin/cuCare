@@ -89,7 +89,7 @@ list<int> Factory::pullPatientsByFollowupStatus(ModelObject::FollowupStatus stat
     string errString;
     list<map<string, string> *>* objectsList;
 
-    if(!cni.pull(tableName.str(), "", &filteredProps, objectsList, &errString))
+    if(!cni.pull(tablename.str(), "", &filteredProps, objectsList, &errString))
         throw errString;
 
     list<int> pulledIds;
@@ -107,6 +107,11 @@ list<int> Factory::pullPatientsByFollowupStatus(ModelObject::FollowupStatus stat
     }
 
     return pulledIds;
+}
+
+Warehouse *Factory::getWarehouse()
+{
+    return warehouse;
 }
 
 int Factory::propertyify(map<string, string> *properties, ModelObject *newObject, int uid)
