@@ -20,7 +20,6 @@ string RepoModel::getAuditCommand(int day, int month, int year)
 bool RepoModel::dbexists(Database *db)
 {
     ifstream dbfile(db->dbFilename.c_str());
-    cout << "Checking for db: " << (bool)dbfile << endl;
     return dbfile; //Casts to true if file exists.
 }
 
