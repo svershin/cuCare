@@ -3,7 +3,7 @@
 
 Factory::Factory()
     : warehouse (new Warehouse(this)),
-      cni ("134.117.28.70", (quint16)60003)
+      cni ("134.117.28.71", (quint16)60003)
 {
     instantiationMap[ModelObject::ADMINASSISTANT] = &Factory::instantiateAdminAssistant;
     instantiationMap[ModelObject::SYSADMIN] = &Factory::instantiateSysAdmin;

@@ -9,7 +9,7 @@ PatientViewWindow::PatientViewWindow(AccessControl *accessControlParam,
     patientData(patientDataParam),
     currentPatientId(-1),
     currentConsultationId(-1),
-    prevStatusIndex(0),
+    followupBaseStatus(0),
     newPatient(false),
     newConsultation(false),
     newFollowup(false)
@@ -426,6 +426,7 @@ void PatientViewWindow::on_CreateFollowupPushButton_clicked()
     clearStatus();
 
     newFollowup = true;
+    followupBaseStatus = 0;
     currentConsultationId = ui->PatientTreeWidget->currentItem()->data(1, Qt::UserRole).toInt();
 
     clearFollowupInfo();
@@ -482,13 +483,20 @@ void PatientViewWindow::on_FollowupReceivedCheckBox_stateChanged(int arg1)
     clearStatus();
 
     if (arg1 == 0) {
-        prevStatusIndex = ui->FollowupStatusComboBox->currentIndex();
         ui->ReceivedDateEdit->setEnabled(false);
+    }
+    else {
+        ui->ReceivedDateEdit->setEnabled(true);
+    }
+
+    if (ui->FollowupCompletedCheckBox->checkState() == Qt::Checked) {
+        ui->FollowupStatusComboBox->setCurrentIndex(3);
+    }
+    else if (ui->FollowupReceivedCheckBox->checkState() == Qt::Checked) {
         ui->FollowupStatusComboBox->setCurrentIndex(2);
     }
     else {
-        ui->FollowupStatusComboBox->setCurrentIndex(prevStatusIndex);
-        ui->ReceivedDateEdit->setEnabled(true);
+        ui->FollowupStatusComboBox->setCurrentIndex(followupBaseStatus);
     }
 }
 
@@ -497,13 +505,20 @@ void PatientViewWindow::on_FollowupCompletedCheckBox_stateChanged(int arg1)
     clearStatus();
 
     if (arg1 == 0) {
-        prevStatusIndex = ui->FollowupStatusComboBox->currentIndex();
         ui->CompletedDateEdit->setEnabled(false);
-        ui->FollowupStatusComboBox->setCurrentIndex(3);
     }
     else {
-        ui->FollowupStatusComboBox->setCurrentIndex(prevStatusIndex);
         ui->CompletedDateEdit->setEnabled(true);
+    }
+
+    if (ui->FollowupCompletedCheckBox->checkState() == Qt::Checked) {
+        ui->FollowupStatusComboBox->setCurrentIndex(3);
+    }
+    else if (ui->FollowupReceivedCheckBox->checkState() == Qt::Checked) {
+        ui->FollowupStatusComboBox->setCurrentIndex(2);
+    }
+    else {
+        ui->FollowupStatusComboBox->setCurrentIndex(followupBaseStatus);
     }
 }
 
@@ -845,15 +860,19 @@ void PatientViewWindow::showFollowupInfo(int fid)
     Followup::FollowupStatus fStat = (Followup::FollowupStatus)tempFollowup->getFStatus();
     switch(fStat) {
     case Followup::FSTAT_PENDING:
+        followupBaseStatus = 0;
         ui->FollowupStatusComboBox->setCurrentIndex(0);
         break;
     case Followup::FSTAT_OVERDUE:
+        followupBaseStatus = 1;
         ui->FollowupStatusComboBox->setCurrentIndex(1);
         break;
     case Followup::FSTAT_RECEIVED:
+        followupBaseStatus = 0;
         ui->FollowupStatusComboBox->setCurrentIndex(2);
         break;
     case Followup::FSTAT_COMPLETED:
+        followupBaseStatus = 0;
         ui->FollowupStatusComboBox->setCurrentIndex(3);
         break;
     default:

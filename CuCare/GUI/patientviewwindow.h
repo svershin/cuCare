@@ -52,7 +52,7 @@ private:
     int currentPatientId;
     int currentConsultationId;
 
-    int prevStatusIndex;
+    int followupBaseStatus;
 
     bool newPatient;
     bool newConsultation;
