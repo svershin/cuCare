@@ -170,9 +170,11 @@ bool ServerController::pull(string tableName, string idKey, map<string, string> 
             if(pObjectList == NULL) {throw(string("null list pointer returned on server"));}
             list<StorageObject>::iterator it = pStorageObjectList->begin();
             while(it != pStorageObjectList->end())
-            {
+            { 
                 map<string, string> *tempPObjectMap = new map<string, string>();
-                tempPObjectMap = it->getValues();
+                map<string, string> *fromStorageObject = it->getValues();
+                for(map<string, string>::iterator mapIt = fromStorageObject->begin(); mapIt != fromStorageObject->end(); ++mapIt)
+                    (*tempPObjectMap)[mapIt->first] = mapIt->second;
                 pObjectList->push_back(tempPObjectMap);
                 it++;
             }

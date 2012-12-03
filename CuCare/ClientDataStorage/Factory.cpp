@@ -11,9 +11,9 @@ Factory::Factory()
     instantiationMap[ModelObject::CONSULTATION] = &Factory::instantiateConsultation;
     instantiationMap[ModelObject::PATIENT] = &Factory::instantiatePatient;
     instantiationMap[ModelObject::REFERRAL] = &Factory::instantiateReferral;
-    instantiationMap[ModelObject::MEDICALTEST] = &Factory::instantiateReturnConsultation;
-    instantiationMap[ModelObject::MEDICATIONRENEWAL] = &Factory::instantiateMedicalTest;
-    instantiationMap[ModelObject::RETURNCONSULTATION] = &Factory::instantiateMedicationRenewal;
+    instantiationMap[ModelObject::MEDICALTEST] = &Factory::instantiateMedicalTest;
+    instantiationMap[ModelObject::MEDICATIONRENEWAL] = &Factory::instantiateMedicationRenewal;
+    instantiationMap[ModelObject::RETURNCONSULTATION] = &Factory::instantiateReturnConsultation;
 }
 
 Factory::~Factory()
@@ -29,25 +29,10 @@ int Factory::create(ModelObject *object, int parentId)
     int uid;
     string errString;
 
-    cout << "About to call comms." << endl;
-
-    cout << "tableName: " << tableName << endl;
-    cout << "map: " << endl;
-    for(map<string, string>::iterator it = objectProps.begin(); it != objectProps.end(); ++it)
-        cout << it->first << ", " << it->second << endl;
-
-
-    cout << "About to really call comms." << endl;
     if(!cni.create(tableName, object->getIdName(), &objectProps, &uid, &errString) )
         throw errString;
 
-    cout << "Got past comms." << endl;
-    cout << "uid: " << uid << endl;
-    cout << "objectType: " << object->getObjectType() << endl;
-
     CALL_MEM_FUN((*this), instantiationMap[object->getObjectType()]) (&objectProps, uid);
-
-    cout << "Got past instantiation." <<endl;
 
     return uid;
 }
@@ -68,21 +53,22 @@ void Factory::modify(ModelObject *object)
 list<int> Factory::pull(ModelObject *filteredObject, int parentId)
 {
     map<string, string> filteredProps;
+
+    cout << endl << "New pull " << endl;
+    for(list<Property*>::iterator mapit = filteredObject->getProperties()->begin(); mapit != filteredObject->getProperties()->end(); ++mapit)
+        cout << (*mapit)->getName() << ", " << (*mapit)->getValue() << endl;
+
     ObjectInterpreter::ObjectToProperties(filteredObject, &filteredProps, parentId);
     string tableName = filteredObject->getTableName();
     string errString;
-    list<map<string, string> *>* objectsList = NULL;
+    list<map<string, string> *> objectsList;
 
-    cout << "Got to comms." << endl;
-
-    if(!cni.pull(tableName, filteredObject->getIdName(), &filteredProps, objectsList, &errString))
+    if(!cni.pull(tableName, filteredObject->getIdName(), &filteredProps, &objectsList, &errString))
         throw errString;
-
-    cout << "Got past comms." << endl;
 
     list<int> pulledIds;
 
-    for(list<map<string, string> *>::iterator it = objectsList->begin(); it != objectsList->end(); ++it)
+    for(list<map<string, string> *>::iterator it = objectsList.begin(); it != objectsList.end(); ++it)
     {
         map<string, string> *objectProps = (*it);
 
@@ -104,29 +90,31 @@ list<int> Factory::pullPatientsByFollowupStatus(ModelObject::FollowupStatus stat
     //Unfortunately this ties the factory to the storage implementation to some degree
     //In future versions, we would like to find a better way to solve this problem
     map<string, string> filteredProps;
-    filteredProps["status"] = Utility::itos((int)status);
-    filteredProps[ID_NAME_PROPERTY_NAME] = "";
+    filteredProps["c.status"] = Utility::itos((int)status);
 
     stringstream tablename;
-    tablename << Patient::TABLE_NAME << "a LEFT OUTER JOIN " << Consultation::TABLE_NAME << "b ON a." << Patient::ID_NAME
-              << " = b." << PARENT_ID_PROPERTY_NAME << " LEFT OUTER JOIN " << Followup::TABLE_NAME << "c ON b." << Consultation::ID_NAME
+    tablename << Patient::TABLE_NAME << " a LEFT OUTER JOIN " << Consultation::TABLE_NAME << " b ON a." << Patient::ID_NAME
+              << " = b." << PARENT_ID_PROPERTY_NAME << " LEFT OUTER JOIN " << Followup::TABLE_NAME << " c ON b." << Consultation::ID_NAME
               << " = c." << PARENT_ID_PROPERTY_NAME;
     string errString;
-    list<map<string, string> *>* objectsList = NULL;
+    list<map<string, string> *> objectsList;
 
-    if(!cni.pull(tablename.str(), "", &filteredProps, objectsList, &errString))
+    if(!cni.pull(tablename.str(), "", &filteredProps, &objectsList, &errString))
         throw errString;
 
     list<int> pulledIds;
 
-    for(list<map<string, string> *>::iterator it = objectsList->begin(); it != objectsList->end(); ++it)
+    for(list<map<string, string> *>::iterator it = objectsList.begin(); it != objectsList.end(); ++it)
     {
         map<string, string> *objectProps = (*it);
+
+        for(map<string, string>::iterator mapit = objectProps->begin(); mapit != objectProps->end(); ++mapit)
+            cout << mapit->first << ", " << mapit->second << endl;
 
         //Object type is a special property.  It is used to decide which instantiation function to call.
         ModelObject::ObjectType type = (ModelObject::ObjectType)(Utility::stoi((*objectProps)[OBJECT_TYPE_PROPERTY_NAME]));
 
-        int pulledId = CALL_MEM_FUN((*this), instantiationMap[type]) (objectProps, -1);
+        int pulledId = instantiatePatient(objectProps, -1);
 
         pulledIds.push_back(pulledId);
     }

@@ -119,7 +119,7 @@ Consultation* Warehouse::getConsultation(int index)
         list<Property*> *filters = filterObject.getProperties();
         Property *idProp = NULL;
         for(list<Property*>::iterator it = filters->begin(); it != filters->end(); ++it)
-            if(User::ID_NAME == (*it)->getName())
+            if(Consultation::ID_NAME == (*it)->getName())
                 idProp = (*it);
         filters->clear();
         filters->push_back(idProp);
@@ -140,7 +140,7 @@ Patient* Warehouse::getPatient(int index)
         list<Property*> *filters = filterObject.getProperties();
         Property *idProp = NULL;
         for(list<Property*>::iterator it = filters->begin(); it != filters->end(); ++it)
-            if(User::ID_NAME == (*it)->getName())
+            if(Patient::ID_NAME == (*it)->getName())
                 idProp = (*it);
         filters->clear();
         filters->push_back(idProp);
@@ -161,7 +161,7 @@ Referral* Warehouse::getReferral(int index)
         list<Property*> *filters = filterObject.getProperties();
         Property *idProp = NULL;
         for(list<Property*>::iterator it = filters->begin(); it != filters->end(); ++it)
-            if(User::ID_NAME == (*it)->getName())
+            if(Followup::ID_NAME == (*it)->getName())
                 idProp = (*it);
         filters->clear();
         filters->push_back(idProp);
@@ -182,7 +182,7 @@ ReturnConsultation* Warehouse::getReturnConsultation(int index)
         list<Property*> *filters = filterObject.getProperties();
         Property *idProp = NULL;
         for(list<Property*>::iterator it = filters->begin(); it != filters->end(); ++it)
-            if(User::ID_NAME == (*it)->getName())
+            if(Followup::ID_NAME == (*it)->getName())
                 idProp = (*it);
         filters->clear();
         filters->push_back(idProp);
@@ -203,7 +203,7 @@ MedicationRenewal* Warehouse::getMedicationRenewal(int index)
         list<Property*> *filters = filterObject.getProperties();
         Property *idProp = NULL;
         for(list<Property*>::iterator it = filters->begin(); it != filters->end(); ++it)
-            if(User::ID_NAME == (*it)->getName())
+            if(Followup::ID_NAME == (*it)->getName())
                 idProp = (*it);
         filters->clear();
         filters->push_back(idProp);
@@ -224,7 +224,7 @@ MedicalTest* Warehouse::getMedicalTest(int index)
         list<Property*> *filters = filterObject.getProperties();
         Property *idProp = NULL;
         for(list<Property*>::iterator it = filters->begin(); it != filters->end(); ++it)
-            if(User::ID_NAME == (*it)->getName())
+            if(Followup::ID_NAME == (*it)->getName())
                 idProp = (*it);
         filters->clear();
         filters->push_back(idProp);

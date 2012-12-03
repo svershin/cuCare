@@ -35,7 +35,6 @@ QVariantMap BaseNetworkMessenger::stringMapToQVariantMap(const map<string, strin
     return outMap;
 }
 
-
 void BaseNetworkMessenger::qVariantMapToStringMap(const QVariantMap& inMap, map<string, string> *pOutMap)
 {
     if(! pOutMap->empty())  { throw (string("non-empty map passed in qVariantMapToStringMap")); }
@@ -80,11 +79,9 @@ QVariantList BaseNetworkMessenger::mapListToQVariantList(const list< map<string,
     return outList;
 }
 
-
 void BaseNetworkMessenger::qVariantListToMapList(const QVariantList& inList, list< map<string, string>* >* pOutList)
 {
     if(! pOutList->empty())  { throw (string("non-empty list passed in qVariantListToMapList")); }
-
     QVariantList::const_iterator it = inList.begin();
     while(it != inList.end())
     {
@@ -93,7 +90,6 @@ void BaseNetworkMessenger::qVariantListToMapList(const QVariantList& inList, lis
         pOutList->push_back(tempMap);
         it++;
     }
-
     return;
 }
 
@@ -259,7 +255,6 @@ int BaseNetworkMessenger::unpackCreateReplyContents(const QVariantMap& replyMap)
         throw(string("server reply is missing ")+= string(REPLY_ID_KEY)+= string(" field"));
     }
 }
-
 
 void BaseNetworkMessenger::unpackPullReplyContents(const QVariantMap& replyMap, list< map<string, string>* > *pOutList)
 {

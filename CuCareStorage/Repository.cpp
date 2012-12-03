@@ -57,6 +57,7 @@ bool Repository::pull(StorageObject sObj, list<StorageObject> *&pResults)
         return false;
     pResults = new list<StorageObject>();
     instantiate(queryResult, pResults, sObj);
+
     return true;
 }
 

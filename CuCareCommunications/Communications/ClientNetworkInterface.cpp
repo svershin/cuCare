@@ -12,12 +12,9 @@ bool ClientNetworkInterface::create(string tableName, string idKey, map<string, 
 
     try
     {
-
         requestMessage = packRequest(CREATE, tableName, idKey, *pObjectMap);
-        cout << "Calling makeRequest..." << endl;
 
         replyMessage = ClientNetworkTranslator::makeRequest(serverIP, serverPort, requestMessage);
-        cout << "After makeRequest..." << endl;
 
         if(SUCCESS_REPLY == unpackReplyStatus(replyMessage))
         {

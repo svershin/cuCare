@@ -71,9 +71,9 @@ list<int> PatientData::getPatientsByFollowupStatus(ModelObject::FollowupStatus f
 Patient *PatientData::getFullPatient(int patientId)
 {
     Patient* patient = clientData.getPatient(patientId);
-    Patient patientFilter;
-    patientFilter.getProperties()->clear();
-    patient->setConsultationIds(clientData.pull(&patientFilter, patientId));
+    Consultation consultFilter;
+    consultFilter.getProperties()->clear();
+    patient->setConsultationIds(clientData.pull(&consultFilter, patientId));
 
     list<int>* consultList = patient->getConsultationIds();
     for(list<int>::iterator it=consultList->begin(); it!=consultList->end(); it++)
@@ -84,6 +84,7 @@ Patient *PatientData::getFullPatient(int patientId)
 
 int PatientData::createPatient(Patient *patient)
 {
+    //Went to create a patient
     return clientData.create(patient);
 }
 
@@ -95,9 +96,30 @@ void PatientData::modifyPatient(Patient *patient)
 Consultation *PatientData::getConsultation(int consultationId)
 {
     Consultation* consultation = clientData.getConsultation(consultationId);
-    Consultation consultationFilter;
-    consultationFilter.getProperties()->clear();
-    consultation->setFollowupIds(clientData.pull(&consultationFilter, consultationId));
+    list<int> followupIds;
+    list<int> pulledIds;
+
+    Referral referralFilter;
+    referralFilter.getProperties()->clear();
+    pulledIds = clientData.pull(&referralFilter, consultationId);
+    followupIds.insert(followupIds.begin(), pulledIds.begin(), pulledIds.end());
+
+    MedicationRenewal renewalFilter;
+    renewalFilter.getProperties()->clear();
+    pulledIds = clientData.pull(&renewalFilter, consultationId);
+    followupIds.insert(followupIds.begin(), pulledIds.begin(), pulledIds.end());
+
+    MedicalTest testFilter;
+    testFilter.getProperties()->clear();
+    pulledIds = clientData.pull(&testFilter, consultationId);
+    followupIds.insert(followupIds.begin(), pulledIds.begin(), pulledIds.end());
+
+    ReturnConsultation returnFilter;
+    returnFilter.getProperties()->clear();
+    pulledIds = clientData.pull(&returnFilter, consultationId);
+    followupIds.insert(followupIds.begin(), pulledIds.begin(), pulledIds.end());
+
+    consultation->setFollowupIds(followupIds);
 
     list<int>* followupList = consultation->getFollowupIds();
     for(list<int>::iterator it=followupList->begin(); it!=followupList->end(); it++)

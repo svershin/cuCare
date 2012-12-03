@@ -10,23 +10,21 @@ AccessControl::LoginStatus AccessControl::verifyUsername(string username)
 
     list<int> users;
 
-//    Physician physician;
-//    physician.setUsername(username);
-//    setupFilter(&physician);
+    Physician physician;
+    physician.setUsername(username);
+    setupFilter(&physician);
 
-//    cout << "About to pull physician with username: " << physician.getUsername() << endl;
-//    users = clientData.pull(&physician);
-//    if(!users.empty()) {
-//        status = AC_LOGGED_IN_AS_PHYSICIAN;
-//        return status;
-//    }
+    users = clientData.pull(&physician);
+    if(!users.empty()) {
+        status = AC_LOGGED_IN_AS_PHYSICIAN;
+        return status;
+    }
 
 
     AdminAssistant adminAssistant;
     adminAssistant.setUsername(username);
     setupFilter(&adminAssistant);
 
-    cout << "About to pull adminAssistant with username: " << adminAssistant.getUsername() << endl;
     users = clientData.pull(&adminAssistant);
     if(!users.empty()) {
         status = AC_LOGGED_IN_AS_ADMINASSISTANT;
@@ -34,16 +32,15 @@ AccessControl::LoginStatus AccessControl::verifyUsername(string username)
     }
 
 
-//    SysAdmin sysAdmin;
-//    sysAdmin.setUsername(username);
-//    setupFilter(&sysAdmin);
+    SysAdmin sysAdmin;
+    sysAdmin.setUsername(username);
+    setupFilter(&sysAdmin);
 
-//    cout << "About to pull sysAdmin with username: " << sysAdmin.getUsername() << endl;
-//    users = clientData.pull(&sysAdmin);
-//    if(!users.empty()) {
-//        status = AC_LOGGED_IN_AS_SYSADMIN;
-//        return status;
-//    }
+    users = clientData.pull(&sysAdmin);
+    if(!users.empty()) {
+        status = AC_LOGGED_IN_AS_SYSADMIN;
+        return status;
+    }
 
     return AC_FAILED;
 }

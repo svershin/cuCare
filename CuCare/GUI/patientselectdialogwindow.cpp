@@ -79,6 +79,9 @@ void PatientSelectDialogWindow::refreshList()
     //disable the 'Select' button until a patient has been selected
     ui->SelectPushButton->setEnabled(false);
 
+    //Clear the previous contents
+    ui->PatientListWidget->clear();
+
     //Determine if any filters are to be applied
     if (ui->PhysicianFilterComboBox->currentIndex() != 0
             && ui->FollowupStatusFilterComboBox->currentIndex() != 0)
@@ -96,15 +99,16 @@ void PatientSelectDialogWindow::refreshList()
         switch(ui->FollowupStatusFilterComboBox->currentIndex()) {
         case 1:
             followupStatus = ModelObject::FSTAT_PENDING;
-
+            break;
         case 2:
             followupStatus = ModelObject::FSTAT_OVERDUE;
-
+            break;
         case 3:
             followupStatus = ModelObject::FSTAT_RECEIVED;
-
+            break;
         case 4:
             followupStatus = ModelObject::FSTAT_COMPLETED;
+            break;
         }
     }
 
@@ -125,8 +129,8 @@ void PatientSelectDialogWindow::refreshList()
         ui->PatientListWidget->addItem(tempListItem);
         pPatientList.pop_front();
     }
-    if (tempListItem != NULL)
-        delete tempListItem;
+//    if (tempListItem != NULL) //TODO: What is this?  We delete the last item?  This was causing one item to be missing from the patient select dialog
+//        delete tempListItem;
 }
 
 void PatientSelectDialogWindow::clearStatus()

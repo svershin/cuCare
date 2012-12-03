@@ -150,6 +150,28 @@ int main(int argc, char *argv[])
 
     try
     {
+        //Make sure there's something to log in with
+        Factory *fact = new Factory();
+        Warehouse *wh = fact->getWarehouse();
+        if(NULL == wh->getAdminAssistant(1))
+        {
+            AdminAssistant user;
+            user.setUsername("AdminAssistant");
+
+            cout << "Creating sample AA." << endl;
+
+            int uid = fact->create(&user);
+        }
+        if(NULL == wh->getPhysician(2))
+        {
+            Physician user;
+            user.setUsername("Physician");
+
+            cout << "Creating sample Phys." << endl;
+
+            int uid = fact->create(&user);
+        }
+
         wc->start();
     }
     catch(string err)

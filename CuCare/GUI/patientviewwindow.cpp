@@ -31,6 +31,8 @@ void PatientViewWindow::on_NewPatientPushButton_clicked()
     enablePatientEditing();
     clearPatientInfo();
 
+    ui->PatientTreeWidget->clear(); //TODO : Makes sure this is where it should be
+
     //Move to Patient tab
     ui->DisplayTabsWidget->setTabEnabled(0, true);
     ui->DisplayTabsWidget->setCurrentIndex(0);
@@ -158,6 +160,7 @@ void PatientViewWindow::on_SubmitChangesPushButton_clicked()
                 populatePatientTree();
                 showPatientInfo();
                 ui->StatusLabel->setText("New patient created.");
+                ui->CreateConsultationPushButton->setEnabled(true);
             }
             catch (char * err) {
                 ui->StatusLabel->setText(QString::fromStdString(err));
@@ -173,6 +176,7 @@ void PatientViewWindow::on_SubmitChangesPushButton_clicked()
                 ui->StatusLabel->setText(QString::fromStdString(err));
             }
         }
+        break;
 
     case 1: //Consultation Tab
         //Create the status object
@@ -226,6 +230,7 @@ void PatientViewWindow::on_SubmitChangesPushButton_clicked()
                 ui->StatusLabel->setText(QString::fromStdString(err));
             }
         }
+        break;
 
     case 2: //Followup Tab
         //create the status object
@@ -294,6 +299,7 @@ void PatientViewWindow::on_SubmitChangesPushButton_clicked()
                 }
 
             }
+            break;
 
         case 1: //Medication Renewal
 
@@ -331,6 +337,7 @@ void PatientViewWindow::on_SubmitChangesPushButton_clicked()
                 }
 
             }
+            break;
 
         case 2: //Referral
 
@@ -369,6 +376,7 @@ void PatientViewWindow::on_SubmitChangesPushButton_clicked()
                 }
 
             }
+            break;
 
         case 3: //Return Consultation
 
@@ -404,6 +412,7 @@ void PatientViewWindow::on_SubmitChangesPushButton_clicked()
                 }
 
             }
+            break;
 
         }
 
@@ -918,8 +927,13 @@ void PatientViewWindow::populatePatientTree()
     try {
         pTempPatient = patientData->getFullPatient(currentPatientId);
     }
-    catch (char * err) {
+    catch (char const * err) {
         ui->StatusLabel->setText(QString::fromStdString(err));
+        return;
+    }
+    catch (string err) {
+        ui->StatusLabel->setText(QString::fromStdString(err));
+        return;
     }
 
     pPatientWidget->setText(0, QString::fromStdString(pTempPatient->getLastName() + string(", ") + pTempPatient->getFirstName()));
