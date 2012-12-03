@@ -1,0 +1,1 @@
+/home/mike/4pupsRepo/cucare/CuCareCommunications/qjson/build/src/CMakeFiles/qjson.dir
