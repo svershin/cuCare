@@ -65,6 +65,7 @@ void PatientViewWindow::on_CreateConsultationPushButton_clicked()
     clearStatus();
 
     newConsultation = true;
+    ui->CreateFollowupPushButton->setEnabled(false);
     clearConsultationInfo();
 
     //Move to Consultation tab
@@ -558,6 +559,9 @@ void PatientViewWindow::initializeUi()
     //Disable consultation creation until a patient is selected
     ui->CreateConsultationPushButton->setEnabled(false);
 
+    //Disable followup creation until a consultation is selected
+    ui->CreateFollowupPushButton->setEnabled(false);
+
     //Followup status combo box is never user-modifiable, it just displays the current status
     ui->FollowupStatusComboBox->setEnabled(false);
 
@@ -790,6 +794,7 @@ void PatientViewWindow::showConsultationInfo(int cid)
     }
 
     clearConsultationInfo();
+    ui->CreateFollowupPushButton->setEnabled(true);
 
     //Switch to consultation tab and disable other tabs
     ui->DisplayTabsWidget->setTabEnabled(1, true);
