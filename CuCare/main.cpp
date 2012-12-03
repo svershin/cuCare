@@ -38,6 +38,7 @@ int main(int argc, char *argv[])
             user.setUsername("Physician");
             user.setFirstName("Bob");
             user.setLastName("Loblaw");
+            user.setPhysicianId(1);
 
             int uid = fact->create(&user);
         }
@@ -47,6 +48,7 @@ int main(int argc, char *argv[])
             user.setUsername("OtherPhysician");
             user.setFirstName("Whirling");
             user.setLastName("Dervish");
+            user.setPhysicianId(2);
 
             int uid = fact->create(&user);
         }

@@ -10,11 +10,11 @@ string RepoModel::getAuditCommand(int day, int month, int year)
     string table = Followup::TABLE_NAME;
     stringstream statement;
     statement << "UPDATE " << table << " SET status = '" << Followup::FSTAT_OVERDUE
-              << "' WHERE ('" << year << "' > dueyear OR ('" << year
-              << "' = dueyear AND '" << month << "' > duemonth) OR ('" << year
-              << "' = dueyear AND '" << month << "' = duemonth AND '" << day
-              << "' > dueday)) AND status = '" << Followup::FSTAT_PENDING << "';";
-    return "";
+              << "' WHERE ('" << year << "' > CAST (dueyear AS INTEGER) OR ('" << year
+              << "' = CAST (dueyear AS INTEGER) AND '" << month << "' > CAST (duemonth AS INTEGER)) OR ('" << year
+              << "' = CAST(dueyear AS INTEGER) AND '" << month << "' = CAST(duemonth AS INTEGER) AND '" << day
+              << "' > CAST(dueday AS INTEGER))) AND status = '" << Followup::FSTAT_PENDING << "';";
+    return statement.str();
 }
 
 bool RepoModel::dbexists(Database *db)

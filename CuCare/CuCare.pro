@@ -9,7 +9,6 @@ QT       += core gui network
 TARGET = CuCare
 TEMPLATE = app
 
-
 SOURCES += main.cpp\
     ObjectInterpreter/ObjectInterpreter.cpp \
     ClientDataStorage/Factory.cpp \

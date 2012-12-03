@@ -114,6 +114,7 @@ void PatientSelectDialogWindow::refreshList()
 
     //Populate the patient list
     try {
+        ui->StatusLabel->setText(QString::fromStdString(Utility::itos(ui->PhysicianFilterComboBox->itemData(ui->PhysicianFilterComboBox->currentIndex(), Qt::UserRole).toInt())));
         pPatientList = patientData->getPatientList(filterType,
                                                    ui->PhysicianFilterComboBox->itemData(ui->PhysicianFilterComboBox->currentIndex(), Qt::UserRole).toInt(),
                                                    followupStatus);
@@ -129,8 +130,6 @@ void PatientSelectDialogWindow::refreshList()
         ui->PatientListWidget->addItem(tempListItem);
         pPatientList.pop_front();
     }
-//    if (tempListItem != NULL) //TODO: What is this?  We delete the last item?  This was causing one item to be missing from the patient select dialog
-//        delete tempListItem;
 }
 
 void PatientSelectDialogWindow::clearStatus()
