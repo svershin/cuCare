@@ -22,17 +22,15 @@ int main(int argc, char *argv[])
 
     try
     {
-        //Make sure there's something to log in with
-        Factory *fact = new Factory();
-        Warehouse *wh = fact->getWarehouse();
-        if(NULL == wh->getAdminAssistant(1))
+        ClientData cd = ClientData::getInstance();
+        if(NULL == cd.getAdminAssistant(1))
         {
             AdminAssistant user;
             user.setUsername("AdminAssistant");
 
-            int uid = fact->create(&user);
+            cd.create(&user);
         }
-        if(NULL == wh->getPhysician(2))
+        if(NULL == cd.getPhysician(2))
         {
             Physician user;
             user.setUsername("Physician");
@@ -40,9 +38,9 @@ int main(int argc, char *argv[])
             user.setLastName("Loblaw");
             user.setPhysicianId(1);
 
-            int uid = fact->create(&user);
+            cd.create(&user);
         }
-        if(NULL == wh->getPhysician(3))
+        if(NULL == cd.getPhysician(3))
         {
             Physician user;
             user.setUsername("OtherPhysician");
@@ -50,7 +48,7 @@ int main(int argc, char *argv[])
             user.setLastName("Dervish");
             user.setPhysicianId(2);
 
-            int uid = fact->create(&user);
+            cd.create(&user);
         }
 
         wc->start();

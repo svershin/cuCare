@@ -19,7 +19,8 @@ SOURCES += main.cpp\
     GUI/logindialogwindow.cpp \
     GuiServices/PatientData.cpp \
     GuiServices/AccessControl.cpp \
-    ClientDataStorage/ClientData.cpp
+    ClientDataStorage/ClientData.cpp \
+    ClientDataStorage/NetworkSettingsStorage.cpp
 
 HEADERS  += \
     ObjectInterpreter/ObjectInterpreter.h \
@@ -31,7 +32,8 @@ HEADERS  += \
     GUI/logindialogwindow.h \
     GuiServices/PatientData.h \
     GuiServices/AccessControl.h \
-    ClientDataStorage/ClientData.h
+    ClientDataStorage/ClientData.h \
+    ClientDataStorage/NetworkSettingsStorage.h
 
 FORMS    += \
     GUI/logindialogwindow.ui \
@@ -57,3 +59,6 @@ unix:!macx:!symbian: LIBS += -L$$PWD/../CuCareCommunications/qjson/build/lib/ -l
 
 INCLUDEPATH += $$PWD/../CuCareCommunications/qjson/build
 DEPENDPATH += $$PWD/../CuCareCommunications/qjson/build
+
+OTHER_FILES += \
+    NetworkSettings.init

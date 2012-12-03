@@ -5,6 +5,7 @@
 using namespace std;
 #include "Warehouse.h"
 #include "Factory.h"
+#include "NetworkSettingsStorage.h"
 #include "../../CuCareModel/ModelObject.h"
 
 class ClientData
@@ -34,6 +35,7 @@ public:
     list<int> pullPatientsByFollowupStatus(ModelObject::FollowupStatus status);
 
 private:
+    NetworkSettingsStorage netStorage;
     Factory factory;
     Warehouse* warehouse;
     static ClientData* instance;

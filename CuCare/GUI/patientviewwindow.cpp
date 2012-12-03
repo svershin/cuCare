@@ -9,6 +9,7 @@ PatientViewWindow::PatientViewWindow(AccessControl *accessControlParam,
     patientData(patientDataParam),
     currentPatientId(-1),
     currentConsultationId(-1),
+    followupBaseStatus(0),
     newPatient(false),
     newConsultation(false),
     newFollowup(false)
@@ -47,6 +48,7 @@ void PatientViewWindow::on_SelectPatientPushButton_clicked()
     PatientSelectDialogWindow *patientDialog = new PatientSelectDialogWindow(patientData);
 
     if (patientDialog->exec() == 1) {
+        newPatient = false;
         currentPatientId = patientDialog->getSelectedPid();
 
         enablePatientEditing();
@@ -143,12 +145,12 @@ void PatientViewWindow::on_SubmitChangesPushButton_clicked()
 
         tempPatient.setPhysicianId(ui->PatientPhysicianSelectComboBox->itemData(ui->PatientPhysicianSelectComboBox->currentIndex(), Qt::UserRole).toInt());
 
-        tempPatient.setDateOfBirth(Date(ui->DOBDateEdit->date().year(), ui->DOBDateEdit->date().month(), ui->DOBDateEdit->date().day()));
-        tempPatient.setDateAddedToSystem(Date(ui->AddedDateEdit->date().year(), ui->AddedDateEdit->date().month(), ui->AddedDateEdit->date().day()));
+        tempPatient.setDateOfBirth(Date(ui->DOBDateEdit->date().day(), ui->DOBDateEdit->date().month(), ui->DOBDateEdit->date().year()));
+        tempPatient.setDateAddedToSystem(Date(ui->AddedDateEdit->date().day(), ui->AddedDateEdit->date().month(), ui->AddedDateEdit->date().year()));
 
-        tempPatient.setHealthCard(HealthCard(ui->CardNumberLineEdit->text().toStdString(), Date(ui->CardExpirationDateEdit->date().year(),
+        tempPatient.setHealthCard(HealthCard(ui->CardNumberLineEdit->text().toStdString(), Date(ui->CardExpirationDateEdit->date().day(),
                                                                                                 ui->CardExpirationDateEdit->date().month(),
-                                                                                                ui->CardExpirationDateEdit->date().day())));
+                                                                                                ui->CardExpirationDateEdit->date().year())));
 
         tempPatient.setNotes(ui->PatientNotesTextEdit->toPlainText().toStdString());
 
@@ -199,9 +201,9 @@ void PatientViewWindow::on_SubmitChangesPushButton_clicked()
 
         tempConsultation.setCStatus(cStatus);
 
-        tempConsultation.setDate(Date(ui->ConsultationDateTimeEdit->date().year(),
+        tempConsultation.setDate(Date(ui->ConsultationDateTimeEdit->date().day(),
                                       ui->ConsultationDateTimeEdit->date().month(),
-                                      ui->ConsultationDateTimeEdit->date().day()));
+                                      ui->ConsultationDateTimeEdit->date().year()));
         tempConsultation.setTime(Time(ui->ConsultationDateTimeEdit->time().hour(),
                                       ui->ConsultationDateTimeEdit->time().minute()));
 
@@ -266,9 +268,9 @@ void PatientViewWindow::on_SubmitChangesPushButton_clicked()
 
             //Populate the temp object
             tempMedicalTest.setFStatus(fStatus);
-            tempMedicalTest.setDateDue(Date(ui->DueDateEdit->date().year(),
+            tempMedicalTest.setDateDue(Date(ui->DueDateEdit->date().day(),
                                             ui->DueDateEdit->date().month(),
-                                            ui->DueDateEdit->date().day()));
+                                            ui->DueDateEdit->date().year()));
             tempMedicalTest.setDateReceived(tempReceivedDate);
             tempMedicalTest.setDateCompleted(tempCompletedDate);
 
@@ -305,9 +307,9 @@ void PatientViewWindow::on_SubmitChangesPushButton_clicked()
 
             //Populate the temp object
             tempMedicationRenewal.setFStatus(fStatus);
-            tempMedicationRenewal.setDateDue(Date(ui->DueDateEdit->date().year(),
+            tempMedicationRenewal.setDateDue(Date(ui->DueDateEdit->date().day(),
                                             ui->DueDateEdit->date().month(),
-                                            ui->DueDateEdit->date().day()));
+                                            ui->DueDateEdit->date().year()));
             tempMedicationRenewal.setDateReceived(tempReceivedDate);
             tempMedicationRenewal.setDateCompleted(tempCompletedDate);
 
@@ -343,9 +345,9 @@ void PatientViewWindow::on_SubmitChangesPushButton_clicked()
 
             //Populate the temp object
             tempReferral.setFStatus(fStatus);
-            tempReferral.setDateDue(Date(ui->DueDateEdit->date().year(),
+            tempReferral.setDateDue(Date(ui->DueDateEdit->date().day(),
                                             ui->DueDateEdit->date().month(),
-                                            ui->DueDateEdit->date().day()));
+                                            ui->DueDateEdit->date().year()));
             tempReferral.setDateReceived(tempReceivedDate);
             tempReferral.setDateCompleted(tempCompletedDate);
 
@@ -382,9 +384,9 @@ void PatientViewWindow::on_SubmitChangesPushButton_clicked()
 
             //Populate the temp object
             tempreturnConsultation.setFStatus(fStatus);
-            tempreturnConsultation.setDateDue(Date(ui->DueDateEdit->date().year(),
+            tempreturnConsultation.setDateDue(Date(ui->DueDateEdit->date().day(),
                                             ui->DueDateEdit->date().month(),
-                                            ui->DueDateEdit->date().day()));
+                                            ui->DueDateEdit->date().year()));
             tempreturnConsultation.setDateReceived(tempReceivedDate);
             tempreturnConsultation.setDateCompleted(tempCompletedDate);
 
@@ -424,6 +426,7 @@ void PatientViewWindow::on_CreateFollowupPushButton_clicked()
     clearStatus();
 
     newFollowup = true;
+    followupBaseStatus = 0;
     currentConsultationId = ui->PatientTreeWidget->currentItem()->data(1, Qt::UserRole).toInt();
 
     clearFollowupInfo();
@@ -479,20 +482,44 @@ void PatientViewWindow::on_FollowupReceivedCheckBox_stateChanged(int arg1)
 {
     clearStatus();
 
-    if (arg1 == 0)
+    if (arg1 == 0) {
         ui->ReceivedDateEdit->setEnabled(false);
-    else
+    }
+    else {
         ui->ReceivedDateEdit->setEnabled(true);
+    }
+
+    if (ui->FollowupCompletedCheckBox->checkState() == Qt::Checked) {
+        ui->FollowupStatusComboBox->setCurrentIndex(3);
+    }
+    else if (ui->FollowupReceivedCheckBox->checkState() == Qt::Checked) {
+        ui->FollowupStatusComboBox->setCurrentIndex(2);
+    }
+    else {
+        ui->FollowupStatusComboBox->setCurrentIndex(followupBaseStatus);
+    }
 }
 
 void PatientViewWindow::on_FollowupCompletedCheckBox_stateChanged(int arg1)
 {
     clearStatus();
 
-    if (arg1 == 0)
+    if (arg1 == 0) {
         ui->CompletedDateEdit->setEnabled(false);
-    else
+    }
+    else {
         ui->CompletedDateEdit->setEnabled(true);
+    }
+
+    if (ui->FollowupCompletedCheckBox->checkState() == Qt::Checked) {
+        ui->FollowupStatusComboBox->setCurrentIndex(3);
+    }
+    else if (ui->FollowupReceivedCheckBox->checkState() == Qt::Checked) {
+        ui->FollowupStatusComboBox->setCurrentIndex(2);
+    }
+    else {
+        ui->FollowupStatusComboBox->setCurrentIndex(followupBaseStatus);
+    }
 }
 
 void PatientViewWindow::on_PatientTreeWidget_itemClicked(QTreeWidgetItem *item)
@@ -501,12 +528,15 @@ void PatientViewWindow::on_PatientTreeWidget_itemClicked(QTreeWidgetItem *item)
 
     switch(item->data(0, Qt::UserRole).toInt()) {
     case 0: //Patient has been selected
+        newPatient = false;
         showPatientInfo();
         break;
     case 1: //Consultation has been selected
+        newConsultation = false;
         showConsultationInfo(item->data(1, Qt::UserRole).toInt());
         break;
     case 2: //Followup has been selected
+        newFollowup = false;
         showFollowupInfo(item->data(1, Qt::UserRole).toInt());
         break;
     }
@@ -527,6 +557,9 @@ void PatientViewWindow::initializeUi()
 
     //Disable consultation creation until a patient is selected
     ui->CreateConsultationPushButton->setEnabled(false);
+
+    //Followup status combo box is never user-modifiable, it just displays the current status
+    ui->FollowupStatusComboBox->setEnabled(false);
 
     //All of the elements of the patient tab are grayed out until one is
     //selected, or until a new one is to be created
@@ -551,6 +584,8 @@ void PatientViewWindow::enablePatientEditing()
     ui->CityLineEdit->setEnabled(true);
     ui->CountryLineEdit->setEnabled(true);
     ui->PostalCodeLineEdit->setEnabled(true);
+
+    ui->PatientPhysicianSelectComboBox->setEnabled(true);
 
     ui->DOBDateEdit->setEnabled(true);
     ui->AddedDateEdit->setEnabled(true);
@@ -578,6 +613,8 @@ void PatientViewWindow::disablePatientEditing()
     ui->CityLineEdit->setEnabled(false);
     ui->CountryLineEdit->setEnabled(false);
     ui->PostalCodeLineEdit->setEnabled(false);
+
+    ui->PatientPhysicianSelectComboBox->setEnabled(false);
 
     ui->DOBDateEdit->setEnabled(false);
     ui->AddedDateEdit->setEnabled(false);
@@ -823,15 +860,19 @@ void PatientViewWindow::showFollowupInfo(int fid)
     Followup::FollowupStatus fStat = (Followup::FollowupStatus)tempFollowup->getFStatus();
     switch(fStat) {
     case Followup::FSTAT_PENDING:
+        followupBaseStatus = 0;
         ui->FollowupStatusComboBox->setCurrentIndex(0);
         break;
     case Followup::FSTAT_OVERDUE:
+        followupBaseStatus = 1;
         ui->FollowupStatusComboBox->setCurrentIndex(1);
         break;
     case Followup::FSTAT_RECEIVED:
+        followupBaseStatus = 0;
         ui->FollowupStatusComboBox->setCurrentIndex(2);
         break;
     case Followup::FSTAT_COMPLETED:
+        followupBaseStatus = 0;
         ui->FollowupStatusComboBox->setCurrentIndex(3);
         break;
     default:

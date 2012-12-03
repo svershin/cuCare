@@ -1,7 +1,9 @@
 #include "ClientData.h"
 
 ClientData::ClientData()
-    : warehouse(factory.getWarehouse()){
+    : netStorage(),
+      factory (netStorage.getIpAddress(), netStorage.getPortNumber()),
+      warehouse(factory.getWarehouse()){
 }
 
 ClientData* ClientData::instance = NULL;

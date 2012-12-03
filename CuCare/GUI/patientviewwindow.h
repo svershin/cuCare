@@ -52,6 +52,8 @@ private:
     int currentPatientId;
     int currentConsultationId;
 
+    int followupBaseStatus;
+
     bool newPatient;
     bool newConsultation;
     bool newFollowup;

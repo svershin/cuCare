@@ -1,9 +1,9 @@
 #include "Factory.h"
 #include "Warehouse.h"
 
-Factory::Factory()
+Factory::Factory(string ip, int port)
     : warehouse (new Warehouse(this)),
-      cni ("134.117.28.70", (quint16)60003)
+      cni (ip, (quint16)port)
 {
     instantiationMap[ModelObject::ADMINASSISTANT] = &Factory::instantiateAdminAssistant;
     instantiationMap[ModelObject::SYSADMIN] = &Factory::instantiateSysAdmin;

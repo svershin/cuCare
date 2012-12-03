@@ -14,7 +14,7 @@ using namespace std;
 class Factory
 {
 public:
-    Factory();
+    Factory(string ip, int port);
 
     ~Factory();
 
