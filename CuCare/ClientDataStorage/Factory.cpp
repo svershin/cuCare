@@ -54,10 +54,6 @@ list<int> Factory::pull(ModelObject *filteredObject, int parentId)
 {
     map<string, string> filteredProps;
 
-    cout << endl << "New pull " << endl;
-    for(list<Property*>::iterator mapit = filteredObject->getProperties()->begin(); mapit != filteredObject->getProperties()->end(); ++mapit)
-        cout << (*mapit)->getName() << ", " << (*mapit)->getValue() << endl;
-
     ObjectInterpreter::ObjectToProperties(filteredObject, &filteredProps, parentId);
     string tableName = filteredObject->getTableName();
     string errString;
@@ -107,12 +103,6 @@ list<int> Factory::pullPatientsByFollowupStatus(ModelObject::FollowupStatus stat
     for(list<map<string, string> *>::iterator it = objectsList.begin(); it != objectsList.end(); ++it)
     {
         map<string, string> *objectProps = (*it);
-
-        for(map<string, string>::iterator mapit = objectProps->begin(); mapit != objectProps->end(); ++mapit)
-            cout << mapit->first << ", " << mapit->second << endl;
-
-        //Object type is a special property.  It is used to decide which instantiation function to call.
-        ModelObject::ObjectType type = (ModelObject::ObjectType)(Utility::stoi((*objectProps)[OBJECT_TYPE_PROPERTY_NAME]));
 
         int pulledId = instantiatePatient(objectProps, -1);
 

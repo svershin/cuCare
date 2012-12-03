@@ -6,8 +6,6 @@ Repository::Repository()
       errorText (""),
       rModel ()
 {
-    cout << "Creating repository." << endl;
-
     db = new Sqlite3Database();
 
     bool firstTimeRun = !rModel.dbexists(db);
@@ -84,7 +82,7 @@ bool Repository::insertStatement(StorageObject sObj)
     statement << valueBracket.str() << ";";
 
     string command = statement.str();
-    cout << command << endl;
+    //cout << command << endl;
     return db->command(command);
 }
 
@@ -109,7 +107,7 @@ bool Repository::updateStatement(StorageObject sObj)
     statement << " WHERE " << sObj.getIdName() << " = '" << idValue << "';";
 
     string command = statement.str();
-    cout << command << endl;
+    //cout << command << endl;
     return db->command(command);
 }
 
@@ -137,7 +135,7 @@ bool Repository::selectStatement(StorageObject sObj, QueryResult *&results)
     statement << ";";
 
     string query = statement.str();
-    cout << query << endl;
+    //cout << query << endl;
     return db->query(query, results);
 }
 
