@@ -39,7 +39,6 @@ QByteArray ClientNetworkConnection::sendReceive(QHostAddress serverIP, quint16 s
         reply.append(readAll());
     }
 
-    cout << "Json String Size: " << QString(reply).toStdString().size() << endl;
     disconnectFromHost();
 
     reply.chop(1);
