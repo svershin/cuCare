@@ -88,7 +88,7 @@ bool ServerController::create(string tableName, string idKey, map<string, string
         }
         else
         {
-            throw(string("unkown error saving to storage"));
+            throw(repository.getErrorText());
         }
     }
     catch(string errStr)
@@ -104,7 +104,7 @@ bool ServerController::create(string tableName, string idKey, map<string, string
 
     catch(...)
     {
-        *pErrorString = "an unkown error occurred";
+        *pErrorString = "an unkown error occurred during a create";
         return false;
     }
 }
@@ -130,7 +130,7 @@ bool ServerController::push(string tableName, string idKey, map<string, string> 
         }
         else
         {
-            throw(string("unkown error saving to storage"));
+            throw(repository.getErrorText());
         }
     }
     catch(string errStr)
@@ -145,7 +145,7 @@ bool ServerController::push(string tableName, string idKey, map<string, string> 
     }
     catch(...)
     {
-        *pErrorString = "an unkown error occurred";
+        *pErrorString = "an unkown error occurred during a push";
         return false;
     }
 }
@@ -190,7 +190,7 @@ bool ServerController::pull(string tableName, string idKey, map<string, string> 
         else
         {
             delete pStorageObjectList;
-            throw(string("unkown error saving to storage"));
+            throw(repository.getErrorText());
         }
     }
     catch(string errStr)
@@ -205,7 +205,7 @@ bool ServerController::pull(string tableName, string idKey, map<string, string> 
     }
     catch(...)
     {
-        *pErrorString = "an unkown error occurred";
+        *pErrorString = "an unkown error occurred during a pull";
         return false;
     }
     return true;

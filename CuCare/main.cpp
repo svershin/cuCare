@@ -3,10 +3,6 @@
 #include "GuiServices/AccessControl.h"
 #include "GuiServices/PatientData.h"
 
-
-
-#include "ClientDataStorage/Factory.h"
-#include "ClientDataStorage/Warehouse.h"
 #include <iostream>
 
 using namespace std;
@@ -22,6 +18,9 @@ int main(int argc, char *argv[])
 
     try
     {
+
+        //Pre-added users since there is no sysadmin interface
+
         ClientData cd = ClientData::getInstance();
         if(NULL == cd.getAdminAssistant(1))
         {
