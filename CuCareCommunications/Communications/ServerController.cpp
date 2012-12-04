@@ -88,7 +88,7 @@ bool ServerController::create(string tableName, string idKey, map<string, string
         }
         else
         {
-            throw(repository.getErrorText());
+            throw(string("repository return false during a create"));
         }
     }
     catch(string errStr)
@@ -130,7 +130,7 @@ bool ServerController::push(string tableName, string idKey, map<string, string> 
         }
         else
         {
-            throw(repository.getErrorText());
+            throw(string("repository return false during a push"));
         }
     }
     catch(string errStr)
@@ -190,7 +190,7 @@ bool ServerController::pull(string tableName, string idKey, map<string, string> 
         else
         {
             delete pStorageObjectList;
-            throw(repository.getErrorText());
+            throw(string("repository return false during a pull"));
         }
     }
     catch(string errStr)
