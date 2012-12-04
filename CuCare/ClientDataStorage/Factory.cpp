@@ -74,6 +74,8 @@ list<int> Factory::pull(ModelObject *filteredObject, int parentId)
         int pulledId = CALL_MEM_FUN((*this), instantiationMap[type]) (objectProps, -1);
 
         pulledIds.push_back(pulledId);
+        \
+        delete objectProps;
     }
 
     return pulledIds;
@@ -107,6 +109,8 @@ list<int> Factory::pullPatientsByFollowupStatus(ModelObject::FollowupStatus stat
         int pulledId = instantiatePatient(objectProps, -1);
 
         pulledIds.push_back(pulledId);
+
+        delete objectProps;
     }
 
     return pulledIds;
