@@ -183,6 +183,8 @@ void PatientViewWindow::on_SubmitChangesPushButton_clicked()
             tempPatient.setId(currentPatientId);
             try {
                 patientData->modifyPatient(&tempPatient);
+                populatePatientTree();
+                ui->SubmitChangesPushButton->setEnabled(false);
                 ui->StatusLabel->setText("Patient record modified successfully.");
             }
             catch (char const * err) {
@@ -245,6 +247,10 @@ void PatientViewWindow::on_SubmitChangesPushButton_clicked()
             try {
                 tempConsultation.setId(ui->PatientTreeWidget->currentItem()->data(1, Qt::UserRole).toInt());
                 patientData->modifyConsultation(&tempConsultation);
+
+                populatePatientTree();
+                ui->SubmitChangesPushButton->setEnabled(false);
+                ui->CreateFollowupPushButton->setEnabled(false);
                 ui->StatusLabel->setText("Consultation record modified successfully.");
             }
             catch (char const * err) {
@@ -320,6 +326,8 @@ void PatientViewWindow::on_SubmitChangesPushButton_clicked()
                 tempMedicalTest.setId(ui->PatientTreeWidget->currentItem()->data(1, Qt::UserRole).toInt());
                 try {
                     patientData->modifyFollowup(&tempMedicalTest);
+                    populatePatientTree();
+                    ui->SubmitChangesPushButton->setEnabled(false);
                     ui->StatusLabel->setText("Followup record modified successfully.");
                 }
                 catch (char const * err) {
@@ -365,6 +373,8 @@ void PatientViewWindow::on_SubmitChangesPushButton_clicked()
                 tempMedicationRenewal.setId(ui->PatientTreeWidget->currentItem()->data(1, Qt::UserRole).toInt());
                 try {
                     patientData->modifyFollowup(&tempMedicationRenewal);
+                    populatePatientTree();
+                    ui->SubmitChangesPushButton->setEnabled(false);
                     ui->StatusLabel->setText("Followup record modified successfully.");
                 }
                 catch (char const * err) {
@@ -411,6 +421,8 @@ void PatientViewWindow::on_SubmitChangesPushButton_clicked()
                 tempReferral.setId(ui->PatientTreeWidget->currentItem()->data(1, Qt::UserRole).toInt());
                 try {
                     patientData->modifyFollowup(&tempReferral);
+                    populatePatientTree();
+                    ui->SubmitChangesPushButton->setEnabled(false);
                     ui->StatusLabel->setText("Followup record modified successfully.");
                 }
                 catch (char const * err) {
@@ -454,6 +466,8 @@ void PatientViewWindow::on_SubmitChangesPushButton_clicked()
                 tempreturnConsultation.setId(ui->PatientTreeWidget->currentItem()->data(1, Qt::UserRole).toInt());
                 try {
                     patientData->modifyFollowup(&tempreturnConsultation);
+                    populatePatientTree();
+                    ui->SubmitChangesPushButton->setEnabled(false);
                     ui->StatusLabel->setText("Followup record modified successfully.");
                 }
                 catch (char const * err) {

@@ -6,15 +6,15 @@
 using namespace std;
 
 ServerNetworkListener::ServerNetworkListener()
-    :QTcpServer()
+    : QTcpServer()
 {
-    connect(this, SIGNAL(newConnection()), this, SLOT(handleIncomingConnection()));
+    connect(this, SIGNAL(newConnection()), this, SLOT(handleIncomingConnection()), Qt::QueuedConnection);
 }
 
 ServerNetworkListener::ServerNetworkListener(const ServerNetworkListener& origin)
     :QTcpServer()
 {
-    connect(this, SIGNAL(newConnection()), this, SLOT(ServerNetworkListener()));
+    connect(this, SIGNAL(newConnection()), this, SLOT(ServerNetworkListener()), Qt::QueuedConnection);
 }
 
 
@@ -43,7 +43,6 @@ bool ServerNetworkListener::stopListening()
 
 void ServerNetworkListener::handleIncomingConnection()
 {
-    cout << QDateTime::currentDateTime().toString().toStdString() << ": New Connection initiated" << endl;
     ServerNetworkConnection connection(nextPendingConnection());
     connection.handleRequest();
 

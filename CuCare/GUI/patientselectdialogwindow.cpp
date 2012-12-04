@@ -117,7 +117,6 @@ void PatientSelectDialogWindow::refreshList()
 
     //Populate the patient list
     try {
-        ui->StatusLabel->setText(QString::fromStdString(Utility::itos(ui->PhysicianFilterComboBox->itemData(ui->PhysicianFilterComboBox->currentIndex(), Qt::UserRole).toInt())));
         pPatientList = patientData->getPatientList(filterType,
                                                    ui->PhysicianFilterComboBox->itemData(ui->PhysicianFilterComboBox->currentIndex(), Qt::UserRole).toInt(),
                                                    followupStatus);

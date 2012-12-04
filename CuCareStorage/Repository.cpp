@@ -61,8 +61,12 @@ bool Repository::pull(StorageObject sObj, list<StorageObject> *&pResults)
 
 bool Repository::runAudit(int day, int month, int year)
 {
-    cout << rModel.getAuditCommand(day, month, year) << endl;
     return db->command(rModel.getAuditCommand(day, month, year));
+}
+
+string Repository::getErrorText()
+{
+    return errorText;
 }
 
 bool Repository::insertStatement(StorageObject sObj)
@@ -83,7 +87,6 @@ bool Repository::insertStatement(StorageObject sObj)
     statement << valueBracket.str() << ";";
 
     string command = statement.str();
-    cout << command << endl;
     return db->command(command);
 }
 
@@ -108,7 +111,6 @@ bool Repository::updateStatement(StorageObject sObj)
     statement << " WHERE " << sObj.getIdName() << " = '" << idValue << "';";
 
     string command = statement.str();
-    cout << command << endl;
     return db->command(command);
 }
 
@@ -136,7 +138,6 @@ bool Repository::selectStatement(StorageObject sObj, QueryResult *&results)
     statement << ";";
 
     string query = statement.str();
-    cout << query << endl;
     return db->query(query, results);
 }
 
