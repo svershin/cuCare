@@ -68,6 +68,7 @@ void PatientViewWindow::on_CreateConsultationPushButton_clicked()
 
     newConsultation = true;
     ui->SubmitChangesPushButton->setEnabled(true);
+    ui->ResetFormsPushButton->setEnabled(true);
     clearConsultationInfo();
     ui->CreateFollowupPushButton->setEnabled(false);
 
@@ -137,6 +138,9 @@ void PatientViewWindow::on_SubmitChangesPushButton_clicked()
     ReturnConsultation tempreturnConsultation;
     int returnId = -1;
 
+    ui->SubmitChangesPushButton->setEnabled(false);
+    ui->ResetFormsPushButton->setEnabled(false);
+
     switch(ui->DisplayTabsWidget->currentIndex()) {
     case 0: //Patient Tab
 
@@ -168,7 +172,6 @@ void PatientViewWindow::on_SubmitChangesPushButton_clicked()
 
                 populatePatientTree();
                 showPatientInfo();
-                ui->SubmitChangesPushButton->setEnabled(false);
                 ui->StatusLabel->setText("New patient created.");
                 ui->CreateConsultationPushButton->setEnabled(true);
             }
@@ -184,7 +187,6 @@ void PatientViewWindow::on_SubmitChangesPushButton_clicked()
             try {
                 patientData->modifyPatient(&tempPatient);
                 populatePatientTree();
-                ui->SubmitChangesPushButton->setEnabled(false);
                 ui->StatusLabel->setText("Patient record modified successfully.");
             }
             catch (char const * err) {
@@ -232,7 +234,6 @@ void PatientViewWindow::on_SubmitChangesPushButton_clicked()
 
                 populatePatientTree();
                 showConsultationInfo(returnId);
-                ui->SubmitChangesPushButton->setEnabled(false);
                 ui->CreateFollowupPushButton->setEnabled(false);
                 ui->StatusLabel->setText("New consultation created.");
             }
@@ -249,7 +250,6 @@ void PatientViewWindow::on_SubmitChangesPushButton_clicked()
                 patientData->modifyConsultation(&tempConsultation);
 
                 populatePatientTree();
-                ui->SubmitChangesPushButton->setEnabled(false);
                 ui->CreateFollowupPushButton->setEnabled(false);
                 ui->StatusLabel->setText("Consultation record modified successfully.");
             }
@@ -312,7 +312,6 @@ void PatientViewWindow::on_SubmitChangesPushButton_clicked()
 
                     populatePatientTree();
                     showFollowupInfo(returnId);
-                    ui->SubmitChangesPushButton->setEnabled(false);
                     ui->StatusLabel->setText("New followup created.");
                 }
                 catch (char const * err) {
@@ -327,7 +326,6 @@ void PatientViewWindow::on_SubmitChangesPushButton_clicked()
                 try {
                     patientData->modifyFollowup(&tempMedicalTest);
                     populatePatientTree();
-                    ui->SubmitChangesPushButton->setEnabled(false);
                     ui->StatusLabel->setText("Followup record modified successfully.");
                 }
                 catch (char const * err) {
@@ -359,7 +357,6 @@ void PatientViewWindow::on_SubmitChangesPushButton_clicked()
 
                     populatePatientTree();
                     showFollowupInfo(returnId);
-                    ui->SubmitChangesPushButton->setEnabled(false);
                     ui->StatusLabel->setText("New followup created.");
                 }
                 catch (char const * err) {
@@ -374,7 +371,6 @@ void PatientViewWindow::on_SubmitChangesPushButton_clicked()
                 try {
                     patientData->modifyFollowup(&tempMedicationRenewal);
                     populatePatientTree();
-                    ui->SubmitChangesPushButton->setEnabled(false);
                     ui->StatusLabel->setText("Followup record modified successfully.");
                 }
                 catch (char const * err) {
@@ -407,7 +403,6 @@ void PatientViewWindow::on_SubmitChangesPushButton_clicked()
 
                     populatePatientTree();
                     showFollowupInfo(returnId);
-                    ui->SubmitChangesPushButton->setEnabled(false);
                     ui->StatusLabel->setText("New followup created.");
                 }
                 catch (char const * err) {
@@ -422,7 +417,6 @@ void PatientViewWindow::on_SubmitChangesPushButton_clicked()
                 try {
                     patientData->modifyFollowup(&tempReferral);
                     populatePatientTree();
-                    ui->SubmitChangesPushButton->setEnabled(false);
                     ui->StatusLabel->setText("Followup record modified successfully.");
                 }
                 catch (char const * err) {
@@ -452,7 +446,6 @@ void PatientViewWindow::on_SubmitChangesPushButton_clicked()
 
                     populatePatientTree();
                     showFollowupInfo(returnId);
-                    ui->SubmitChangesPushButton->setEnabled(false);
                     ui->StatusLabel->setText("New followup created.");
                 }
                 catch (char const * err) {
@@ -467,7 +460,6 @@ void PatientViewWindow::on_SubmitChangesPushButton_clicked()
                 try {
                     patientData->modifyFollowup(&tempreturnConsultation);
                     populatePatientTree();
-                    ui->SubmitChangesPushButton->setEnabled(false);
                     ui->StatusLabel->setText("Followup record modified successfully.");
                 }
                 catch (char const * err) {
@@ -491,6 +483,7 @@ void PatientViewWindow::on_CreateFollowupPushButton_clicked()
 
     newFollowup = true;
     ui->SubmitChangesPushButton->setEnabled(true);
+    ui->ResetFormsPushButton->setEnabled(true);
     followupBaseStatus = 0;
     currentConsultationId = ui->PatientTreeWidget->currentItem()->data(1, Qt::UserRole).toInt();
 
@@ -595,16 +588,19 @@ void PatientViewWindow::on_PatientTreeWidget_itemClicked(QTreeWidgetItem *item)
     case 0: //Patient has been selected
         newPatient = false;
         ui->SubmitChangesPushButton->setEnabled(true);
+        ui->ResetFormsPushButton->setEnabled(true);
         showPatientInfo();
         break;
     case 1: //Consultation has been selected
         newConsultation = false;
         ui->SubmitChangesPushButton->setEnabled(true);
+        ui->ResetFormsPushButton->setEnabled(true);
         showConsultationInfo(item->data(1, Qt::UserRole).toInt());
         break;
     case 2: //Followup has been selected
         newFollowup = false;
         ui->SubmitChangesPushButton->setEnabled(true);
+        ui->ResetFormsPushButton->setEnabled(true);
         showFollowupInfo(item->data(1, Qt::UserRole).toInt());
         break;
     }
