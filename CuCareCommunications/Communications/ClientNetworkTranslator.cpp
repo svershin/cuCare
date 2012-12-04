@@ -23,6 +23,7 @@ QVariantMap ClientNetworkTranslator::makeRequest(QHostAddress IP, quint16 port, 
 
     try
     {
+
         replyMap = deserializeMessage(replyBytes);
     }
     catch(...)

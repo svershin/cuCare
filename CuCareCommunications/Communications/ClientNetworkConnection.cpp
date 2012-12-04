@@ -26,15 +26,28 @@ QByteArray ClientNetworkConnection::sendReceive(QHostAddress serverIP, quint16 s
 
     write(request);
 
-    if(!waitForReadyRead(SERVER_RESPONSE_WAIT_TIME_MS))
+
+    QByteArray reply;
+
+    while(!containsEOT(reply))
     {
-        std::cout << "Timed out waiting for server response" << endl;
-        throw string("Timed out waiting for server response");
+        if(!waitForReadyRead(SERVER_RESPONSE_WAIT_TIME_MS))
+        {
+            std::cout << "Timed out waiting for server response" << endl;
+            throw string("Timed out waiting for server response");
+        }
+        reply.append(readAll());
     }
 
-    QByteArray reply = readAll();
+    cout << "Json String Size: " << QString(reply).toStdString().size() << endl;
     disconnectFromHost();
 
+    reply.chop(1);
     return reply;
 }
 
+
+bool ClientNetworkConnection::containsEOT(QByteArray message)
+{
+    return message.endsWith(END_OF_TRANSMISSION_CHARACTER);
+}
