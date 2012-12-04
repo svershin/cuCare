@@ -2,9 +2,11 @@
 #define SERVERNETWORKCONNECTION_H
 
 #define END_OF_TRANSMISSION_CHARACTER (char)4
+#define CLIENT_REQUEST_WAIT_TIME_MS 10000
 
 #include <QtNetwork>
 #include "ServerNetworkTranslator.h"
+#include "ClientNetworkConnection.h"
 
 class ServerNetworkConnection
 {

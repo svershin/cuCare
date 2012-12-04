@@ -4,12 +4,12 @@
 using namespace std;
 
 ClientNetworkConnection::ClientNetworkConnection()
-    : QTcpSocket()
+    :QTcpSocket()
 {}
 
 
 ClientNetworkConnection::ClientNetworkConnection(const ClientNetworkConnection& origin)
-    : QTcpSocket()
+    :QTcpSocket()
 {}
 
 ClientNetworkConnection& ClientNetworkConnection::operator=(const ClientNetworkConnection& origin)
@@ -24,11 +24,9 @@ QByteArray ClientNetworkConnection::sendReceive(QHostAddress serverIP, quint16 s
         throw string("Failed to connect to server");
     }
 
-    write(request);
-
+    wrappedWrite(request);
 
     QByteArray reply;
-
     while(!containsEOT(reply))
     {
         if(!waitForReadyRead(SERVER_RESPONSE_WAIT_TIME_MS))
@@ -49,4 +47,10 @@ QByteArray ClientNetworkConnection::sendReceive(QHostAddress serverIP, quint16 s
 bool ClientNetworkConnection::containsEOT(QByteArray message)
 {
     return message.endsWith(END_OF_TRANSMISSION_CHARACTER);
+}
+
+
+qint64 ClientNetworkConnection::wrappedWrite(QByteArray request)
+{
+    return write(request.append(END_OF_TRANSMISSION_CHARACTER));
 }

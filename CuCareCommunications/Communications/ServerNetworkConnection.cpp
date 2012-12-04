@@ -14,17 +14,28 @@ void ServerNetworkConnection::handleRequest()
 {
     try
     {
-    connectedSocket->waitForReadyRead();
-    QByteArray requestMessage = connectedSocket->readAll();
+        QByteArray request;
+        while(!ClientNetworkConnection::containsEOT(request))
+        {
+            if(!connectedSocket->waitForReadyRead(CLIENT_REQUEST_WAIT_TIME_MS))
+            {
+                std::cout << "Timed out waiting for client's request" << endl;
+                throw(string("Timed out waiting for client's request"));
+                return;
+            }
+            request.append(connectedSocket->readAll());
+        }
 
-    qint64 written = wrappedWrite(ServerNetworkTranslator::translateAndHandleRequest(requestMessage));
+        request.chop(1);
+
+        wrappedWrite(ServerNetworkTranslator::translateAndHandleRequest(request));
 
     }
     catch (string errorString)
     {
         wrappedWrite(ServerNetworkTranslator::giveErrorReply(errorString));
     }
-    catch (char const * errorString)
+    catch (char const *errorString)
     {
         wrappedWrite(ServerNetworkTranslator::giveErrorReply(errorString));
     }
@@ -40,7 +51,7 @@ void ServerNetworkConnection::handleRequest()
 }
 
 
-qint64 ServerNetworkConnection::wrappedWrite(QByteArray message)
+qint64 ServerNetworkConnection::wrappedWrite(QByteArray reply)
 {
-    return connectedSocket->write(message.append(END_OF_TRANSMISSION_CHARACTER));
+    return connectedSocket->write(reply.append(END_OF_TRANSMISSION_CHARACTER));
 }

@@ -2,7 +2,7 @@
 
 NetworkSettingsStorage::NetworkSettingsStorage()
     : settingsPath ("../CuCare/NetworkSettings.init"),
-      ipAddress ("192.168.0.1"),
+      ipAddress ("127.0.0.1"),
       portNumber (60003)
 {
     if(settingsFileExists())
