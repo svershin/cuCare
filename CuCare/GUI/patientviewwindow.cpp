@@ -29,6 +29,7 @@ void PatientViewWindow::on_NewPatientPushButton_clicked()
     clearStatus();
 
     newPatient = true;
+    ui->CreateConsultationPushButton->setEnabled(false);
     enablePatientEditing();
     clearPatientInfo();
 
