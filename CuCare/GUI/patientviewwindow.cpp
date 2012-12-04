@@ -84,7 +84,10 @@ void PatientViewWindow::on_LogOutPushButton_clicked()
         accessControl->logOut();
         accept();
     }
-    catch (char * err) {
+    catch (char const * err) {
+        ui->StatusLabel->setText(QString::fromStdString(err));
+    }
+    catch (string err) {
         ui->StatusLabel->setText(QString::fromStdString(err));
     }
 }
@@ -169,7 +172,10 @@ void PatientViewWindow::on_SubmitChangesPushButton_clicked()
                 ui->StatusLabel->setText("New patient created.");
                 ui->CreateConsultationPushButton->setEnabled(true);
             }
-            catch (char * err) {
+            catch (char const * err) {
+                ui->StatusLabel->setText(QString::fromStdString(err));
+            }
+            catch (string err) {
                 ui->StatusLabel->setText(QString::fromStdString(err));
             }
         }
@@ -179,7 +185,10 @@ void PatientViewWindow::on_SubmitChangesPushButton_clicked()
                 patientData->modifyPatient(&tempPatient);
                 ui->StatusLabel->setText("Patient record modified successfully.");
             }
-            catch (char * err) {
+            catch (char const * err) {
+                ui->StatusLabel->setText(QString::fromStdString(err));
+            }
+            catch (string err) {
                 ui->StatusLabel->setText(QString::fromStdString(err));
             }
         }
@@ -225,7 +234,10 @@ void PatientViewWindow::on_SubmitChangesPushButton_clicked()
                 ui->CreateFollowupPushButton->setEnabled(false);
                 ui->StatusLabel->setText("New consultation created.");
             }
-            catch (char * err) {
+            catch (char const * err) {
+                ui->StatusLabel->setText(QString::fromStdString(err));
+            }
+            catch (string err) {
                 ui->StatusLabel->setText(QString::fromStdString(err));
             }
         }
@@ -235,7 +247,10 @@ void PatientViewWindow::on_SubmitChangesPushButton_clicked()
                 patientData->modifyConsultation(&tempConsultation);
                 ui->StatusLabel->setText("Consultation record modified successfully.");
             }
-            catch (char * err) {
+            catch (char const * err) {
+                ui->StatusLabel->setText(QString::fromStdString(err));
+            }
+            catch (string err) {
                 ui->StatusLabel->setText(QString::fromStdString(err));
             }
         }
@@ -294,7 +309,10 @@ void PatientViewWindow::on_SubmitChangesPushButton_clicked()
                     ui->SubmitChangesPushButton->setEnabled(false);
                     ui->StatusLabel->setText("New followup created.");
                 }
-                catch (char * err) {
+                catch (char const * err) {
+                    ui->StatusLabel->setText(QString::fromStdString(err));
+                }
+                catch (string err) {
                     ui->StatusLabel->setText(QString::fromStdString(err));
                 }
             }
@@ -304,7 +322,10 @@ void PatientViewWindow::on_SubmitChangesPushButton_clicked()
                     patientData->modifyFollowup(&tempMedicalTest);
                     ui->StatusLabel->setText("Followup record modified successfully.");
                 }
-                catch (char * err) {
+                catch (char const * err) {
+                    ui->StatusLabel->setText(QString::fromStdString(err));
+                }
+                catch (string err) {
                     ui->StatusLabel->setText(QString::fromStdString(err));
                 }
 
@@ -333,7 +354,10 @@ void PatientViewWindow::on_SubmitChangesPushButton_clicked()
                     ui->SubmitChangesPushButton->setEnabled(false);
                     ui->StatusLabel->setText("New followup created.");
                 }
-                catch (char * err) {
+                catch (char const * err) {
+                    ui->StatusLabel->setText(QString::fromStdString(err));
+                }
+                catch (string err) {
                     ui->StatusLabel->setText(QString::fromStdString(err));
                 }
             }
@@ -343,7 +367,10 @@ void PatientViewWindow::on_SubmitChangesPushButton_clicked()
                     patientData->modifyFollowup(&tempMedicationRenewal);
                     ui->StatusLabel->setText("Followup record modified successfully.");
                 }
-                catch (char * err) {
+                catch (char const * err) {
+                    ui->StatusLabel->setText(QString::fromStdString(err));
+                }
+                catch (string err) {
                     ui->StatusLabel->setText(QString::fromStdString(err));
                 }
 
@@ -373,7 +400,10 @@ void PatientViewWindow::on_SubmitChangesPushButton_clicked()
                     ui->SubmitChangesPushButton->setEnabled(false);
                     ui->StatusLabel->setText("New followup created.");
                 }
-                catch (char * err) {
+                catch (char const * err) {
+                    ui->StatusLabel->setText(QString::fromStdString(err));
+                }
+                catch (string err) {
                     ui->StatusLabel->setText(QString::fromStdString(err));
                 }
             }
@@ -383,7 +413,10 @@ void PatientViewWindow::on_SubmitChangesPushButton_clicked()
                     patientData->modifyFollowup(&tempReferral);
                     ui->StatusLabel->setText("Followup record modified successfully.");
                 }
-                catch (char * err) {
+                catch (char const * err) {
+                    ui->StatusLabel->setText(QString::fromStdString(err));
+                }
+                catch (string err) {
                     ui->StatusLabel->setText(QString::fromStdString(err));
                 }
 
@@ -410,7 +443,10 @@ void PatientViewWindow::on_SubmitChangesPushButton_clicked()
                     ui->SubmitChangesPushButton->setEnabled(false);
                     ui->StatusLabel->setText("New followup created.");
                 }
-                catch (char * err) {
+                catch (char const * err) {
+                    ui->StatusLabel->setText(QString::fromStdString(err));
+                }
+                catch (string err) {
                     ui->StatusLabel->setText(QString::fromStdString(err));
                 }
             }
@@ -420,7 +456,10 @@ void PatientViewWindow::on_SubmitChangesPushButton_clicked()
                     patientData->modifyFollowup(&tempreturnConsultation);
                     ui->StatusLabel->setText("Followup record modified successfully.");
                 }
-                catch (char * err) {
+                catch (char const * err) {
+                    ui->StatusLabel->setText(QString::fromStdString(err));
+                }
+                catch (string err) {
                     ui->StatusLabel->setText(QString::fromStdString(err));
                 }
 
@@ -688,7 +727,10 @@ void PatientViewWindow::clearConsultationInfo()
     try {
         tempStatus = accessControl->getLoginStatus();
     }
-    catch (char * err) {
+    catch (char const * err) {
+        ui->StatusLabel->setText(QString::fromStdString(err));
+    }
+    catch (string err) {
         ui->StatusLabel->setText(QString::fromStdString(err));
     }
 
@@ -732,7 +774,10 @@ void PatientViewWindow::clearFollowupInfo()
     try {
         tempStatus = accessControl->getLoginStatus();
     }
-    catch (char * err) {
+    catch (char const * err) {
+        ui->StatusLabel->setText(QString::fromStdString(err));
+    }
+    catch (string err) {
         ui->StatusLabel->setText(QString::fromStdString(err));
     }
 
@@ -752,7 +797,10 @@ void PatientViewWindow::showPatientInfo()
     try {
         tempPatient = patientData->getFullPatient(currentPatientId);
     }
-    catch (char * err) {
+    catch (char const * err) {
+        ui->StatusLabel->setText(QString::fromStdString(err));
+    }
+    catch (string err) {
         ui->StatusLabel->setText(QString::fromStdString(err));
     }
 
@@ -803,7 +851,10 @@ void PatientViewWindow::showConsultationInfo(int cid)
     try {
         tempConsult = patientData->getConsultation(cid);
     }
-    catch (char * err) {
+    catch (char const * err) {
+        ui->StatusLabel->setText(QString::fromStdString(err));
+    }
+    catch (string err) {
         ui->StatusLabel->setText(QString::fromStdString(err));
     }
 
@@ -853,7 +904,10 @@ void PatientViewWindow::showFollowupInfo(int fid)
     try {
         tempFollowup = patientData->getFollowup(fid);
     }
-    catch (char * err) {
+    catch (char const * err) {
+        ui->StatusLabel->setText(QString::fromStdString(err));
+    }
+    catch (string err) {
         ui->StatusLabel->setText(QString::fromStdString(err));
     }
 
@@ -1014,7 +1068,10 @@ void PatientViewWindow::populatePatientTree()
                                                            + string(":")
                                                            + intToString(patientData->getConsultation(*it)->getMinute())));
         }
-        catch (char * err) {
+        catch (char const * err) {
+            ui->StatusLabel->setText(QString::fromStdString(err));
+        }
+        catch (string err) {
             ui->StatusLabel->setText(QString::fromStdString(err));
         }
         pTempWidget->setData(0, Qt::UserRole, 1); //Consultation
@@ -1031,7 +1088,10 @@ void PatientViewWindow::populatePatientTree()
                                                                 + string("/")
                                                                 + intToString(patientData->getFollowup(*jt)->getYear())));
             }
-            catch (char * err) {
+            catch (char const * err) {
+                ui->StatusLabel->setText(QString::fromStdString(err));
+            }
+            catch (string err) {
                 ui->StatusLabel->setText(QString::fromStdString(err));
             }
             pTempWidget2->setData(0, Qt::UserRole, 2); //Followup
@@ -1053,7 +1113,10 @@ void PatientViewWindow::populatePhysicianLists()
     try {
         pPhysicianList = patientData->getPhysicianList();
     }
-    catch (char * err) {
+    catch (char const * err) {
+        ui->StatusLabel->setText(QString::fromStdString(err));
+    }
+    catch (string err) {
         ui->StatusLabel->setText(QString::fromStdString(err));
     }
 

@@ -24,6 +24,10 @@ void ServerNetworkConnection::handleRequest()
     {
         connectedSocket->write(ServerNetworkTranslator::giveErrorReply(errorString));
     }
+    catch (char const * errorString)
+    {
+        connectedSocket->write(ServerNetworkTranslator::giveErrorReply(errorString));
+    }
     catch (...)
     {
         connectedSocket->write(ServerNetworkTranslator::giveErrorReply(string("unknown server error")));

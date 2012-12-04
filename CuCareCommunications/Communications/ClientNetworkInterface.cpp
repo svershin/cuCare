@@ -40,6 +40,11 @@ bool ClientNetworkInterface::create(string tableName, string idKey, map<string, 
         *pErrorString = errStr;
         return false;
     }
+    catch(char const * errStr)
+    {
+        *pErrorString = errStr;
+        return false;
+    }
 }
 
 bool ClientNetworkInterface::push(string tableName, string idKey, map<string, string> *pObjectMap, string *pErrorString)
@@ -69,6 +74,11 @@ bool ClientNetworkInterface::push(string tableName, string idKey, map<string, st
         *pErrorString = errStr;
         return false;
     }
+    catch(char const * errStr)
+    {
+        *pErrorString = errStr;
+        return false;
+    }
 }
 
 bool ClientNetworkInterface::pull(string tableName, string idKey, map<string, string> *pObjectMap, list< map<string, string> *> *pObjectList, string *pErrorString)
@@ -94,6 +104,11 @@ bool ClientNetworkInterface::pull(string tableName, string idKey, map<string, st
         }
     }
     catch(string errStr)
+    {
+        *pErrorString = errStr;
+        return false;
+    }
+    catch(char const * errStr)
     {
         *pErrorString = errStr;
         return false;

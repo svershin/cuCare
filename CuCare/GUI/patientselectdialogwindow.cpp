@@ -15,7 +15,10 @@ PatientSelectDialogWindow::PatientSelectDialogWindow(PatientData *patientDataPar
     try {
         pPhysicianList = patientData->getPhysicianList();
     }
-    catch (char * err) {
+    catch (char const * err) {
+        ui->StatusLabel->setText(QString::fromStdString(err));
+    }
+    catch (string err) {
         ui->StatusLabel->setText(QString::fromStdString(err));
     }
 
@@ -119,7 +122,10 @@ void PatientSelectDialogWindow::refreshList()
                                                    ui->PhysicianFilterComboBox->itemData(ui->PhysicianFilterComboBox->currentIndex(), Qt::UserRole).toInt(),
                                                    followupStatus);
     }
-    catch (char * err) {
+    catch (char const * err) {
+        ui->StatusLabel->setText(QString::fromStdString(err));
+    }
+    catch (string err) {
         ui->StatusLabel->setText(QString::fromStdString(err));
     }
 

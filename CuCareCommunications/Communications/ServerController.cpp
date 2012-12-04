@@ -138,6 +138,11 @@ bool ServerController::push(string tableName, string idKey, map<string, string> 
         *pErrorString = errStr;
         return false;
     }
+    catch(char const * errStr)
+    {
+        *pErrorString = errStr;
+        return false;
+    }
     catch(...)
     {
         *pErrorString = "an unkown error occurred";
@@ -189,6 +194,11 @@ bool ServerController::pull(string tableName, string idKey, map<string, string> 
         }
     }
     catch(string errStr)
+    {
+        *pErrorString = errStr;
+        return false;
+    }
+    catch(char const * errStr)
     {
         *pErrorString = errStr;
         return false;
