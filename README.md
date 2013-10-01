@@ -3,14 +3,14 @@ cuCare
 
 __Authors:__ David Carson ([davecarson](http://github.com/davecarson)), Devin Denis ([CURigel](http://github.com/CURigel)), Sergey Vershinin ([svershin](http://github.com/svershin)), and Michael Yuill ([mikeyuill](http://github.com/mikeyuill))
 
+__NOTE:__
+- The repository has been moved here from BitBucket, and represents the final state of the codebase before it was packaged for submission.
+- Although the commit history appears to have been ported over, it DOES NOT accurately represent the team members' respective contributions (probably because they weren't tagged properly).
+
 Introduction
 ------
 
 cuCare is a medical patient management system, written in C++ using the Qt Creator IDE, designed to run under Linux.
-
-The repository has been moved here from BitBucket, and represents the final state of the codebase before it was packaged for submission.
-
-__NOTE:__ Although the commit history appears to have been ported over, it DOES NOT accurately represent the team members' respective contributions (probably because they weren't tagged properly).
 
 Application Deployment Instructions
 ------
