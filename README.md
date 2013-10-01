@@ -1,6 +1,8 @@
 cuCare
 ======
 
+__Authors:__ David Carson (davecarson), Devin Denis (CURigel), Sergey Vershinin (svershin), and Michael Yuill (mikeyuill)
+
 Introduction
 ------
 
