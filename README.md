@@ -1,7 +1,7 @@
 cuCare
 ======
 
-__Authors:__ David Carson ([davecarson](http://github.com/davecarson)), Devin Denis (CURigel), Sergey Vershinin (svershin), and Michael Yuill (mikeyuill)
+__Authors:__ David Carson ([davecarson](http://github.com/davecarson)), Devin Denis ([CURigel](http://github.com/CURigel)), Sergey Vershinin ([svershin](http://github.com/svershin)), and Michael Yuill ([mikeyuill](http://github.com/mikeyuill))
 
 Introduction
 ------
